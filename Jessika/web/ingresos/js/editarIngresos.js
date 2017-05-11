@@ -4,7 +4,9 @@
  * and open the template in the editor.
  */
 ocultarModal();
-
+ $('.tooltips').tooltip({
+     trigger: 'focus'
+ })
 /*-------------------------------Variables-------------------------------------------------------------------------*/
 var pagina=1;
 var diagnosticos=[];    
@@ -57,7 +59,7 @@ function cargarIngresos()
                 ultimo=indice;
                 $("#paginacionIngresosEditar ul").append('<li id="adelante"> <a href="#">&raquo;</a></li>');
                 $('#tablaIngresos tr').remove();
-                $('#tablaIngresos thead').append("<tr>\n\                                                        <th>No.</th>\n\
+                $('#tablaIngresos thead').append("<tr>\n\                                                        <th style='display:none;'>No.</th>\n\
                                                         <th class='col-lg-1'>Cédula</th>\n\
                                                         <th>Nombres</th>\n\
                                                         <th>Apellidos</th>\n\
@@ -76,17 +78,18 @@ function cargarIngresos()
                                                         <th class='col-lg-1'>Cód.</th>\n\
                                                         <th >Acción.</th></tr>");
                 var valor="btn-group";
+                
                     for(i=0;i <resultado.length; i++)
                     {
                         diagnosticos[i]=resultado[i].definitivoEgreso;
-                        if(diagnosticos[i].length>=17)
-                            var res = diagnosticos[i].substring(0, 17)+'...';
+                        if(diagnosticos[i].length>=15)
+                            var res = diagnosticos[i].substring(0, 15)+'...';
                         else
                             res = diagnosticos[i];
                         if(i==4)
                             valor="btn-group dropup";
                         $('#tablaIngresos').append("<tr >\n\
-                                                        <td>"+resultado[i].id+"</td>\n\
+                                                        <td style='display:none;'>"+resultado[i].id+"</td>\n\
                                                         <td>"+resultado[i].unPaciente.cedula+"</td>\n\
                                                         <td>"+resultado[i].unPaciente.nombre1+ ' '+resultado[i].unPaciente.nombre2+"</td>\n\
                                                         <td>"+resultado[i].unPaciente.apellido1+" "+resultado[i].unPaciente.apellido2+"</td>\n\
@@ -98,7 +101,7 @@ function cargarIngresos()
                                                         <td>"+resultado[i].fechaSalida+"</td>\n\
                                                         <td style='display:none;'>"+resultado[i].hora+"</td>\n\
                                                         <td style='display:none;'>"+resultado[i].condicionEgreso+"</td>\n\
-                                                        <td>"+res+"</td>\n\
+                                                        <td data-toggle='tooltip' data-placement='left' title='"+resultado[i].definitivoEgreso+"'>"+res+"</td>\n\
                                                         <td style='display:none;'>"+resultado[i].secundarioEgreso+"</td>\n\
                                                         <td style='display:none;'>"+resultado[i].secundarioEgreso2+"</td>\n\
                                                         <td style='display:none;'>"+resultado[i].causaExterna+"</td>\n\

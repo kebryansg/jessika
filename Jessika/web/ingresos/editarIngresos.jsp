@@ -366,9 +366,9 @@
                 <div class="tab-pane fade in active" id="ip" style="padding-top: 10px;">
                     <div class="row">
                         <div class="col-lg-12">                                    
-                               <div style="width: 100%; height: 300px; overflow-y: scroll; overflow-x: hidden;">         
+                               <div >         
                                     <div class="table-responsive">
-                                        <table id="tablaMedicamentos" class="table table-bordered table-hover table-striped">
+                                        <table style="width: 100%; height: 300px; overflow-y: scroll; overflow-x: hidden;" id="tablaMedicamentos" class="table table-bordered table-hover table-striped">
                                             <thead>
                                                 <tr>
                                                     <th class="col-lg-1">id</th>
