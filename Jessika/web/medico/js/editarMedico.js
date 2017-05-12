@@ -172,14 +172,14 @@ function cargarMedicos(pagina)
         ultimo=indice;
         $("#tabMedicoEditar #paginacionMedico ul").append('<li id="adelante"><a href="#">&raquo;</a></li>');
         $('#tabMedicoEditar #tablaMedico thead').append("<tr>\n\<th >No.</th>\n\                                                <th>Cédula</th>\n\
-                                               <th class='col-lg-2'>Apellidos</th>\n\
-                                               <th class='col-lg-2'>Nombres</th>\n\
-                                               <th class='col-lg-2'>Domicilio</th>\n\
+                                               <th >Apellidos</th>\n\
+                                               <th >Nombres</th>\n\
+                                               <th >Domicilio</th>\n\
                                                <th style='display:none;'>Ciudad</th>\n\
                                                <th style='display:none;'>Teléf. Domicilio</th>\n\
                                                <th style='display:none;'>Teléf. Oficina</th>\n\
                                                <th>Teléf. Movil</th>\n\
-                                               <th style='display:none;' class='col-lg-3'>Email</th>\n\
+                                               <th style='display:none;' >Email</th>\n\
                                                <th style='display:none;'>Estado</th>\n\
                                                <th >Acci&oacute;n</th>");
         for(i=0;i <resultado.length; i++)

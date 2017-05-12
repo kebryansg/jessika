@@ -60,22 +60,22 @@ function cargarIngresos()
                 $("#paginacionIngresosEditar ul").append('<li id="adelante"> <a href="#">&raquo;</a></li>');
                 $('#tablaIngresos tr').remove();
                 $('#tablaIngresos thead').append("<tr>\n\                                                        <th style='display:none;'>No.</th>\n\
-                                                        <th class='col-lg-1'>Cédula</th>\n\
+                                                        <th >Cédula</th>\n\
                                                         <th>Nombres</th>\n\
                                                         <th>Apellidos</th>\n\
-                                                        <th style='display:none;' class='col-lg-2'>idTipoIngregos</th>\n\
+                                                        <th style='display:none;' >idTipoIngregos</th>\n\
                                                         <th style='display:none;'>idCaso</th>\n\
                                                         \n\<th style='display:none;'>Id. Espegreso</th>\n\
                                                         <th style='display:none;'>E. Egreso</th>\n\
                                                         <th>F. Ingreso</th>\n\
                                                         <th>F. Egreso</th>\n\
                                                         <th style='display:none;'>Hora</th>\n\
-                                                        <th class='col-lg-1' style='display:none;'>Cond. Egreso</th>\n\
-                                                        <th class='col-lg-2'>D. Egreso</th>\n\
+                                                        <th  style='display:none;'>Cond. Egreso</th>\n\
+                                                        <th>D. Egreso</th>\n\
                                                         <th style='display:none;' class='col-lg-1'>S. Egreso</th>\n\
                                                         <th style='display:none;' class='col-lg-1'>S. Egreso 2</th>\n\
                                                         <th style='display:none;' class='col-lg-1'>C. Externa</th>\n\
-                                                        <th class='col-lg-1'>Cód.</th>\n\
+                                                        <th >Cód.</th>\n\
                                                         <th >Acción.</th></tr>");
                 var valor="btn-group";
                 
@@ -106,7 +106,7 @@ function cargarIngresos()
                                                         <td style='display:none;'>"+resultado[i].secundarioEgreso2+"</td>\n\
                                                         <td style='display:none;'>"+resultado[i].causaExterna+"</td>\n\
                                                         <td>"+resultado[i].codigoDiagnosticoDefinitivo+"</td>\n\
-                                                        <td style='width: 20%' >\n\
+                                                        <td >\n\
                                                             <button id='botonEditar' class='btn btn-primary'><span class='glyphicon glyphicon-pencil'></span> </button> \n\
                                                             \n\
                                                             <button id='btnEliminar' class='btn btn-danger'><span class='glyphicon glyphicon-trash'></span></a></button>\n\

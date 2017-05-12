@@ -41,7 +41,7 @@
         </div>
         <span class="label label-default"></span>
         <br>
-        <div style="width: 100%; height: 300px; overflow-y: scroll; overflow-x: hidden;">
+        
         <div class="row">
             <div class="col-xs-12">
             <div class="table-responsive" style="margin: 0 auto; text-align:left">
@@ -59,7 +59,7 @@
             </div>
         </div>
         </div>  
-            </div>
+            
         <div style="text-align: right; width: 100%;" id="paginacionIngresosEditar">
                     <ul class="pagination" >
                 
@@ -368,7 +368,7 @@
                         <div class="col-lg-12">                                    
                                <div >         
                                     <div class="table-responsive">
-                                        <table style="width: 100%; height: 300px; overflow-y: scroll; overflow-x: hidden;" id="tablaMedicamentos" class="table table-bordered table-hover table-striped">
+                                        <table id="tablaMedicamentos" class="table table-bordered table-hover table-striped">
                                             <thead>
                                                 <tr>
                                                     <th class="col-lg-1">id</th>

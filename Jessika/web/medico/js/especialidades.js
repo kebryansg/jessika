@@ -178,9 +178,9 @@
             $("#tbEspecialidad #paginacionEspecialidad ul").append('<li id="adelante" ><a href="#">&raquo;</a></li>');
             $('#tbEspecialidad #especialidades tr').remove();
             $('#tbEspecialidad #especialidades thead').append("<tr>\n\
-                                                <th class='col-lg-1'>No.</th>\n\
+                                                <th>No.</th>\n\
                                                 <th class='col-lg-9'>Descripción</th>\n\
-                                                <th class='col-lg-2'>Opción</th>\n\
+                                                <th >Opción</th>\n\
                                               </tr>");
               
             for(i=0;i <resultado.length; i++)
