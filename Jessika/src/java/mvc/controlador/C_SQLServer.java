@@ -26,7 +26,7 @@ public final class C_SQLServer extends C_BD{
             //conect = DriverManager.getConnection(connectionUrl);
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             //jdbc:sqlserver://localhost:1433;databaseName=prueba
-            this.conexion = DriverManager.getConnection("jdbc:sqlserver://localhost:"+params[1]+";databaseName="+params[0],params[2],params[3]);
+            this.conexion = DriverManager.getConnection("jdbc:sqlserver://DEIVI-PC\\SQL2012:"+params[1]+";databaseName="+params[0],params[2],params[3]);
         } catch (Exception ex) {
             System.out.print(ex.getMessage());
         }
