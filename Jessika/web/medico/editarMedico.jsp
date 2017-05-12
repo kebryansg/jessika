@@ -9,8 +9,6 @@
 <!DOCTYPE html>
 <script src="medico/js/editarMedico.js"></script>
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>
 
 
 <!--<script src="resources/js/style.js" type="text/javascript"></script>-->
@@ -168,4 +166,4 @@
     </div>
 </div>
                                                 </div>
-<script src="resources/js/configuracionInicial.js" type="text/javascript" ></script>                                                
+                                          
