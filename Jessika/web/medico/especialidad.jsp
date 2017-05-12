@@ -34,15 +34,15 @@
             </div>
         </div>    
         <br>
-        <div style="width: 100%; height: 300px; overflow-y: scroll; overflow-x: hidden;">
+        <div>
             <div class="row">
                 <div class="table-responsive col-lg-12">
                     <table id="especialidades" class="table table-bordered table-hover table-striped">
                         <thead>
                             <tr>
-                                <th class="col-lg-1">No.</th>
+                                <th >No.</th>
                                 <th>Descripci&oacute;n</th>
-                                <th class="col-lg-1">Acci&oacute;n</th>
+                                <th>Acci&oacute;n</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -77,5 +77,5 @@
         </div>
     </div>
 </div>
-<script src="resources/js/configuracionInicial.js" type="text/javascript" ></script>
+
 <script src="medico/js/especialidades.js"></script>

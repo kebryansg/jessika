@@ -73,7 +73,7 @@
                     </div>
                     <div class="form-group col-xs-4">
                         <div class="col-md-8">
-                            <label class="col-md-12" for="cboEspecialidadEgreso">Especialidad del egreso</label>
+                            <label class="col-md-12" for="cboEspecialidadEgreso">Especialidad Egreso</label>
                             <div class="col-md-12">
                                 <select id="cboEspecialidadEgreso" data-live-search="true" class="selectpicker">
                                     <%
@@ -235,7 +235,7 @@
 
                                 </div>
                             </div>
-                           <div style="width: 100%; height: 300px; overflow-y: scroll; overflow-x: hidden;">         
+                                    
                             <div class="table-responsive">
                                 
                                 <table id="tablaPacientes" class="table table-bordered table-hover table-striped">
@@ -248,7 +248,7 @@
                                     </tbody>
                                 </table>
                             </div>
-                           </div>
+                          
                             <div style="text-align: right; width: 100%;" id="paginacionBuscarIngresos">
                             <nav aria-label="Page navigation">
                                     <ul class="pagination" id="paginacionBuscarI"></ul>

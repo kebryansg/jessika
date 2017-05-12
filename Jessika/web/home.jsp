@@ -37,22 +37,22 @@
 
         <script type="text/javascript" src="resources/js/moment.js" async="async"></script>
         <!--<script type="text/javascript" src="resources/bootstrap/js/bootstrap-datetimepicker.min.js"></script>-->
-        <script type="text/javascript" src="resources/bootstrap/js/bootstrap-datetimepicker.js" async="async"></script>        
-        <script src="resources/bootstrap/js/bootstrap-datetimepicker.es.js" type="text/javascript" async="async"></script>
+        <script type="text/javascript" src="resources/bootstrap/js/bootstrap-datetimepicker.js" ></script>        
+        <script src="resources/bootstrap/js/bootstrap-datetimepicker.es.js" type="text/javascript" ></script>
 
-        <link rel="stylesheet" href="resources/bootstrap/css/bootstrap-select.min.css" >
-        <script src="resources/bootstrap/js/bootstrap-select.min.js"></script>
+        
         <script type="text/javascript" src="resources/js/alertify.min.js" async="async"></script>
         <script type="text/javascript" src="resources/js/alertify.js" async="async"></script>
-        <link rel="stylesheet" href="resources/css/alertify.core.css" > />
+        <link rel="stylesheet" href="resources/css/alertify.core.css" />
         <link rel="stylesheet" href="resources/css/alertify.default.css" > />
-        <script src="resources/js/jquery.twbsPagination.js" type="text/javascript" >></script>
+        <script src="resources/js/jquery.twbsPagination.js" type="text/javascript" ></script>
         <script src="resources/js/validate.js" type="text/javascript"></script>
         <script src="resources/js/style.js" type="text/javascript"></script>
         <!--<script src="resources/js/tabPanel.js" type="text/javascript" > ></script>-->
           
         
-
+        <link rel="stylesheet" href="resources/bootstrap/css/bootstrap-select.min.css" >
+        <script src="resources/bootstrap/js/bootstrap-select.min.js"></script>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -143,7 +143,7 @@
                     </li>
                     </li>
                     <li>
-                        <a href="javascript:;" data-toggle="collapse" data-target="#ingresos">Ingresos<i class="fa fa-fw fa-caret-down"></i></a>
+                        <a href="javascript:;" data-toggle="collapse" data-target="#ingresos">Hospitalización<i class="fa fa-fw fa-caret-down"></i></a>
                         <ul id="ingresos" class="collapse">
                             <li>
                                 <a  data-url="ingresos/registroIngresos.jsp" data-title="Ingresos" href="#"><i class="fa fa-user fa-fw" aria-hidden="true"></i>&nbsp; Registrar</a>

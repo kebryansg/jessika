@@ -25,7 +25,10 @@ function registerComposeButtonEvent() {
     /* just for this demo */
     $("a[data-url]").click(function (e) {
         e.preventDefault();        
-        $("#contenido").load($(this).attr("data-url"));
+        $("#contenido").load($(this).attr("data-url"), function()
+        {
+            ini();
+        });
         $("#tituloPagina").text($(this).attr("data-title"));
         /*if (pestañaValida($(this))) {
             var tabId = "compose" + composeCount; //this is id on tab content div where the 
@@ -99,6 +102,33 @@ function getElement(selector) {
     var tabContentId = $currentTab.attr("href");
     return $("" + tabContentId).find("" + selector);
 
+}
+function ini()
+{
+     $('.form_date').datetimepicker({
+        format: "yyyy-mm-dd",
+        language: 'es',
+        weekStart: 1,
+        todayBtn: 1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        pickerPosition: "bottom-left",
+        minView: 2,
+        forceParse: 0
+    });
+    $('.form_time').datetimepicker({
+        language: 'es',
+        weekStart: 1,
+        //todayBtn: 1,
+        autoclose: 1,
+        //todayHighlight: 1,
+        startView: 1,
+        minView: 0,
+        maxView: 1,
+        forceParse: 0
+    });
+    $(".selectpicker").selectpicker().selectpicker("render");
 }
 
 
