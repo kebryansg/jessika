@@ -1,4 +1,4 @@
-    $('.form_date').datetimepicker({
+/*    $('.form_date').datetimepicker({
         format: "yyyy-mm-dd",
         language: 'es',
         weekStart: 1,
@@ -23,3 +23,4 @@
     });
     $(".selectpicker").selectpicker().selectpicker("render");
 
+*/
