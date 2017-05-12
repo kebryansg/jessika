@@ -48,7 +48,7 @@
                         </div>    
                         <hr/>
                         <!--Tabla-->
-                        <div style="width: 100%; height: 300px; overflow-y: scroll; overflow-x: hidden;">
+                        <div >
                             <div class="row" >
                                 <div class="col-xs-12">
                                     <div class="table-responsive" style="margin: 0 auto; text-align:left">

@@ -171,7 +171,7 @@ function cargarMedicos(pagina)
         }
         ultimo=indice;
         $("#tabMedicoEditar #paginacionMedico ul").append('<li id="adelante"><a href="#">&raquo;</a></li>');
-        $('#tabMedicoEditar #tablaMedico thead').append("<tr>\n\<th class='col-lg-1'>No.</th>\n\                                                <th>Cédula</th>\n\
+        $('#tabMedicoEditar #tablaMedico thead').append("<tr>\n\<th >No.</th>\n\                                                <th>Cédula</th>\n\
                                                <th class='col-lg-2'>Apellidos</th>\n\
                                                <th class='col-lg-2'>Nombres</th>\n\
                                                <th class='col-lg-2'>Domicilio</th>\n\
@@ -181,11 +181,11 @@ function cargarMedicos(pagina)
                                                <th>Teléf. Movil</th>\n\
                                                <th style='display:none;' class='col-lg-3'>Email</th>\n\
                                                <th style='display:none;'>Estado</th>\n\
-                                               <th class='col-lg-1'>Acci&oacute;n</th>");
+                                               <th >Acci&oacute;n</th>");
         for(i=0;i <resultado.length; i++)
         {
             $('#tabMedicoEditar #tablaMedico').append("<tr>\n\
-                                               <td style='width: 1%' >"+resultado[i].id+"</td>\n\
+                                               <td>"+resultado[i].id+"</td>\n\
                                                <td>"+resultado[i].cedula+"</td>\n\
                                                <td>"+resultado[i].apellidos1+ ' '+resultado[i].apellidos2+"</td>\n\
                                                <td>"+resultado[i].nombre1+" "+resultado[i].nombre2+"</td>\n\
@@ -196,7 +196,7 @@ function cargarMedicos(pagina)
                                                <td>"+resultado[i].telefonoMovil+"</td>\n\
                                                <td style='display:none;'>"+resultado[i].email+"</td>\n\
                                                <td style='display:none;'>"+resultado[i].visible+"</td>  \n\
-                                               <td style='width: 10%' >     \n\
+                                               <td >     \n\
                                                     <button id='botonEditar' class='btn btn-primary'><span class='glyphicon glyphicon-pencil'></span> </button> \n\
                                                     <button id='btnEliminar' class='btn btn-danger'><span class='glyphicon glyphicon-trash'></span></a></button>\n\
                                                     </td>\n\

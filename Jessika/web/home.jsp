@@ -166,9 +166,9 @@
                 </div>
                 <div class="row">
                     <div class="col-sm-12">                        
-                        <div class="panel panel-primary">
+                        <div class="panel panel-default">
                             <div class="panel-heading">
-                                <h3 class="panel-title">Titulo del panel</h3>
+                                <h3 class="panel-title">Titulo del panel (Colores por definir)</h3>
                             </div>
                             <div id="contenido" class="panel-body">
                                 Contenido del panel
