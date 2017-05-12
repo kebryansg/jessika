@@ -17,6 +17,7 @@
 
     <!-- Custom CSS -->
     <link href="resources/bootstrap/css/sb-admin.css" rel="stylesheet">
+    <link href="resources/css/style_home.css" rel="stylesheet" type="text/css"/>
     <!-- Custom Fonts -->
     <link href="resources/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     
@@ -49,6 +50,7 @@
         <script src="resources/js/validate.js" type="text/javascript"></script>
         <script src="resources/js/style.js" type="text/javascript"></script>
         <!--<script src="resources/js/tabPanel.js" type="text/javascript" > ></script>-->
+          
         
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -171,7 +173,7 @@
                                 <h3 class="panel-title">Titulo del panel (Colores por definir)</h3>
                             </div>
                             <div id="contenido" class="panel-body">
-                                Contenido del panel
+                                <%@include file="paciente/paciente.jsp" %>
                             </div>
                         </div>
                     </div>
@@ -191,7 +193,7 @@
     </div>
     <!-- /#wrapper -->
 
-<script src="resources/js/configuracionInicial.js" type="text/javascript" ></script>   
+
 </body>
 <script type="text/javascript">
     $(document).ready(function() {

@@ -147,8 +147,6 @@ function list_filter() {
         $pagination.twbsPagination(defaultOpts);
     }
 
-
-
 }
 
 function edit(id) {
@@ -162,7 +160,7 @@ function edit(id) {
         },
         success: function (response) {
             var ob = $.parseJSON(response);
-            $("#editP" + ob.paciente.id + " #optionPaciente").attr("data-id", ob.paciente.id);
+            $("#optionPaciente").attr("data-id", ob.paciente.id);
             asignarPaciente(ob.paciente);
             addAntecedentes(ob.list, ob.paciente.id);
             if (!ob.paciente.sexo) {
@@ -278,15 +276,15 @@ function newAntecedentes(id) {
 
 function addAntecedentes(list, id) {
     $.each(list, function (index, item) {
-        $("#editP" + id + " input[antecedentes][dEnfermedad='" + item.idEnfermedad.id + "'][dParient='" + item.idPariente.id + "']").attr("data-id", item.id);
-        $("#editP" + id + " input[antecedentes][dEnfermedad='" + item.idEnfermedad.id + "'][dParient='" + item.idPariente.id + "']").prop("checked", true);
+        $("input[antecedentes][dEnfermedad='" + item.idEnfermedad.id + "'][dParient='" + item.idPariente.id + "']").attr("data-id", item.id);
+        $("input[antecedentes][dEnfermedad='" + item.idEnfermedad.id + "'][dParient='" + item.idPariente.id + "']").prop("checked", true);
     });
 }
 
 function editAntecedentes(id) {
 // Retorna los antecedentes que han sido editados
     var ids = [];
-    $.each($("#editP" + id + " input[antecedentes][data-id!='0']"), function (index, cbk) {
+    $.each($("input[antecedentes][data-id!='0']"), function (index, cbk) {
         if (!$(cbk).prop("checked")) {
             ids.push($(cbk).attr("data-id"));
         }
@@ -295,47 +293,47 @@ function editAntecedentes(id) {
 }
 
 function asignarObstetrico(obs, id) {
-    $("#editP" + id + " #tabObstetricia").attr("data-id", obs.id);
-    $("#editP" + id + " #pac_FPP").val(obs.fpp);
-    $("#editP" + id + " #pac_Gestacion").val(obs.gestas);
-    $("#editP" + id + " #pac_Abortos").val(obs.abortos);
-    $("#editP" + id + " #pac_Partos").val(obs.partos);
-    $("#editP" + id + " #pac_Cesareas").val(obs.cesareas);
-    $("#editP" + id + " #pac_NacidoVivo").val(obs.nacidosVivos);
-    $("#editP" + id + " #pac_NacidoMuerto").val(obs.nacidosMuertos);
-    $("#editP" + id + " #pac_HijosVivos").val(obs.hijosVivos);
-    $("#editP" + id + " #pac_HijosMuertos").val(obs.muertos);
+    $("#tabObstetricia").attr("data-id", obs.id);
+    $("#pac_FPP").val(obs.fpp);
+    $("#pac_Gestacion").val(obs.gestas);
+    $("#pac_Abortos").val(obs.abortos);
+    $("#pac_Partos").val(obs.partos);
+    $("#pac_Cesareas").val(obs.cesareas);
+    $("#pac_NacidoVivo").val(obs.nacidosVivos);
+    $("#pac_NacidoMuerto").val(obs.nacidosMuertos);
+    $("#pac_HijosVivos").val(obs.hijosVivos);
+    $("#pac_HijosMuertos").val(obs.muertos);
 }
 
 function asignarPaciente(paciente) {
-    $("#editP" + paciente.id + " #savePaciente").attr("data-id", paciente.id);
-    $("#editP" + paciente.id + " #pac_Cedula").val(paciente.cedula);
-    $("#editP" + paciente.id + " #pac_primerNombre").val(paciente.nombre1);
-    $("#editP" + paciente.id + " #pac_segundoNombre").val(paciente.nombre2);
-    $("#editP" + paciente.id + " #pac_primerApellido").val(paciente.apellido1);
-    $("#editP" + paciente.id + " #pac_segundoApellido").val(paciente.apellido2);
-    $("#editP" + paciente.id + " #pac_FechaNac").val(paciente.fechaNacimiento);
-    $("#editP" + paciente.id + " #pac_imagen").attr("src", paciente.imagen);
-    $("#editP" + paciente.id + " #pac_imagen").attr("edit", paciente.imagen);
-    $("#editP" + paciente.id + " #pac_TelCasa").val(paciente.telefonoDomicilio);
-    $("#editP" + paciente.id + " #pac_Email").val(paciente.email);
-    $("#editP" + paciente.id + " #pac_TelOficina").val(paciente.telefonoOficina);
-    $("#editP" + paciente.id + " #pac_PaisNac").val(paciente.paisNacimiento);
-    $("#editP" + paciente.id + " #pac_LugarNac").val(paciente.lugarNacimiento);
-    $("#editP" + paciente.id + " #pac_Domicilio").val(paciente.domicilio);
-    $("#editP" + paciente.id + " #pac_Ciudad").val(paciente.ciudad);
-    $("#editP" + paciente.id + " #pac_nombreContacto").val(paciente.nombreContacto);
-    $("#editP" + paciente.id + " #pac_movilContacto").val(paciente.movilContacto);
-    $("#editP" + paciente.id + " #cboParentezco").selectpicker("val", paciente.parentezco);
+    $("#savePaciente").attr("data-id", paciente.id);
+    $("#pac_Cedula").val(paciente.cedula);
+    $("#pac_primerNombre").val(paciente.nombre1);
+    $("#pac_segundoNombre").val(paciente.nombre2);
+    $("#pac_primerApellido").val(paciente.apellido1);
+    $("#pac_segundoApellido").val(paciente.apellido2);
+    $("#pac_FechaNac").val(paciente.fechaNacimiento);
+    $("#pac_imagen").attr("src", paciente.imagen);
+    $("#pac_imagen").attr("edit", paciente.imagen);
+    $("#pac_TelCasa").val(paciente.telefonoDomicilio);
+    $("#pac_Email").val(paciente.email);
+    $("#pac_TelOficina").val(paciente.telefonoOficina);
+    $("#pac_PaisNac").val(paciente.paisNacimiento);
+    $("#pac_LugarNac").val(paciente.lugarNacimiento);
+    $("#pac_Domicilio").val(paciente.domicilio);
+    $("#pac_Ciudad").val(paciente.ciudad);
+    $("#pac_nombreContacto").val(paciente.nombreContacto);
+    $("#pac_movilContacto").val(paciente.movilContacto);
+    $("#cboParentezco").selectpicker("val", paciente.parentezco);
     var discapacidad = paciente.discapacidad === 1 ? true : false;
-    $("#editP" + paciente.id + " #pac_Discapacidad").attr("checked", discapacidad);
+    $("#pac_Discapacidad").attr("checked", discapacidad);
     //Select
-    $('#editP' + paciente.id + ' #pac_nacionalidad > option[value="' + paciente.nacionalidad + '"]').attr('selected', true);
-    $('#editP' + paciente.id + ' #pac_Etnia > option[value="' + paciente.etnia + '"]').attr('selected', true);
-    $('#editP' + paciente.id + ' #pac_EstadoCivil > option[value="' + paciente.estadoCivil + '"]').attr('selected', true);
+    $('#pac_nacionalidad > option[value="' + paciente.nacionalidad + '"]').attr('selected', true);
+    $('#pac_Etnia > option[value="' + paciente.etnia + '"]').attr('selected', true);
+    $('#pac_EstadoCivil > option[value="' + paciente.estadoCivil + '"]').attr('selected', true);
     var sexo = paciente.sexo === true ? "1" : "2";
-    $('#editP' + paciente.id + ' #pac_Genero > option[value="' + sexo + '"]').attr('selected', true);
-    change_Genero($('#editP' + paciente.id + ' #pac_Genero'));
+    $('#pac_Genero > option[value="' + sexo + '"]').attr('selected', true);
+    change_Genero($('#pac_Genero'));
     /* Carga y asigna provincia,canton y parroquia */
     $.ajax({
         type: 'POST',
@@ -347,13 +345,13 @@ function asignarPaciente(paciente) {
         },
         success: function (response) {
             var det = $.parseJSON(response);
-            $('#editP' + paciente.id + ' #cboProvincia').selectpicker('val', det.provincia);
+            $('#cboProvincia').selectpicker('val', det.provincia);
             //$('#cboProvincia > option[value="' + det.provincia + '"]').attr('selected', true);
-            change_cboProvincia($('#editP' + paciente.id + ' #cboProvincia'));
-            $('#editP' + paciente.id + ' #cboCanton').selectpicker('val', det.canton);
+            change_cboProvincia($('#cboProvincia'));
+            $('#cboCanton').selectpicker('val', det.canton);
             //$('#cboCanton > option[value="' + det.canton + '"]').attr('selected', true);
-            change_cboCanton($('#editP' + paciente.id + ' #cboCanton'));
-            $('#editP' + paciente.id + ' #cboParroquia').selectpicker('val', paciente.idParroquia.id);
+            change_cboCanton($('#cboCanton'));
+            $('#cboParroquia').selectpicker('val', paciente.idParroquia.id);
             //$('#cboParroquia > option[value="' + paciente.idParroquia.id + '"]').attr('selected', true);
         }
     });

@@ -1,4 +1,5 @@
-$(function () {
+$(function () { 
+    
     $("#contenido").on("changed.bs.select", "#cboProvincia", function (e) {
         change_cboProvincia(this);
     });
