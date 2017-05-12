@@ -99,7 +99,7 @@ function indexPag(pag, totalList, txt_filter) {
         },
         success: function (response) {
             var obj = $.parseJSON(response);
-            var tablePaciente = $(pestañaGlobal()).find("#tablePaciente");
+            var tablePaciente = $("#tablePaciente");
             $(tablePaciente).html(obj.list);
             if($(tablePaciente).attr("modal") === "1"){
                 td_tr_seleccionar(tablePaciente);
@@ -111,9 +111,9 @@ function indexPag(pag, totalList, txt_filter) {
 
 function list_filter() {
 
-    var $pagination = $(pestañaGlobal()).find('#pagPacientes');
-    var txt_filter = $(pestañaGlobal()).find("#txt_filterPaciente").val();
-    var cantList = $(pestañaGlobal()).find("#cantList").val();
+    var $pagination = $('#pagPacientes');
+    var txt_filter = $("#txt_filterPaciente").val();
+    var cantList = $("#cantList").val();
     if (txt_filter === "") {
         indexPag(1, cantList, txt_filter);
         $pagination.twbsPagination('destroy');
