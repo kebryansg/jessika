@@ -32,7 +32,7 @@
         <link href="resources/js-ui/jquery-ui.css" rel="stylesheet"/>
         <link href="resources/font-awesome/css/font-awesome.min.css" rel="stylesheet">
 
-        <link href="resources/css/style_home.css" rel="stylesheet" type="text/css"/>
+        
 
         <script src="resources/js/jquery.min.js" type="text/javascript" ></script>
         <script src="resources/bootstrap/js/bootstrap.min.js" type="text/javascript"  ></script>
@@ -167,20 +167,26 @@
             <div class="container-fluid">
 
                 <!-- Page Heading -->
+                <div class="alert alert-info">
+                    <strong>Titulo de la pagina</strong> 
+                </div>
                 <div class="row">
-                    <div class="col-lg-12">
-                        <h1 class="page-header" id="tituloPagina">
-                            
-                        </h1>                       
+                    <div class="col-sm-12">                        
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Titulo del panel</h3>
+                            </div>
+                            <div id="contenido" class="panel-body">
+                                Contenido del panel
+                            </div>
+                        </div>
                     </div>
+                    <!-- /.col-sm-4 -->
+                    
                 </div>
                 <!-- /.row -->
                 
-                <!--contenido-->
-                <div class="row" id="contenido">
-                    <div class="col-lg-12">                        
-                    </div>                    
-                </div>
+                
                 <!-- / contenido -->            
             </div>
             <!-- /.container-fluid -->

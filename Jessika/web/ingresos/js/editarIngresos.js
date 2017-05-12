@@ -101,7 +101,7 @@ function cargarIngresos()
                                                         <td>"+resultado[i].fechaSalida+"</td>\n\
                                                         <td style='display:none;'>"+resultado[i].hora+"</td>\n\
                                                         <td style='display:none;'>"+resultado[i].condicionEgreso+"</td>\n\
-                                                        <td data-toggle='tooltip' data-placement='left' title='"+resultado[i].definitivoEgreso+"'>"+res+"</td>\n\
+                                                        <td class='tooltips' data-toggle='tooltip' data-placement='left' title='"+resultado[i].definitivoEgreso+"'>"+res+"</td>\n\
                                                         <td style='display:none;'>"+resultado[i].secundarioEgreso+"</td>\n\
                                                         <td style='display:none;'>"+resultado[i].secundarioEgreso2+"</td>\n\
                                                         <td style='display:none;'>"+resultado[i].causaExterna+"</td>\n\

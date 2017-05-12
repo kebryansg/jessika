@@ -180,5 +180,6 @@ a[data-toggle="collapse"]{
     display: flex;
     flex-flow: column nowrap;
     justify-content: space-around;
+    
 }
 /* Page Paciente */
