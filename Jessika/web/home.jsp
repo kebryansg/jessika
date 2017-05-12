@@ -1,9 +1,3 @@
-<%-- 
-    Document   : home
-    Created on : 11-may-2017, 8:38:10
-    Author     : Deivi
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -54,8 +48,8 @@
         <script src="resources/js/jquery.twbsPagination.js" type="text/javascript" >></script>
         <script src="resources/js/validate.js" type="text/javascript"></script>
         <script src="resources/js/style.js" type="text/javascript"></script>
-        <script src="resources/js/tabPanel.js" type="text/javascript" > ></script>
-        <script src="resources/js/configuracionInicial.js" type="text/javascript" ></script>
+        <!--<script src="resources/js/tabPanel.js" type="text/javascript" > ></script>-->
+        
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -197,7 +191,7 @@
     </div>
     <!-- /#wrapper -->
 
-   
+<script src="resources/js/configuracionInicial.js" type="text/javascript" ></script>   
 </body>
 <script type="text/javascript">
     $(document).ready(function() {
