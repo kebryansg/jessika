@@ -4,20 +4,17 @@ function limpiarDivPaciente() {
     $("#con_nombrePaciente").val("");
     $("#con_ciudadPaciente").val("");
 }
+
 $(document).ready(function () {
-    $("#pac_Buscar").click(function () {
+    $("#contenido").on("click","#pac_Buscar",function (e) {
         $("#ListPaciente .modal-body").load("paciente/listPacientes.jsp", function () {
-            ini();
-            var tablePaciente = $(pestañaGlobal()).find("#tablePaciente");
+            var tablePaciente = $("#tablePaciente");
             $(tablePaciente).attr("modal", "1");
             $.getScript("paciente/js/paciente.js", function () {
                 td_tr_seleccionar(tablePaciente);
             });
-
         });
-        //$(pestañaGlobal()).find("#tablePaciente").attr("data-modal","1");
         openModal("ListPaciente");
-
     });
     $("#pac_Cargar").click(function () {
         limpiarDivPaciente();

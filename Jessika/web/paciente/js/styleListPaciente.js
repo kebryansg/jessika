@@ -1,22 +1,35 @@
-$("#ContentAdm").on("change", "#cantList", function () {
+$(function () {
     $.getScript("paciente/js/paciente.js", function () {
-        list_filter();
-    });
-});
-$("#ContentAdm").on("keyup", "#txt_filterPaciente", function () {
-    $.getScript("paciente/js/paciente.js", function () {
-        list_filter();
-    });
-});
-$("#ContentAdm").on("click", "#tablePaciente button[name='deletPaciente']", function () {
 
-    var id = $(this).attr("data-id");
-    $.getScript("paciente/js/paciente.js", function () {
-        deletPaciente(id);
-        list_filter();
+        indexPag(1, 5, "");
     });
+
+    $("#contenido").on("change", "#cantList", function () {
+        $.getScript("paciente/js/paciente.js", function () {
+            list_filter();
+        });
+    });
+    $("#contenido").on("keyup", "#txt_filterPaciente", function () {
+        $.getScript("paciente/js/paciente.js", function () {
+            list_filter();
+        });
+    });
+    $("#contenido").on("click", "#tablePaciente button[name='deletPaciente']", function () {
+
+        var id = $(this).attr("data-id");
+        $.getScript("paciente/js/paciente.js", function () {
+            deletPaciente(id);
+            list_filter();
+        });
+    });
+
+
+
 });
-$("#ContentAdm").on("click", "#tablePaciente button[name='SeleccionarPaciente']", function () {
+
+
+
+$("#contenido").on("click", "#tablePaciente button[name='SeleccionarPaciente']", function () {
     var tr = $(this).closest("tr");
     var tds = $(tr).find("td");
     $("#con_historiaPaciente").val($(tds).eq(0).html());
@@ -26,7 +39,7 @@ $("#ContentAdm").on("click", "#tablePaciente button[name='SeleccionarPaciente']"
     closeModal("ListPaciente");
 });
 
-$("#ContentAdm").on("click", "#tablePaciente button[name='editPaciente']", function () {
+$("#contenido").on("click", "#tablePaciente button[name='editPaciente']", function () {
     var title = "Modificar Paciente";
     var id = $(this).attr("data-id");
     if ($('#editP' + id).length === 0) {

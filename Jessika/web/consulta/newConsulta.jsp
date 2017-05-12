@@ -161,4 +161,4 @@
     </div>
 </div>
 <script src="consulta/js/styleConsulta.js" type="text/javascript"></script>
-<script src="resources/js/configuracionInicial.js" type="text/javascript" ></script>
+<!--<script src="resources/js/configuracionInicial.js" type="text/javascript" ></script>-->

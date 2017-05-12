@@ -1,9 +1,3 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
     $('.form_date').datetimepicker({
         format: "yyyy-mm-dd",
         language: 'es',
@@ -28,7 +22,4 @@
         forceParse: 0
     });
     $(".selectpicker").selectpicker().selectpicker("render");
-
-
-
 
