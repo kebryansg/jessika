@@ -5,8 +5,9 @@ function limpiarDivPaciente() {
     $("#con_ciudadPaciente").val("");
 }
 
-$(document).ready(function () {
 
+$(document).ready(function () {
+    
     $("#contenido").on("click", "#tablePaciente button[name='SeleccionarPaciente']", function () {
         var tr = $(this).closest("tr");
         var tds = $(tr).find("td");

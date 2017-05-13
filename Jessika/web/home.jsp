@@ -173,6 +173,7 @@
                                 <h3 class="panel-title">Titulo del panel (Colores por definir)</h3>
                             </div>
                             <div id="contenido" class="panel-body">
+                                <%@include file="consulta/estudiosLab.jsp" %>
                             </div>
                         </div>
                     </div>

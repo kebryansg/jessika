@@ -160,5 +160,29 @@
         </div>
     </div>
 </div>
+                        
+<div class="modal fade" id="estLab" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Estudios de Laboratorio</h4>
+            </div>
+            <div class="modal-body">
+
+            </div>
+            <!--<div class="modal-footer">
+
+                <button id="btnActualizar" type="button"  class="btn btn-primary">Guardar</button>
+            </div>-->
+        </div>
+    </div>
+</div>                        
+                        
+                        
 <script src="consulta/js/styleConsulta.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+    //openModal("estLab");
+</script>
 <!--<script src="resources/js/configuracionInicial.js" type="text/javascript" ></script>-->

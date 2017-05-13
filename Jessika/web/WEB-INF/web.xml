@@ -28,6 +28,10 @@
         <servlet-name>sConsulta</servlet-name>
         <servlet-class>mvc.servlet.sConsulta</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>sEstudioLab</servlet-name>
+        <servlet-class>mvc.servlet.sEstudioLab</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>pruebaCombo</servlet-name>
         <url-pattern>/pruebaCombo</url-pattern>
@@ -55,6 +59,10 @@
     <servlet-mapping>
         <servlet-name>sConsulta</servlet-name>
         <url-pattern>/sConsulta</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>sEstudioLab</servlet-name>
+        <url-pattern>/sEstudioLab</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
