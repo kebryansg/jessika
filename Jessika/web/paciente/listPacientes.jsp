@@ -35,7 +35,7 @@
                                 <td>Apellidos y Nombres</td>
                                 <td>Ciudad</td>
                                 <td>Domicilio</td>
-                                <td style="width: 10%;">Acciòn</td>
+                                <td style="width: 15%;">Acciòn</td>
                             </tr>
                         </thead>
                         <tbody id="tablePaciente"></tbody>
@@ -55,12 +55,30 @@
     </div>
 
 </div>
+<div class="modal fade" id="editPaciente" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Editar paciente</h4>
+            </div>
+            <div class="modal-body">
+
+            </div>
+            <!--<div class="modal-footer">
+
+                <button id="btnActualizar" type="button"  class="btn btn-primary">Guardar</button>
+            </div>-->
+        </div>
+    </div>
+</div>
+<script src="resources/js/configuracionInicial.js" type="text/javascript" ></script> 
 <script src="paciente/js/styleListPaciente.js" type="text/javascript"></script>-
-<!--<script src="resources/js/configuracionInicial.js" type="text/javascript" ></script>-->
+
 <script type="text/javascript">
     $(function () {
         /*$.getScript("paciente/js/paciente.js", function () {
-            indexPag(1,5,"");
-        });*/
+         indexPag(1,5,"");
+         });*/
     });
 </script>

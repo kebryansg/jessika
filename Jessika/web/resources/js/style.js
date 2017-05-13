@@ -5,9 +5,9 @@ $(function () {
         $("#cerrarMenu i").toggleClass("fa-chevron-circle-left");
         $("#cerrarMenu i").toggleClass("fa-chevron-circle-right");
     });
-    
+
     $("a[data-url]").click(function (e) {
-        e.preventDefault();        
+        e.preventDefault();
         $("#contenido").load($(this).attr("data-url"));
         $("#tituloPagina").text($(this).attr("data-title"));
     });
@@ -30,4 +30,7 @@ function openModal_Clean(id) {
 
 function closeModal(id) {
     $("#" + id).modal('toggle');
+
 }
+
+

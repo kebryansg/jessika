@@ -1,4 +1,5 @@
-$(function () {
+$(function () { 
+    
     $("#contenido").on("changed.bs.select", "#cboProvincia", function (e) {
         change_cboProvincia(this);
     });
@@ -53,6 +54,7 @@ $(function () {
             }
         });
     });
+    
     $("#contenido").on("click", "#cancelPaciente", function () {
         var id = pestañaActive();
 

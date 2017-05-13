@@ -16,7 +16,7 @@
             <div class="form-group col-md-2">
                 <input class="form-control solo-numero" maxlength="10" validate="date" id="txt_cargarPaciente" placeholder="Buscar (cedula)" type="text" >
             </div>
-            <div class="form-group col-md-3">
+            <div class="form-group col-md-4">
                 <button class="btn btn-info" id="pac_Cargar" >Cargar</button>    
                 <button class="btn btn-info" id="pac_Buscar" ><i class="glyphicon glyphicon-search"></i> Buscar Paciente</button>    
             </div>
