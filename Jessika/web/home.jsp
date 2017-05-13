@@ -161,9 +161,7 @@
             <div class="container-fluid">
 
                 <!-- Page Heading -->
-                <div class="alert alert-info">
-                    <strong>Titulo de la pagina</strong> 
-                </div>
+                
                 <div class="row">
                     <div class="col-sm-12">                        
                         <div class="panel panel-default">
