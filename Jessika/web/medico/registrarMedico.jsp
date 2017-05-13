@@ -48,42 +48,42 @@
                             <div class="form-group">
                                 <label for="inputUserName" class="control-label col-md-4">Cédula *</label>
                                 <div class="col-md-8">
-                                    <input  onblur="validarCedula()" type="text" class="form-control" validate="text" id="txtCedula" maxlength="10" id="inputUserName" placeholder="Cedula">
+                                    <input  onblur="validarCedula()" type="text" class="form-control" validate="text" id="txtCedula" tabindex="1"  maxlength="10" id="inputUserName" placeholder="Cedula">
                                 </div>
                             </div>   
                         
                         <div class="form-group">                                  
                             <label for="inputUserName" class="control-label col-md-4">Primer Nombre</label>
                             <div class="col-md-8">
-                                <input type="text" class="form-control" id="txtPrimerNombre" validate="text" placeholder="Primer nombre">                                    
+                                <input type="text" class="form-control" id="txtPrimerNombre" tabindex="3" validate="text" placeholder="Primer nombre">                                    
                             </div>
                         </div>
                         
                         <div class="form-group">                                  
                             <label for="inputUserName" class="control-label col-md-4">Primer Apellido</label>
                             <div class="col-md-8">
-                                <input type="text" class="form-control" id="txtPrimerApellido" validate="text" placeholder="Primer apellido">
+                                <input type="text" class="form-control" id="txtPrimerApellido" tabindex="5" validate="text" placeholder="Primer apellido">
                             </div>
                         </div>
                         
                         <div class="form-group">   
                             <label for="inputUserName" class="control-label col-md-4" >Ciudad</label>   
                             <div class="col-md-8">
-                                <input type="text" class="form-control" maxlength="10" validate="text" id="txtCiudad" placeholder="Ciudad">
+                                <input type="text" class="form-control" maxlength="10" validate="text" tabindex="7" id="txtCiudad" placeholder="Ciudad">
                             </div>
                         </div>
                         
                         <div class="form-group">
                                 <label for="inputUserName" class="control-label col-md-4">Teléf. Domicilio</label>
                                 <div class="col-md-8">
-                                    <input type="text" class="form-control" validate="text" maxlength="10" id="txtTelefonoDomicilio" placeholder="Teléf. Domicilio">
+                                    <input type="text" class="form-control" validate="text" tabindex="9" maxlength="10" id="txtTelefonoDomicilio" placeholder="Teléf. Domicilio">
                                 </div>
                         </div>
                     
                         <div class="form-group">
                             <label for="inputUserName" class="control-label col-md-4">Teléf. Movil</label>
                             <div class="col-md-8">
-                                <input type="text" class="form-control" validate="text" maxlength="10" id="txtTelefonoMovil" placeholder="Teléf. Movil">
+                                <input type="text" class="form-control" validate="text" tabindex="11" maxlength="10" id="txtTelefonoMovil" placeholder="Teléf. Movil">
                             </div>
                         </div>
                     
@@ -97,7 +97,7 @@
                        <div class="form-group">
                             <label for="inputUserName" class="control-label col-md-4">Especialidad</label>
                             <div class="col-md-8">
-                                <select class="selectpicker" validate="select" data-live-search="true" id="cboEspecialidad" data-width="100%" multiple >
+                                <select class="selectpicker" validate="select" tabindex="2" data-live-search="true" id="cboEspecialidad" data-width="100%" multiple >
                                 <%
                                     EspecialidadDao esp = new EspecialidadDaoImp();
                                     List<Especialidad> list = esp.list();
@@ -111,35 +111,35 @@
                          <div class="form-group">
                             <label for="inputUserName" class="control-label col-md-4">Segundo Nombre</label>
                             <div class="col-md-8">
-                                <input type="text" class="form-control" validate="text" id="txtSegundoNombre" placeholder="Segundo nombre">
+                                <input type="text" class="form-control" tabindex="4" validate="text" id="txtSegundoNombre" placeholder="Segundo nombre">
                             </div>
                         </div>
                         
                         <div class="form-group">
                             <label for="inputUserName" class="control-label col-md-4">Segundo Apellido</label>
                             <div class="col-md-8">
-                                <input type="text" class="form-control" validate="text"  id="txtSegundoApellido" placeholder="Segundo apellido">
+                                <input type="text" class="form-control" validate="text" tabindex="6" id="txtSegundoApellido" placeholder="Segundo apellido">
                             </div>
                         </div>
                                 
                         <div class="form-group">
                             <label for="inputUserName" class="control-label col-md-4">Domicilio</label>
                             <div class="col-md-8">
-                                <input type="text" class="form-control" validate="text"  id="txtDomicilio" placeholder="Domicilio">
+                                <input type="text" class="form-control" validate="text" tabindex="8" id="txtDomicilio" placeholder="Domicilio">
                             </div>
                         </div>
                                 
                         <div class="form-group">
                             <label for="inputUserName" class="control-label col-md-4">Teléf. Oficina</label>
                             <div class="col-md-8">
-                                <input type="text" class="form-control" validate="text"  maxlength="10" id="txtTelefonoOficina" placeholder="Teléf. Oficina">
+                                <input type="text" class="form-control" validate="text" tabindex="10" maxlength="10" id="txtTelefonoOficina" placeholder="Teléf. Oficina">
                             </div>
                         </div>   
                         
                         <div class="form-group">
                             <label for="inputUserName" class="control-label col-md-4">Email</label>
                             <div class="col-md-8">
-                                <input type="email" class="form-control" maxlength="50" validate="email" id="txtEmail" placeholder="E-mail">
+                                <input type="email" class="form-control" maxlength="50" validate="email" tabindex="12" id="txtEmail" placeholder="E-mail">
                             </div>
                         </div>  
                                 

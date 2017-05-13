@@ -37,11 +37,11 @@
                             <div class="col-md-4">
                                 <input type="text" class="form-control" id="txtCedula" placeholder="Cédula">
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-8">
                                 <div class="col-md-4">
                                     <button id="btnCargar" type="button" class="btn btn-primary">Cargar</button>   
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <button id="btnBuscar"  type="button" class="btn btn-primary">Buscar</button>   
                                 </div>
                             </div>
@@ -91,7 +91,7 @@
                 </div>
                 <div class="row">
                     <div class="form-group col-xs-3">
-                        <div class="col-md-10">
+                        <div class="col-md-12">
                             <label class="col-md-12" for="dtpFechaIngreso">F. Ingreso</label>
                             <div class="col-md-12">
                             <div class="input-group date form_date" data-date="" data-date-format="yyyy-mm-dd">
@@ -103,7 +103,7 @@
                         </div>
                     </div>
                     <div class="form-group col-xs-3">
-                        <div class="col-md-10">
+                        <div class="col-md-12">
                             <label class="col-md-12" for="dtpFechaEgreso">F. Egreso</label>
                             <div class="col-md-12">
                                 <div class="input-group date form_date" data-date="" data-date-format="yyyy-mm-dd">
@@ -116,7 +116,7 @@
                     </div>
 
                     <div class="form-group col-xs-3">
-                        <div class="col-md-10">
+                        <div class="col-md-12">
                             <label class="col-md-12" for="dtpHoraIngreso">Hora Ingreso</label>
                             <div class="col-md-12">
                                 <div class="input-group date form_time" data-date="" data-date-format="hh:ii" data-link-format="hh:ii">
@@ -131,7 +131,7 @@
                     </div>
 
                     <div class="form-group col-xs-3">
-                        <div class="col-md-10">
+                        <div class="col-md-12">
                             <label class="col-md-12" for="dtpHoraIngreso">Código CIE - 10 </label>
                             <div class="col-md-12">
                                 <div class='input-group date' id='dtpHoraIngreso'>
@@ -167,7 +167,7 @@
                         <div class="col-md-12">
                             <label class="col-md-12" for="txtSecundarioEgreso2">2. Secundarios de Egreso</label>
                             <div class="col-md-12">
-                                <textarea id="txtSecundarioEgreso2" rows="3" class="form-control" placeholder=""></textarea>
+                                <textarea id="txtSecundarioEgreso2" rows="2" class="form-control" placeholder=""></textarea>
                             </div>
                         </div>
                     </div>
@@ -176,7 +176,7 @@
                         <div class="col-md-12">
                             <label class="col-md-12" for="txtCausaExterna">Causa Externa</label>
                             <div class="col-md-12">
-                                <textarea id="txtCausaExterna" rows="3" class="form-control" placeholder=""></textarea>
+                                <textarea id="txtCausaExterna" rows="2" class="form-control" placeholder=""></textarea>
                             </div>
                         </div>
                     </div>

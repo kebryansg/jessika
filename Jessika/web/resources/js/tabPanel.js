@@ -113,7 +113,7 @@ function ini()
         autoclose: 1,
         todayHighlight: 1,
         startView: 2,
-        pickerPosition: "top-right",
+        pickerPosition: "bottom-left",
         minView: 2,
         forceParse: 0
     });

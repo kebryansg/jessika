@@ -86,6 +86,7 @@ function validarSelect(value)
 function validarCedula()
     {
        
+       if($("#txtCedula").val()!=="" )
          $.ajax({
             type: 'Post',
             url: 'sMedico',

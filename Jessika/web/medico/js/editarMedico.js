@@ -21,6 +21,7 @@ var filas=5;
 $("#tabMedicoEditar #txtBuscar").text("");
 $("#tabMedicoEditar #cboMostrar").val(5);     
 cargarMedicos(1);
+
 function validar(id) {
     var email = $("#tabMedicoEditar input[validate='email']");
     $(email).blur(function(){
@@ -151,7 +152,7 @@ function cargarMedicos(pagina)
         bandera:buscar,
         buscar:$("#tabMedicoEditar #txtBuscar").val()
     }, function(data) {   
-        
+         
         $('#tabMedicoEditar #tablaMedico tr').remove();
         $('#tabMedicoEditar #paginacionMedico').find('li').remove();
         var resultado = JSON && JSON.parse(data) || $.parseJSON(data); 
@@ -278,12 +279,14 @@ $("#tabMedicoEditar #tablaMedico").on("click", "#botonEditar", function(){
      $.each($("#tabMedicoEditar select[validate='select']"), function (index, value) {
          remover(value) ;
      });
+     $('#btnActualizar').prop('disabled', false);
     $("#tabMedicoEditar .help-block").remove();
     var id='modalEditarMedico';
     $("#"+id).modal('show');
 });
 $('#tabMedicoEditar #btnActualizar').click(function(event) {
     if (validar(1)) {
+         $('#btnActualizar').prop('disabled', true);
         $.post('sMedico', {
             cedula : $('#txtCedulaModal').val(),
             primerNombre: $('#txtPrimerNombreModal').val(),
