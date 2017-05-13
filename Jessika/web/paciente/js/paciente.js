@@ -75,6 +75,7 @@ function list() {
         }
     });
 }
+
 function td_tr_seleccionar(tbody) {
     $.each($(tbody).find("tr"), function (index, tr) {
         var id = $(tr).attr("data-id");
@@ -85,7 +86,6 @@ function td_tr_seleccionar(tbody) {
 }
 
 function indexPag(pag, totalList, txt_filter) {
-    
     var cantList = totalList;
     $.ajax({
         url: 'sPaciente',
@@ -101,16 +101,18 @@ function indexPag(pag, totalList, txt_filter) {
             var obj = $.parseJSON(response);
             var tablePaciente = $("#tablePaciente");
             $(tablePaciente).html(obj.list);
-            if($(tablePaciente).attr("modal") === "1"){
+            if ($(tablePaciente).attr("modal") === "1") {
+
                 td_tr_seleccionar(tablePaciente);
             }
-            
+
         }
     });
 }
 
 function list_filter() {
-
+    var tablePaciente = $("#tablePaciente");
+    $(tablePaciente).html("");
     var $pagination = $('#pagPacientes');
     var txt_filter = $("#txt_filterPaciente").val();
     var cantList = $("#cantList").val();
@@ -188,7 +190,7 @@ function editSave(id) {
             },
             success: function (response) {
                 alertify.success("Paciente Modificado");
-                $(getCurrentTab()).find(".closeTab").click();
+                closeModal("editPaciente");
             }
         });
     } else {
@@ -198,7 +200,6 @@ function editSave(id) {
 
 function save() {
     if (validarPaciente(0)) {
-//if (true) {
         var newA = newAntecedentes(0);
         $.ajax({
             url: 'sPaciente',
@@ -358,7 +359,7 @@ function asignarPaciente(paciente) {
 }
 
 function limpiarPaciente() {
-    $($(getCurrentTab()).attr("href")).load("paciente/paciente.jsp", function () {
-        ini();
+    $("#contenido").load("paciente/paciente.jsp", function () {
+        
     });
 }

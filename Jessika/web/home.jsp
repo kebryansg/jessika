@@ -173,7 +173,6 @@
                                 <h3 class="panel-title">Titulo del panel (Colores por definir)</h3>
                             </div>
                             <div id="contenido" class="panel-body">
-                                <%@include file="paciente/paciente.jsp" %>
                             </div>
                         </div>
                     </div>
@@ -195,12 +194,4 @@
 
 
 </body>
-<script type="text/javascript">
-    $(document).ready(function() {
-        $("#boton").click(function(event) {
-            
-            $("#contenido").load('/Jessika/paciente/paciente.jsp');
-        });
-    });
-		</script>
 </html>

@@ -54,6 +54,7 @@ $(function () {
             }
         });
     });
+    
     $("#contenido").on("click", "#cancelPaciente", function () {
         var id = pestañaActive();
 

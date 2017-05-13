@@ -35,7 +35,7 @@
                                 <td>Apellidos y Nombres</td>
                                 <td>Ciudad</td>
                                 <td>Domicilio</td>
-                                <td style="width: 10%;">Acciòn</td>
+                                <td style="width: 15%;">Acciòn</td>
                             </tr>
                         </thead>
                         <tbody id="tablePaciente"></tbody>

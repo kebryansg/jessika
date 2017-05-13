@@ -252,7 +252,7 @@
                                         <div class="form-group">
                                             <label class="control-label col-md-3">Parentezco</label>
                                             <div class="col-md-8">
-                                                <select class="selectpicker" validate="select" data-live-search="true" id="cboParentezco">
+                                                <select class="selectpicker" data-live-search="true" id="cboParentezco">
                                                     <option value="0">Seleccione</option>
                                                     <option value="1">Padre</option>
                                                     <option value="2">Madre</option>

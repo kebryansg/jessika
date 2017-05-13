@@ -10,7 +10,7 @@ $(function () {
         });
     });
     $("#contenido").on("keyup", "#txt_filterPaciente", function () {
-        $.getScript("paciente/js/paciente.js", function () {
+            $.getScript("paciente/js/paciente.js", function () {
             list_filter();
         });
     });
@@ -22,25 +22,18 @@ $(function () {
             list_filter();
         });
     });
+    
+    $("#editPaciente").on("hidden.bs.modal", function () {
+        alert();
+        $("#editPaciente .modal-body").html("");
+    });
 
 
 
 });
 
-
-
-$("#contenido").on("click", "#tablePaciente button[name='SeleccionarPaciente']", function () {
-    var tr = $(this).closest("tr");
-    var tds = $(tr).find("td");
-    $("#con_historiaPaciente").val($(tds).eq(0).html());
-    $("#con_cedulaPaciente").val($(tds).eq(1).html());
-    $("#con_nombrePaciente").val($(tds).eq(2).html());
-    $("#con_ciudadPaciente").val($(tds).eq(3).html());
-    closeModal("ListPaciente");
-});
 
 $("#contenido").on("click", "#tablePaciente button[name='editPaciente']", function () {
-
     var id = $(this).attr("data-id");
     $('#editPaciente .modal-body').load("paciente/paciente.jsp", function () {
         $.getScript("paciente/js/paciente.js", function () {

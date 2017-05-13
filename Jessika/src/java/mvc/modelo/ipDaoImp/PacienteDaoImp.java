@@ -111,7 +111,7 @@ public class PacienteDaoImp implements PacienteDao {
         String sql = "";
         try {
             if (value.getId() == 0) {
-                sql = "INSERT INTO [dbo].[paciente]([cedula],[nombre1],[nombre2],[apellido1],[apellido2],[domicilio],[nacionalidad],[ciudad],[estadoCivil],[telefonoDomicilio],[telefonoOficina],[email],[sexo],[paisNacimiento],[lugarNacimiento],[fechaNacimiento],[etnia],[discapacidad],[idParroquia],[nombreContacto],[movilContacto],[parentezco])\n"
+                sql = "INSERT INTO [dbo].[paciente]([cedula],[nombre1],[nombre2],[apellido1],[apellido2],[domicilio],[nacionalidad],[ciudad],[estadoCivil],[telefonoDomicilio],[telefonoOficina],[email],[sexo],[paisNacimiento],[lugarNacimiento],[fechaNacimiento],[etnia],[discapacidad],[idParroquia],[imagen],[nombreContacto],[movilContacto],[parentezco])\n"
                         + "     VALUES\n"
                         + "           ('" + value.getCedula() + "'\n"
                         + "           ,'" + value.getNombre1() + "'\n"
@@ -157,6 +157,7 @@ public class PacienteDaoImp implements PacienteDao {
                         + "      ,[etnia] = '" + value.getEtnia() + "'\n"
                         + "      ,[discapacidad] = '" + value.getDiscapacidad() + "'\n"
                         + "      ,[idParroquia] = '" + value.getIdParroquia().getId() + "'\n"
+                        + "      ,[imagen] = '" + value.getImagen() + "'\n"
                         + "      ,[nombreContacto] = '" + value.getNombreContacto()+ "'\n"
                         + "      ,[movilContacto] = '" + value.getMovilContacto()+ "'\n"
                         + "      ,[parentezco] = '" + value.getParentezco()+ "'\n"
