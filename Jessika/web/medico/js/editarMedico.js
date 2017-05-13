@@ -12,7 +12,7 @@ var totalPaginas=0;
 var paginasVisibles=5;
 var paginaActual=0;
 var buscar=0;
-var pagina=1;
+var pagina=0;
 var datos = [];
 var idTablaSeleccionada=-1;     
 var indice=-1;
@@ -89,8 +89,8 @@ $("#tabMedicoEditar #txtBuscar").keyup(function(event){
     {
         buscar=1;
     }
-    pagina=1;
-    cargarMedicos(1);
+    pagina=0;
+    cargarMedicos(0);
 });         
 //Funcion para cargar los medicos de forma paginada
 function cargarMedicos(pagina)
@@ -121,17 +121,16 @@ function cargarMedicos(pagina)
         for(i=0;i <totalPaginas; i++)                
         {
             indice=parseInt(i)+1;
-            if(indice==pagina)
-                $("#tabMedicoEditar #paginacionMedico ul").append('<li id='+indice+' class="active"><a href="#">'+indice+'</a></li>');
+            if(i==pagina)
+                $("#tabMedicoEditar #paginacionMedico ul").append('<li id='+i+' class="active"><a href="#">'+indice+'</a></li>');
             else 
-                $("#tabMedicoEditar #paginacionMedico ul ").append('<li id='+indice+'><a  href="#">'+indice+'</a></li>');
+                $("#tabMedicoEditar #paginacionMedico ul ").append('<li id='+i+'><a  href="#">'+indice+'</a></li>');
         }
         ultimo=indice;
         $("#tabMedicoEditar #paginacionMedico ul").append('<li id="adelante"><a href="#">&raquo;</a></li>');
         $('#tabMedicoEditar #tablaMedico thead').append("<tr>\n\<th >No.</th>\n\                                                <th>Cédula</th>\n\
-                                               <th >Apellidos</th>\n\
-                                               <th >Nombres</th>\n\
-                                               <th >Domicilio</th>\n\
+                                               <th >Apellidos y Nombres</th>\n\
+\n\                                             <th >Domicilio</th>\n\
                                                <th style='display:none;'>Ciudad</th>\n\
                                                <th style='display:none;'>Teléf. Domicilio</th>\n\
                                                <th style='display:none;'>Teléf. Oficina</th>\n\
@@ -144,9 +143,8 @@ function cargarMedicos(pagina)
             $('#tabMedicoEditar #tablaMedico').append("<tr>\n\
                                                <td>"+resultado[i].id+"</td>\n\
                                                <td>"+resultado[i].cedula+"</td>\n\
-                                               <td>"+resultado[i].apellidos1+ ' '+resultado[i].apellidos2+"</td>\n\
-                                               <td>"+resultado[i].nombre1+" "+resultado[i].nombre2+"</td>\n\
-                                               <td>"+resultado[i].domicilio+"</td>\n\
+                                               <td>"+resultado[i].apellidos1+ ' '+resultado[i].apellidos2+" "+resultado[i].nombre1+" "+resultado[i].nombre2+"</td>\n\
+\n\                                             <td>"+resultado[i].domicilio+"</td>\n\
                                                <td style='display:none;'>"+resultado[i].ciudad+"</td>\n\
                                                <td  style='display:none;'>"+resultado[i].telefonoDomicilio+"</td>\n\
                                                <td  style='display:none;'>"+resultado[i].telefonoOficina+"</td>\n\

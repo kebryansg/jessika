@@ -58,6 +58,7 @@ function cargarIngresos()
                 $('#paginacionIngresosEditar').find('li').remove();
                 var totalPaginas=resultado[0].registros/5;
                 totalPaginas=Math.ceil(totalPaginas);
+                
                 $("#paginacionIngresosEditar ul").append('<li id="atras"><a href="#">&laquo;</a></li>');
                 filas=resultado.length;
                 var indice=0;

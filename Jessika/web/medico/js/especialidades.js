@@ -8,7 +8,7 @@
     var datos = [];
     var totalRegistros=0;
     var totalPaginas=0;
-    var pagina=1;
+    var pagina=0;
     var buscar=0;    
     var indice=0;
     var xhrRequest=[];
@@ -42,7 +42,7 @@
             buscar=0;
         else
             buscar=1;
-         pagina=1;
+         pagina=0;
         
         cargarEspecialidades(pagina,buscar);   
     }); 
@@ -160,14 +160,15 @@
             $('#tbEspecialidad #paginacionEspecialidad').find('li').remove();
             $("#tbEspecialidad #paginacionEspecialidad ul").append('<li id="atras"><a href="#">&laquo;</a></li>');
             var indice=0;
+            
             for(i=0;i <totalPaginas; i++)                
             {
                 indice=parseInt(i)+1;
                 //<li><a href="#">1</a></li>                
-                if(indice==pagina)
-                    $("#tbEspecialidad #paginacionEspecialidad ul").append('<li id='+indice+' class="active"><a href="#">'+indice+'</a></li>');
+                if(i==pagina)
+                    $("#tbEspecialidad #paginacionEspecialidad ul").append('<li id='+i+' class="active"><a href="#">'+indice+'</a></li>');
                 else 
-                    $("#tbEspecialidad #paginacionEspecialidad ul ").append('<li id='+indice+'><a href="#">'+indice+'</a></li>');
+                    $("#tbEspecialidad #paginacionEspecialidad ul ").append('<li id='+i+'><a href="#">'+indice+'</a></li>');
             }
             ultimo=indice;
             $("#tbEspecialidad #paginacionEspecialidad ul").append('<li id="adelante" ><a href="#">&raquo;</a></li>');
