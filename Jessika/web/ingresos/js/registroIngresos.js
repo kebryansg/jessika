@@ -22,69 +22,34 @@ function validarIngreso()
     $("#tabIngresos .help-block").remove();
     $.each($("#tabIngresos input[validate='date']"), function (index, value) {
         $(value).change(function(){    		               
-                validarDateIngresos(value);
+                validarDate(value);
 	});
-        validarDateIngresos(value);
+        validarDate(value);
         
     });
+    var codigo = $("#tabIngresos #txtCodigoCie");
     $('#tabIngresos #txtCodigoCie').blur(function(){    		               
-        validarCodigo();
+        validarText(codigo);
     });
-    validarCodigo();
-    validarDefinitivoEgreso();
+    validarText(codigo);
+    var definitivo = $("#tabIngresos #txtDefinitivoEgreso");
+    validarText(definitivo);
     $('#tabIngresos #txtDefinitivoEgreso').blur(function(){    		               
-        validarDefinitivoEgreso();
+        validarText(definitivo);
     });
     if(idHistoria==0)
     {
         $('#tabIngresos #txtCedula').closest("div").addClass("has-error");
-        $('#tabIngresos #txtCedula').after('<span id="' + $('#tabIngresos #txtCedula').attr("id") + 'help" class="help-block">Cargar un paciente</span');
-     
+        $('#tabIngresos #txtCedula').after('<span id="' + $('#tabIngresos #txtCedula').attr("id") + 'help" class="help-block">Cargar un paciente</span');     
     }
     else
     {
-        $('#tabIngresos #txtCedula').closest("div").removeClass("has-error");
-        
+        $('#tabIngresos #txtCedula').closest("div").removeClass("has-error");        
     }
     return $("#tabIngresos .help-block").length === 0;
 }
-function validarCodigo()
-{
-    $("#tabIngresos #txtCodigoCiehelp").remove(); 
-    if ($('#tabIngresos #txtCodigoCie').val() === null || $('#tabIngresos #txtCodigoCie').val()==="" )
-        {
-            $('#tabIngresos #txtCodigoCie').closest("div").addClass("has-error");
-            $('#tabIngresos #txtCodigoCie').after('<span id="' + $('#tabIngresos #txtCodigoCie').attr("id") + 'help" class="help-block">Campo Vacio</span');
-        }
-        else
-        {
-            $('#tabIngresos #txtCodigoCie').closest("div").removeClass("has-error");
-        }
-}
-function validarDefinitivoEgreso()
-{
-    $("#tabIngresos #txtDefinitivoEgresohelp").remove();  
-    if ($('#tabIngresos #txtDefinitivoEgreso').val() === null || $('#tabIngresos #txtDefinitivoEgreso').val()==="" )
-        {
-            $('#tabIngresos #txtDefinitivoEgreso').closest("div").addClass("has-error");
-            $('#tabIngresos #txtDefinitivoEgreso').after('<span id="' + $('#tabIngresos #txtDefinitivoEgreso').attr("id") + 'help" class="help-block">Campo Vacio</span');
-        }
-        else
-        {
-            $('#txtDefinitivoEgreso').closest("div").removeClass("has-error");
-        }
-}
-function validarDateIngresos(value)
-{
-    if ($(value).val() === null || $(value).val() === "") {
-            $(value).closest("div").addClass("has-error");
-            $(value).parent("div").after('<span id="' + $(value).attr("id") + 'help" style="color:#a94442;" class="help-block">Sin Fecha</span');
-        } else
-        {
-            $(value).closest("div").removeClass("has-error");
-            $("#"+$(value).attr("id") + 'help').remove();
-        }
-}
+
+
 $('#btnBuscar').click(function (event) {    
     cargarPacientes(pagina,buscar);
 });
@@ -92,18 +57,17 @@ $('#tabIngresos #cboMostrar').on('change', function () {
     pagina=1;
     cargarPacientes(pagina,buscar);
 });
-function momentToDate(varMoment, formato)
-{
-    var dateObj = new Date(varMoment);
-    var momentObj = moment(dateObj);
-    return momentObj.format(formato);
-
-}
 function limpiar()
 {
     $(':text').val('');
     $('textarea').val('');
-    //$('#tabIngresos tr:not(:first-child)').remove();
+    $.each($("#tabIngresos input[validate='date']"), function (index, value) {
+        $(value).off("blur");
+    });
+    $("#tabIngresos #txtDefinitivoEgreso").off("blur"); 
+    remover($("#tabIngresos #txtCodigoCie"));
+    remover($("#tabIngresos #txtDefinitivoEgreso"));
+    $("#tabIngresos .help-block").remove();
 }
 
 

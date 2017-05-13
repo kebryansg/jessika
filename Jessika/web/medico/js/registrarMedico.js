@@ -7,26 +7,22 @@
 var bandera=0;
     function validar() {
     /* Validacion de email */
-    
-    var email = $("#tabMedicoRegistro input[validate='email']");
-    $(email).blur(function(){    		               
-                validarText(email);
-	});
-   validarEmail(email);
-    /* Validacion de email */
-
+   var email = $("#tabMedicoRegistro input[validate='email']");
+    if (!validarEmail(email)) {
+        $(email).blur(function () {
+            validarEmail(email);
+        });
+    }
     $.each($("#tabMedicoRegistro input[validate='text']"), function (index, value) {  
        $(value).blur(function(){    		               
                 validarText(value);
 	});
         validarText(value);
-    });
-    
+    });    
     $.each($("#tabMedicoRegistro select[validate='select']"), function (index, value) {
         $(value).on('change', function() { 
              validarSelect(value);
-        });
-        
+        });        
        validarSelect(value); 
     });
     $.each($("#tabMedicoRegistro input[validate='date']"), function (index, value) {
@@ -40,48 +36,6 @@ var bandera=0;
     });
  
     return $("#tabMedicoRegistro .help-block").length === 0;
-}
-function validarText(value)
-{
-    
-     if($(value).attr("id")!=="txtCedula" || $(value).val() === "")
-     {
-          var valor= "#"+$(value).attr("id") + 'help';           
-          $(valor).remove();
-        if ($(value).val() === null || $(value).val() === "") {
-            $(value).closest("div").addClass("has-error");
-            $(value).after('<span id="' + $(value).attr("id") + 'help" class="help-block">Campo Vacio</span');
-        } else
-        {
-            $(value).closest("div").removeClass("has-error");            
-          
-        }
-    }
-}
-function validarEmail(email)  
-{
-    var validacion_email = /^[a-zA-Z0-9_\.\-]+@[a-zA-Z0-9\-]+\.[a-zA-Z0-9\-\.]+$/;
-     var valor= "#"+$(email).attr("id") + 'help'; 
-         $(valor).remove();
-     if ($(email).val() === null || $(email).val() === "" || !validacion_email.test($(email).val())) {
-        $(email).closest("div").addClass("has-error");
-        $(email).after('<span id="' + $(email).attr("id") + 'help" class="help-block">Email no valido.</span');
-    } else {
-        $(email).closest("div").removeClass("has-error");
-        
-    }
-}
-function validarSelect(value)
-{
-    var valor= "#"+$(value).attr("id") + 'help'; 
-         $(valor).remove();
-   if ($(value).val() === "0" || $(value).val() === null ) {
-            $(value).closest("div").addClass("has-error");
-            $(value).after('<span id="' + $(value).attr("id") + 'help" class="help-block">Sin seleccionar</span');
-        } else
-        {
-            $(value).closest("div").removeClass("has-error");
-        } 
 }
 function validarCedula()
     {
@@ -116,14 +70,19 @@ function validarCedula()
     }
     function limpiar()
     {
+       
         $('#tabMedicoRegistro :text').val('');
        // $(':email').val('');
         $('#tabMedicoRegistro textarea').val('');
         $("#tabMedicoRegistro #txtEmail").val('');
         $('#tabMedicoRegistro .selectpicker').selectpicker('deselectAll');
-        $.each($("#tabMedicoEditar select[validate='select']"), function (index, value) {
+        $.each($("#tabMedicoRegistro select[validate='select']"), function (index, value) {
             $(value).closest("div").removeClass("has-error");
-     });
+        });
+        $.each($("#tabMedicoRegistro :text"), function (index, value) {             
+              $(value).off("blur");
+               
+           });
     $("#tabMedicoRegistro .help-block").remove();
 
     }

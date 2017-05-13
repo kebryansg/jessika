@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 ocultarModal();
+
  $('.tooltips').tooltip({
      trigger: 'focus'
  })
@@ -21,9 +22,15 @@ var indiceMedicamentos=0;
  var bandera=0;
 /*-------------------------------Ingresos-------------------------------------------------------------------------*/
 //Buscar Ingresos
-$('#tabMantenimientoIngresos #btnBuscar').click(function(event) {                        
-         cargarIngresos();
-     });    
+$('#tabMantenimientoIngresos #btnBuscar').click(function(event) {    
+     $('#tablaIngresos tr').remove();
+     $('#paginacionIngresosEditar').find('li').remove();
+    if(!fechaMayorQue($("#dtpFechaIngresoIngresos"),$("#dtpFechaEgresoIngresos")))
+    {
+        cargarIngresos();
+    }
+    
+});    
 //Ingresos cargar
 function cargarIngresos()
     {
@@ -40,7 +47,13 @@ function cargarIngresos()
             async: false,
             success:function(data){  
                 console.log(data);
-                var resultado = JSON && JSON.parse(data) || $.parseJSON(data);                                    
+                var resultado = JSON && JSON.parse(data) || $.parseJSON(data);   
+                if(resultado.length==0)
+                {
+                    alertify.success("No existen registros disponibles");
+                }
+                else
+                {
                 console.log(resultado[0].registros);
                 $('#paginacionIngresosEditar').find('li').remove();
                 var totalPaginas=resultado[0].registros/5;
@@ -123,6 +136,7 @@ function cargarIngresos()
                                                     </tr>");
                 }
             }
+        }
         });
     
      } 
@@ -227,6 +241,19 @@ $("#tabMantenimientoIngresos .table-responsive").on("click", "tr", function(){
       });
     
 /*-------------------------------Medicamentos-------------------------------------------------------------------------*/    
+//
+function limpiarMedicamentos()
+{
+    remover($('#dtpFechaMedicamentoIngresosModal'));
+    remover($('#txtMedicamentos'));
+    $("#txtMedicamentoshelp").remove();  
+    $("#dtpFechaMedicamentoIngresosModalhelp").remove();  
+    $($('#dtpFechaMedicamentoIngresosModal')).off("blur");
+    $($('#txtMedicamentos')).off("blur");
+    
+}
+
+
 //Medicamentos cargar
  $("#tabMantenimientoIngresos .table-responsive").on("click", "#opMantenimientoMedicina", function(){
           var cont=0;    
@@ -241,6 +268,10 @@ $("#tabMantenimientoIngresos .table-responsive").on("click", "tr", function(){
            }, function(data) { 
                var resultado = JSON && JSON.parse(data) || $.parseJSON(data); 
                $('#tablaMedicamentos tr').remove();
+               $("#sinRegistro #sinRegistros").remove();
+               if(resultado.length>0)
+               {
+               
                $('#tablaMedicamentos thead').append("<tr>\n\
                                                 <th style='display:none;' class='col-lg-1'>id</th>\n\
                                                 <th class='col-lg-2'>Fecha</th>\n\
@@ -266,6 +297,14 @@ $("#tabMantenimientoIngresos .table-responsive").on("click", "tr", function(){
                                                     </td>\n\
                                                 </tr>");
                 }
+            }
+            else
+            {
+                
+                $('#sinRegistro').append(" <div id='sinRegistros' class='alert alert-success'>\n\
+                                                    <strong>Sin medicamentos Registrados</strong>\n\
+                                                </div>");
+            }
            
        });
            
@@ -293,10 +332,7 @@ $("#tabMantenimientoIngresos .table-responsive").on("click", "#btnEditarMedicame
            $('#txtLni').val(medicinas[3]);
            $('#txtFin').val(medicinas[4]);
            $('#txtMedicamentos').val(medicinas[5]);
-           remover($('#dtpFechaMedicamentoIngresosModal'));
-           remover($('#txtMedicamentos'));
-           $("#txtMedicamentoshelp").remove();  
-           $("#dtpFechaMedicamentoIngresosModalhelp").remove();  
+           limpiarMedicamentos();
            $("#"+id).modal('show');
           
       });
@@ -309,6 +345,7 @@ $("#tabMantenimientoIngresos .table-responsive").on("click", "#btnEditarMedicame
               cont++;
           });
           idIngreso=datos[0];
+          limpiarMedicamentos();
           var id='medicinas';
           $.each($("#"+id+" input"), function (){
             $(this).val("");
@@ -437,10 +474,7 @@ function ocultarModal()
 	        });
          
      }
-function remover(value)
-{
-    $(value).closest("div").removeClass("has-error");       
-}
+
 $('.dropdown-toggle').dropdown();
  $('[data-toggle="tooltip"]').tooltip();  
     

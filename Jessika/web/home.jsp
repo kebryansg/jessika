@@ -28,12 +28,13 @@
         <link href="resources/font-awesome/css/font-awesome.min.css" rel="stylesheet">
 
         
-
+       
         <script src="resources/js/jquery.min.js" type="text/javascript" ></script>
         <script src="resources/bootstrap/js/bootstrap.min.js" type="text/javascript"  ></script>
 
 
         <!--    desde aqui mis links -->
+       
 
         <script type="text/javascript" src="resources/js/moment.js" async="async"></script>
         <!--<script type="text/javascript" src="resources/bootstrap/js/bootstrap-datetimepicker.min.js"></script>-->
@@ -153,6 +154,18 @@
                             </li>                            
                         </ul>
                     </li>
+                    
+                    <li>
+                        <a href="javascript:;" data-toggle="collapse" data-target="#reportes">Reportes<i class="fa fa-fw fa-caret-down"></i></a>
+                        <ul id="reportes" class="collapse">
+                            <li>
+                                <a  data-url="" data-title="Ingresos" href="#"><i class="fa fa-user fa-fw" aria-hidden="true"></i>&nbsp; Hospitalizaciones</a>
+                            </li>
+                            <li>
+                                <a data-url="" data-title="Mantenimiento Ingresos" href="#"><i class="fa fa-address-book fa-fw" aria-hidden="true"></i>&nbsp; Consultas</a>
+                            </li>                            
+                        </ul>
+                    </li>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -168,7 +181,7 @@
                     <div class="col-sm-12">                        
                         <div class="panel panel-default" id="panel">
                             <div class="panel-heading">
-                                <h3 class="panel-title">Titulo del panel (Colores por definir)</h3>
+                                <h3 class="panel-title" id="titulo"> </h3>
                             </div>
                             <div id="contenido" class="panel-body">
                             </div>

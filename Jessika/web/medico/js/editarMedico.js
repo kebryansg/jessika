@@ -55,51 +55,7 @@ function validar(id) {
     });
     return $("#tabMedicoEditar .help-block").length === 0;
 }
-function validarText(value)
-{
-    if($(value).attr("id")!=="txtCedula" || $(value).val() === "")
-    {
-        var valor= "#"+$(value).attr("id") + 'help';
-        $(valor).remove();
-        if ($(value).val() === null || $(value).val() === "") {
-            $(value).closest("div").addClass("has-error");
-            $(value).after('<span id="' + $(value).attr("id") + 'help" class="help-block">Campo Vacio</span');
-        } else
-        {
-            $(value).closest("div").removeClass("has-error");
-        }
-    }
-}
 
-function validarEmail(email)  
-{
-    var validacion_email = /^[a-zA-Z0-9_\.\-]+@[a-zA-Z0-9\-]+\.[a-zA-Z0-9\-\.]+$/;
-    var valor= "#"+$(email).attr("id") + 'help'; 
-    $(valor).remove();
-    if ($(email).val() === null || $(email).val() === "" || !validacion_email.test($(email).val())) {
-        $(email).closest("div").addClass("has-error");
-        $(email).after('<span id="' + $(email).attr("id") + 'help" class="help-block">Email no valido.</span');
-    } else {
-        $(email).closest("div").removeClass("has-error");        
-    }
-}
-
-function validarSelect(value)
-{
-    var valor= "#"+$(value).attr("id") + 'help'; 
-    $(valor).remove();
-    if ($(value).val() === "0" || $(value).val() === null ) {
-        $(value).closest("div").addClass("has-error");
-        $(value).after('<span id="' + $(value).attr("id") + 'help" class="help-block">Sin seleccionar</span');
-    } else
-    {
-        $(value).closest("div").removeClass("has-error");
-    } 
-}
-function remover(value)
-{
-    $(value).closest("div").removeClass("has-error");
-}
 function validarCedula()
 {
     $.ajax({
