@@ -20,6 +20,7 @@ var ultimo=0;
 var filas=5;
 var indiceMedicamentos=0;
  var bandera=0;
+ var m;
 /*-------------------------------Ingresos-------------------------------------------------------------------------*/
 //Buscar Ingresos
 $('#tabMantenimientoIngresos #btnBuscar').click(function(event) {    
