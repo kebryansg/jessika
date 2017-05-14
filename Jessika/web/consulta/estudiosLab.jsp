@@ -67,5 +67,7 @@
     $("#cboCategoria").on("changed.bs.select", function () {
         list_filter_estLab();
     });
-
+    $("#txt_filterEstudiosLab").on("changed.bs.select", function () {
+        list_filter_estLab();
+    });
 </script>

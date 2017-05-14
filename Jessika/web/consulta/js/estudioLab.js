@@ -37,7 +37,7 @@ function list_filter_estLab() {
                 $totalPages = Math.ceil($totalPages);
             }
         });
-        var defaultOpts = {
+        var defaultOpt = {
             totalPages: $totalPages,
             visiblePages: 10,
             first: "Primero",
@@ -45,13 +45,13 @@ function list_filter_estLab() {
             last: "Ultimo",
             prev: "Anterior",
             onPageClick: function (event, pag) {
-                alert();
-                //indexPagEstudioLab(page, cantList, txt_filter, categoria);
+                //alert(pag);
+                indexPagEstudioLab(pag, cantList, txt_filter, categoria);
                 //indexPagEstudioLab(page, cantList, txt_filter, categoria);
             }
         };
         $pagination.twbsPagination('destroy');
-        $pagination.twbsPagination(defaultOpts);
+        $pagination.twbsPagination(defaultOpt);
     }
 
 }
