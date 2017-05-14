@@ -32,14 +32,15 @@
     <div class="row">
         <div class="col-md-12">
             <div class="table-responsive">
-                <table class="table table-bordered table-hover table-striped">
+                <table class="table table-bordered table-hover table-striped" id="tableEstudiosLab">
                     <thead style="font-weight: bold;">
                         <tr>
+                            <td style="width: 15%;" >Categoria</td>
                             <td>Estudio de laboratorio</td>
                             <td style="width: 15%;">Selecciòn</td>
                         </tr>
                     </thead>
-                    <tbody id="tableEstudiosLab"></tbody>
+                    <tbody ></tbody>
                 </table>
             </div>
 
@@ -53,11 +54,22 @@
 
         </div>
     </div>
+    <hr>
+    <div class="row">
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover table-striped">
+                <thead style="font-weight: bold;">
+                    <tr>
+                        <td>Estudio de laboratorio</td>
+                        <td style="width: 10%;">Eliminar</td>
+                    </tr>
+                </thead>
+                <tbody id="tableEstudiosLabSelec"></tbody>
+            </table>
+        </div>
+    </div>
 </div>
-<hr>
-<div class="row">
 
-</div>
 <script type="text/javascript" >
     $.getScript("consulta/js/estudioLab.js", function () {
         cboCategoria_load($("#cboCategoria"));
@@ -67,7 +79,25 @@
     $("#cboCategoria").on("changed.bs.select", function () {
         list_filter_estLab();
     });
-    $("#txt_filterEstudiosLab").on("changed.bs.select", function () {
+
+    $("#cantListEstudiosLab").on("changed.bs.select", function () {
         list_filter_estLab();
     });
+    $("#txt_filterEstudiosLab").keyup(function () {
+        list_filter_estLab();
+    });
+    $("#tableEstudiosLab").on("click", "button[name='estlab']", function () {
+        cat = $("#cboCategoria").val();
+        var tr = $(this).closest("tr");//.find("td:eq("+ ((cat === "0")? "1":"0") +")");
+        html = "<tr data-id='" + $(tr).attr("data-id") + "'><td>" + $(tr).find("td:eq(" + ((cat === "0") ? "1" : "0") + ")").html() + "</td><td><button class='btn btn-danger' name='estlab_del'>Eliminar</button></td></tr>";
+        if ($("#tableEstudiosLabSelec tr[data-id='" + $(tr).attr("data-id") + "']").length === 0) {
+            $("#tableEstudiosLabSelec").append(html);
+        }
+    });
+    $("#tableEstudiosLabSelec").on("click", "button[name='estlab_del']", function () {
+        $(this).closest("tr").remove();
+    });
+
 </script>
+
+

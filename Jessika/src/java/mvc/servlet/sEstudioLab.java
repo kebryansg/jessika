@@ -86,6 +86,9 @@ public class sEstudioLab extends HttpServlet {
         final String FORMATO_FECHA = "yyyy-MM-dd";
         final DateFormat DF = new SimpleDateFormat(FORMATO_FECHA);
         Gson gson = new GsonBuilder().setDateFormat(FORMATO_FECHA).create();
+        
+        int categoria = 0;
+        
         switch (op) {
             case "list_cbo":
                 List<EstudiosLaboratorio> list = new EstudiosLaboratorioDaoImp().list();
@@ -98,12 +101,16 @@ public class sEstudioLab extends HttpServlet {
                 out.close();
                 break;
             case "detalle":
-                List<DetalleEstudiosLabs> listDet = new EstudiosLaboratorioDaoImp().list_Det(Integer.parseInt(request.getParameter("categoria")), request.getParameter("filter"), Integer.parseInt(request.getParameter("pag")), Integer.parseInt(request.getParameter("top")));
+                categoria = Integer.parseInt(request.getParameter("categoria"));
+                List<DetalleEstudiosLabs> listDet = new EstudiosLaboratorioDaoImp().list_Det(categoria, request.getParameter("filter"), Integer.parseInt(request.getParameter("pag")), Integer.parseInt(request.getParameter("top")));
 
                 for (DetalleEstudiosLabs detalleEstudiosLabs : listDet) {
                     result += "<tr data-id='" + detalleEstudiosLabs.getId() + "'>";
+                    if(categoria == 0){
+                        result += "<td> " + detalleEstudiosLabs.getIdEstudiosLab().getDescripcion()+ " </td>";
+                    }
                     result += "<td> " + detalleEstudiosLabs.getDescripcion() + " </td>";
-                    result += "<td> Selecciòn </td>";
+                    result += "<td> <button name='estlab' class='btn btn-info'>Seleccionar</button> </td>";
                     result += "</tr>";
                 }
 
@@ -113,7 +120,7 @@ public class sEstudioLab extends HttpServlet {
                 break;
 
             case "list_size":
-                int categoria = Integer.parseInt(request.getParameter("categoria"));
+                categoria = Integer.parseInt(request.getParameter("categoria"));
                 result = String.valueOf(new EstudiosLaboratorioDaoImp().list_Det(categoria, request.getParameter("filter"), 0, -1).size());
                 out.print(result);
                 out.flush();

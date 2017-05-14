@@ -41,7 +41,7 @@ public class EstudiosLaboratorioDaoImp implements EstudiosLaboratorioDao {
         try {
             while (rs.next()) {
                 esLab.setId(rs.getInt("id"));
-                esLab.setDescripcion(rs.getNString("descripcion"));
+                esLab.setDescripcion(rs.getNString("descripcion").toUpperCase());
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -56,13 +56,14 @@ public class EstudiosLaboratorioDaoImp implements EstudiosLaboratorioDao {
         this.conn = con_db.open(con_db.MSSQL_SM);
         List<DetalleEstudiosLabs> list = new ArrayList<>();
         String paginacion = (top != -1) ? "OFFSET " + pag + " ROWS FETCH NEXT " + top + " ROWS ONLY;" : "";
-        String categoriaSQL = (categoria != 0) ? ("and idEstudiosLab = " + categoria) : "";
-        System.out.println("select * from dbo.detalleEstudiosLabs where (descripcion like '%"+ filter +"%')  "+ categoriaSQL +" order by id " + paginacion);
-        ResultSet rs = this.conn.query("select * from dbo.detalleEstudiosLabs where (descripcion like '%"+ filter +"%')  "+ categoriaSQL +" order by id " + paginacion);
+        String categoriaSQL = (categoria != 0) ? ("and el.id = " + categoria) : "";
+        System.out.println("select del.id del_id, del.descripcion del_descripcion, el.id el_id, el.descripcion el_descripcion from dbo.estudiosLaboratorio el inner join dbo.detalleEstudiosLabs del on el.id = del.idEstudiosLab where (del.descripcion like '%" + filter + "%')  " + categoriaSQL + " order by del.id " + paginacion);
+        ResultSet rs = this.conn.query("select del.id del_id, del.descripcion del_descripcion, el.id el_id, el.descripcion el_descripcion from dbo.estudiosLaboratorio el inner join dbo.detalleEstudiosLabs del on el.id = del.idEstudiosLab where (del.descripcion like '%" + filter + "%')  " + categoriaSQL + " order by del.id " + paginacion);
         try {
             while (rs.next()) {
-                DetalleEstudiosLabs detEst = new DetalleEstudiosLabs(rs.getInt("id"));
-                detEst.setDescripcion(rs.getNString("descripcion").toUpperCase());
+                DetalleEstudiosLabs detEst = new DetalleEstudiosLabs(rs.getInt("del_id"));
+                detEst.setIdEstudiosLab(new EstudiosLaboratorio(rs.getInt("el_id"), rs.getNString("el_descripcion")));
+                detEst.setDescripcion(rs.getNString("del_descripcion").toUpperCase());
                 list.add(detEst);
             }
         } catch (SQLException ex) {

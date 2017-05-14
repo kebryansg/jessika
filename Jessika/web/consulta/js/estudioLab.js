@@ -13,7 +13,7 @@ function cboCategoria_load(cbo) {
 }
 
 function list_filter_estLab() {
-    $("#tableEstudiosLab").html("");
+    $("#tableEstudiosLab tbody").html("");
     var $pagination = $('#pagEstudiosLab');
     var categoria = $('#cboCategoria').val();
     var txt_filter = $("#txt_filterEstudiosLab").val();
@@ -69,7 +69,12 @@ function indexPagEstudioLab(pag, totalList, txt_filter, categoria) {
             op: 'detalle'
         },
         success: function (response) {
-            $("#tableEstudiosLab").html(response);
+            if(categoria !== "0"){
+              $("#tableEstudiosLab  thead td:first").hide();  
+            }else{
+                $("#tableEstudiosLab  thead td:first").show();  
+            }
+            $("#tableEstudiosLab  tbody").html(response);
         }
     });
 }
