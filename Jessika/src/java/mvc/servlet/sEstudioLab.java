@@ -107,10 +107,10 @@ public class sEstudioLab extends HttpServlet {
                 for (DetalleEstudiosLabs detalleEstudiosLabs : listDet) {
                     result += "<tr data-id='" + detalleEstudiosLabs.getId() + "'>";
                     if(categoria == 0){
-                        result += "<td> " + detalleEstudiosLabs.getIdEstudiosLab().getDescripcion()+ " </td>";
+                        result += "<td class=\"col-md-2\"> " + detalleEstudiosLabs.getIdEstudiosLab().getDescripcion()+ " </td>";
                     }
-                    result += "<td> " + detalleEstudiosLabs.getDescripcion() + " </td>";
-                    result += "<td> <button name='estlab' class='btn btn-info'>Seleccionar</button> </td>";
+                    result += "<td class=\"col-md-6\"> " + detalleEstudiosLabs.getDescripcion() + " </td>";
+                    result += "<td class=\"col-md-1\"> <button name='estlab' class='btn btn-info'>Seleccionar</button> </td>";
                     result += "</tr>";
                 }
 
