@@ -56,9 +56,9 @@
                 <table data-toggle="table" data-height="300" id="tableEstudiosLab">
                     <thead style="font-weight: bold;">
                         <tr>
-                            <th>Categoria</th>
-                            <th>Estudio de laboratorio</th>
-                            <th>Selecciòn</th>
+                            <th data-field="categoria">Categoria</th>
+                            <th data-field="estudio">Estudio de laboratorio</th>
+                            <th data-field="seleccion">Selecciòn</th>
                         </tr>
                     </thead>
                     <tbody ></tbody>
@@ -79,20 +79,19 @@
     <div class="row">
         <div class="col-md-12">
             <div class="table-responsive">
-                <table data-toggle="table" data-height="300">
+                <table id="tableEstudiosLabSelec" data-toggle="table" data-height="300">
                     <thead style="font-weight: bold;">
                         <tr>
-                            <th>Estudio de laboratorio</td>
-                            <th>Eliminar</td>
+                            <th data-field="estudio">Estudio de laboratorio</td>
+                            <th data-field="eliminar">Eliminar</td>
                         </tr>
                     </thead>
-                    <tbody id="tableEstudiosLabSelec"></tbody>
+                    <tbody ></tbody>
                 </table>
             </div>
         </div>
     </div>
 </div>
-<script src="resources/js/configuracionInicial.js" type="text/javascript"></script>                        
 <script src="resources/bootstrap/table/bootstrap-table.min.js" type="text/javascript"></script>
 <script type="text/javascript" >
     $.getScript("consulta/js/estudioLab.js", function () {
@@ -112,11 +111,19 @@
     });
     $("#tableEstudiosLab").on("click", "button[name='estlab']", function () {
         cat = $("#cboCategoria").val();
+        var rows = [];
         var tr = $(this).closest("tr");//.find("td:eq("+ ((cat === "0")? "1":"0") +")");
-        html = "<tr data-id='" + $(tr).attr("data-id") + "'><td class='col-xs-8'>" + $(tr).find("td:eq(" + ((cat === "0") ? "1" : "0") + ")").html() + "</td><td class='col-xs-1'><button class='btn btn-danger' name='estlab_del'>Eliminar</button></td></tr>";
-        if ($("#tableEstudiosLabSelec tr[data-id='" + $(tr).attr("data-id") + "']").length === 0) {
+        
+        rows.push({
+            estudio: "si",
+            eliminar:"<button class='btn btn-danger' name='estlab_del'>Eliminar</button>"
+        });
+        alert();
+        $("#tableEstudiosLabSelec").bootstrapTable("append",rows);
+        //html = "<tr data-id='" + $(tr).attr("data-id") + "'><td class='col-xs-8'>" + $(tr).find("td:eq(" + ((cat === "0") ? "1" : "0") + ")").html() + "</td><td class='col-xs-1'><button class='btn btn-danger' name='estlab_del'>Eliminar</button></td></tr>";
+        /*if ($("#tableEstudiosLabSelec tr[data-id='" + $(tr).attr("data-id") + "']").length === 0) {
             $("#tableEstudiosLabSelec").append(html);
-        }
+        }*/
     });
     $("#tableEstudiosLabSelec").on("click", "button[name='estlab_del']", function () {
         $(this).closest("tr").remove();

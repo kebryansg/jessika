@@ -82,7 +82,6 @@ function td_tr_seleccionar(tbody) {
         $(tr).find("td:last").html("");
         $(tr).find("td:last").html('<button name="SeleccionarPaciente" class="btn btn-info">Seleccionar</button>');
     });
-    $('table').bootstrapTable('resetView');
 }
 
 function indexPag(pag, totalList, txt_filter) {

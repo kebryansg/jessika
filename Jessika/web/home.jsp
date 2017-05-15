@@ -170,90 +170,7 @@
                                     <h3 class="panel-title">Titulo del panel (Colores por definir)</h3>
                                 </div>
                                 <div id="contenido" class="panel-body">
-                                    <table data-toggle="table" 
-                                           data-height="300" >
-                                        <thead style="font-weight: bold;">
-                                            <tr>
-                                                <th >H. Clinica</th>
-                                                <th >Cèdula</th>
-                                                <th >Apellidos y Nombres</th>
-                                                <th >Ciudad</th>
-                                                <th >Domicilio</th>
-                                                <th >Acciòn</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="">
-                                            <!--<tbody id="tablePaciente">-->
-                                            <tr data-id="2">
-                                                <td >1015</td>
-                                                <td >1206249391</td>
-                                                <td >SUAREZ GUZMAN KEVIN BRYAN</td>
-                                                <td >Quevedo</td>
-                                                <td >San Camilo</td>
-                                                <td >
-                                                    <button name="editPaciente" data-id="2" style="margin-right: 2px;" class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span> </button>
-                                                    <button name="deletPaciente" data-id="2" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> </button>
-                                                </td>
-                                            </tr>
-                                            <tr data-id="2">
-                                                <td >1015</td>
-                                                <td >1206249391</td>
-                                                <td >SUAREZ GUZMAN KEVIN BRYAN</td>
-                                                <td >Quevedo</td>
-                                                <td >San Camilo</td>
-                                                <td >
-                                                    <button name="editPaciente" data-id="2" style="margin-right: 2px;" class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span> </button>
-                                                    <button name="deletPaciente" data-id="2" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> </button>
-                                                </td>
-                                            </tr>
-                                            <tr data-id="2">
-                                                <td >1015</td>
-                                                <td >1206249391</td>
-                                                <td >SUAREZ GUZMAN KEVIN BRYAN</td>
-                                                <td >Quevedo</td>
-                                                <td >San Camilo</td>
-                                                <td >
-                                                    <button name="editPaciente" data-id="2" style="margin-right: 2px;" class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span> </button>
-                                                    <button name="deletPaciente" data-id="2" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> </button>
-                                                </td>
-                                            </tr>
-                                            <tr data-id="2">
-                                                <td >1015</td>
-                                                <td >1206249391</td>
-                                                <td >SUAREZ GUZMAN KEVIN BRYAN</td>
-                                                <td >Quevedo</td>
-                                                <td >San Camilo</td>
-                                                <td >
-                                                    <button name="editPaciente" data-id="2" style="margin-right: 2px;" class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span> </button>
-                                                    <button name="deletPaciente" data-id="2" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> </button>
-                                                </td>
-                                            </tr>
-                                            <tr data-id="2">
-                                                <td >1015</td>
-                                                <td >1206249391</td>
-                                                <td >SUAREZ GUZMAN KEVIN BRYAN</td>
-                                                <td >Quevedo</td>
-                                                <td >San Camilo</td>
-                                                <td >
-                                                    <button name="editPaciente" data-id="2" style="margin-right: 2px;" class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span> </button>
-                                                    <button name="deletPaciente" data-id="2" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> </button>
-                                                </td>
-                                            </tr>
-                                            <tr data-id="2">
-                                                <td >1015</td>
-                                                <td >1206249391</td>
-                                                <td >SUAREZ GUZMAN KEVIN BRYAN</td>
-                                                <td >Quevedo</td>
-                                                <td >San Camilo</td>
-                                                <td >
-                                                    <button name="editPaciente" data-id="2" style="margin-right: 2px;" class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span> </button>
-                                                    <button name="deletPaciente" data-id="2" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> </button>
-                                                </td>
-                                            </tr>
-                                            
-
-                                        </tbody>
-                                    </table>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -274,7 +191,7 @@
         <!-- /#wrapper -->
         
         <script type="text/javascript">
-
+$("#contenido").load("consulta/estudiosLab.jsp");
         </script>
         
     </body>

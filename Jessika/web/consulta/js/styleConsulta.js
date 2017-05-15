@@ -4,10 +4,32 @@ function limpiarDivPaciente() {
     $("#con_nombrePaciente").val("");
     $("#con_ciudadPaciente").val("");
 }
+function modalListPaciente() {
+    $("#ListPaciente .modal-body").load("paciente/listPacientes.jsp", function () {
+        var tablePaciente = $("#tablePaciente");
+        $(tablePaciente).attr("modal", "1");
+
+        $.getScript("paciente/js/paciente.js", function () {
+            td_tr_seleccionar(tablePaciente);
+        });
+        
+    });
+    
+}
 
 
 $(document).ready(function () {
+    modalListPaciente();
 
+
+    $("#estLab .modal-body").load("consulta/estudiosLab.jsp");
+
+    $('#estLab').on('shown.bs.modal', function () {
+        $('#estLab table').bootstrapTable('resetView');
+    });
+    $('#ListPaciente').on('shown.bs.modal', function () {
+        $("#ListPaciente table").bootstrapTable('resetView');
+    });
     $("#contenido").on("click", "#tablePaciente button[name='SeleccionarPaciente']", function () {
         var tr = $(this).closest("tr");
         var tds = $(tr).find("td");
@@ -24,19 +46,19 @@ $(document).ready(function () {
 
 
     $("#contenido").on("click", "#pac_Buscar", function (e) {
-        $("#ListPaciente .modal-body").load("paciente/listPacientes.jsp", function () {
-            var tablePaciente = $("#tablePaciente");
-            $(tablePaciente).attr("modal", "1");
-
-            $.getScript("paciente/js/paciente.js", function () {
-                td_tr_seleccionar(tablePaciente);
-            });
-            $("#tablPaciente").bootstrapTable('resetView');
-
-        });
+        /*$("#ListPaciente .modal-body").load("paciente/listPacientes.jsp", function () {
+         var tablePaciente = $("#tablePaciente");
+         $(tablePaciente).attr("modal", "1");
+         
+         $.getScript("paciente/js/paciente.js", function () {
+         td_tr_seleccionar(tablePaciente);
+         });
+         $("#tablPaciente").bootstrapTable('resetView');
+         
+         });*/
         openModal("ListPaciente");
     });
-    
+
     $("#pac_Cargar").click(function () {
         limpiarDivPaciente();
         var cod = $("#txt_cargarPaciente").val();

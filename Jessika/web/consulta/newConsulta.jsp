@@ -184,11 +184,5 @@
 <script src="consulta/js/styleConsulta.js" type="text/javascript"></script>
 
 <script type="text/javascript">
-                        $("#estLab .modal-body").load("consulta/estudiosLab.jsp");
-
-$('#estLab').on('shown.bs.modal', function () {
-            $('#estLab table').bootstrapTable('resetView');
-        });
-                        //openModal("estLab");
+                        
 </script>
-<!--<script src="resources/js/configuracionInicial.js" type="text/javascript" ></script>-->
