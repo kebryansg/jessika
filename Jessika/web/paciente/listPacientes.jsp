@@ -27,7 +27,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="table-responsive ">
-                    <table  data-toggle="table" data-height="300">
+                    <table  data-toggle="table" id="tablPaciente" data-height="300">
                         <thead style="font-weight: bold;">
                             <tr>
                                 <th >H. Clinica</th>

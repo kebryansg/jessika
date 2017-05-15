@@ -78,7 +78,7 @@
             <div class="col-md-6">
                 <div class="col-md-4">
                     <button class="btn btn-danger btn-block" onclick="openModal_Clean('SignosVitales')">Signos Vitales</button>
-                    <button class="btn btn-danger btn-block" onclick="openModal('estLab')">Signos Vitales</button>
+                    <button class="btn btn-danger btn-block" onclick="openModal('estLab')">Estudios Laboratorios</button>
                 </div>
 
 
@@ -186,6 +186,9 @@
 <script type="text/javascript">
                         $("#estLab .modal-body").load("consulta/estudiosLab.jsp");
 
+$('#estLab').on('shown.bs.modal', function () {
+            $('#estLab table').bootstrapTable('resetView');
+        });
                         //openModal("estLab");
 </script>
 <!--<script src="resources/js/configuracionInicial.js" type="text/javascript" ></script>-->

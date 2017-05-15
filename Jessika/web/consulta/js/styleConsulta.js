@@ -7,7 +7,7 @@ function limpiarDivPaciente() {
 
 
 $(document).ready(function () {
-    
+
     $("#contenido").on("click", "#tablePaciente button[name='SeleccionarPaciente']", function () {
         var tr = $(this).closest("tr");
         var tds = $(tr).find("td");
@@ -31,11 +31,12 @@ $(document).ready(function () {
             $.getScript("paciente/js/paciente.js", function () {
                 td_tr_seleccionar(tablePaciente);
             });
-            
+            $("#tablPaciente").bootstrapTable('resetView');
+
         });
         openModal("ListPaciente");
-        
     });
+    
     $("#pac_Cargar").click(function () {
         limpiarDivPaciente();
         var cod = $("#txt_cargarPaciente").val();
