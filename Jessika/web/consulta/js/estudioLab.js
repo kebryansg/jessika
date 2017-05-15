@@ -1,5 +1,3 @@
-var xhrRequest_estudioLab = [];
-
 function cboCategoria_load(cbo) {
     $.ajax({
         url: 'sEstudioLab',
@@ -15,15 +13,11 @@ function cboCategoria_load(cbo) {
     });
 }
 var defaultOpt = {
-    //totalPages: $totalPages,
     visiblePages: 10,
     first: "Primero",
     next: "Siguiente",
     last: "Ultimo",
     prev: "Anterior"
-            /*onPageClick: function (event, pag) {
-             indexPagEstudioLab(pag, cantList, txt_filter, categoria);
-             }*/
 };
 function list_filter_estLab() {
     var tablePaciente = $("#tableEstudiosLab tbody");
@@ -32,11 +26,10 @@ function list_filter_estLab() {
     var categoria = $('#cboCategoria').val();
     var txt_filter = $("#txt_filterEstudiosLab").val();
     var cantList = $("#cantListEstudiosLab").val();
+    var $totalPages = 0;
     if (txt_filter === "" && categoria === "0") {
-        indexPagEstudioLab(1, cantList, txt_filter, categoria);
-        $pagination.twbsPagination('destroy');
+        $totalPages = 2;
     } else {
-        var $totalPages = 0;
         $.ajax({
             url: 'sEstudioLab',
             type: 'POST',
@@ -51,22 +44,17 @@ function list_filter_estLab() {
                 $totalPages = Math.ceil($totalPages);
             }
         });
-        $pagination.twbsPagination('destroy');
-        $pagination.twbsPagination($.extend({}, defaultOpt, {
-            onPageClick: function (event, pag) {
-                indexPagEstudioLab(pag, cantList, txt_filter, categoria);
-            },
-            totalPages: $totalPages
-        }));
     }
+    $pagination.twbsPagination('destroy');
+    $pagination.twbsPagination($.extend({}, defaultOpt, {
+        onPageClick: function (event, pag) {
+            indexPagEstudioLab(pag, cantList, txt_filter, categoria);
+        },
+        totalPages: $totalPages
+    }));
 
 }
 function indexPagEstudioLab(pag, totalList, txt_filter, categoria) {
-    $.each(xhrRequest_estudioLab, function (idx, jqXHR)
-    {
-        jqXHR.abort();
-    });
-    var xhr_estudioLab = null;
     var cantList = totalList;
     $.ajax({
         url: 'sEstudioLab',
@@ -89,6 +77,4 @@ function indexPagEstudioLab(pag, totalList, txt_filter, categoria) {
             $('table').bootstrapTable('resetView');
         }
     });
-    //xhr_estudioLab.push(xhr_estudioLab);
-
 }

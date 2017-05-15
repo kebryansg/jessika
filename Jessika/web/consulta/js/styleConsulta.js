@@ -40,9 +40,9 @@ $(document).ready(function () {
         closeModal("ListPaciente");
     });
 
-    $("#ListPaciente").on("hidden.bs.modal", function () {
+    /*$("#ListPaciente").on("hidden.bs.modal", function () {
         $("#ListPaciente .modal-body").html("");
-    });
+    });*/
 
 
     $("#contenido").on("click", "#pac_Buscar", function (e) {

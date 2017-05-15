@@ -78,13 +78,4 @@
 <script src="resources/js/configuracionInicial.js" type="text/javascript" ></script> 
 <script src="paciente/js/styleListPaciente.js" type="text/javascript"></script>
 
-        <script src="resources/bootstrap/table/bootstrap-table.min.js" type="text/javascript"></script>
-<script src="resources/bootstrap/table/locale/bootstrap-table-es-ES.min.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-    $(function () {
-        /*$.getScript("paciente/js/paciente.js", function () {
-         indexPag(1,5,"");
-         });*/
-    });
-</script>
+<script src="resources/bootstrap/table/bootstrap-table.min.js" type="text/javascript"></script>

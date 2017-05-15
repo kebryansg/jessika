@@ -1,7 +1,6 @@
 $(function () {
     $.getScript("paciente/js/paciente.js", function () {
-
-        indexPag(1, 5, "");
+        list_filter();
     });
 
     $("#contenido").on("change", "#cantList", function () {
@@ -24,7 +23,6 @@ $(function () {
     });
     
     $("#editPaciente").on("hidden.bs.modal", function () {
-        alert();
         $("#editPaciente .modal-body").html("");
     });
 

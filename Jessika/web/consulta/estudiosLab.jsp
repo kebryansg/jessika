@@ -58,7 +58,7 @@
                         <tr>
                             <th data-field="categoria">Categoria</th>
                             <th data-field="estudio">Estudio de laboratorio</th>
-                            <th data-field="seleccion">Selecciòn</th>
+                            <th data-field="seleccion">Accion</th>
                         </tr>
                     </thead>
                     <tbody ></tbody>
@@ -93,6 +93,7 @@
     </div>
 </div>
 <script src="resources/bootstrap/table/bootstrap-table.min.js" type="text/javascript"></script>
+<script src="resources/js/configuracionInicial.js" type="text/javascript"></script>
 <script type="text/javascript" >
     $.getScript("consulta/js/estudioLab.js", function () {
         cboCategoria_load($("#cboCategoria"));
