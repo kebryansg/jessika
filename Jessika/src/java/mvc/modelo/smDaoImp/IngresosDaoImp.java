@@ -220,7 +220,7 @@ C_BD conn;
                 cStmt.setDate(6, new java.sql.Date(value.getFechaSalida().getTime()));
                 cStmt.setTime(7,new java.sql.Time(value.getHora().getTime()));
                 cStmt.setObject(8, value.getSos(),Types.BIT );
-                cStmt.setObject(9, value.getCondicionEgreso(),Types.BIT );
+                cStmt.setInt(9, value.getCondicionEgreso());
                 cStmt.setString(10, value.getDefinitivoEgreso());
                 cStmt.setString(11, value.getSecundarioEgreso());
                 cStmt.setString(12, value.getSecundarioEgreso2());

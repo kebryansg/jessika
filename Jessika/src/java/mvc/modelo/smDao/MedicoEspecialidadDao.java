@@ -16,7 +16,7 @@ public interface MedicoEspecialidadDao {
     public List<MedicoEspecialidad> list(int id);
     public MedicoEspecialidad edit(int id);
     public boolean save(MedicoEspecialidad value);
-    public boolean delete (int id);
+    public boolean delete (int id);    
     
     
 }

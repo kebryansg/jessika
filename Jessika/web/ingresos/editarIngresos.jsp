@@ -20,7 +20,7 @@
                     <div class="col-md-12">
                         <label for="inputName" style="padding-top: 10px" class="control-label col-xs-1">Ingreso</label>
                         <div class="col-md-4">
-                             <div class="input-group date form_date" data-date="" data-date-format="yyyy-mm-dd">
+                             <div class="input-group date form_date" data-date="" data-date-format="yyyy-mm-dd" data-date="2013-02-21T15:25:00Z">
                                             <input validate="date" class="form-control" id="dtpFechaIngresoIngresos" size="16" type="text" value="" readonly>
                                             <!--<span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>-->
                                             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
@@ -29,7 +29,7 @@
                         <label for="inputName" style="padding-top: 10px" class="control-label col-xs-1">Salida</label>
                         <div class="col-md-4">
                             <div class="input-group date form_date" data-date="" data-date-format="yyyy-mm-dd">
-                                            <input validate="date" class="form-control" id="dtpFechaEgresoIngresos" size="16" type="text" value="" readonly>
+                                            <input validate="date" class="form-control" id="dtpFechaEgresoIngresos" size="16" type="text"  readonly>
                                             <!--<span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>-->
                                             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                              </div>
@@ -179,7 +179,7 @@
                                     <div class="col-md-12">
                                         <label class="col-md-12" for="txtDefinitivoEgreso">Definitivo de Egreso</label>
                                         <div class="col-md-12">
-                                            <textarea id="txtDefinitivoEgreso" rows="3" class="form-control" placeholder=""></textarea>
+                                            <textarea id="txtDefinitivoEgreso" validate="text" rows="3" class="form-control" placeholder=""></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -219,7 +219,7 @@
                                 </div>                                       
                                 <div class="form-group col-xs-2">                                       
                                     <div class="col-md-2">
-                                        <button id="btnActualizar" type="button" onclick="closeModal('modalEditarIngresos')" class="btn btn-primary">Guardar</button>
+                                        <button id="btnActualizar" type="button"  class="btn btn-primary">Guardar</button>
                                     </div>
                                 </div>
                             </div>

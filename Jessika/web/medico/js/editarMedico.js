@@ -128,7 +128,8 @@ function cargarMedicos(pagina)
         }
         ultimo=indice;
         $("#tabMedicoEditar #paginacionMedico ul").append('<li id="adelante"><a href="#">&raquo;</a></li>');
-        $('#tabMedicoEditar #tablaMedico thead').append("<tr>\n\<th >No.</th>\n\                                                <th>Cédula</th>\n\
+        $('#tabMedicoEditar #tablaMedico thead').append("<tr>\n\<th >No.</th>\n\                                                \n\
+                                            <th>Cédula</th>\n\
                                                <th >Apellidos y Nombres</th>\n\
 \n\                                             <th >Domicilio</th>\n\
                                                <th style='display:none;'>Ciudad</th>\n\
@@ -186,25 +187,25 @@ $('#tabMedicoEditar #cboMostrar').on('change', function() {
 $("#tabMedicoEditar #tablaMedico").on("click", "#botonEditar", function(){   
     var cont=0;
     $(this).parents("tr").find("td").each(function(){
-        datos[cont]=$(this).html();        
+        datos[cont]=$(this).html();   
+        //alert(datos[cont]);
         cont++;
     });
-    var nombres=datos[3];
-    var apellidos=datos[2];
-    var res1 = apellidos.split(" ");
-    var res = nombres.split(" ");
+    //var nombres=datos[3];
+    var apellidos=datos[2];    
+    var res = apellidos.split(" ");
     $('#txtCedulaModal').val(datos[1]);
-    $('#txtPrimerApellidoModal').val(res1[0]);
-    $('#txtSegundoApellidoModal').val(res1[1]);
-    $('#txtPrimerNombreModal').val(res[0]);
-    $('#txtSegundoNombreModal').val(res[1]);
-    $('#txtDomicilioModal').val(datos[4]);
-    $('#txtCiudadModal').val(datos[5]);
-    $('#txtTelefonoDomicilioModal').val(datos[6]);
-    $('#txtTelefonoOficinaModal').val(datos[7]);
-    $('#txtTelefonoMovilModal').val(datos[8]);
-    $('#txtEmailModal').val(datos[9]);
-    $('select[id=cboEstadoModal]').val(datos[10]);
+    $('#txtPrimerApellidoModal').val(res[0]);
+    $('#txtSegundoApellidoModal').val(res[1]);
+    $('#txtPrimerNombreModal').val(res[2]);
+    $('#txtSegundoNombreModal').val(res[3]);
+    $('#txtDomicilioModal').val(datos[3]);
+    $('#txtCiudadModal').val(datos[4]);
+    $('#txtTelefonoDomicilioModal').val(datos[5]);
+    $('#txtTelefonoOficinaModal').val(datos[6]);
+    $('#txtTelefonoMovilModal').val(datos[7]);
+    $('#txtEmailModal').val(datos[8]);
+    $('select[id=cboEstadoModal]').val(datos[9]);
     $.ajax({
         type: 'Post',
         url: 'sMedico',
@@ -259,15 +260,15 @@ $('#tabMedicoEditar #btnActualizar').click(function(event) {
             idMedico: datos[0]
         }, function(responseText) {   
             $($('#tablaMedico').find('tbody > tr')[indice]).children('td')[1].innerHTML = $('#txtCedulaModal').val();
-            $($('#tabMedicoEditar .table-responsive').find('tbody > tr')[indice]).children('td')[2].innerHTML = $('#txtPrimerApellidoModal').val()+' '+$('#txtSegundoApellidoModal').val();
-            $($('#tabMedicoEditar .table-responsive').find('tbody > tr')[indice]).children('td')[3].innerHTML = $('#txtPrimerNombreModal').val()+' '+$('#txtSegundoNombreModal').val();
-            $($('#tabMedicoEditar .table-responsive').find('tbody > tr')[indice]).children('td')[4].innerHTML =datos[4];
-            $($('#tabMedicoEditar .table-responsive').find('tbody > tr')[indice]).children('td')[5].innerHTML =datos[5];
-            $($('#tabMedicoEditar .table-responsive').find('tbody > tr')[indice]).children('td')[6].innerHTML =datos[6];
-            $($('#tabMedicoEditar .table-responsive').find('tbody > tr')[indice]).children('td')[7].innerHTML =datos[7];
-            $($('#tabMedicoEditar .table-responsive').find('tbody > tr')[indice]).children('td')[8].innerHTML =datos[8];
-            $($('#tabMedicoEditar .table-responsive').find('tbody > tr')[indice]).children('td')[9].innerHTML =datos[9];
-            $($('#tabMedicoEditar .table-responsive').find('tbody > tr')[indice]).children('td')[10].innerHTML =$("#cboEstadoModal").val();
+            $($('#tabMedicoEditar .table-responsive').find('tbody > tr')[indice]).children('td')[2].innerHTML = $('#txtPrimerApellidoModal').val()+' '+$('#txtSegundoApellidoModal').val()+' '+$('#txtPrimerNombreModal').val()+' '+$('#txtSegundoNombreModal').val() ;
+            //$($('#tabMedicoEditar .table-responsive').find('tbody > tr')[indice]).children('td')[3].innerHTML = ;
+            $($('#tabMedicoEditar .table-responsive').find('tbody > tr')[indice]).children('td')[3].innerHTML =$('#txtDomicilioModal').val();
+            $($('#tabMedicoEditar .table-responsive').find('tbody > tr')[indice]).children('td')[4].innerHTML =$('#txtCiudadModal').val();
+            $($('#tabMedicoEditar .table-responsive').find('tbody > tr')[indice]).children('td')[5].innerHTML =$('#txtTelefonoDomicilioModal').val();
+            $($('#tabMedicoEditar .table-responsive').find('tbody > tr')[indice]).children('td')[6].innerHTML =$('#txtTelefonoOficinaModal').val();
+            $($('#tabMedicoEditar .table-responsive').find('tbody > tr')[indice]).children('td')[7].innerHTML =$('#txtTelefonoMovilModal').val();
+            $($('#tabMedicoEditar .table-responsive').find('tbody > tr')[indice]).children('td')[8].innerHTML =$('#txtEmailModal').val();
+            $($('#tabMedicoEditar .table-responsive').find('tbody > tr')[indice]).children('td')[9].innerHTML =$("#cboEstadoModal").val();
             alertify.success("Datos Actualizados correctamente");
             var cont=0;     
             $("#tabMedicoEditar #modalEditarMedico").modal('toggle');

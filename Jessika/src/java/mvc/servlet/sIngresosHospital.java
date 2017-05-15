@@ -200,7 +200,7 @@ public class sIngresosHospital extends HttpServlet {
                 Integer idTipoIngreso =Integer.valueOf(request.getParameter("idTipoIngreso"));
                 Integer idEspecialidadEgreso =Integer.valueOf(request.getParameter("idEspecialidadEgreso"));
                 Date fechaEgreso = sdf.parse(request.getParameter("fechaEgreso"));
-                SimpleDateFormat format = new SimpleDateFormat("YYYY-MM-DD HH:MM");
+                SimpleDateFormat format = new SimpleDateFormat("HH:MM");
                 Date horaIngreso = format.parse(request.getParameter("horaIngreso"));
                 Boolean sos = Boolean.valueOf(request.getParameter("sos"));
                 Integer condicionEgreso = Integer.valueOf(request.getParameter("condicionEgreso"));
