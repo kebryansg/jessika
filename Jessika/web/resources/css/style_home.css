@@ -22,6 +22,25 @@
     display: flex;
     flex-flow: column nowrap;
     justify-content: space-around;
-    
+
 }
 /* Page Paciente */
+
+
+.tb_scroll tbody tr {
+    display: inline-table;
+    table-layout: fixed;
+    overflow: hidden;
+    
+}
+
+.tb_scroll table{
+    height: 300px;              
+    display: -moz-groupbox; 
+}
+.tb_scroll tbody{
+    overflow-y: scroll;      
+    height: 40vh;
+    min-height: 200px;
+    position: absolute;
+}

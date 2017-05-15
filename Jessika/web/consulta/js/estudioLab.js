@@ -77,4 +77,5 @@ function indexPagEstudioLab(pag, totalList, txt_filter, categoria) {
             $("#tableEstudiosLab  tbody").html(response);
         }
     });
+    $('table').bootstrapTable('resetView');
 }

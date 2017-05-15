@@ -31,8 +31,10 @@ $(document).ready(function () {
             $.getScript("paciente/js/paciente.js", function () {
                 td_tr_seleccionar(tablePaciente);
             });
+            
         });
         openModal("ListPaciente");
+        
     });
     $("#pac_Cargar").click(function () {
         limpiarDivPaciente();

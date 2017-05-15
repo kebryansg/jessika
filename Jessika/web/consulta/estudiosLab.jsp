@@ -15,21 +15,7 @@
         width: 100%;
     }*/
 
-    tbody tr {
-        display: inline-table;
-        table-layout: fixed;
-    }
-
-    table{
-        height:300px;              
-        display: -moz-groupbox; 
-    }
-    tbody{
-        overflow-y: scroll;      
-        height: 40vh;
-        min-height: 200px;
-        position: absolute;
-    }
+    
 
 
 
@@ -67,12 +53,12 @@
     <div class="row">
         <div class="col-md-12">
             <div class="table-responsive">
-                <table class="table table-hover table-striped" id="tableEstudiosLab">
+                <table data-toggle="table" data-height="300" id="tableEstudiosLab">
                     <thead style="font-weight: bold;">
                         <tr>
-                            <td class="col-md-2" >Categoria</td>
-                            <td class="col-md-7">Estudio de laboratorio</td>
-                            <td class="col-md-2">Selecciòn</td>
+                            <th>Categoria</th>
+                            <th>Estudio de laboratorio</th>
+                            <th>Selecciòn</th>
                         </tr>
                     </thead>
                     <tbody ></tbody>
@@ -93,11 +79,11 @@
     <div class="row">
         <div class="col-md-12">
             <div class="table-responsive">
-                <table class="table table-hover table-striped">
+                <table data-toggle="table" data-height="300">
                     <thead style="font-weight: bold;">
                         <tr>
-                            <td class="col-md-8">Estudio de laboratorio</td>
-                            <td class="col-md-1">Eliminar</td>
+                            <th>Estudio de laboratorio</td>
+                            <th>Eliminar</td>
                         </tr>
                     </thead>
                     <tbody id="tableEstudiosLabSelec"></tbody>
@@ -107,6 +93,7 @@
     </div>
 </div>
 <script src="resources/js/configuracionInicial.js" type="text/javascript"></script>                        
+<script src="resources/bootstrap/table/bootstrap-table.min.js" type="text/javascript"></script>
 <script type="text/javascript" >
     $.getScript("consulta/js/estudioLab.js", function () {
         cboCategoria_load($("#cboCategoria"));
@@ -126,7 +113,7 @@
     $("#tableEstudiosLab").on("click", "button[name='estlab']", function () {
         cat = $("#cboCategoria").val();
         var tr = $(this).closest("tr");//.find("td:eq("+ ((cat === "0")? "1":"0") +")");
-        html = "<tr data-id='" + $(tr).attr("data-id") + "'><td class='col-md-8'>" + $(tr).find("td:eq(" + ((cat === "0") ? "1" : "0") + ")").html() + "</td><td class='col-md-1'><button class='btn btn-danger' name='estlab_del'>Eliminar</button></td></tr>";
+        html = "<tr data-id='" + $(tr).attr("data-id") + "'><td class='col-xs-8'>" + $(tr).find("td:eq(" + ((cat === "0") ? "1" : "0") + ")").html() + "</td><td class='col-xs-1'><button class='btn btn-danger' name='estlab_del'>Eliminar</button></td></tr>";
         if ($("#tableEstudiosLabSelec tr[data-id='" + $(tr).attr("data-id") + "']").length === 0) {
             $("#tableEstudiosLabSelec").append(html);
         }
