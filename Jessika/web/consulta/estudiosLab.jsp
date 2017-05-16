@@ -1,29 +1,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<style> 
-    /*tbody {
-        display: block;
-        height: 40vh;
-        min-height: 200px;
-        overflow-y: scroll;
-    }
-    tr {
-        display: block;
-        overflow: hidden;
-    }
-    thead td{
-        width: 100%;
-    }*/
-
-    
-
-
-
-</style>
-
 <div class="container-fluid">
     <div class="row">
-        <div class="pull-right">
+        <div class="pull-right ">
             <div class="col-md-12">
 
                 <div class="form-inline">
@@ -82,8 +61,9 @@
                 <table id="tableEstudiosLabSelec" data-toggle="table" data-height="300">
                     <thead style="font-weight: bold;">
                         <tr>
-                            <th data-field="estudio">Estudio de laboratorio</td>
-                            <th data-field="eliminar">Eliminar</td>
+                            <th data-field="id">ID</th>
+                            <th data-field="estudio">Estudio de laboratorio</th>
+                            <th data-field="eliminar">Eliminar</th>
                         </tr>
                     </thead>
                     <tbody ></tbody>
@@ -95,6 +75,7 @@
 <script src="resources/bootstrap/table/bootstrap-table.min.js" type="text/javascript"></script>
 <script src="resources/js/configuracionInicial.js" type="text/javascript"></script>
 <script type="text/javascript" >
+    //$("#tableEstudiosLabSelec").bootstrapTable("hideColumn", "id");
     $.getScript("consulta/js/estudioLab.js", function () {
         cboCategoria_load($("#cboCategoria"));
         list_filter_estLab();
@@ -114,17 +95,21 @@
         cat = $("#cboCategoria").val();
         var rows = [];
         var tr = $(this).closest("tr");//.find("td:eq("+ ((cat === "0")? "1":"0") +")");
-        
         rows.push({
-            estudio: "si",
-            eliminar:"<button class='btn btn-danger' name='estlab_del'>Eliminar</button>"
+            id: $(tr).attr("data-id"),
+            estudio: $(tr).find("td:eq(" + ((cat === "0") ? "1" : "0") + ")").html(),
+            eliminar: "<button class='btn btn-danger' name='estlab_del'>Eliminar</button>"
         });
-        alert();
-        $("#tableEstudiosLabSelec").bootstrapTable("append",rows);
-        //html = "<tr data-id='" + $(tr).attr("data-id") + "'><td class='col-xs-8'>" + $(tr).find("td:eq(" + ((cat === "0") ? "1" : "0") + ")").html() + "</td><td class='col-xs-1'><button class='btn btn-danger' name='estlab_del'>Eliminar</button></td></tr>";
-        /*if ($("#tableEstudiosLabSelec tr[data-id='" + $(tr).attr("data-id") + "']").length === 0) {
-            $("#tableEstudiosLabSelec").append(html);
-        }*/
+        bandera = true;
+        $.each($("#tableEstudiosLabSelec tbody tr"),function(index,trs){
+            if($(trs).find("td:first").html() === $(tr).attr("data-id")){
+                bandera = false;
+                return;
+            }
+        });
+        if (bandera) {
+            $("#tableEstudiosLabSelec").bootstrapTable("append", rows);
+        }
     });
     $("#tableEstudiosLabSelec").on("click", "button[name='estlab_del']", function () {
         $(this).closest("tr").remove();

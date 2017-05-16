@@ -1,4 +1,6 @@
 $(function () {
+    $('#editPaciente .modal-body').load("paciente/paciente.jsp");
+
     $.getScript("paciente/js/paciente.js", function () {
         list_filter();
     });
@@ -9,7 +11,7 @@ $(function () {
         });
     });
     $("#contenido").on("keyup", "#txt_filterPaciente", function () {
-            $.getScript("paciente/js/paciente.js", function () {
+        $.getScript("paciente/js/paciente.js", function () {
             list_filter();
         });
     });
@@ -21,7 +23,7 @@ $(function () {
             list_filter();
         });
     });
-    
+
     $("#editPaciente").on("hidden.bs.modal", function () {
         $("#editPaciente .modal-body").html("");
     });
@@ -33,10 +35,8 @@ $(function () {
 
 $("#contenido").on("click", "#tablePaciente button[name='editPaciente']", function () {
     var id = $(this).attr("data-id");
-    $('#editPaciente .modal-body').load("paciente/paciente.jsp", function () {
-        $.getScript("paciente/js/paciente.js", function () {
-            edit(id);
-        });
+    $.getScript("paciente/js/paciente.js", function () {
+        edit(id);
     });
     openModal("editPaciente");
 });

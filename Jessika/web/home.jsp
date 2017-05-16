@@ -170,7 +170,11 @@
                                     <h3 class="panel-title">Titulo del panel (Colores por definir)</h3>
                                 </div>
                                 <div id="contenido" class="panel-body">
-                                    
+                                    <div class="list-group">
+                                        <li href="#" class="list-group-item">First item <span class="badge"> <a href="#">x</a> </span></li>
+                                        <a href="#" class="list-group-item">Second item</a>
+                                        <a href="#" class="list-group-item">Third item</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -189,10 +193,10 @@
 
         </div>
         <!-- /#wrapper -->
-        
+
         <script type="text/javascript">
-$("#contenido").load("consulta/estudiosLab.jsp");
+            //$("#contenido").load("consulta/estudiosLab.jsp");
         </script>
-        
+
     </body>
 </html>
