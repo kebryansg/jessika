@@ -20,7 +20,7 @@ var ultimo=-1;
 var filas=5;
 $("#tabMedicoEditar #txtBuscar").text("");
 $("#tabMedicoEditar #cboMostrar").val(5);     
-cargarMedicos(1);
+cargarMedicos(0);
 
 function validar(id) {
     var email = $("#tabMedicoEditar input[validate='email']");
@@ -179,7 +179,7 @@ $('#tabMedicoEditar #paginacionMedico ul').click(function (e) {
 });
 
 $('#tabMedicoEditar #cboMostrar').on('change', function() {   
-    pagina=1;
+    pagina=0;
     cargarMedicos(pagina);
     filas=$("#tabMedicoEditar #cboMostrar").val();
 });
