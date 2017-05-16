@@ -72,7 +72,7 @@ function cargarIngresos()
                     else 
                         $("#paginacionIngresosEditar ul ").append('<li id='+i+'><a href="#">'+indice+'</a></li>');
                 }
-                ultimo=indice;
+                ultimo=parseInt(totalPaginas)-1;
                 $("#paginacionIngresosEditar ul").append('<li id="adelante"> <a href="#">&raquo;</a></li>');
                 $('#tablaIngresos tr').remove();
                 $('#tablaIngresos thead').append("<tr>\n\                                                        <th style='display:none;'>No.</th>\n\
@@ -253,7 +253,7 @@ $('#tabMantenimientoIngresos .table-responsive').on("click", "#btnEliminar", fun
         }
         if(a.id==="adelante"  && pagina!==ultimo)    
             pagina=parseInt(pagina)+1
-        if(a.id==="atras" && pagina!==1)    
+        if(a.id==="atras" && pagina!==0)    
             pagina=parseInt(pagina)-1;                        
         cargarIngresos();
     });  

@@ -126,7 +126,7 @@ function cargarMedicos(pagina)
             else 
                 $("#tabMedicoEditar #paginacionMedico ul ").append('<li id='+i+'><a  href="#">'+indice+'</a></li>');
         }
-        ultimo=indice;
+        ultimo=parseInt(totalPaginas)-1;
         $("#tabMedicoEditar #paginacionMedico ul").append('<li id="adelante"><a href="#">&raquo;</a></li>');
         $('#tabMedicoEditar #tablaMedico thead').append("<tr>\n\<th >No.</th>\n\                                                \n\
                                             <th>Cédula</th>\n\
@@ -164,6 +164,8 @@ function cargarMedicos(pagina)
 
 $('#tabMedicoEditar #paginacionMedico ul').click(function (e) {
     var a = e.target.parentNode;
+    
+    
     if(a.id!=="adelante" && a.id!=="atras")
     {
         pagina=a.id;
@@ -171,7 +173,7 @@ $('#tabMedicoEditar #paginacionMedico ul').click(function (e) {
     if(a.id==="adelante"  && pagina!==ultimo)    
         pagina=parseInt(pagina)+1
     
-    if(a.id==="atras" && pagina!==1)    
+    if(a.id==="atras" && pagina!==0)    
         pagina=parseInt(pagina)-1;
     
     cargarMedicos(pagina);

@@ -136,7 +136,7 @@ $('#tabIngresos #btnCargar').click(function (event) {
                 else 
                     $("#tabIngresos #paginacionBuscarIngresos ul ").append('<li id='+i+' ><a href="#">'+indice+'</a></li>');
             }
-            ultimo=indice;
+            ultimo=parseInt(totalPaginas)-1;
             $("#tabIngresos #paginacionBuscarIngresos ul").append('<li id="adelante"><a href="#">&raquo;</a></li>');
             
             $('#tabIngresos #tablaPacientes thead').append("<tr>\n\
@@ -170,7 +170,7 @@ $('#tabIngresos #btnCargar').click(function (event) {
         }
         if(a.id==="adelante"  && pagina!==ultimo)    
             pagina=parseInt(pagina)+1
-        if(a.id==="atras" && pagina!==1)    
+        if(a.id==="atras" && pagina!==0)    
             pagina=parseInt(pagina)-1;
         cargarPacientes(pagina,buscar)
     });
