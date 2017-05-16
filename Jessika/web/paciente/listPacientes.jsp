@@ -26,19 +26,22 @@
         <br>
         <div class="row">
             <div class="col-md-12">
-                <div class="table-responsive">
-                    <table class="table table-bordered table-hover table-striped">
+                <div class="table-responsive ">
+                    <table  data-toggle="table" id="tablPaciente" data-height="300">
                         <thead style="font-weight: bold;">
                             <tr>
-                                <td style="width: 12%;">Historia Clinica</td>
-                                <td>Cèdula</td>
-                                <td>Apellidos y Nombres</td>
-                                <td>Ciudad</td>
-                                <td>Domicilio</td>
-                                <td style="width: 15%;">Acciòn</td>
+                                <th >H. Clinica</th>
+                                <th >Cèdula</th>
+                                <th >Apellidos y Nombres</th>
+                                <th >Ciudad</th>
+                                <th >Domicilio</th>
+                                <th >Acciòn</th>
                             </tr>
                         </thead>
-                        <tbody id="tablePaciente"></tbody>
+                        <tbody id="tablePaciente">
+
+
+                        </tbody>
                     </table>
                 </div>
 
@@ -73,7 +76,10 @@
     </div>
 </div>
 <script src="resources/js/configuracionInicial.js" type="text/javascript" ></script> 
-<script src="paciente/js/styleListPaciente.js" type="text/javascript"></script>-
+<script src="paciente/js/styleListPaciente.js" type="text/javascript"></script>
+
+        <script src="resources/bootstrap/table/bootstrap-table.min.js" type="text/javascript"></script>
+<script src="resources/bootstrap/table/locale/bootstrap-table-es-ES.min.js" type="text/javascript"></script>
 
 <script type="text/javascript">
     $(function () {

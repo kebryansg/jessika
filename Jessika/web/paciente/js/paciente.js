@@ -81,8 +81,8 @@ function td_tr_seleccionar(tbody) {
         var id = $(tr).attr("data-id");
         $(tr).find("td:last").html("");
         $(tr).find("td:last").html('<button name="SeleccionarPaciente" class="btn btn-info">Seleccionar</button>');
-
     });
+    $('table').bootstrapTable('resetView');
 }
 
 function indexPag(pag, totalList, txt_filter) {
@@ -108,6 +108,7 @@ function indexPag(pag, totalList, txt_filter) {
 
         }
     });
+    $('table').bootstrapTable('resetView');
 }
 
 function list_filter() {

@@ -31,7 +31,7 @@
                 <input class="form-control solo-numero" readonly  id="con_cedulaPaciente" placeholder="Cedula Paciente" type="text" >
             </div>
             <div class="form-group col-md-4">
-                
+
                 <label class="control-label" for="con_nombrePaciente">Paciente:</label>
                 <input class="form-control solo-numero" readonly  id="con_nombrePaciente" placeholder="Nombre Paciente" type="text" >
             </div>
@@ -77,7 +77,8 @@
             </div>
             <div class="col-md-6">
                 <div class="col-md-4">
-                    <button class="btn btn-danger btn-block" onclick="openModal_Clean('SignosVitales')">Signos Vitales</button>    
+                    <button class="btn btn-danger btn-block" onclick="openModal_Clean('SignosVitales')">Signos Vitales</button>
+                    <button class="btn btn-danger btn-block" onclick="openModal('estLab')">Estudios Laboratorios</button>
                 </div>
 
 
@@ -160,5 +161,34 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="estLab" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Estudios de Laboratorio</h4>
+            </div>
+            <div class="modal-body">
+
+            </div>
+            <!--<div class="modal-footer">
+
+                <button id="btnActualizar" type="button"  class="btn btn-primary">Guardar</button>
+            </div>-->
+        </div>
+    </div>
+</div>                        
+
+
 <script src="consulta/js/styleConsulta.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+                        $("#estLab .modal-body").load("consulta/estudiosLab.jsp");
+
+$('#estLab').on('shown.bs.modal', function () {
+            $('#estLab table').bootstrapTable('resetView');
+        });
+                        //openModal("estLab");
+</script>
 <!--<script src="resources/js/configuracionInicial.js" type="text/javascript" ></script>-->
