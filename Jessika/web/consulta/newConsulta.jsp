@@ -23,8 +23,8 @@
         </div>    
         <div class="row">
             <div class="form-group col-md-2">
-                <label class="control-label" for="con_nombrePaciente">Nº Historia Clinica:</label>
-                <input class="form-control solo-numero" readonly  id="con_historiaPaciente" placeholder="Nº Historia Clinica" type="text" >
+                <label class="control-label" for="con_nombrePaciente">Nº Historia C.:</label>
+                <input class="form-control solo-numero" readonly  id="con_historiaPaciente" placeholder="Nº Historia C." type="text" >
             </div>
             <div class="form-group col-md-2">
                 <label class="control-label" for="con_nombrePaciente">Cedula:</label>
@@ -35,11 +35,16 @@
                 <label class="control-label" for="con_nombrePaciente">Paciente:</label>
                 <input class="form-control solo-numero" readonly  id="con_nombrePaciente" placeholder="Nombre Paciente" type="text" >
             </div>
-            <div class="form-group col-md-3">
+            <div class="form-group col-md-2">
                 <label class="control-label" for="con_ciudadPaciente">Ciudad:</label>
                 <input class="form-control solo-numero" readonly  id="con_ciudadPaciente" placeholder="Ciudad Paciente" type="text" >
             </div>
+            <div class="form-group col-md-2">
+                <label class="control-label" for="con_edadPaciente">Edad:</label>
+                <input class="form-control solo-numero" id="con_edadPaciente" placeholder="Edad Paciente" type="text" >
+            </div>
         </div>  
+
         <hr>
         <div class="row">
             <div class="col-md-6">
@@ -76,18 +81,56 @@
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="col-md-4">
-                    <button class="btn btn-danger btn-block" onclick="openModal_Clean('SignosVitales')">Signos Vitales</button>
+                <div class="col-md-6">
+                    <!--<button class="btn btn-danger btn-block" onclick="openModal_Clean('SignosVitales')">Signos Vitales</button>-->
                     <button class="btn btn-danger btn-block" onclick="openModal('estLab')">Estudios Laboratorios</button>
                 </div>
 
 
             </div>
         </div>
+        <hr>
+        <div class="row">
+            <div class="form-group col-md-2">
+                <label class="form-control-label">Peso:</label>
+                <input validate="text" type="text" class="form-control solo-numero" placeholder="kg" id="sv_Peso">
+            </div>
+            <div class="form-group col-md-2">
+                <label class="form-control-label">Talla:</label>
+                <input validate="text" type="text" class="form-control solo-numero" placeholder="cm" id="sv_Talla">
+            </div>
+            <div class="form-group col-md-2">
+                <label class="form-control-label">F. Cardìaca:</label>
+                <input validate="text" type="text" class="form-control solo-numero" placeholder="x Minuto" id="sv_Frecuencia">
+            </div>
+            <div class="form-group col-md-2">
+                <label class="form-control-label">Presiòn Arterial:</label>
+                <input validate="text" type="text" class="form-control solo-numero" placeholder="mmHg" id="sv_Presion">
+            </div>
+            <div class="form-group col-md-2">
+                <label class="form-control-label">Temperatura:</label>
+                <input validate="text" type="text" class="form-control solo-numero" placeholder="ºC" id="sv_Temperatura">
+            </div>
+            <div class="clearfix"></div>
+            <div class="form-group col-md-4">
+                <label class="form-control-label">FUM:</label>
+                <div class="input-group date form_date" data-date="" data-date-format="yyyy-mm-dd">
+                    <input class="form-control" validate="date" id="sv_FUM" size="16" type="text" value="" readonly>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                </div>  
+            </div>
+            <div class="form-group col-md-4">
+                <label class="form-control-label">FUC:</label>
+                <div class="input-group date form_date" data-date="" data-date-format="yyyy-mm-dd">
+                    <input class="form-control" validate="date" id="sv_FUC" size="16" type="text" value="" readonly>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                </div>  
+            </div>
+        </div>
     </div>
 </div>
 
-<div class="modal fade" id="SignosVitales" role="dialog">
+<!--<div class="modal fade" id="SignosVitales" role="dialog">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -142,7 +185,7 @@
             </div>
         </div>
     </div>
-</div>
+</div>-->
 
 <div class="modal fade" id="ListPaciente" role="dialog">
     <div class="modal-dialog modal-lg">
@@ -179,10 +222,4 @@
         </div>
     </div>
 </div>                        
-
-
 <script src="consulta/js/styleConsulta.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-                        
-</script>

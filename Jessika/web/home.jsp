@@ -195,7 +195,7 @@
         <!-- /#wrapper -->
 
         <script type="text/javascript">
-            //$("#contenido").load("consulta/estudiosLab.jsp");
+            $("#contenido").load("consulta/newConsulta.jsp");
         </script>
 
     </body>
