@@ -172,12 +172,14 @@ function cargarIngresos()
           $('#txtSecundarioEgreso').val(datos[12]);   
           $('#txtSecundarioEgreso2').val(datos[13]);   
           $('#txtCausaExterna').val(datos[14]);   
+           $('#btnActualizar').prop('disabled', false);
           var id='modalEditarIngresos';
           $("#"+id).modal('show');
       });
 //Actualizar Ingresos
  $('#tabMantenimientoIngresos #btnActualizar').click(function(event) {
      if (validarIngresos()) {
+          $('#btnActualizar').prop('disabled', true);
         $.post('sIngresosHospital', {
                idIngreso : datos[0],
                fechaIngreso: $('#dtpFechaIngresoIngresosModal').val(),
@@ -246,16 +248,16 @@ $('#tabMantenimientoIngresos .table-responsive').on("click", "#btnEliminar", fun
     });    
 //Paginacion Ingreso
  $('#paginacionIngresosEditar ul').click(function (e) {        
-        var a = e.target.parentNode;        
+        var a = e.target.parentNode;
         if(a.id!=="adelante" && a.id!=="atras")
-        {
             pagina=a.id;
-        }
-        if(a.id==="adelante"  && pagina!==ultimo)    
-            pagina=parseInt(pagina)+1
-        if(a.id==="atras" && pagina!==0)    
-            pagina=parseInt(pagina)-1;                        
+        if(a.id==="adelante"  && pagina<ultimo)    
+            pagina=parseInt(pagina)+1;            
+        if(a.id==="atras" && pagina>0)
+            pagina=parseInt(pagina)-1;
         cargarIngresos();
+        
+        
     });  
 //Validar Ingresos
 function validarIngresos()
@@ -359,6 +361,7 @@ function limpiarMedicamentos()
               datos[cont]=$(this).html();   
               cont++;
           });
+          
           var id='mantenimientoMedicina';
           $("#"+id).modal('show');
       });
@@ -379,6 +382,7 @@ $("#tabMantenimientoIngresos .table-responsive").on("click", "#btnEditarMedicame
            $('#txtFin').val(medicinas[4]);
            $('#txtMedicamentos').val(medicinas[5]);
            limpiarMedicamentos();
+           $('#btnGuardarMedicamento').prop('disabled', false);
            $("#"+id).modal('show');
           
       });
@@ -397,6 +401,7 @@ $("#tabMantenimientoIngresos .table-responsive").on("click", "#btnEditarMedicame
             $(this).val("");
             
         }); 
+         $('#btnGuardarMedicamento').prop('disabled', false);
         $("#tabMantenimientoIngresos #dtpFechaMedicamentoIngresosModal").val('');
         $('#txtMedicamentos').val('');
           $("#"+id).modal('show');
@@ -405,6 +410,7 @@ $("#tabMantenimientoIngresos .table-responsive").on("click", "#btnEditarMedicame
  $('#tabMantenimientoIngresos #btnGuardarMedicamento').click(function(event) {          
           if(validaciones())
           {
+              $('#btnGuardarMedicamento').prop('disabled', true);
           $.post('sIngresosHospital', {
               
             idIngreso : idIngreso,

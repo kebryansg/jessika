@@ -164,18 +164,12 @@ function cargarMedicos(pagina)
 
 $('#tabMedicoEditar #paginacionMedico ul').click(function (e) {
     var a = e.target.parentNode;
-    
-    
     if(a.id!=="adelante" && a.id!=="atras")
-    {
         pagina=a.id;
-    }
-    if(a.id==="adelante"  && pagina!==ultimo)    
-        pagina=parseInt(pagina)+1
-    
-    if(a.id==="atras" && pagina!==0)    
+    if(a.id==="adelante"  && pagina<ultimo)    
+        pagina=parseInt(pagina)+1;            
+    if(a.id==="atras" && pagina>0)
         pagina=parseInt(pagina)-1;
-    
     cargarMedicos(pagina);
     
 });
