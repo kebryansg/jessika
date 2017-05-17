@@ -5,7 +5,7 @@ var totalPaginas = 0;
 var paginasVisibles = 5;
 var paginaActual = 1;
 var buscar = 0;
-var pagina=1;
+var pagina=0;
 var ultimo=-1;
 $("#tabIngresos #cboMostrar").val(5);
 limpiar();
@@ -14,7 +14,7 @@ $("#tabIngresos #txtBuscar").keyup(function (event) {
         buscar = 0;
     else
         buscar = 1;
-    pagina=1;
+    pagina=0;
     cargarPacientes(pagina,buscar);
 });
 function validarIngreso()
@@ -22,88 +22,52 @@ function validarIngreso()
     $("#tabIngresos .help-block").remove();
     $.each($("#tabIngresos input[validate='date']"), function (index, value) {
         $(value).change(function(){    		               
-                validarDateIngresos(value);
+                validarDate(value);
 	});
-        validarDateIngresos(value);
+        validarDate(value);
         
     });
+    var codigo = $("#tabIngresos #txtCodigoCie");
     $('#tabIngresos #txtCodigoCie').blur(function(){    		               
-        validarCodigo();
+        validarText(codigo);
     });
-    validarCodigo();
-    validarDefinitivoEgreso();
+    validarText(codigo);
+    var definitivo = $("#tabIngresos #txtDefinitivoEgreso");
+    validarText(definitivo);
     $('#tabIngresos #txtDefinitivoEgreso').blur(function(){    		               
-        validarDefinitivoEgreso();
+        validarText(definitivo);
     });
     if(idHistoria==0)
     {
         $('#tabIngresos #txtCedula').closest("div").addClass("has-error");
-        $('#tabIngresos #txtCedula').after('<span id="' + $('#tabIngresos #txtCedula').attr("id") + 'help" class="help-block">Cargar un paciente</span');
-     
+        $('#tabIngresos #txtCedula').after('<span id="' + $('#tabIngresos #txtCedula').attr("id") + 'help" class="help-block">Cargar un paciente</span');     
     }
     else
     {
-        $('#tabIngresos #txtCedula').closest("div").removeClass("has-error");
-        
+        $('#tabIngresos #txtCedula').closest("div").removeClass("has-error");        
     }
     return $("#tabIngresos .help-block").length === 0;
 }
-function validarCodigo()
-{
-    $("#tabIngresos #txtCodigoCiehelp").remove(); 
-    if ($('#tabIngresos #txtCodigoCie').val() === null || $('#tabIngresos #txtCodigoCie').val()==="" )
-        {
-            $('#tabIngresos #txtCodigoCie').closest("div").addClass("has-error");
-            $('#tabIngresos #txtCodigoCie').after('<span id="' + $('#tabIngresos #txtCodigoCie').attr("id") + 'help" class="help-block">Campo Vacio</span');
-        }
-        else
-        {
-            $('#tabIngresos #txtCodigoCie').closest("div").removeClass("has-error");
-        }
-}
-function validarDefinitivoEgreso()
-{
-    $("#tabIngresos #txtDefinitivoEgresohelp").remove();  
-    if ($('#tabIngresos #txtDefinitivoEgreso').val() === null || $('#tabIngresos #txtDefinitivoEgreso').val()==="" )
-        {
-            $('#tabIngresos #txtDefinitivoEgreso').closest("div").addClass("has-error");
-            $('#tabIngresos #txtDefinitivoEgreso').after('<span id="' + $('#tabIngresos #txtDefinitivoEgreso').attr("id") + 'help" class="help-block">Campo Vacio</span');
-        }
-        else
-        {
-            $('#txtDefinitivoEgreso').closest("div").removeClass("has-error");
-        }
-}
-function validarDateIngresos(value)
-{
-    if ($(value).val() === null || $(value).val() === "") {
-            $(value).closest("div").addClass("has-error");
-            $(value).parent("div").after('<span id="' + $(value).attr("id") + 'help" style="color:#a94442;" class="help-block">Sin Fecha</span');
-        } else
-        {
-            $(value).closest("div").removeClass("has-error");
-            $("#"+$(value).attr("id") + 'help').remove();
-        }
-}
+
+
 $('#btnBuscar').click(function (event) {    
     cargarPacientes(pagina,buscar);
 });
 $('#tabIngresos #cboMostrar').on('change', function () {
-    pagina=1;
+    pagina=0;
     cargarPacientes(pagina,buscar);
 });
-function momentToDate(varMoment, formato)
-{
-    var dateObj = new Date(varMoment);
-    var momentObj = moment(dateObj);
-    return momentObj.format(formato);
-
-}
 function limpiar()
 {
     $(':text').val('');
     $('textarea').val('');
-    //$('#tabIngresos tr:not(:first-child)').remove();
+    $.each($("#tabIngresos input[validate='date']"), function (index, value) {
+        $(value).off("blur");
+    });
+    $("#tabIngresos #txtDefinitivoEgreso").off("blur"); 
+    remover($("#tabIngresos #txtCodigoCie"));
+    remover($("#tabIngresos #txtDefinitivoEgreso"));
+    $("#tabIngresos .help-block").remove();
 }
 
 
@@ -167,10 +131,10 @@ $('#tabIngresos #btnCargar').click(function (event) {
             {
                 indice=parseInt(i)+1;
                 //<li><a href="#">1</a></li>                
-                if(indice==pagina)
-                    $("#tabIngresos #paginacionBuscarIngresos ul").append('<li id='+indice+' class="active"><a href="#">'+indice+'</a></li>');
+                if(i==pagina)
+                    $("#tabIngresos #paginacionBuscarIngresos ul").append('<li id='+i+' class="active"><a href="#">'+indice+'</a></li>');
                 else 
-                    $("#tabIngresos #paginacionBuscarIngresos ul ").append('<li id='+indice+' ><a href="#">'+indice+'</a></li>');
+                    $("#tabIngresos #paginacionBuscarIngresos ul ").append('<li id='+i+' ><a href="#">'+indice+'</a></li>');
             }
             ultimo=indice;
             $("#tabIngresos #paginacionBuscarIngresos ul").append('<li id="adelante"><a href="#">&raquo;</a></li>');
@@ -179,9 +143,8 @@ $('#tabIngresos #btnCargar').click(function (event) {
                                                 <th style='display: none'></th>\n\
                                                 <th class='col-lg-1'>No.</th>\n\
                                                 <th class='col-lg-3'>Cédula</th>\n\
-                                                <th class='col-lg-4'>Apellidos</th>\n\
-                                                <th class='col-lg-4'>Nombres</th>\n\
-                                                <th class='col-lg-4'>Opción</th>\n\
+                                                <th class='col-lg-8'>Apellidos y Nombres</th>\n\
+\n\                                             <th class='col-lg-4'>Opción</th>\n\
                                              </tr>");
             var resultado = JSON && JSON.parse(data) || $.parseJSON(data);  
             for(i=0;i <resultado.length; i++)
@@ -190,9 +153,8 @@ $('#tabIngresos #btnCargar').click(function (event) {
                                                 <td style='display: none'>"+resultado[i].idPaciente+"</td>\n\
                                                 <td>"+resultado[i].id+"</td>\n\
                                                 <td>"+resultado[i].cedula+"</td>\n\
-                                                <td>"+resultado[i].apellido1+" "+resultado[i].apellido2+"</td>\n\
-                                                <td>"+resultado[i].nombre1+" "+resultado[i].nombre2+"</td>\n\
-                                                <td style='width: 20%' ><button id='btnSeleccionar' type=\"button\" class='btn btn-primary'><span>Seleccionar</span> </button></td>\n\
+                                                <td>"+resultado[i].apellido1+" "+resultado[i].apellido2+" "+resultado[i].nombre1+" "+resultado[i].nombre2+"</td>\n\
+\n\                                         <td style='width: 20%' ><button id='btnSeleccionar' type=\"button\" class='btn btn-primary'><span>Seleccionar</span> </button></td>\n\
                                              </tr>");
             }
         });        
@@ -221,7 +183,7 @@ $('#tabIngresos #btnCargar').click(function (event) {
         });
         idHistoria=datos[1];
         $("#tabIngresos #txtCedula").val(datos[2]);
-        $("#tabIngresos #txtPaciente").val(datos[3]+' '+datos[4]);
+        $("#tabIngresos #txtPaciente").val(datos[3]);
         $('#tabIngresos #txtCedula').closest("div").removeClass("has-error");
          $("#tabIngresos #txtCedulahelp").remove();  
         closeModal("myModal");

@@ -179,21 +179,27 @@ public class sMedico extends HttpServlet {
             {
                 idMd = Integer.parseInt(request.getParameter("idMedico"));
                 unMedico.setId(idMd);
+                flag=true;
             }       
             medico.save(unMedico);
             //insertar
             Medico medi=null;
+            MedicoEspecialidadDao mediEspe= new MedicoEspecialidadDaoImp();
             if(!flag)
                 medi= new Medico(medico.id());
             else
+            {
                 medi= new Medico(Integer.parseInt(String.valueOf(idMd)));
+                mediEspe.delete(idMd);
+                
+            }
+            
             
             for (String idEspecialidad : idEspecialidades) {                
                 Especialidad espe;         
                 espe = new Especialidad(Integer.parseInt(idEspecialidad));
-                MedicoEspecialidad medicoEspe= new MedicoEspecialidad(medi,espe);
-                MedicoEspecialidadDao mediEspe= new MedicoEspecialidadDaoImp();
-                medicoEspe.setId(0);
+                MedicoEspecialidad medicoEspe= new MedicoEspecialidad(medi,espe);                
+                medicoEspe.setId(idMd);
                 mediEspe.save(medicoEspe);
             } 
         }

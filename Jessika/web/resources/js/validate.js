@@ -16,16 +16,16 @@ function validarText(value) {
 
 function validarSelect(value) {
     var bandera = true;
-    var valor = "#" + $(value).attr("id") + 'help';
-    $(valor).remove();
-    if ($(value).val() === "0") {
-        $(value).closest("div").addClass("has-error");
-        $(value).after('<span id="' + $(value).attr("id") + 'help" class="help-block">Sin seleccionar</span');
-        bandera = false;
-    } else
-    {
-        $(value).closest("div").removeClass("has-error");
-    }
+    var valor= "#"+$(value).attr("id") + 'help'; 
+         $(valor).remove();
+    if ($(value).val() === "0" || $(value).val() === null ) {
+            $(value).closest("div").addClass("has-error");
+            $(value).after('<span id="' + $(value).attr("id") + 'help" class="help-block">Sin seleccionar</span');
+            bandera=false;
+        } else
+        {
+            $(value).closest("div").removeClass("has-error");
+        } 
     return bandera;
 }
 function validarDate(value) {
@@ -72,4 +72,31 @@ function validarCedula(value) {
         $(value).closest("div").removeClass("has-error");
     }
     return bandera;
+}
+function remover(value)
+{
+    $(value).closest("div").removeClass("has-error");
+}
+function fechaMayorQue(fechaInicial,fechaFinal)
+{   
+    value=fechaInicial;
+     var valor = "#" + $(value).attr("id") + 'help';
+    $(valor).remove();
+    fechaInicial=moment(fechaInicial.val()).format('DD/MM/YYYY');
+    fechaFinal=moment(fechaFinal.val()).format('DD/MM/YYYY');
+    
+    valuesStart=fechaInicial.split("/");
+    valuesEnd=fechaFinal.split("/");
+    var dateStart=new Date(valuesStart[0],(valuesStart[1]-1),valuesStart[2]);
+    var dateEnd=new Date(valuesEnd[0],(valuesEnd[1]-1),valuesEnd[0]);
+    console.log(dateStart,dateEnd);
+    if(dateStart>=dateEnd)
+    {
+        $(value).closest("div").removeClass("has-error");
+        return 0;
+    }
+     
+     $(value).closest("div").addClass("has-error");
+        $(value).after('<span id="' + $(value).attr("id") + 'help" class="help-block">Rango No Válido</span');
+    return 1;
 }

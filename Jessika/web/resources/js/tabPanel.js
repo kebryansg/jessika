@@ -28,8 +28,9 @@ function registerComposeButtonEvent() {
         $("#contenido").load($(this).attr("data-url"), function()
         {
             ini();
+            $("#titulo").text($(this).attr("data-title"));
         });
-        $("#tituloPagina").text($(this).attr("data-title"));
+        
         /*if (pestañaValida($(this))) {
             var tabId = "compose" + composeCount; //this is id on tab content div where the 
             composeCount = composeCount + 1; //increment compose count

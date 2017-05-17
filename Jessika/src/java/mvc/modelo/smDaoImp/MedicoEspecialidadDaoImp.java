@@ -29,17 +29,7 @@ public class MedicoEspecialidadDaoImp implements MedicoEspecialidadDao {
         this.conn= con_db.open(con_db.MSSQL_SM);
         try 
         {
-            //Insert
-            if(value.getId()==0)
-            {
-                sql="INSERT INTO medico_especialidad (idMedico,idEspecialidad) values ('"+value.getIdMedico().getId()+"','"+value.getIdEspecialidad().getId()+"');";
-            }
-            //Update
-            else
-            {
-                sql="UPDATE medico_especialidad set idEspecialidad='+"+value.getIdEspecialidad().getId()+"', idMedico='"+value.getIdMedico().getId()+"' where id='"+value.getId()+"'";
-                
-            }
+            sql="INSERT INTO medico_especialidad (idMedico,idEspecialidad) values ('"+value.getIdMedico().getId()+"','"+value.getIdEspecialidad().getId()+"');";
             this.conn.execute(sql);
             return true;
         }
@@ -48,7 +38,8 @@ public class MedicoEspecialidadDaoImp implements MedicoEspecialidadDao {
             return false;
         }
     }
-
+    
+   
     @Override
     public List<MedicoEspecialidad> list(int id) {
         this.conn = con_db.open(con_db.MSSQL_SM);
@@ -76,6 +67,18 @@ public class MedicoEspecialidadDaoImp implements MedicoEspecialidadDao {
 
     @Override
     public boolean delete(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String sql="delete from medico_especialidad where idMedico="+id;
+        this.conn= con_db.open(con_db.MSSQL_SM);
+        try 
+        {                   
+            this.conn.execute(sql);
+            return true;
+        }
+        catch(Exception ex)
+        { 
+            return false;
+        }
+        
     }
+    
 }

@@ -166,4 +166,4 @@
     </div>
 </div>
                                                 </div>
-                                          
+<script src="resources/js/configuracionInicial.js" type="text/javascript" ></script>                                          

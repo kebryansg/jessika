@@ -44,7 +44,6 @@
                 <input class="form-control solo-numero" id="con_edadPaciente" placeholder="Edad Paciente" type="text" >
             </div>
         </div>  
-
         <hr>
         <div class="row">
             <div class="col-md-6">
@@ -71,62 +70,101 @@
                         </select>
                     </div>
                 </div>
+
+            </div>
+            <div class="col-md-6">
+                <div class="panel-group" id="accordion">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">
+                                    Signos vitales</a>
+                            </h4>
+                        </div>
+                        <div id="collapse1" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="form-group col-md-6">
+                                    <label class="form-control-label">Peso:</label>
+                                    <input validate="text" type="text" class="form-control solo-numero" placeholder="kg" id="sv_Peso">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label class="form-control-label">Talla:</label>
+                                    <input validate="text" type="text" class="form-control solo-numero" placeholder="cm" id="sv_Talla">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label class="form-control-label">F. Cardìaca:</label>
+                                    <input validate="text" type="text" class="form-control solo-numero" placeholder="x Minuto" id="sv_Frecuencia">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label class="form-control-label">Presiòn Arterial:</label>
+                                    <input validate="text" type="text" class="form-control solo-numero" placeholder="mmHg" id="sv_Presion">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label class="form-control-label">Temperatura:</label>
+                                    <input validate="text" type="text" class="form-control solo-numero" placeholder="ºC" id="sv_Temperatura">
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="form-group col-md-6">
+                                    <label class="form-control-label">FUM:</label>
+                                    <div class="input-group date form_date" data-date="" data-date-format="yyyy-mm-dd">
+                                        <input class="form-control" validate="date" id="sv_FUM" size="16" type="text" value="" readonly>
+                                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                    </div>  
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label class="form-control-label">FUC:</label>
+                                    <div class="input-group date form_date" data-date="" data-date-format="yyyy-mm-dd">
+                                        <input class="form-control" validate="date" id="sv_FUC" size="16" type="text" value="" readonly>
+                                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                    </div>  
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">
+                                    Estudios Generales</a>
+                            </h4>
+                        </div>
+                        <div id="collapse2" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <button class="btn btn-danger btn-block" onclick="openModal('estLab')">Estudios Laboratorios</button>
+                                <button class="btn btn-danger btn-block" onclick="">Estudios Imagenes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--<div class="col-md-6">
+                    <button class="btn btn-danger btn-block" onclick="openModal('estLab')">Estudios Laboratorios</button>
+                </div>-->
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
                 <div class="form-group">
                     <label class="control-label">Motivo</label>
                     <textarea class="form-control" validate="text" rows="3" id="con_Motivo"></textarea>
                 </div>
                 <div class="form-group">
                     <label class="control-label">Sintomas</label>
-                    <textarea class="form-control" validate="text" rows="5" id="con_Sintomas"></textarea>
+                    <textarea class="form-control" validate="text" rows="3" id="con_Sintomas"></textarea>
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="col-md-6">
-                    <!--<button class="btn btn-danger btn-block" onclick="openModal_Clean('SignosVitales')">Signos Vitales</button>-->
-                    <button class="btn btn-danger btn-block" onclick="openModal('estLab')">Estudios Laboratorios</button>
+                <div class="form-group">
+                    <label class="control-label">Diagnostico</label>
+                    <textarea class="form-control" validate="text" rows="3" id="con_Motivo"></textarea>
                 </div>
-
-
+                <div class="form-group">
+                    <label class="control-label">Prescripciòn</label>
+                    <textarea class="form-control" validate="text" rows="3" id="con_Sintomas"></textarea>
+                </div>
             </div>
         </div>
-        <hr>
-        <div class="row">
-            <div class="form-group col-md-2">
-                <label class="form-control-label">Peso:</label>
-                <input validate="text" type="text" class="form-control solo-numero" placeholder="kg" id="sv_Peso">
-            </div>
-            <div class="form-group col-md-2">
-                <label class="form-control-label">Talla:</label>
-                <input validate="text" type="text" class="form-control solo-numero" placeholder="cm" id="sv_Talla">
-            </div>
-            <div class="form-group col-md-2">
-                <label class="form-control-label">F. Cardìaca:</label>
-                <input validate="text" type="text" class="form-control solo-numero" placeholder="x Minuto" id="sv_Frecuencia">
-            </div>
-            <div class="form-group col-md-2">
-                <label class="form-control-label">Presiòn Arterial:</label>
-                <input validate="text" type="text" class="form-control solo-numero" placeholder="mmHg" id="sv_Presion">
-            </div>
-            <div class="form-group col-md-2">
-                <label class="form-control-label">Temperatura:</label>
-                <input validate="text" type="text" class="form-control solo-numero" placeholder="ºC" id="sv_Temperatura">
-            </div>
-            <div class="clearfix"></div>
-            <div class="form-group col-md-4">
-                <label class="form-control-label">FUM:</label>
-                <div class="input-group date form_date" data-date="" data-date-format="yyyy-mm-dd">
-                    <input class="form-control" validate="date" id="sv_FUM" size="16" type="text" value="" readonly>
-                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                </div>  
-            </div>
-            <div class="form-group col-md-4">
-                <label class="form-control-label">FUC:</label>
-                <div class="input-group date form_date" data-date="" data-date-format="yyyy-mm-dd">
-                    <input class="form-control" validate="date" id="sv_FUC" size="16" type="text" value="" readonly>
-                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                </div>  
-            </div>
-        </div>
+
     </div>
 </div>
 
