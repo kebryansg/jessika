@@ -52,6 +52,7 @@ function validarIngreso()
 
 $('#btnBuscar').click(function (event) {    
     cargarPacientes(pagina,buscar);
+    $("#myModal").modal('show');
 });
 $('#tabIngresos #cboMostrar').on('change', function () {
     pagina=0;
@@ -159,7 +160,7 @@ $('#tabIngresos #btnCargar').click(function (event) {
             }
         });        
         xhrRequest.push(xhr);
-        $("#myModal").modal('show');
+        
     }
     
     $('#paginacionBuscarIngresos ul').click(function (e) {        

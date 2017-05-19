@@ -20,7 +20,7 @@ var ultimo=-1;
 var filas=5;
 $("#tabMedicoEditar #txtBuscar").text("");
 $("#tabMedicoEditar #cboMostrar").val(5);     
-cargarMedicos(0);
+//cargarMedicos(0);
 
 function validar(id) {
     var email = $("#tabMedicoEditar input[validate='email']");

@@ -52,11 +52,11 @@
                                        <br />
                                      <div class="form-group input-group">
                                             <span class="input-group-addon"><i class="fa fa-tag"  ></i></span>
-                                            <input type="text" class="form-control" placeholder="Usuario " />
+                                            <input id="txtUsuario" type="text" class="form-control" placeholder="Usuario " />
                                         </div>
                                                                               <div class="form-group input-group">
                                             <span class="input-group-addon"><i class="fa fa-lock"  ></i></span>
-                                            <input type="password" class="form-control"  placeholder="Contraseña" />
+                                            <input id="txtClave" type="password" class="form-control"  placeholder="Contraseña" />
                                         </div>
                                     <div class="form-group">
                                             <label class="checkbox-inline">
