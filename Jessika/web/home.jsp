@@ -203,7 +203,7 @@
         <!-- /#wrapper -->
 
         <script type="text/javascript">
-            $("#contenido").load("consulta/newConsulta.jsp");
+            $("#contenido").load("consulta/ListHistorialC.jsp");
         </script>
 
     </body>
