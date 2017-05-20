@@ -306,10 +306,10 @@
 
         </div>
         <!-- /#wrapper -->
-        
-        <script type="text/javascript">
 
+        <script type="text/javascript">
+            $("#contenido").load("consulta/ListHistorialC.jsp");
         </script>
-        
+
     </body>
 </html>

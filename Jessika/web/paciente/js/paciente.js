@@ -82,7 +82,6 @@ function td_tr_seleccionar(tbody) {
         $(tr).find("td:last").html("");
         $(tr).find("td:last").html('<button name="SeleccionarPaciente" class="btn btn-info">Seleccionar</button>');
     });
-    $('table').bootstrapTable('resetView');
 }
 
 function indexPag(pag, totalList, txt_filter) {
@@ -105,11 +104,20 @@ function indexPag(pag, totalList, txt_filter) {
 
                 td_tr_seleccionar(tablePaciente);
             }
+            $('#tablPaciente').bootstrapTable('resetView');
 
         }
     });
-    $('table').bootstrapTable('resetView');
+
 }
+
+var defaultOpts = {
+    visiblePages: 10,
+    first: "Primero",
+    next: "Siguiente",
+    last: "Ultimo",
+    prev: "Anterior"
+};
 
 function list_filter() {
     var tablePaciente = $("#tablePaciente");
@@ -117,11 +125,10 @@ function list_filter() {
     var $pagination = $('#pagPacientes');
     var txt_filter = $("#txt_filterPaciente").val();
     var cantList = $("#cantList").val();
+    var $totalPages = 0;
     if (txt_filter === "") {
-        indexPag(1, cantList, txt_filter);
-        $pagination.twbsPagination('destroy');
+        $totalPages = 2;
     } else {
-        var $totalPages = 0;
         $.ajax({
             url: 'sPaciente',
             type: 'POST',
@@ -135,20 +142,14 @@ function list_filter() {
                 $totalPages = Math.ceil($totalPages);
             }
         });
-        var defaultOpts = {
-            totalPages: $totalPages,
-            visiblePages: 10,
-            first: "Primero",
-            next: "Siguiente",
-            last: "Ultimo",
-            prev: "Anterior",
-            onPageClick: function (event, page) {
-                indexPag(page, cantList, txt_filter);
-            }
-        };
-        $pagination.twbsPagination('destroy');
-        $pagination.twbsPagination(defaultOpts);
     }
+    $pagination.twbsPagination('destroy');
+    $pagination.twbsPagination($.extend({}, defaultOpts, {
+        onPageClick: function (event, page) {
+            indexPag(page, cantList, txt_filter);
+        },
+        totalPages: $totalPages
+    }));
 
 }
 
@@ -361,6 +362,6 @@ function asignarPaciente(paciente) {
 
 function limpiarPaciente() {
     $("#contenido").load("paciente/paciente.jsp", function () {
-        
+
     });
 }

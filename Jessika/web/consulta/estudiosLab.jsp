@@ -1,29 +1,14 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<style> 
-    /*tbody {
-        display: block;
-        height: 40vh;
-        min-height: 200px;
-        overflow-y: scroll;
-    }
-    tr {
-        display: block;
-        overflow: hidden;
-    }
-    thead td{
-        width: 100%;
-    }*/
-
+<style>
+    .modal-body{
     
-
-
-
-</style>
-
+    
+}
+    </style>
 <div class="container-fluid">
     <div class="row">
-        <div class="pull-right">
+        <div class="pull-right ">
             <div class="col-md-12">
 
                 <div class="form-inline">
@@ -56,9 +41,9 @@
                 <table data-toggle="table" data-height="300" id="tableEstudiosLab">
                     <thead style="font-weight: bold;">
                         <tr>
-                            <th>Categoria</th>
-                            <th>Estudio de laboratorio</th>
-                            <th>Selecciòn</th>
+                            <th data-field="categoria">Categoria</th>
+                            <th data-field="estudio">Estudio de laboratorio</th>
+                            <th data-field="seleccion">Accion</th>
                         </tr>
                     </thead>
                     <tbody ></tbody>
@@ -79,22 +64,24 @@
     <div class="row">
         <div class="col-md-12">
             <div class="table-responsive">
-                <table data-toggle="table" data-height="300">
+                <table id="tableEstudiosLabSelec" data-toggle="table" data-height="300">
                     <thead style="font-weight: bold;">
                         <tr>
-                            <th>Estudio de laboratorio</td>
-                            <th>Eliminar</td>
+                            <th data-field="id">ID</th>
+                            <th data-field="estudio">Estudio de laboratorio</th>
+                            <th data-field="eliminar">Eliminar</th>
                         </tr>
                     </thead>
-                    <tbody id="tableEstudiosLabSelec"></tbody>
+                    <tbody ></tbody>
                 </table>
             </div>
         </div>
     </div>
 </div>
-<script src="resources/js/configuracionInicial.js" type="text/javascript"></script>                        
 <script src="resources/bootstrap/table/bootstrap-table.min.js" type="text/javascript"></script>
+<script src="resources/js/configuracionInicial.js" type="text/javascript"></script>
 <script type="text/javascript" >
+    //$("#tableEstudiosLabSelec").bootstrapTable("hideColumn", "id");
     $.getScript("consulta/js/estudioLab.js", function () {
         cboCategoria_load($("#cboCategoria"));
         list_filter_estLab();
@@ -112,10 +99,22 @@
     });
     $("#tableEstudiosLab").on("click", "button[name='estlab']", function () {
         cat = $("#cboCategoria").val();
+        var rows = [];
         var tr = $(this).closest("tr");//.find("td:eq("+ ((cat === "0")? "1":"0") +")");
-        html = "<tr data-id='" + $(tr).attr("data-id") + "'><td class='col-xs-8'>" + $(tr).find("td:eq(" + ((cat === "0") ? "1" : "0") + ")").html() + "</td><td class='col-xs-1'><button class='btn btn-danger' name='estlab_del'>Eliminar</button></td></tr>";
-        if ($("#tableEstudiosLabSelec tr[data-id='" + $(tr).attr("data-id") + "']").length === 0) {
-            $("#tableEstudiosLabSelec").append(html);
+        rows.push({
+            id: $(tr).attr("data-id"),
+            estudio: $(tr).find("td:eq(" + ((cat === "0") ? "1" : "0") + ")").html(),
+            eliminar: "<button class='btn btn-danger' name='estlab_del'>Eliminar</button>"
+        });
+        bandera = true;
+        $.each($("#tableEstudiosLabSelec tbody tr"),function(index,trs){
+            if($(trs).find("td:first").html() === $(tr).attr("data-id")){
+                bandera = false;
+                return;
+            }
+        });
+        if (bandera) {
+            $("#tableEstudiosLabSelec").bootstrapTable("append", rows);
         }
     });
     $("#tableEstudiosLabSelec").on("click", "button[name='estlab_del']", function () {

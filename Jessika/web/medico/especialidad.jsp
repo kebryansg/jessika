@@ -2,6 +2,11 @@
 
 
 
+<%@page import="mvc.modelo.smDaoImp.EspecialidadDaoImp"%>
+<%@page import="mvc.controlador.entidades.sm.Especialidad"%>
+<%@page import="mvc.modelo.smDao.EspecialidadDao"%>
+<%@page import="java.util.List"%>
+<%@page import="mvc.modelo.smDao.EspecialidadDao"%>
 <div class="contenedor-tabs" id="tbEspecialidad">
     <div class="container-fluid">
         <div class="row ">
@@ -40,11 +45,30 @@
                         <thead>
                             <tr>
                                 <th >No.</th>
-                                <th>Descripci&oacute;n</th>
+                                <th class='col-lg-10'>Descripción</th>
                                 <th>Acci&oacute;n</th>
                             </tr>
                         </thead>
                         <tbody>
+                            <%
+                                EspecialidadDao espe= new EspecialidadDaoImp();                                                           
+                                List <Especialidad> list= espe.list(0,5,0,"");
+                                double totalPaginas= Float.parseFloat(String.valueOf(list.get(0).getRegistros()))/Float.parseFloat(String.valueOf("5"));
+                                totalPaginas=Math.ceil(totalPaginas);   
+                                for (Especialidad elem : list)
+                                {
+                                    %>
+                                    <tr>
+                                       <td><%=elem.getId()%></td>
+                                       <td><%=elem.getDescripcion()%></td>
+                                       <td >
+                                           <button id='botonEditar' class='btn btn-primary' onclick='openModal("myModal")'><span class='glyphicon glyphicon-pencil'></span> </button>
+                                           <button id='btnEliminar' class='btn btn-danger'><span class='glyphicon glyphicon-trash'></span></a></button>
+                                       </td>
+                                    </tr>
+                                    <%
+                                }
+                            %>
                         </tbody>
                     </table>
                 </div>
@@ -52,7 +76,27 @@
         </div>  
         <div style="text-align: right; width: 100%;" id="paginacionEspecialidad">
             <nav aria-label="Page navigation">
-                <ul class="pagination" id="pagEspecialidad"></ul>
+                <ul class="pagination" id="pagEspecialidad">
+                    <li id="atras"><a  href="#">&laquo;</a></li>
+                        <%
+                            for(int i=0;i <totalPaginas; i++)
+                            {
+                                int indice=i+1;
+                                if(i==0)
+                                {
+                                %>
+                                    <li id='<%=i%>' class="active"><a href="#"><%=indice%></a></li>
+                                <%
+                                }
+                                else 
+                                {
+                                %>
+                                <li id='<%=i%>' ><a href="#"><%=indice%></a></li>
+                                <%
+                                }
+                            }%> 
+                    <li id="adelante"><a href="#">&raquo;</a></li>
+                </ul>
             </nav>
         </div>        
     </div>

@@ -8,21 +8,28 @@ function cboCategoria_load(cbo) {
         },
         success: function (response) {
             $(cbo).html(response);
+            $(cbo).selectpicker('refresh');
         }
     });
 }
-
+var defaultOpt = {
+    visiblePages: 10,
+    first: "Primero",
+    next: "Siguiente",
+    last: "Ultimo",
+    prev: "Anterior"
+};
 function list_filter_estLab() {
-    $("#tableEstudiosLab tbody").html("");
+    var tablePaciente = $("#tableEstudiosLab tbody");
+    $(tablePaciente).html("");
     var $pagination = $('#pagEstudiosLab');
     var categoria = $('#cboCategoria').val();
     var txt_filter = $("#txt_filterEstudiosLab").val();
     var cantList = $("#cantListEstudiosLab").val();
+    var $totalPages = 0;
     if (txt_filter === "" && categoria === "0") {
-        indexPagEstudioLab(1, cantList, txt_filter, categoria);
-        $pagination.twbsPagination('destroy');
+        $totalPages = 2;
     } else {
-        var $totalPages = 0;
         $.ajax({
             url: 'sEstudioLab',
             type: 'POST',
@@ -37,22 +44,14 @@ function list_filter_estLab() {
                 $totalPages = Math.ceil($totalPages);
             }
         });
-        var defaultOpt = {
-            totalPages: $totalPages,
-            visiblePages: 10,
-            first: "Primero",
-            next: "Siguiente",
-            last: "Ultimo",
-            prev: "Anterior",
-            onPageClick: function (event, pag) {
-                //alert(pag);
-                indexPagEstudioLab(pag, cantList, txt_filter, categoria);
-                //indexPagEstudioLab(page, cantList, txt_filter, categoria);
-            }
-        };
-        $pagination.twbsPagination('destroy');
-        $pagination.twbsPagination(defaultOpt);
     }
+    $pagination.twbsPagination('destroy');
+    $pagination.twbsPagination($.extend({}, defaultOpt, {
+        onPageClick: function (event, pag) {
+            indexPagEstudioLab(pag, cantList, txt_filter, categoria);
+        },
+        totalPages: $totalPages
+    }));
 
 }
 function indexPagEstudioLab(pag, totalList, txt_filter, categoria) {
@@ -69,13 +68,13 @@ function indexPagEstudioLab(pag, totalList, txt_filter, categoria) {
             op: 'detalle'
         },
         success: function (response) {
-            if(categoria !== "0"){
-              $("#tableEstudiosLab  thead td:first").hide();  
-            }else{
-                $("#tableEstudiosLab  thead td:first").show();  
+            if (categoria !== "0") {
+                $("#tableEstudiosLab").bootstrapTable('hideColumn', 'categoria');
+            } else {
+                $("#tableEstudiosLab").bootstrapTable('showColumn', 'categoria');
             }
             $("#tableEstudiosLab  tbody").html(response);
+            $('table').bootstrapTable('resetView');
         }
     });
-    $('table').bootstrapTable('resetView');
 }
