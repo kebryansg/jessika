@@ -68,8 +68,7 @@
                                         </div>
                                      
                                      <a href="home.jsp" class="btn btn-primary ">Iniciar sesión</a>
-                                    <hr />
-                                    No está registrado ? <a href="#" >Click Aquí</a> 
+                                    
                                     </form>
                             </div>
                            
