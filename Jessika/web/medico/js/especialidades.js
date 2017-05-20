@@ -33,7 +33,7 @@
     }
     $("#tbEspecialidad #cboMostrar").val(5);   
     $('#tbEspecialidad #cboMostrar').on('change', function() {    
-         pagina=1;
+         pagina=0;
         cargarEspecialidades(pagina,buscar);   
         filas=$('#tbEspecialidad #cboMostrar').val();
     });    
@@ -170,7 +170,7 @@
                 else 
                     $("#tbEspecialidad #paginacionEspecialidad ul ").append('<li id='+i+'><a href="#">'+indice+'</a></li>');
             }
-            ultimo=indice;
+            ultimo=parseInt(totalPaginas)-1;
             $("#tbEspecialidad #paginacionEspecialidad ul").append('<li id="adelante" ><a href="#">&raquo;</a></li>');
             $('#tbEspecialidad #especialidades tr').remove();
             $('#tbEspecialidad #especialidades thead').append("<tr>\n\
@@ -194,16 +194,17 @@
         xhrRequest.push(xhr);
     }
     $('#tbEspecialidad #paginacionEspecialidad ul').click(function (e) {        
-        var a = e.target.parentNode;        
+        var a = e.target.parentNode; 
         if(a.id!=="adelante" && a.id!=="atras")
-        {
             pagina=a.id;
-        }
-        if(a.id==="adelante"  && pagina!==ultimo)    
-            pagina=parseInt(pagina)+1
-        if(a.id==="atras" && pagina!==1)    
+        if(a.id==="adelante"  && pagina<ultimo)    
+            pagina=parseInt(pagina)+1;            
+        if(a.id==="atras" && pagina>0)
             pagina=parseInt(pagina)-1;
         cargarEspecialidades(pagina,buscar);
+            
+        
+        
     });
 
 

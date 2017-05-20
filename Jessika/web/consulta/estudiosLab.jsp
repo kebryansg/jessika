@@ -56,14 +56,18 @@
     </div>
     <hr>
     <div class="row">
+        <button id="button" class="btn btn-default">Remover</button>
+    </div>
+    <div class="row">
         <div class="col-md-12">
+
             <div class="table-responsive">
                 <table id="tableEstudiosLabSelec" data-toggle="table" data-height="300">
                     <thead style="font-weight: bold;">
                         <tr>
+                            <th data-field="state" data-checkbox="true"></th>
                             <th data-field="id">ID</th>
                             <th data-field="estudio">Estudio de laboratorio</th>
-                            <th data-field="eliminar">Eliminar</th>
                         </tr>
                     </thead>
                     <tbody ></tbody>
@@ -76,6 +80,17 @@
 <script src="resources/js/configuracionInicial.js" type="text/javascript"></script>
 <script type="text/javascript" >
     //$("#tableEstudiosLabSelec").bootstrapTable("hideColumn", "id");
+    $('#button').click(function () {
+        var ids = $.map($("#tableEstudiosLabSelec").bootstrapTable('getSelections'), function (row) {
+            return row.id;
+        });
+        $("#tableEstudiosLabSelec").bootstrapTable('remove', {
+            field: 'id',
+            values: ids
+        });
+    });
+
+
     $.getScript("consulta/js/estudioLab.js", function () {
         cboCategoria_load($("#cboCategoria"));
         list_filter_estLab();
@@ -101,8 +116,8 @@
             eliminar: "<button class='btn btn-danger' name='estlab_del'>Eliminar</button>"
         });
         bandera = true;
-        $.each($("#tableEstudiosLabSelec tbody tr"),function(index,trs){
-            if($(trs).find("td:first").html() === $(tr).attr("data-id")){
+        $.each($("#tableEstudiosLabSelec tbody tr"), function (index, trs) {
+            if ($(trs).find("td:eq(1)").html() === $(tr).attr("data-id")) {
                 bandera = false;
                 return;
             }

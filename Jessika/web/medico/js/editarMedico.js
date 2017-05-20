@@ -20,7 +20,7 @@ var ultimo=-1;
 var filas=5;
 $("#tabMedicoEditar #txtBuscar").text("");
 $("#tabMedicoEditar #cboMostrar").val(5);     
-cargarMedicos(1);
+//cargarMedicos(0);
 
 function validar(id) {
     var email = $("#tabMedicoEditar input[validate='email']");
@@ -126,7 +126,7 @@ function cargarMedicos(pagina)
             else 
                 $("#tabMedicoEditar #paginacionMedico ul ").append('<li id='+i+'><a  href="#">'+indice+'</a></li>');
         }
-        ultimo=indice;
+        ultimo=parseInt(totalPaginas)-1;
         $("#tabMedicoEditar #paginacionMedico ul").append('<li id="adelante"><a href="#">&raquo;</a></li>');
         $('#tabMedicoEditar #tablaMedico thead').append("<tr>\n\<th >No.</th>\n\                                                \n\
                                             <th>Cédula</th>\n\
@@ -165,21 +165,17 @@ function cargarMedicos(pagina)
 $('#tabMedicoEditar #paginacionMedico ul').click(function (e) {
     var a = e.target.parentNode;
     if(a.id!=="adelante" && a.id!=="atras")
-    {
         pagina=a.id;
-    }
-    if(a.id==="adelante"  && pagina!==ultimo)    
-        pagina=parseInt(pagina)+1
-    
-    if(a.id==="atras" && pagina!==1)    
+    if(a.id==="adelante"  && pagina<ultimo)    
+        pagina=parseInt(pagina)+1;            
+    if(a.id==="atras" && pagina>0)
         pagina=parseInt(pagina)-1;
-    
     cargarMedicos(pagina);
     
 });
 
 $('#tabMedicoEditar #cboMostrar').on('change', function() {   
-    pagina=1;
+    pagina=0;
     cargarMedicos(pagina);
     filas=$("#tabMedicoEditar #cboMostrar").val();
 });

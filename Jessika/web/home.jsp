@@ -1,3 +1,7 @@
+<%@page import="java.util.List"%>
+<%@page import="mvc.modelo.smDaoImp.IngresosDaoImp"%>
+<%@page import="mvc.controlador.entidades.sm.HistorialClinico"%>
+<%@page import="mvc.modelo.smDao.IngresosDao"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -10,7 +14,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>Jessika 2.0</title>
+        <title>Jessika 3.0</title>
 
         <!-- Bootstrap Core CSS -->
         <link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -20,7 +24,7 @@
         <link href="resources/css/style_home.css" rel="stylesheet" type="text/css"/>
         <!-- Custom Fonts -->
         <link href="resources/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
+        <link href="resources/font-awesome/css/style.css" rel="stylesheet" type="text/css">
 
         <link href="resources/bootstrap/css/bootstrap-datetimepicker.css"  rel="stylesheet" type="text/css"/>
 
@@ -49,6 +53,7 @@
         <script src="resources/js/jquery.twbsPagination.js" type="text/javascript" ></script>
         <script src="resources/js/validate.js" type="text/javascript"></script>
         <script src="resources/js/style.js" type="text/javascript"></script>
+        <script src="resources/js/home.js" type="text/javascript"></script>
         <!--<script src="resources/js/tabPanel.js" type="text/javascript" > ></script>-->
 
 
@@ -102,23 +107,13 @@
                         </ul>
                     </li>
                     
-                    <li>
-                        <a href="javascript:;" data-toggle="collapse" data-target="#reportes">Reportes<i class="fa fa-fw fa-caret-down"></i></a>
-                        <ul id="reportes" class="collapse">
-                            <li>
-                                <a  data-url="" data-title="Ingresos" href="#"><i class="fa fa-user fa-fw" aria-hidden="true"></i>&nbsp; Hospitalizaciones</a>
-                            </li>
-                            <li>
-                                <a data-url="" data-title="Mantenimiento Ingresos" href="#"><i class="fa fa-address-book fa-fw" aria-hidden="true"></i>&nbsp; Consultas</a>
-                            </li>                            
-                        </ul>
-                    </li>
+                    
                 </ul>
                 <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
                 <div class="collapse navbar-collapse navbar-ex1-collapse" id="TabAdm">
                     <ul class="nav navbar-nav side-nav">
                         <li class="active">
-                            <a href="index.html"><i class="fa fa-fw fa-dashboard"></i> Inicio</a>
+                            <a href="home.jsp"><i class="fa fa-fw fa-dashboard"></i> Inicio</a>
                         </li>
                         <li>
                             <a href="javascript:;" data-toggle="collapse" data-target="#pacientes"> Pacientes <i class="fa fa-fw fa-caret-down"></i></a>
@@ -166,6 +161,17 @@
                                 </li>                            
                             </ul>
                         </li>
+                        <li>
+                        <a href="javascript:;" data-toggle="collapse" data-target="#reportes">Reportes<i class="fa fa-fw fa-caret-down"></i></a>
+                        <ul id="reportes" class="collapse">
+                            <li>
+                                <a  data-url="" data-title="Ingresos" href="#"><i class="fa fa-user fa-fw" aria-hidden="true"></i>&nbsp; Hospitalizaciones</a>
+                            </li>
+                            <li>
+                                <a data-url="" data-title="Mantenimiento Ingresos" href="#"><i class="fa fa-address-book fa-fw" aria-hidden="true"></i>&nbsp; Consultas</a>
+                            </li>                            
+                        </ul>
+                    </li>
                     </ul>
                 </div>
                 <!-- /.navbar-collapse -->
@@ -203,7 +209,7 @@
         <!-- /#wrapper -->
 
         <script type="text/javascript">
-            $("#contenido").load("consulta/ListHistorialC.jsp");
+            $("#contenido").load("consulta/newConsulta.jsp");
         </script>
 
     </body>

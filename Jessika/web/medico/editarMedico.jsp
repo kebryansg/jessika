@@ -51,8 +51,51 @@
                                 <div class="col-xs-12">
                                     <div class="table-responsive" style="margin: 0 auto; text-align:left">
                                         <table id="tablaMedico" class="table table-bordered table-hover table-striped">
-                                            <thead><tr></tr></thead>
-                                            <tbody></tbody>
+                                                    <thead>
+                                                        <tr>
+                                                            <th >No.</th>
+                                                            <th>Cédula</th>
+                                                            <th >Apellidos y Nombres</th>
+                                                            <th >Domicilio</th>
+                                                            <th style='display:none;'>Ciudad</th>
+                                                            <th style='display:none;'>Teléf. Domicilio</th>
+                                                            <th style='display:none;'>Teléf. Oficina</th>
+                                                            <th>Teléf. Movil</th>
+                                                            <th style='display:none;' >Email</th>
+                                                            <th style='display:none;'>Estado</th>
+                                                            <th >Acci&oacute;n</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <%
+                                                            MedicoDao med= new MedicoDaoImp();
+                                                            List<Medico> lista= med.list(0,5,0, "");                                                              
+                                                            int totalPaginas=lista.get(0).getRegistros()/5;
+                                                            //totalPaginas=Math.ceil(totalPaginas); 
+                                                            for (Medico elem : lista)
+                                                            {
+                                                                %>
+                                                                <tr>
+                                                                    <td><%=elem.getId()%></td>
+                                                                    <td><%=elem.getCedula()%></td>
+                                                                    <td><%=elem.getApellidos1()+" "+elem.getApellidos2()+" "+elem.getNombre1()+" "+elem.getNombre2()%></td>
+                                                                    <td><%=elem.getDomicilio()%></td>
+                                                                    <td style='display:none;'><%=elem.getCiudad()%></td>
+                                                                    <td  style='display:none;'><%=elem.getTelefonoDomicilio()%></td>
+                                                                    <td  style='display:none;'><%=elem.getTelefonoOficina()%></td>
+                                                                    <td><%=elem.getTelefonoMovil()%></td>
+                                                                    <td style='display:none;'><%=elem.getEmail()%></td>
+                                                                    <td style='display:none;'><%=elem.getVisible()%></td>
+                                                                    <td >     
+                                                                        <button id='botonEditar' class='btn btn-primary'><span class='glyphicon glyphicon-pencil'></span> </button> 
+                                                                        <button id='btnEliminar' class='btn btn-danger'><span class='glyphicon glyphicon-trash'></span></a></button>
+                                                                    </td>
+                                                                </tr>
+                                                                <%
+                                                                
+                                                            }
+                                                        %>
+                                                    </tbody>
                                         </table>
                                     </div>
                                 </div>
@@ -60,7 +103,9 @@
                         </div>  
                         <!--Paginacion-->
                         <div style="text-align: right; width: 100%;" id="paginacionMedico">
-                            <ul class="pagination" id="paginacionMedicoul" ></ul>
+                            <ul class="pagination" id="paginacionMedicoul" >
+                                
+                            </ul>
                         </div>
                     
                     <!--Formulario ventana modal-->
