@@ -45,6 +45,20 @@ public class test {
         }
         return id;
     }
+    public static int getID_SM(String tabla) {
+        int id = 0;
+        C_BD conn = con_db.open(con_db.MSSQL_SM);
+        try {
+            ResultSet rs = conn.query("select IDENT_CURRENT('"+ tabla +"') id");
+            while (rs.next()) {
+                id = rs.getInt("id");
+            }
+        } catch (SQLException e) {
+        } finally {
+            conn.close();
+        }
+        return id;
+    }
 
     public static Date fechaSQL(String stringFecha) {
         try {

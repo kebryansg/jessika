@@ -16,9 +16,18 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import mvc.controlador.entidades.ip.Paciente;
+import mvc.controlador.entidades.sm.Caso;
+import mvc.controlador.entidades.sm.Consulta;
 import mvc.controlador.entidades.sm.HistorialClinico;
+import mvc.controlador.entidades.sm.MedicoEspecialidad;
+import mvc.controlador.entidades.sm.Metodos;
+import mvc.controlador.entidades.sm.SignosVitales;
 import mvc.modelo.ipDaoImp.PacienteDaoImp;
+import mvc.modelo.smDaoImp.CasoDaoImp;
+import mvc.modelo.smDaoImp.ConsultaDaoImp;
 import mvc.modelo.smDaoImp.HistorialClinicoDaoImp;
+import mvc.modelo.smDaoImp.SignosVitalesDaoImp;
+import test.test;
 
 /**
  *
@@ -95,10 +104,52 @@ public class sConsulta extends HttpServlet {
                 if (hc.getId() != 0) {
                     Paciente pc = new PacienteDaoImp().edit(hc.getIdPaciente());
                     out.print("{\"paciente\":" + gson.toJson(pc) + ",\"hc_id\": " + hc.getId() + "}");
-                }
-                else{
+                } else {
                     out.print("null");
                 }
+                out.flush();
+                out.close();
+                break;
+            case "save":
+                // Signos Vitales
+                SignosVitales sv = new SignosVitales(Integer.parseInt(request.getParameter("sv[id]")));
+
+                int idSV = (sv.getId() == 0) ? (test.getID_SM("signosVitales") + 1) : sv.getId();
+
+                sv.setPeso(Integer.parseInt(request.getParameter("sv[peso]")));
+                sv.setTalla(Integer.parseInt(request.getParameter("sv[talla]")));
+                sv.setTemperatura(Integer.parseInt(request.getParameter("sv[temperatura]")));
+                sv.setPresion(request.getParameter("sv[presion]"));
+                sv.setFrecuenciaC(Integer.parseInt(request.getParameter("sv[frecuenciaC]")));
+                sv.setFum(test.fechaSQL(request.getParameter("sv[fum]")));
+                sv.setFuc(test.fechaSQL(request.getParameter("sv[fuc]")));
+                new SignosVitalesDaoImp().save(sv);
+                sv.setId(idSV);
+                // Signos Vitales
+                Consulta consulta = new Consulta(0);
+                consulta.setMotivo(request.getParameter("dc[motivo]"));
+                consulta.setDiagnostico(request.getParameter("dc[diagnostico]"));
+                consulta.setPrescripcion(request.getParameter("dc[prescripcion]"));
+                consulta.setSintoma(request.getParameter("dc[sintomas]"));
+                consulta.setFecha(test.fechaSQL(request.getParameter("fecha")));
+                // Caso
+                Caso cs = new Caso(Integer.parseInt(request.getParameter("idCaso")));
+                if (cs.getId() == 0) {
+                    int idCaso = (test.getID_SM("caso") + 1);
+                    cs.setIdHistorialClinico(new HistorialClinico(Integer.parseInt(request.getParameter("idHc"))));
+                    new CasoDaoImp().save(cs);
+                    cs.setId(idCaso);
+                }
+                // Caso
+
+                consulta.setIdCaso(cs);
+                consulta.setIdMedicoEspecialidad(new MedicoEspecialidad(Integer.parseInt(request.getParameter("idEspecialidad"))));
+                consulta.setIdMetodo(new Metodos(1));
+                consulta.setIdSignosvitales(sv);
+
+                new ConsultaDaoImp().save(consulta);
+
+                out.print("hecho");
                 out.flush();
                 out.close();
                 break;

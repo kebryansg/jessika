@@ -32,6 +32,12 @@ $(document).ready(function () {
         $("#contenido").load("consulta/ListHistorialC.jsp");
         //alert();
     });
+    
+    $("#btnGuardarConsulta").click(function(){
+        $.getScript("consulta/js/consulta.js",function(){
+            saveConsulta();
+        });
+    });
 
 
 });

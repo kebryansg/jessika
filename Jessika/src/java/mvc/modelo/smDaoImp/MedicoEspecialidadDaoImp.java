@@ -44,11 +44,11 @@ public class MedicoEspecialidadDaoImp implements MedicoEspecialidadDao {
     public List<MedicoEspecialidad> list(int id) {
         this.conn = con_db.open(con_db.MSSQL_SM);
         List<MedicoEspecialidad> list = new ArrayList<>();
-        ResultSet rs = this.conn.query("SELECT especialidad.id,  especialidad.descripcion from medico_especialidad inner join especialidad on especialidad.id=medico_especialidad.idEspecialidad inner join medico on medico_especialidad.idMedico=medico.id WHERE medico.id="+id+"");
-        
+        ResultSet rs = this.conn.query("SELECT medico_especialidad.id me_id , especialidad.id,  especialidad.descripcion from medico_especialidad inner join especialidad on especialidad.id=medico_especialidad.idEspecialidad inner join medico on medico_especialidad.idMedico=medico.id WHERE medico.id="+id+"");
+        System.out.println("SELECT medico_especialidad.id me_id , especialidad.id,  especialidad.descripcion from medico_especialidad inner join especialidad on especialidad.id=medico_especialidad.idEspecialidad inner join medico on medico_especialidad.idMedico=medico.id WHERE medico.id="+id+"");
         try {
             while (rs.next()) {
-                MedicoEspecialidad value = new MedicoEspecialidad();                 
+                MedicoEspecialidad value = new MedicoEspecialidad(rs.getInt("me_id"));                 
                 value.setIdEspecialidad(new Especialidad(rs.getInt("id"),rs.getNString("descripcion")));                
                 list.add(value);
             }

@@ -54,6 +54,7 @@ public class SignosVitales implements Serializable {
     private List<Consulta> consultaList;
 
     public SignosVitales() {
+        this.id = 0;
     }
 
     public SignosVitales(Integer id) {

@@ -46,6 +46,7 @@ public class Caso implements Serializable {
     private List<Consulta> consultaList;
 
     public Caso() {
+        this.id =0;
     }
 
     public Caso(Integer id) {

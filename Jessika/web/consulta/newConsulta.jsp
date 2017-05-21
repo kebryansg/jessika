@@ -9,7 +9,7 @@
             <div class="col-md-12">
                 <div class="pull-right">
                     <button class="btn btn-info" id="btnCancelarConsulta">Cancelar</button>
-                    <button class="btn btn-info">Guardar</button>
+                    <button class="btn btn-info" id="btnGuardarConsulta">Guardar</button>
                 </div>
 
                 <div class="pull-left">
@@ -20,7 +20,7 @@
                         </div>
                         <div class="form-group">
                             <label for="casoId" class="control-label">Paciente:</label>
-                            <input type="text" class="form-control" style="width: 300px;" readonly id="PacienteId">
+                            <input type="text" class="form-control" style="width: 300px;" data-hc="1015" readonly id="PacienteId">
                         </div>
                     </div>
                 </div>
@@ -42,10 +42,10 @@
                     <select class="form-control selectpicker" validate="select" data-live-search="true" id="cboEspecialidadMedico">
                         <option value="0">Seleccione</option>
                         <%
-                            List<MedicoEspecialidad> list = new MedicoEspecialidadDaoImp().list(1068);
+                            List<MedicoEspecialidad> list = new MedicoEspecialidadDaoImp().list(2068);
                             for (MedicoEspecialidad m_e : list) {
                         %>
-                        <option value="0"><%= m_e.getIdEspecialidad().getDescripcion()%></option>
+                        <option value="<%= m_e.getId() %>"><%= m_e.getIdEspecialidad().getDescripcion()%></option>
                         <%
                             }
                         %>  
@@ -54,7 +54,7 @@
 
             </div>
             <div class="col-md-9">
-                <div class="well" style="background-color: #fff;">
+                <div class="well" id="sv_id" data-id="0" style="background-color: #fff;">
                     <div class="form-group col-md-2">
                         <label class="form-control-label">Peso:</label>
                         <input validate="text" type="text" class="form-control solo-numero" placeholder="kg" id="sv_Peso">
@@ -109,11 +109,11 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label class="control-label">Diagnostico</label>
-                    <textarea class="form-control" validate="text" rows="3" id="con_Motivo"></textarea>
+                    <textarea class="form-control" validate="text" rows="3" id="con_Diagnostico"></textarea>
                 </div>
                 <div class="form-group">
                     <label class="control-label">Prescripciòn</label>
-                    <textarea class="form-control" validate="text" rows="3" id="con_Sintomas"></textarea>
+                    <textarea class="form-control" validate="text" rows="3" id="con_Prescripcion"></textarea>
                 </div>
             </div>
         </div>
