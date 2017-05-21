@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -94,9 +95,23 @@ public class sConsulta extends HttpServlet {
         final String FORMATO_FECHA = "yyyy-MM-dd";
         final DateFormat DF = new SimpleDateFormat(FORMATO_FECHA);
         Gson gson = new GsonBuilder().setDateFormat(FORMATO_FECHA).create();
-
+        String result = "";
         String op = request.getParameter("op");
         switch (op) {
+            case "list":
+                List<Consulta> list = new CasoDaoImp().listConsulta(Integer.parseInt(request.getParameter("idHc")), "", "", request.getParameter("filter"), 0, 5);
+                for (Consulta con : list) {
+                    result+="<tr>";
+                    result+="<td>"+ test.SQLSave(con.getFecha()) +"</td>";
+                    result+="<td>"+ con.getMotivo() +"</td>";
+                    result+="<td><button name=\"addHistorialCaso\" data-id=\""+ con.getIdCaso().getId() +"\" class=\"btn btn-info\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"Agregar al caso..!\"> <i class=\"glyphicon glyphicon-plus\"></i> </button>\n" +
+"                                <button name=\"viewHistorialCaso\" class=\"btn btn-info\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"Historial caso..!\" > <i class=\"glyphicon glyphicon-align-justify\"></i> </button></td>";
+                    result+="</tr>";
+                }
+                out.print(result);
+                out.flush();
+                out.close();
+                break;
             case "paciente":
                 String codPaciente = request.getParameter("cod");
                 String opcion = (codPaciente.length() == 10) ? "cedula" : "hc";

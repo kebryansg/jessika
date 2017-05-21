@@ -1,28 +1,34 @@
+$(function () {
 
-$(function(){
-    $("#tbHC").on("click","button[name='addHistorialCaso']",function(){
+
+
+    $("#tbHC").on("click", "button[name='addHistorialCaso']", function () {
         nomPaciente = $("#con_nombrePaciente").val();
-        $("#contenido").load("consulta/newConsulta.jsp",function(){
+        idCaso = $(this).attr("data-id");
+        hc = $("#con_historiaPaciente").val();
+        $("#contenido").load("consulta/newConsulta.jsp", function () {
             $("#PacienteId").val(nomPaciente);
+            $("#casoId").val(idCaso);
+            $("#PacienteId").attr("data-hc", hc);
         });
     });
-    
-    $("#btnNewConsulta").click(function(){
+
+    $("#btnNewConsulta").click(function () {
         nomPaciente = $("#con_nombrePaciente").val();
-        $("#contenido").load("consulta/newConsulta.jsp",function(){
+        hc = $("#con_historiaPaciente").val();
+        $("#contenido").load("consulta/newConsulta.jsp", function () {
             $("#PacienteId").val(nomPaciente);
+            $("#PacienteId").attr("data-hc", hc);
         });
     });
-    
-    
+
+
     modalListPaciente();
     $('#ListPaciente').on('shown.bs.modal', function () {
         $("#ListPaciente table").bootstrapTable('resetView');
     });
-    
-    
-    
-    
+
+
     $("#contenido").on("click", "#tablePaciente button[name='SeleccionarPaciente']", function () {
         var tr = $(this).closest("tr");
         var tds = $(tr).find("td");
@@ -31,24 +37,13 @@ $(function(){
         $("#con_nombrePaciente").val($(tds).eq(2).html());
         $("#con_ciudadPaciente").val($(tds).eq(3).html());
         closeModal("ListPaciente");
+        $.getScript("consulta/js/consulta.js", function () {
+            obtList();
+        });
     });
-
-    /*$("#ListPaciente").on("hidden.bs.modal", function () {
-        $("#ListPaciente .modal-body").html("");
-    });*/
 
 
     $("#contenido").on("click", "#pac_Buscar", function (e) {
-        /*$("#ListPaciente .modal-body").load("paciente/listPacientes.jsp", function () {
-         var tablePaciente = $("#tablePaciente");
-         $(tablePaciente).attr("modal", "1");
-         
-         $.getScript("paciente/js/paciente.js", function () {
-         td_tr_seleccionar(tablePaciente);
-         });
-         $("#tablPaciente").bootstrapTable('resetView');
-         
-         });*/
         openModal("ListPaciente");
     });
 
@@ -91,7 +86,7 @@ function modalListPaciente() {
         $.getScript("paciente/js/paciente.js", function () {
             td_tr_seleccionar(tablePaciente);
         });
-        
+
     });
 }
 function limpiarDivPaciente() {

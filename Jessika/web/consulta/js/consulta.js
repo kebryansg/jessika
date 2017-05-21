@@ -1,3 +1,6 @@
+function limpiarConsulta(){
+    
+}
 function saveConsulta() {
     $.ajax({
         url: "sConsulta",
@@ -13,13 +16,11 @@ function saveConsulta() {
         type: 'POST',
         async: false,
         success: function (data) {
-            alert(data);
+            alertify.success("Registrado correctamente...!");
+            
         }
 
     });
-
-
-
 }
 function obtenerSignosVitales() {
     sv = {
@@ -44,4 +45,23 @@ function obtenerDescripcion() {
         sintomas: $("#con_Sintomas").val()
     };
     return dc;
+}
+function obtList(){
+    $.ajax({
+        url: "sConsulta",
+        data: {
+            op: "list",
+            idHc: $("#con_historiaPaciente").val(),
+            filter: ""
+            //fecha: $("#con_Fecha").val()
+        },
+        type: 'POST',
+        async: false,
+        success: function (data) {
+            //alertify.success("Registrado correctamente...!");
+            $("#tbHC tbody").html(data);
+            $('#tbHC').bootstrapTable('resetView');
+        }
+
+    });
 }
