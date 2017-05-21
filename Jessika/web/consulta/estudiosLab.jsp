@@ -1,5 +1,11 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<style>
+    .modal-body{
+    
+    
+}
+    </style>
 <div class="container-fluid">
     <div class="row">
         <div class="pull-right ">

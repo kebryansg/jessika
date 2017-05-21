@@ -8,7 +8,7 @@
     var datos = [];
     var totalRegistros=0;
     var totalPaginas=0;
-    var pagina=0;
+    var pagina=1;
     var buscar=0;    
     var indice=0;
     var xhrRequest=[];
@@ -46,7 +46,7 @@
         
         cargarEspecialidades(pagina,buscar);   
     }); 
-    cargarEspecialidades(pagina,buscar);
+    //cargarEspecialidades(pagina,buscar);
     
     $("#tbEspecialidad .table-responsive").on("click", "#botonEditar", function(){           
         var cont=0;            
@@ -175,7 +175,7 @@
             $('#tbEspecialidad #especialidades tr').remove();
             $('#tbEspecialidad #especialidades thead').append("<tr>\n\
                                                 <th>No.</th>\n\
-                                                <th class='col-lg-9'>Descripción</th>\n\
+                                                <th class='col-lg-10'>Descripción</th>\n\
                                                 <th >Opción</th>\n\
                                               </tr>");
               

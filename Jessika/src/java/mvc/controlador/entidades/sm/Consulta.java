@@ -6,6 +6,7 @@
 package mvc.controlador.entidades.sm;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -18,11 +19,9 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
-/**
- *
- * @author kebryan
- */
 @Entity
 @Table(name = "consulta")
 @NamedQueries({
@@ -54,6 +53,56 @@ public class Consulta implements Serializable {
     @JoinColumn(name = "idSignosvitales", referencedColumnName = "id")
     @ManyToOne
     private SignosVitales idSignosvitales;
+    
+    @Column(name = "fecha")
+    @Temporal(TemporalType.DATE)
+    private Date fecha;
+    
+    
+    @Column(name = "motivo")
+    private String motivo;
+    @Column(name = "prescripcion")
+    private String prescripcion;
+    @Column(name = "diagnostico")
+    private String diagnostico;
+    @Column(name = "sintoma")
+    private String sintoma;
+
+    public String getMotivo() {
+        return motivo;
+    }
+
+    public void setMotivo(String motivo) {
+        this.motivo = motivo;
+    }
+
+    public String getPrescripcion() {
+        return prescripcion;
+    }
+
+    public void setPrescripcion(String prescripcion) {
+        this.prescripcion = prescripcion;
+    }
+
+    public String getDiagnostico() {
+        return diagnostico;
+    }
+
+    public void setDiagnostico(String diagnostico) {
+        this.diagnostico = diagnostico;
+    }
+
+    public String getSintoma() {
+        return sintoma;
+    }
+
+    public void setSintoma(String sintoma) {
+        this.sintoma = sintoma;
+    }
+    
+    
+    
+    
 
     public Consulta() {
     }
@@ -68,6 +117,13 @@ public class Consulta implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+    public Date getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
     }
 
     public List<ConsultaEstudiosImagen> getConsultaEstudiosImagenList() {

@@ -70,8 +70,8 @@
                                                         <%
                                                             MedicoDao med= new MedicoDaoImp();
                                                             List<Medico> lista= med.list(0,5,0, "");                                                              
-                                                            int totalPaginas=lista.get(0).getRegistros()/5;
-                                                            //totalPaginas=Math.ceil(totalPaginas); 
+                                                            double totalPaginas= Float.parseFloat(String.valueOf(lista.get(0).getRegistros()))/Float.parseFloat(String.valueOf("5"));
+                                                            totalPaginas=Math.ceil(totalPaginas);                                                             
                                                             for (Medico elem : lista)
                                                             {
                                                                 %>
@@ -104,7 +104,25 @@
                         <!--Paginacion-->
                         <div style="text-align: right; width: 100%;" id="paginacionMedico">
                             <ul class="pagination" id="paginacionMedicoul" >
-                                
+                                <li id="atras"><a  href="#">&laquo;</a></li>
+                               <%
+                                   for(int i=0;i <totalPaginas; i++)
+                                   {
+                                       int indice=i+1;
+                                       if(i==0)
+                                       {
+                                           %>
+                                           <li id='<%=i%>' class="active"><a href="#"><%=indice%></a></li>
+                                           <%
+                                       }
+                                       else 
+                                       {
+                                            %>
+                                           <li id='<%=i%>' ><a href="#"><%=indice%></a></li>
+                                           <%
+                                        }
+                                   }%> 
+                               <li id="adelante"><a href="#">&raquo;</a></li>
                             </ul>
                         </div>
                     

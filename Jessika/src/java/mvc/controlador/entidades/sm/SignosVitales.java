@@ -42,6 +42,8 @@ public class SignosVitales implements Serializable {
     private String presion;
     @Column(name = "temperatura")
     private Integer temperatura;
+    @Column(name = "frecuenciaC")
+    private Integer frecuenciaC;
     @Column(name = "fum")
     @Temporal(TemporalType.DATE)
     private Date fum;
@@ -73,6 +75,15 @@ public class SignosVitales implements Serializable {
     public void setPeso(Integer peso) {
         this.peso = peso;
     }
+
+    public Integer getFrecuenciaC() {
+        return frecuenciaC;
+    }
+
+    public void setFrecuenciaC(Integer frecuenciaC) {
+        this.frecuenciaC = frecuenciaC;
+    }
+    
 
     public Integer getTalla() {
         return talla;
