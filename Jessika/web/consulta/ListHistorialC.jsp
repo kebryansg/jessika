@@ -25,23 +25,33 @@
             <label class="control-label" for="con_nombrePaciente">Paciente:</label>
             <input class="form-control solo-numero" readonly  id="con_nombrePaciente" placeholder="Nombre Paciente" type="text" >
         </div>
-        <!--<div class="form-group col-md-2">
-            <label class="control-label" for="con_ciudadPaciente">Ciudad:</label>
-            <input class="form-control solo-numero" readonly  id="con_ciudadPaciente" placeholder="Ciudad Paciente" type="text" >
-        </div>-->
     </div>  
     <hr>
     <div class="row">
-        <div class="col-md-12">
-            <div class="pull-left">
-
-                <select class="form-control selectpicker" validate="select" data-live-search="true" >
-                    <option value="5">5</option>
-                    <option value="5">10</option>
-                    <option value="5">20</option>
-                </select>
+        <div class="col-md-2">
+            <select class="form-control selectpicker" validate="select" data-live-search="true" >
+                <option value="5">5</option>
+                <option value="5">10</option>
+                <option value="5">20</option>
+            </select>
+        </div>
+            <!--<div class="form-group col-md-3">
+                <label class="control-label" for="con_Fecha">Fecha Inicio</label>
+                <div class="input-group date form_date" data-date="" data-date-format="yyyy-mm-dd">
+                    <input class="form-control" validate="date" id="con_Fecha" size="16" type="text" value="" readonly>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                </div>    
             </div>
-            <div class="pull-right">
+            <div class="form-group col-md-3">
+                <label class="control-label" for="con_Fecha">Fecha Final</label>
+                <div class="input-group date form_date" data-date="" data-date-format="yyyy-mm-dd">
+                    <input class="form-control" validate="date" id="con_Fecha" size="16" type="text" value="" readonly>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                </div>    
+            </div>-->
+        <div class="col-md-4 col-md-offset-6"> 
+            <div class="form-inline">
+                <input class="form-control" style="width: 150px;" placeholder="Buscar" id="txt_filterHistorialC">
                 <button class="btn btn-info" id="btnNewConsulta"> Nueva Consulta </button>
             </div>
         </div>

@@ -16,10 +16,15 @@ $(function () {
     $("#btnNewConsulta").click(function () {
         nomPaciente = $("#con_nombrePaciente").val();
         hc = $("#con_historiaPaciente").val();
-        $("#contenido").load("consulta/newConsulta.jsp", function () {
-            $("#PacienteId").val(nomPaciente);
-            $("#PacienteId").attr("data-hc", hc);
-        });
+        if (hc !== "") {
+            $("#contenido").load("consulta/newConsulta.jsp", function () {
+                $("#PacienteId").val(nomPaciente);
+                $("#PacienteId").attr("data-hc", hc);
+            });
+        }
+        else{
+            alertify.success("Paciente no seleccionado...!");
+        }
     });
 
 
@@ -36,7 +41,7 @@ $(function () {
         $("#con_cedulaPaciente").val($(tds).eq(1).html());
         $("#con_nombrePaciente").val($(tds).eq(2).html());
         $("#con_ciudadPaciente").val($(tds).eq(3).html());
-        closeModal("ListPaciente");
+        //closeModal("ListPaciente");
         $.getScript("consulta/js/consulta.js", function () {
             obtList();
         });

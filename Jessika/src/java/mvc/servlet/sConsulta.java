@@ -163,6 +163,9 @@ public class sConsulta extends HttpServlet {
                 consulta.setIdSignosvitales(sv);
 
                 new ConsultaDaoImp().save(consulta);
+                
+                
+                
 
                 out.print("hecho");
                 out.flush();

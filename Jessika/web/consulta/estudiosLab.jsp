@@ -2,10 +2,10 @@
 <!DOCTYPE html>
 <style>
     .modal-body{
-    
-    
-}
-    </style>
+
+
+    }
+</style>
 <div class="container-fluid">
     <div class="row">
         <div class="pull-right ">
@@ -62,7 +62,11 @@
     </div>
     <hr>
     <div class="row">
-        <button id="button" class="btn btn-default">Remover</button>
+        <div class="col-md-12">
+            <div class="pull-left">
+                <button id="button" class="btn btn-default">Remover</button>    
+            </div>    
+        </div>
     </div>
     <div class="row">
         <div class="col-md-12">
@@ -118,8 +122,7 @@
         var tr = $(this).closest("tr");//.find("td:eq("+ ((cat === "0")? "1":"0") +")");
         rows.push({
             id: $(tr).attr("data-id"),
-            estudio: $(tr).find("td:eq(" + ((cat === "0") ? "1" : "0") + ")").html(),
-            eliminar: "<button class='btn btn-danger' name='estlab_del'>Eliminar</button>"
+            estudio: $(tr).find("td:eq(" + ((cat === "0") ? "1" : "0") + ")").html()
         });
         bandera = true;
         $.each($("#tableEstudiosLabSelec tbody tr"), function (index, trs) {

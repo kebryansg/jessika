@@ -80,7 +80,7 @@ function td_tr_seleccionar(tbody) {
     $.each($(tbody).find("tr"), function (index, tr) {
         var id = $(tr).attr("data-id");
         $(tr).find("td:last").html("");
-        $(tr).find("td:last").html('<button name="SeleccionarPaciente" class="btn btn-info">Seleccionar</button>');
+        $(tr).find("td:last").html('<button name="SeleccionarPaciente" data-dismiss="modal" class="btn btn-info">Seleccionar</button>');
     });
 }
 

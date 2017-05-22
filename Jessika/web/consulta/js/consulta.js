@@ -46,6 +46,9 @@ function obtenerDescripcion() {
     };
     return dc;
 }
+function obtenerEstudiosLab(){
+    
+}
 function obtList(){
     $.ajax({
         url: "sConsulta",

@@ -34,8 +34,10 @@ $(document).ready(function () {
     });
     
     $("#btnGuardarConsulta").click(function(){
+        //alert();
+        alert(JSON.stringify($("#tableEstudiosLabSelec").bootstrapTable('getData')));
         $.getScript("consulta/js/consulta.js",function(){
-            saveConsulta();
+            //saveConsulta();
         });
     });
 

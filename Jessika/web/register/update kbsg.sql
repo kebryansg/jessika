@@ -11,6 +11,7 @@ ALTER TABLE BD_SM.dbo.consulta ADD diagnostico nvarchar(100) go
 ALTER TABLE BD_SM.dbo.consulta ADD prescripcion nvarchar(100) go
 ALTER TABLE BD_SM.dbo.consulta ADD sintomas nvarchar(100) go
 
+ALTER TABLE BD_SM.dbo.consultaEstudiosLabs ADD valores nvarchar(100) go
 
 
 DROP TABLE BD_SM.dbo.prescripcion go
