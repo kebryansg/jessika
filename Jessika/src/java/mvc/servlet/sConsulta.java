@@ -19,6 +19,8 @@ import javax.servlet.http.HttpServletResponse;
 import mvc.controlador.entidades.ip.Paciente;
 import mvc.controlador.entidades.sm.Caso;
 import mvc.controlador.entidades.sm.Consulta;
+import mvc.controlador.entidades.sm.ConsultaEstudiosLabs;
+import mvc.controlador.entidades.sm.DetalleEstudiosLabs;
 import mvc.controlador.entidades.sm.HistorialClinico;
 import mvc.controlador.entidades.sm.MedicoEspecialidad;
 import mvc.controlador.entidades.sm.Metodos;
@@ -26,6 +28,7 @@ import mvc.controlador.entidades.sm.SignosVitales;
 import mvc.modelo.ipDaoImp.PacienteDaoImp;
 import mvc.modelo.smDaoImp.CasoDaoImp;
 import mvc.modelo.smDaoImp.ConsultaDaoImp;
+import mvc.modelo.smDaoImp.ConsultaEstudiosLabsDaoImp;
 import mvc.modelo.smDaoImp.HistorialClinicoDaoImp;
 import mvc.modelo.smDaoImp.SignosVitalesDaoImp;
 import test.test;
@@ -101,12 +104,12 @@ public class sConsulta extends HttpServlet {
             case "list":
                 List<Consulta> list = new CasoDaoImp().listConsulta(Integer.parseInt(request.getParameter("idHc")), "", "", request.getParameter("filter"), 0, 5);
                 for (Consulta con : list) {
-                    result+="<tr>";
-                    result+="<td>"+ test.SQLSave(con.getFecha()) +"</td>";
-                    result+="<td>"+ con.getMotivo() +"</td>";
-                    result+="<td><button name=\"addHistorialCaso\" data-id=\""+ con.getIdCaso().getId() +"\" class=\"btn btn-info\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"Agregar al caso..!\"> <i class=\"glyphicon glyphicon-plus\"></i> </button>\n" +
-"                                <button name=\"viewHistorialCaso\" class=\"btn btn-info\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"Historial caso..!\" > <i class=\"glyphicon glyphicon-align-justify\"></i> </button></td>";
-                    result+="</tr>";
+                    result += "<tr>";
+                    result += "<td>" + test.SQLSave(con.getFecha()) + "</td>";
+                    result += "<td>" + con.getMotivo() + "</td>";
+                    result += "<td><button name=\"addHistorialCaso\" data-id=\"" + con.getIdCaso().getId() + "\" class=\"btn btn-info\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"Agregar al caso..!\"> <i class=\"glyphicon glyphicon-plus\"></i> </button>\n"
+                            + "                                <button name=\"viewHistorialCaso\" class=\"btn btn-info\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"Historial caso..!\" > <i class=\"glyphicon glyphicon-align-justify\"></i> </button></td>";
+                    result += "</tr>";
                 }
                 out.print(result);
                 out.flush();
@@ -141,7 +144,10 @@ public class sConsulta extends HttpServlet {
                 new SignosVitalesDaoImp().save(sv);
                 sv.setId(idSV);
                 // Signos Vitales
+
                 Consulta consulta = new Consulta(0);
+                int idConsulta = (consulta.getId() == 0) ? (test.getID_SM("consulta") + 1) : consulta.getId();
+
                 consulta.setMotivo(request.getParameter("dc[motivo]"));
                 consulta.setDiagnostico(request.getParameter("dc[diagnostico]"));
                 consulta.setPrescripcion(request.getParameter("dc[prescripcion]"));
@@ -163,9 +169,19 @@ public class sConsulta extends HttpServlet {
                 consulta.setIdSignosvitales(sv);
 
                 new ConsultaDaoImp().save(consulta);
-                
-                
-                
+                consulta.setId(idConsulta);
+
+                //Estudios Lab
+                String[] estudLabs = request.getParameterValues("estudLab[]");
+                if (estudLabs != null) {
+                    for (String estudLab : estudLabs) {
+                        ConsultaEstudiosLabs cEstLab = new ConsultaEstudiosLabs();
+                        cEstLab.setIdConsulta(consulta);
+                        cEstLab.setIdDetalleEstudiosLabs(new DetalleEstudiosLabs(Integer.parseInt(estudLab)));
+                        new ConsultaEstudiosLabsDaoImp().save(cEstLab);
+                    }
+                }
+                //Estudios Lab
 
                 out.print("hecho");
                 out.flush();

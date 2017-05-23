@@ -1,11 +1,12 @@
-function limpiarConsulta(){
-    
+function limpiarConsulta() {
+
 }
 function saveConsulta() {
     $.ajax({
         url: "sConsulta",
         data: {
             op: "save",
+            estudLab: obtenerEstudiosLab(),
             idCaso: $("#casoId").val(),
             idHc: $("#PacienteId").attr("data-hc"),
             sv: obtenerSignosVitales(),
@@ -17,7 +18,7 @@ function saveConsulta() {
         async: false,
         success: function (data) {
             alertify.success("Registrado correctamente...!");
-            
+
         }
 
     });
@@ -46,17 +47,24 @@ function obtenerDescripcion() {
     };
     return dc;
 }
-function obtenerEstudiosLab(){
-    
+function obtenerEstudiosLab() {
+    alert();
+    est = $.parseJSON(JSON.stringify($("#tableEstudiosLabSelec").bootstrapTable('getData')));
+    estArreglo = [];
+    $.each(est, function (i, item) {
+        estArreglo.push(est[i].id);
+        //alert(est[i].id);
+    });
+    return estArreglo;
 }
-function obtList(){
+function obtList() {
     $.ajax({
         url: "sConsulta",
         data: {
             op: "list",
             idHc: $("#con_historiaPaciente").val(),
             filter: ""
-            //fecha: $("#con_Fecha").val()
+                    //fecha: $("#con_Fecha").val()
         },
         type: 'POST',
         async: false,

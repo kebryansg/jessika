@@ -42,10 +42,12 @@ public class ConsultaEstudiosLabs implements Serializable {
 
     public ConsultaEstudiosLabs() {
         this.id = 0;
+        this.valores = "";
     }
 
     public ConsultaEstudiosLabs(Integer id) {
         this.id = id;
+        this.valores = "";
     }
 
     public Integer getId() {
@@ -63,9 +65,6 @@ public class ConsultaEstudiosLabs implements Serializable {
     public void setValores(String valores) {
         this.valores = valores;
     }
-    
-    
-    
 
     public Consulta getIdConsulta() {
         return idConsulta;
@@ -107,5 +106,5 @@ public class ConsultaEstudiosLabs implements Serializable {
     public String toString() {
         return "mvc.controlador.entidades.sm.ConsultaEstudiosLabs[ id=" + id + " ]";
     }
-    
+
 }

@@ -30,14 +30,11 @@ $(document).ready(function () {
 
     $("#btnCancelarConsulta").click(function () {
         $("#contenido").load("consulta/ListHistorialC.jsp");
-        //alert();
     });
     
     $("#btnGuardarConsulta").click(function(){
-        //alert();
-        alert(JSON.stringify($("#tableEstudiosLabSelec").bootstrapTable('getData')));
         $.getScript("consulta/js/consulta.js",function(){
-            //saveConsulta();
+            saveConsulta();
         });
     });
 
