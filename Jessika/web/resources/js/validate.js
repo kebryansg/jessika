@@ -73,6 +73,21 @@ function validarCedula(value) {
     }
     return bandera;
 }
+function validarLogin(value) {
+    var bandera = true;
+    var valor = "#" + $(value).attr("id") + 'help';
+    $(valor).remove();
+    if ($(value).val() === null || $(value).val() === "") {
+
+        $(value).closest("div").addClass("has-error");
+        //$(value).after('<span id="' + $(value).attr("id") + 'help" class="help-block">Campo Vacio</span');
+        bandera = false;
+    } else
+    {
+        $(value).closest("div").removeClass("has-error");
+    }
+    return bandera;
+}
 function remover(value)
 {
     $(value).closest("div").removeClass("has-error");

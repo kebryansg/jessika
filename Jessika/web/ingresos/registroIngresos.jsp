@@ -31,15 +31,15 @@
             <div class="col-lg-12">                                    
                 <div class="row">                                            
                     <div class="form-group col-xs-6">
-                        <div class="col-md-12">                                                        
-                            <div class="col-md-4">
+                        <div class="col-md-12 col-xs-6">                                                        
+                            <div class="col-md-4 col-xs-3">
                                 <input type="text" class="form-control" id="txtCedula" placeholder="Cédula">
                             </div>
-                            <div class="col-md-8">
+                            <div class="col-md-8 col-xs-6">
                                 <div class="col-md-4">
                                     <button id="btnCargar" type="button" class="btn btn-primary">Cargar</button>   
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-3 col-xs-2">
                                     <button id="btnBuscar"  type="button" class="btn btn-primary">Buscar</button>   
                                 </div>
                             </div>

@@ -117,7 +117,7 @@ C_BD conn;
 
     @Override
     public boolean save(Medico value) {
-        String sql="";
+        String sql="", sql2="";
         this.conn= con_db.open(con_db.MSSQL_SM);
         try 
         {
@@ -126,14 +126,20 @@ C_BD conn;
             {
                 sql="INSERT INTO Medico (nombre1,nombre2,apellidos1,apellidos2,domicilio,ciudad,telefonoDomicilio,telefonoOficina, telefonoMovil,email, cedula,visible)\n" +
 "			values ('"+value.getNombre1()+"','"+value.getNombre2()+"','"+value.getApellidos1()+"','"+value.getApellidos2()+"','"+value.getDomicilio()+"','"+value.getCiudad()+"','"+value.getTelefonoDomicilio()+"','"+value.getTelefonoOficina()+"','"+value.getTelefonoMovil()+"','"+value.getEmail()+"','"+value.getCedula()+"','1');";
+                sql2="INSERT INTO usuario(nick, clave,idRol) VALUES ('"+value.getCedula()+"', ENCRYPTBYPASSPHRASE('encriptarClave','"+value.getCedula()+"'),1);";
             }
             //Update
             else
             {
                 sql="UPDATE medico SET nombre1='"+value.getNombre1()+"', nombre2='"+value.getNombre2()+"', apellidos1='"+value.getApellidos1()+"', apellidos2='"+value.getApellidos2()+"', domicilio='"+value.getDomicilio()+"', ciudad='"+value.getCiudad()+"', telefonoDomicilio='"+value.getTelefonoDomicilio()+"', telefonoOficina='"+value.getTelefonoOficina()+"', telefonoMovil='"+value.getTelefonoMovil()+"',email='"+value.getEmail()+"',cedula='"+value.getCedula()+"', visible='"+value.getVisible()+"' where id='"+value.getId()+"'";
                 
+                
             }
+           
+            
+            this.conn.execute(sql2);
             this.conn.execute(sql);
+            
             return true;
         }
         catch(Exception ex)

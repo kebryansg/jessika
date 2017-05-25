@@ -55,7 +55,7 @@
         <script src="resources/js/style.js" type="text/javascript"></script>
         <script src="resources/js/home.js" type="text/javascript"></script>
         <!--<script src="resources/js/tabPanel.js" type="text/javascript" > ></script>-->
-
+        
 
         <link rel="stylesheet" href="resources/bootstrap/css/bootstrap-select.min.css" >
         <script src="resources/bootstrap/js/bootstrap-select.min.js"></script>
@@ -69,7 +69,14 @@
     </head>
 
     <body>
-
+    <%
+         HttpSession sesion = request.getSession();
+        if(sesion.getAttribute("usuario") == null)
+        {
+            response.sendRedirect("login.jsp");
+            
+        }
+    %>
         <div id="wrapper">
 
             <!-- Navigation -->
@@ -82,27 +89,17 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="index.html">Jessika 2.0</a>
+                    <a class="navbar-brand" href="home.jsp">Jessika 3.0</a>
                 </div>
                 <!-- Top Menu Items -->
                 <ul class="nav navbar-right top-nav">
 
 
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> John Smith <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <%=session.getAttribute("nombresUsuario")%> <b class="caret"></b></a>
+                        <ul class="dropdown-menu">                            
                             <li>
-                                <a href="#"><i class="fa fa-fw fa-user"></i> Perfil</a>
-                            </li>
-                            <li>
-                                <a href="#"><i class="fa fa-fw fa-envelope"></i> Inbox</a>
-                            </li>
-                            <li>
-                                <a href="#"><i class="fa fa-fw fa-gear"></i> Configuracion</a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a href="#"><i class="fa fa-fw fa-power-off"></i> Salir</a>
+                                <a id="aSalida" href="#"><i class="fa fa-fw fa-power-off"></i> Salir</a>
                             </li>
                         </ul>
                     </li>
@@ -222,7 +219,7 @@
                                             </span>
                                             <div class="text-box" >
                                                 <p class="main-text">240 </p>
-                                                <p class="text-muted">Hospitaliaziones</p>
+                                                <p class="text-muted">Hospitaliaciones</p>
                                             </div>
                                         </div>
                                     </div>
@@ -308,8 +305,41 @@
         <!-- /#wrapper -->
 
         <script type="text/javascript">
-            $("#contenido").load("consulta/ListHistorialC.jsp");
+           // $("#contenido").load("consulta/ListHistorialC.jsp");
         </script>
-
+        <script type="text/javascript" src="usuario/login.js"></script>
+        <div class="modal fade" id="modalConfiguracion" role="dialog">
+            <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <h4 class="modal-title">Configuración</h4>
+                </div>
+                <div class="modal-body">
+                  <div class="modal-body">
+                    <div class="form-group">
+                        <label class="form-control-label">Usuario</label>
+                        <input validate="text" type="text" class="form-control" id="recipient-name">
+                    </div>
+                      <div class="form-group">
+                        <label class="form-control-label">Contraseña Actual</label>
+                        <input validate="text" type="text" class="form-control" id="recipient-name">
+                    </div>
+                      <div class="form-group">
+                        <label class="form-control-label">Nueva Contraseña</label>
+                        <input validate="text" type="text" class="form-control" id="recipient-name">
+                    </div>
+                      <div class="form-group">
+                        <label class="form-control-label">Confirmar Contraseña</label>
+                        <input validate="text" type="text" class="form-control" id="recipient-name">
+                    </div>
+                </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+              </div>
+            </div>
+          </div>
     </body>
 </html>

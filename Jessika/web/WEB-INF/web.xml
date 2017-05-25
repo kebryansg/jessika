@@ -32,6 +32,10 @@
         <servlet-name>sEstudioLab</servlet-name>
         <servlet-class>mvc.servlet.sEstudioLab</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>sUsuario</servlet-name>
+        <servlet-class>mvc.servlet.sUsuario</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>pruebaCombo</servlet-name>
         <url-pattern>/pruebaCombo</url-pattern>
@@ -63,6 +67,10 @@
     <servlet-mapping>
         <servlet-name>sEstudioLab</servlet-name>
         <url-pattern>/sEstudioLab</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>sUsuario</servlet-name>
+        <url-pattern>/sUsuario</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
