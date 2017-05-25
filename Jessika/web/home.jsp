@@ -209,7 +209,7 @@
         <!-- /#wrapper -->
 
         <script type="text/javascript">
-            $("#contenido").load("consulta/newConsulta.jsp");
+            $("#contenido").load("consulta/estudiosImg.jsp");
         </script>
 
     </body>

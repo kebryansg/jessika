@@ -35,6 +35,8 @@ public class DetallesEstudiosImg implements Serializable {
     private Integer id;
     @Column(name = "descripcion")
     private String descripcion;
+    @Column(name = "extremidades")
+    private String extremidades;
     @OneToMany(mappedBy = "idDetalleEstudiosImagen")
     private List<ConsultaEstudiosImagen> consultaEstudiosImagenList;
     @JoinColumn(name = "idEstudiosImg", referencedColumnName = "id")
@@ -42,6 +44,8 @@ public class DetallesEstudiosImg implements Serializable {
     private EstudioImagen idEstudiosImg;
 
     public DetallesEstudiosImg() {
+        this.id = 0;
+        this.extremidades = "";
     }
 
     public DetallesEstudiosImg(Integer id) {
@@ -63,6 +67,15 @@ public class DetallesEstudiosImg implements Serializable {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
+
+    public String getExtremidades() {
+        return extremidades;
+    }
+
+    public void setExtremidades(String extremidades) {
+        this.extremidades = extremidades;
+    }
+    
 
     public List<ConsultaEstudiosImagen> getConsultaEstudiosImagenList() {
         return consultaEstudiosImagenList;
@@ -104,5 +117,5 @@ public class DetallesEstudiosImg implements Serializable {
     public String toString() {
         return "mvc.controlador.entidades.sm.DetallesEstudiosImg[ id=" + id + " ]";
     }
-    
+
 }

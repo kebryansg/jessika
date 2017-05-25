@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package mvc.controlador.entidades.sm;
 
 import java.io.Serializable;
@@ -12,15 +8,13 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-/**
- *
- * @author kebryan
- */
 @Entity
 @Table(name = "estudioImagen")
 @NamedQueries({
@@ -36,6 +30,9 @@ public class EstudioImagen implements Serializable {
     private String descripcion;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idEstudiosImg")
     private List<DetallesEstudiosImg> detallesEstudiosImgList;
+    @JoinColumn(name = "idTipoEstudioImg", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private TipoEstudioImg idTipoEstudioImg;
 
     public EstudioImagen() {
     }
@@ -59,6 +56,15 @@ public class EstudioImagen implements Serializable {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
+
+    public TipoEstudioImg getIdTipoEstudioImg() {
+        return idTipoEstudioImg;
+    }
+
+    public void setIdTipoEstudioImg(TipoEstudioImg idTipoEstudioImg) {
+        this.idTipoEstudioImg = idTipoEstudioImg;
+    }
+    
 
     public List<DetallesEstudiosImg> getDetallesEstudiosImgList() {
         return detallesEstudiosImgList;
