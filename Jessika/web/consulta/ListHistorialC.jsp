@@ -85,7 +85,7 @@
     </div>
 </div>
 
-<div class="modal fade" id="ListPaciente" role="dialog">
+<div class="modal fade" id="ListPaciente" role="dialog" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">

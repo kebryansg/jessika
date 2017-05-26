@@ -16,8 +16,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import mvc.controlador.entidades.sm.DetallesEstudiosImg;
 import mvc.controlador.entidades.sm.EstudioImagen;
 import mvc.controlador.entidades.sm.TipoEstudioImg;
+import mvc.modelo.smDaoImp.EstudiosImgDaoImp;
 import mvc.modelo.smDaoImp.TipoEstudiosImgDaoImp;
 
 /**
@@ -82,6 +84,7 @@ public class sEstudioImg extends HttpServlet {
         response.setContentType("text/plain");
         PrintWriter out = response.getWriter();
         String result = "", op = request.getParameter("op");
+        int tipoEst = 0, est = 0;
 
         final String FORMATO_FECHA = "yyyy-MM-dd";
         final DateFormat DF = new SimpleDateFormat(FORMATO_FECHA);
@@ -92,20 +95,44 @@ public class sEstudioImg extends HttpServlet {
                 List<TipoEstudioImg> list_tipo = new TipoEstudiosImgDaoImp().list();
                 result += "<option value='0'>Seleccione</option>";
                 for (TipoEstudioImg tipoEstudioImg : list_tipo) {
-                    result += "<option value='" + tipoEstudioImg.getId() + "'>" + tipoEstudioImg.getDescripcion() + "</option>";
+                    result += "<option value='" + tipoEstudioImg.getId() + "'>" + tipoEstudioImg.getDescripcion().toUpperCase() + "</option>";
                 }
                 out.print(result);
                 out.flush();
                 out.close();
                 break;
-                
-            case "list_EstudioImg": 
+
+            case "list_EstudioImg":
                 List<EstudioImagen> list_estI = new TipoEstudiosImgDaoImp().list_estI(Integer.parseInt(request.getParameter("idTipo")));
                 result += "<option value='0'>Seleccione</option>";
                 for (EstudioImagen estudioImagen : list_estI) {
-                    result += "<option value='" + estudioImagen.getId() + "'>" + estudioImagen.getDescripcion() + "</option>";
+                    result += "<option value='" + estudioImagen.getId() + "'>" + estudioImagen.getDescripcion().toUpperCase() + "</option>";
                 }
-                
+
+                out.print(result);
+                out.flush();
+                out.close();
+                break;
+            case "list_DetEstudioImg":
+                tipoEst = Integer.parseInt(request.getParameter("idTipo"));
+                est = Integer.parseInt(request.getParameter("idEstudio"));
+                List<DetallesEstudiosImg> list_detEstI = new EstudiosImgDaoImp().list_det(tipoEst,est,request.getParameter("filter"), Integer.parseInt(request.getParameter("pag")), Integer.parseInt(request.getParameter("top")));
+                //result += "<option value='0'>Seleccione</option>";
+                for (DetallesEstudiosImg detallesEstudiosImg : list_detEstI) {
+                    result += "<tr data-id='"+ detallesEstudiosImg.getId() +"' >";
+                    result += "<td> " + detallesEstudiosImg.getIdEstudiosImg().getIdTipoEstudioImg().getDescripcion().toUpperCase()+ " </td>";
+                    result += "<td>" + detallesEstudiosImg.getDescripcion().toUpperCase()+ "</td>";
+                    result += "<td><button class='btn btn-info' name='estimg' data-ext='"+ detallesEstudiosImg.getExtremidades() +"'>Seleccionar</button></td>";
+                    result += "</tr>";
+                }
+                out.print(result);
+                out.flush();
+                out.close();
+                break;
+            case "list_size":
+                tipoEst = Integer.parseInt(request.getParameter("idTipo"));
+                est = Integer.parseInt(request.getParameter("idEstudio"));
+                result = String.valueOf(new EstudiosImgDaoImp().list_det(tipoEst,est, request.getParameter("filter"), 0, -1).size());
                 out.print(result);
                 out.flush();
                 out.close();

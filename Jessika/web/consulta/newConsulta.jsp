@@ -45,7 +45,7 @@
                             List<MedicoEspecialidad> list = new MedicoEspecialidadDaoImp().list(2068);
                             for (MedicoEspecialidad m_e : list) {
                         %>
-                        <option value="<%= m_e.getId() %>"><%= m_e.getIdEspecialidad().getDescripcion()%></option>
+                        <option value="<%= m_e.getId()%>"><%= m_e.getIdEspecialidad().getDescripcion()%></option>
                         <%
                             }
                         %>  
@@ -119,23 +119,24 @@
         </div>
         <hr>
         <div class="row">
-                <div class="form-group has-error col-md-3" id="showLabs">
-                    <button class="btn btn-danger" onclick="openModal('estLab')">Estudios Laboratorios</button>
-                    <span class="help-block">Ningun estudio de laboratorio.</span>
-                </div>
-                <div class="form-group has-error col-md-3" id="showImgs">
-                    <button class="btn btn-danger" onclick="">Estudios Imagenes</button>
-                    <span class="help-block">Ningun estudio de imagenes.</span>
-                </div>
+            <div class="form-group has-error col-md-3" id="showLabs">
+                <button class="btn btn-danger" onclick="openModal('estLab')">Estudios Laboratorios</button>
+                <span class="help-block">Ningun estudio de laboratorio.</span>
+            </div>
+            <div class="form-group has-error col-md-3" id="showImgs">
+                <button class="btn btn-danger" data-toggle="modal" data-target="#estImg">Estudios Imagenes</button>
+                <span class="help-block">Ningun estudio de imagenes.</span>
+            </div>
         </div>
     </div>
 </div>
 
-<div class="modal fade" id="estLab" role="dialog">
+<div class="modal fade" id="estLab" role="dialog" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-lg" >
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <!--<button type="button" class="close" data-dismiss="modal">&times;</button>-->
+                <button type="button" data-dismiss="modal"  class="btn btn-primary" style="float: right;">Guardar</button>
                 <h4 class="modal-title">Estudios de Laboratorio</h4>
             </div>
             <div class="modal-body">
@@ -147,5 +148,18 @@
             </div>-->
         </div>
     </div>
-</div>                        
+</div>         
+<div class="modal fade" id="estImg" tabindex="-1" role="dialog" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-lg" >
+        <div class="modal-content">
+            <div class="modal-header">
+                <!--<button type="button" class="close" data-dismiss="modal">&times;</button>-->
+                <button type="button" data-dismiss="modal"  class="btn btn-primary" style="float: right;">Guardar</button>
+                <h4 class="modal-title">Estudios de Imagenes</h4>
+            </div>
+            <div class="modal-body">
+            </div>
+        </div>
+    </div>
+</div>
 <script src="consulta/js/styleConsulta.js" type="text/javascript"></script>

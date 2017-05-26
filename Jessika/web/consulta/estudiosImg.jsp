@@ -4,7 +4,7 @@
     <div class="row">
         <div class="pull-right ">
             <div class="col-md-12">
-
+                
                 <div class="form-inline">
                     <input class="form-control" id="txt_filterEstudiosImg" placeholder="Buscar">
                     <select class="selectpicker" data-width="150px" id="cboTipoEstudiosImg"></select>
@@ -34,17 +34,13 @@
                 <table data-toggle="table" data-height="300" id="tableEstudiosImg">
                     <thead style="font-weight: bold;">
                         <tr>
-                            <th rowspan="2" data-field="categoria">Categoria</th>
-                            <th rowspan="2" data-field="estudio">Estudio de Imagenes</th>
-                            <th colspan="2" data-field="accion">Accion</th>
-                            <th rowspan="2" data-field="seleccion">Selec</th>
-                        </tr>
-                        <tr>
-                            <th data-field="name">Item Name</th>
-                            <th data-field="price">Item Price</th>
+                            <th data-field="tipoEstudio">Tipo Estudio</th>
+                            <th data-field="estudio">Estudio de Imagenes</th>
+                            <th data-field="accion">Accion</th>
                         </tr>
                     </thead>
-                    <tbody ></tbody>
+                    <tbody>
+                    </tbody>
                 </table>
             </div>
 
@@ -73,12 +69,20 @@
                 <table id="tableEstudiosImgSelec" data-toggle="table" data-height="300">
                     <thead style="font-weight: bold;">
                         <tr>
-                            <th data-field="state" data-checkbox="true"></th>
-                            <th data-field="id">ID</th>
-                            <th data-field="estudio">Estudio de imagenes</th>
+                            <th rowspan="2" data-valign="middle" data-field="state" data-checkbox="true"></th>
+                            <th rowspan="2" data-valign="middle" data-field="id" data-align="center" >ID</th>
+                            <th rowspan="2" data-valign="middle" data-field="tipoEstudio">Tipo estudio</th>
+                            <th rowspan="2" data-valign="middle" data-field="estudio">Estudio de imagenes</th>
+                            <th colspan="2" data-halign="center"  >Accion</th>
+                        </tr>
+                        <tr>
+                            <th data-field="der" data-align="center">Der.</th>
+                            <th data-field="izq" data-align="center">Izq.</th>
                         </tr>
                     </thead>
-                    <tbody ></tbody>
+                    <tbody>
+
+                    </tbody>
                 </table>
             </div>
         </div>
@@ -90,11 +94,67 @@
     $.getScript("consulta/js/estudioImg.js", function () {
         TipoEstudiosImg_load($("#cboTipoEstudiosImg"));
         EstudiosImg_load($("#cboEstudiosImg"));
+        list_filter_estImg();
     });
     $("#cboTipoEstudiosImg").on("changed.bs.select", function () {
         $.getScript("consulta/js/estudioImg.js", function () {
             EstudiosImg_load($("#cboEstudiosImg"));
         });
-
     });
+
+    $("#cboEstudiosImg").on("changed.bs.select", function () {
+        $.getScript("consulta/js/estudioImg.js", function () {
+            list_filter_estImg();
+        });
+    });
+    $("#txt_filterEstudiosImg").keyup(function () {
+        list_filter_estImg();
+    });
+    $("#cboTipoEstudiosImg").on("changed.bs.select", function () {
+        list_filter_estImg();
+    });
+
+    $("#cantListEstudiosImg").on("changed.bs.select", function () {
+        list_filter_estImg();
+    });
+
+    $("#tableEstudiosImg").on("click", "button[name='estimg']", function () {
+        ext = $(this).attr("data-ext");
+        var rows = [];
+        var tr = $(this).closest("tr");//.find("td:eq("+ ((cat === "0")? "1":"0") +")");
+        tr_push = {
+            id: $(tr).attr("data-id"),
+            tipoEstudio: $(tr).find("td:eq(0)").html(),
+            estudio: $(tr).find("td:eq(1)").html()
+        };
+        if (ext === "1") {
+            $.extend(true, tr_push, {
+                der: '<input type="checkbox" name="ext_estI" data-dir="der" >', 
+                izq: '<input type="checkbox" name="ext_estI" data-dir="izq">'
+            });
+        }
+        rows.push(tr_push);
+        bandera = true;
+        $.each($("#tableEstudiosImgSelec tbody tr"), function (index, trs) {
+            if ($(trs).find("td:eq(1)").html() === $(tr).attr("data-id")) {
+                bandera = false;
+                return;
+            }
+        });
+        if (bandera) {
+            $("#tableEstudiosImgSelec").bootstrapTable("append", rows);
+        }
+    });
+    $('#button').click(function () {
+        var ids = $.map($("#tableEstudiosImgSelec").bootstrapTable('getSelections'), function (row) {
+            return row.id;
+        });
+        $("#tableEstudiosImgSelec").bootstrapTable('remove', {
+            field: 'id',
+            values: ids
+        });
+    });
+
+    //$("#tableEstudiosImgSelec").bootstrapTable('mergeCells', {index: 1, field: 'der', colspan: 2, rowspan: 0});
+
 </script>

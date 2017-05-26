@@ -1,10 +1,18 @@
 $(document).ready(function () {
 
     $("#estLab .modal-body").load("consulta/estudiosLab.jsp");
+    $("#estImg .modal-body").load("consulta/estudiosImg.jsp");
+    
+    $("#estImg").on('hide.bs.modal',function(e){
+        //e.preventDefault();
+        //trs = $("#tableEstudiosLabSelec tbody tr[data-index]");
+    });
+    
 
     $('#estLab').on('shown.bs.modal', function () {
         $('#estLab table').bootstrapTable('resetView');
     });
+    
     
     $('#estLab').on('hidden.bs.modal', function () {
         cant_tr = $("#tableEstudiosLabSelec tbody tr[data-index]").length;
