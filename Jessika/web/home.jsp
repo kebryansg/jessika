@@ -168,6 +168,18 @@
                                 <a data-url="" data-title="Mantenimiento Ingresos" href="#"><i class="fa fa-address-book fa-fw" aria-hidden="true"></i>&nbsp; Consultas</a>
                             </li>                            
                         </ul>
+                        <a href="javascript:;" data-toggle="collapse" data-target="#inec">Inec<i class="fa fa-fw fa-caret-down"></i></a>
+                        <ul id="inec" class="collapse">
+                            <li>
+                                <a  data-url="inec/ingresosInec.jsp" data-title="Ingresos" href="#"><i class="fa fa-user fa-fw" aria-hidden="true"></i>&nbsp; Hospitalizaciones</a>
+                            </li>
+                            <li>
+                                <a data-url="" data-title="Mantenimiento Ingresos" href="#"><i class="fa fa-address-book fa-fw" aria-hidden="true"></i>&nbsp; Camas</a>
+                            </li>                            
+                            <li>
+                                <a data-url="" data-title="Mantenimiento Ingresos" href="#"><i class="fa fa-address-book fa-fw" aria-hidden="true"></i>&nbsp; RAS</a>
+                            </li>                            
+                        </ul>
                     </li>
                     </ul>
                 </div>

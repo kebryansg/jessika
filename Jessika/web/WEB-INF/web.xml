@@ -36,6 +36,10 @@
         <servlet-name>sUsuario</servlet-name>
         <servlet-class>mvc.servlet.sUsuario</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>sExcel</servlet-name>
+        <servlet-class>mvc.servlet.sExcel</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>pruebaCombo</servlet-name>
         <url-pattern>/pruebaCombo</url-pattern>
@@ -71,6 +75,10 @@
     <servlet-mapping>
         <servlet-name>sUsuario</servlet-name>
         <url-pattern>/sUsuario</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>sExcel</servlet-name>
+        <url-pattern>/sExcel</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
