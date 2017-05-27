@@ -41,6 +41,7 @@ public class ConsultaEstudiosImagen implements Serializable {
     private DetallesEstudiosImg idDetalleEstudiosImagen;
 
     public ConsultaEstudiosImagen() {
+        this.id = 0;
     }
 
     public ConsultaEstudiosImagen(Integer id) {

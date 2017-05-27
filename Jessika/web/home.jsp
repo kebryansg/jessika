@@ -209,7 +209,7 @@
         <!-- /#wrapper -->
 
         <script type="text/javascript">
-            $("#contenido").load("consulta/estudiosImg.jsp");
+            $("#contenido").load("consulta/ListHistorialC.jsp");
         </script>
 
     </body>

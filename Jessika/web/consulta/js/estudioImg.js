@@ -105,11 +105,6 @@ function indexPagEstudioImg(pag, totalList, txt_filter, idTipo, idEstudio) {
             op: 'list_DetEstudioImg'
         },
         success: function (response) {
-            /*if (idTipo !== "0") {
-                $("#tableEstudiosImg").bootstrapTable('hideColumn', 'tipoEstudio');
-            } else {
-                $("#tableEstudiosImg").bootstrapTable('showColumn', 'tipoEstudio');
-            }*/
             $("#tableEstudiosImg  tbody").html(response);
             $('#tableEstudiosImg').bootstrapTable('resetView');
         }

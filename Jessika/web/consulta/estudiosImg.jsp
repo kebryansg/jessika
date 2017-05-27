@@ -58,7 +58,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="pull-left">
-                <button id="button" class="btn btn-default">Remover</button>    
+                <button id="btnRemoverEstImg" class="btn btn-default">Remover</button>    
             </div>    
         </div>
     </div>
@@ -145,7 +145,7 @@
             $("#tableEstudiosImgSelec").bootstrapTable("append", rows);
         }
     });
-    $('#button').click(function () {
+    $('#btnRemoverEstImg').click(function () {
         var ids = $.map($("#tableEstudiosImgSelec").bootstrapTable('getSelections'), function (row) {
             return row.id;
         });

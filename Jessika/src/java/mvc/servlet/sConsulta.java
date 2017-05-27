@@ -5,12 +5,15 @@
  */
 package mvc.servlet;
 
+import java.lang.reflect.Type;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -19,8 +22,10 @@ import javax.servlet.http.HttpServletResponse;
 import mvc.controlador.entidades.ip.Paciente;
 import mvc.controlador.entidades.sm.Caso;
 import mvc.controlador.entidades.sm.Consulta;
+import mvc.controlador.entidades.sm.ConsultaEstudiosImagen;
 import mvc.controlador.entidades.sm.ConsultaEstudiosLabs;
 import mvc.controlador.entidades.sm.DetalleEstudiosLabs;
+import mvc.controlador.entidades.sm.DetallesEstudiosImg;
 import mvc.controlador.entidades.sm.HistorialClinico;
 import mvc.controlador.entidades.sm.MedicoEspecialidad;
 import mvc.controlador.entidades.sm.Metodos;
@@ -28,6 +33,7 @@ import mvc.controlador.entidades.sm.SignosVitales;
 import mvc.modelo.ipDaoImp.PacienteDaoImp;
 import mvc.modelo.smDaoImp.CasoDaoImp;
 import mvc.modelo.smDaoImp.ConsultaDaoImp;
+import mvc.modelo.smDaoImp.ConsultaEstudiosImagenDaoImp;
 import mvc.modelo.smDaoImp.ConsultaEstudiosLabsDaoImp;
 import mvc.modelo.smDaoImp.HistorialClinicoDaoImp;
 import mvc.modelo.smDaoImp.SignosVitalesDaoImp;
@@ -182,6 +188,17 @@ public class sConsulta extends HttpServlet {
                     }
                 }
                 //Estudios Lab
+                String estuImgs = request.getParameter("estuImg");
+                if (estuImgs != null) {
+                    estImg_ob[] estuImgs_a = gson.fromJson(estuImgs, estImg_ob[].class);
+                    for (estImg_ob img_ob : estuImgs_a) {
+                        ConsultaEstudiosImagen cEstImg = new ConsultaEstudiosImagen();
+                        cEstImg.setIdConsulta(consulta);
+                        cEstImg.setIdDetalleEstudiosImagen(new DetallesEstudiosImg(img_ob.getId()));
+                        cEstImg.setDetExtremidad(img_ob.getDetExtre());
+                        new ConsultaEstudiosImagenDaoImp().save(cEstImg);
+                    }
+                }
 
                 out.print("hecho");
                 out.flush();
@@ -200,5 +217,28 @@ public class sConsulta extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+}
+
+class estImg_ob {
+
+    private int id;
+    private String detExtre;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getDetExtre() {
+        return detExtre;
+    }
+
+    public void setDetExtre(String detExtre) {
+        this.detExtre = detExtre;
+    }
 
 }

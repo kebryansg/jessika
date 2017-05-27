@@ -67,14 +67,7 @@
                     <th>Accion</th>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>2017-05-10</td>
-                            <td>Molestias abdominales</td>
-                            <td>
-                                <button name="addHistorialCaso" class="btn btn-info" data-toggle="tooltip" data-placement="top" title="Agregar al caso..!"> <i class="glyphicon glyphicon-plus"></i> </button>
-                                <button name="viewHistorialCaso" class="btn btn-info" data-toggle="tooltip" data-placement="top" title="Historial caso..!" > <i class="glyphicon glyphicon-align-justify"></i> </button>
-                            </td>
-                        </tr>
+                        
                     </tbody>
                 </table>
             </div>
