@@ -84,7 +84,7 @@ public class sExcel extends HttpServlet {
             case "ingresos": 
                 try
                 {
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");                                
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");                                
                     Date fechaReporte = sdf.parse(request.getParameter("fechaReporte"));                    
                     ExcelDao objExcel= new ExcelDaoImp();
                     String json = OBJECT_MAPPER.writeValueAsString(objExcel.generarExcelIngresos(fechaReporte));
