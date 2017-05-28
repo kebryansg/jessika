@@ -101,6 +101,7 @@ public class sUsuario extends HttpServlet {
                 {
                     sesion.setAttribute("usuario", user);
                     sesion.setAttribute("nombresUsuario", usuarioLogueado);
+                    sesion.setAttribute("nombreEstablecimiento", "Hospital del dia Revelo");
                     //response.sendRedirect("home.jsp");
                     String json = OBJECT_MAPPER.writeValueAsString(1);
                     response.getWriter().write(json);

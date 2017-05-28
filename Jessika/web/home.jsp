@@ -180,6 +180,15 @@
                                 <a data-url="" data-title="Mantenimiento Ingresos" href="#"><i class="fa fa-address-book fa-fw" aria-hidden="true"></i>&nbsp; RAS</a>
                             </li>                            
                         </ul>
+                        <a href="javascript:;" data-toggle="collapse" data-target="#establecimiento">Establecimiento<i class="fa fa-fw fa-caret-down"></i></a>
+                        <ul id="establecimiento" class="collapse">
+                            <li>
+                                <a  data-url="" data-title="Ingresos" href="#"><i class="fa fa-user fa-fw" aria-hidden="true"></i>&nbsp; Configuración</a>
+                            </li>                            
+                            <li>
+                                <a data-url="" data-title="Mantenimiento Ingresos" href="#"><i class="fa fa-address-book fa-fw" aria-hidden="true"></i>&nbsp; Camas</a>
+                            </li>                                                        
+                        </ul>
                     </li>
                     </ul>
                 </div>

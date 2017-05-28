@@ -14,7 +14,7 @@
     
     <script>
         $('.form_date').datetimepicker({
-        format: "mm-yyyy",
+        format: "yyyy-mm",
         language: 'es',
         weekStart: 1,
         todayBtn: 1,

@@ -15,6 +15,7 @@ import java.io.InputStream;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -34,7 +35,7 @@ import org.apache.poi.xssf.usermodel.XSSFFormulaEvaluator;
 public class ExcelDaoImp implements ExcelDao {
 C_BD conn;
     @Override
-    public boolean generarExcelIngresos(Date fecha) {
+    public boolean generarExcelIngresos(Date fecha,String path,String nombreEstablecimiento) {
         try
         {
             Connection conexion;          
@@ -43,10 +44,12 @@ C_BD conn;
             cStmt.setDate(1, new java.sql.Date(fecha.getTime()));
             cStmt.execute();    
             final ResultSet rs = cStmt.getResultSet(); 
-            Excel objExcel= new Excel(new File("c:\\agosto.xlsx"), new File("c:\\agosto.xlsx"));                       
-            FileInputStream fileInputStream = new FileInputStream("D:\\agosto.xlsx");
+            
+            //Excel objExcel= new Excel(new File("c:\\agosto.xlsx"), new File("c:\\agosto.xlsx"));                       
+            //FileInputStream fileInputStream = new FileInputStream("./xlsx/plantillaIngresosMensuales2017.xlsx");
+            //File file = new File("/xlsx/plantillaIngresosMensuales2017.xlsx");
             int r=5;
-            XSSFWorkbook wb = new XSSFWorkbook(fileInputStream);
+            XSSFWorkbook wb = new XSSFWorkbook(path);
             XSSFSheet sheet = wb.getSheetAt(0);
             
             int c=5;
@@ -179,7 +182,14 @@ C_BD conn;
             }
             //refresco las formulas del libro
              XSSFFormulaEvaluator.evaluateAllFormulaCells(wb);
-            FileOutputStream fileOut = new FileOutputStream("D:\\agosto.xlsx");
+            
+            SimpleDateFormat dateFormat = null;
+            dateFormat =new SimpleDateFormat("yyyy");
+            int anio=Integer.parseInt(dateFormat.format(fecha));
+            dateFormat =new SimpleDateFormat("MM");
+            int mes=Integer.parseInt(dateFormat.format(fecha));
+            String[] meses = {"Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciemrbre"};            
+            FileOutputStream fileOut = new FileOutputStream("D:\\Ingresos "+meses[mes-1]+" del "+anio+" "+nombreEstablecimiento+" .xlsx");
             wb.write(fileOut);
             fileOut.flush();
             fileOut.close();

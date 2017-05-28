@@ -12,6 +12,6 @@ import java.util.Date;
  * @author Deivi
  */
 public interface ExcelDao {
-    public boolean generarExcelIngresos(Date fecha);
+    public boolean generarExcelIngresos(Date fecha, String path, String nombreEstablecimiento);
     
 }

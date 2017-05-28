@@ -15,6 +15,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import org.codehaus.jackson.map.ObjectMapper;
 
 /**
@@ -84,10 +85,13 @@ public class sExcel extends HttpServlet {
             case "ingresos": 
                 try
                 {
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");                                
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");                                
                     Date fechaReporte = sdf.parse(request.getParameter("fechaReporte"));                    
                     ExcelDao objExcel= new ExcelDaoImp();
-                    String json = OBJECT_MAPPER.writeValueAsString(objExcel.generarExcelIngresos(fechaReporte));
+                    String absoluteFilesystemPath = getServletContext().getRealPath("/xlsx/plantillaIngresosMensuales2017.xlsx");
+                    //nombreEstablecimiento
+                     HttpSession sesion = request.getSession();
+                    String json = OBJECT_MAPPER.writeValueAsString(objExcel.generarExcelIngresos(fechaReporte,absoluteFilesystemPath,sesion.getAttribute("nombreEstablecimiento").toString()));
                     response.getWriter().write(json);
                 }
                 catch(Exception ex)
