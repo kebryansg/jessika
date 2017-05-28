@@ -24,12 +24,6 @@ $(function () {
         });
     });
 
-    $("#editPaciente").on("hidden.bs.modal", function () {
-        $("#editPaciente .modal-body").html("");
-    });
-
-
-
 });
 
 

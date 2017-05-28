@@ -34,3 +34,9 @@ function closeModal(id) {
 }
 
 
+/*
+ $('#myModal').on('hide',function(e){
+ if(!confirm('You want to close me?'))
+ e.preventDefault();
+ });
+ */

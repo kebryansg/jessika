@@ -31,6 +31,8 @@ public class ConsultaEstudiosImagen implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+    @Column(name = "detExtremidad")
+    private String detExtremidad;
     @JoinColumn(name = "idConsulta", referencedColumnName = "id")
     @ManyToOne
     private Consulta idConsulta;
@@ -39,6 +41,7 @@ public class ConsultaEstudiosImagen implements Serializable {
     private DetallesEstudiosImg idDetalleEstudiosImagen;
 
     public ConsultaEstudiosImagen() {
+        this.id = 0;
     }
 
     public ConsultaEstudiosImagen(Integer id) {
@@ -52,6 +55,15 @@ public class ConsultaEstudiosImagen implements Serializable {
     public void setId(Integer id) {
         this.id = id;
     }
+
+    public String getDetExtremidad() {
+        return detExtremidad;
+    }
+
+    public void setDetExtremidad(String detExtremidad) {
+        this.detExtremidad = detExtremidad;
+    }
+    
 
     public Consulta getIdConsulta() {
         return idConsulta;

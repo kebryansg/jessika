@@ -31,6 +31,8 @@ public class ConsultaEstudiosLabs implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+    @Column(name = "valores")
+    private String valores;
     @JoinColumn(name = "idConsulta", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Consulta idConsulta;
@@ -39,10 +41,13 @@ public class ConsultaEstudiosLabs implements Serializable {
     private DetalleEstudiosLabs idDetalleEstudiosLabs;
 
     public ConsultaEstudiosLabs() {
+        this.id = 0;
+        this.valores = "";
     }
 
     public ConsultaEstudiosLabs(Integer id) {
         this.id = id;
+        this.valores = "";
     }
 
     public Integer getId() {
@@ -51,6 +56,14 @@ public class ConsultaEstudiosLabs implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getValores() {
+        return valores;
+    }
+
+    public void setValores(String valores) {
+        this.valores = valores;
     }
 
     public Consulta getIdConsulta() {
@@ -93,5 +106,5 @@ public class ConsultaEstudiosLabs implements Serializable {
     public String toString() {
         return "mvc.controlador.entidades.sm.ConsultaEstudiosLabs[ id=" + id + " ]";
     }
-    
+
 }

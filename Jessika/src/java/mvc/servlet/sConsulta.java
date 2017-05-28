@@ -5,20 +5,39 @@
  */
 package mvc.servlet;
 
+import java.lang.reflect.Type;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import mvc.controlador.entidades.ip.Paciente;
+import mvc.controlador.entidades.sm.Caso;
+import mvc.controlador.entidades.sm.Consulta;
+import mvc.controlador.entidades.sm.ConsultaEstudiosImagen;
+import mvc.controlador.entidades.sm.ConsultaEstudiosLabs;
+import mvc.controlador.entidades.sm.DetalleEstudiosLabs;
+import mvc.controlador.entidades.sm.DetallesEstudiosImg;
 import mvc.controlador.entidades.sm.HistorialClinico;
+import mvc.controlador.entidades.sm.MedicoEspecialidad;
+import mvc.controlador.entidades.sm.Metodos;
+import mvc.controlador.entidades.sm.SignosVitales;
 import mvc.modelo.ipDaoImp.PacienteDaoImp;
+import mvc.modelo.smDaoImp.CasoDaoImp;
+import mvc.modelo.smDaoImp.ConsultaDaoImp;
+import mvc.modelo.smDaoImp.ConsultaEstudiosImagenDaoImp;
+import mvc.modelo.smDaoImp.ConsultaEstudiosLabsDaoImp;
 import mvc.modelo.smDaoImp.HistorialClinicoDaoImp;
+import mvc.modelo.smDaoImp.SignosVitalesDaoImp;
+import test.test;
 
 /**
  *
@@ -85,9 +104,23 @@ public class sConsulta extends HttpServlet {
         final String FORMATO_FECHA = "yyyy-MM-dd";
         final DateFormat DF = new SimpleDateFormat(FORMATO_FECHA);
         Gson gson = new GsonBuilder().setDateFormat(FORMATO_FECHA).create();
-
+        String result = "";
         String op = request.getParameter("op");
         switch (op) {
+            case "list":
+                List<Consulta> list = new CasoDaoImp().listConsulta(Integer.parseInt(request.getParameter("idHc")), "", "", request.getParameter("filter"), 0, 5);
+                for (Consulta con : list) {
+                    result += "<tr>";
+                    result += "<td>" + test.SQLSave(con.getFecha()) + "</td>";
+                    result += "<td>" + con.getMotivo() + "</td>";
+                    result += "<td><button name=\"addHistorialCaso\" data-id=\"" + con.getIdCaso().getId() + "\" class=\"btn btn-info\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"Agregar al caso..!\"> <i class=\"glyphicon glyphicon-plus\"></i> </button>\n"
+                            + "                                <button name=\"viewHistorialCaso\" class=\"btn btn-info\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"Historial caso..!\" > <i class=\"glyphicon glyphicon-align-justify\"></i> </button></td>";
+                    result += "</tr>";
+                }
+                out.print(result);
+                out.flush();
+                out.close();
+                break;
             case "paciente":
                 String codPaciente = request.getParameter("cod");
                 String opcion = (codPaciente.length() == 10) ? "cedula" : "hc";
@@ -95,10 +128,79 @@ public class sConsulta extends HttpServlet {
                 if (hc.getId() != 0) {
                     Paciente pc = new PacienteDaoImp().edit(hc.getIdPaciente());
                     out.print("{\"paciente\":" + gson.toJson(pc) + ",\"hc_id\": " + hc.getId() + "}");
-                }
-                else{
+                } else {
                     out.print("null");
                 }
+                out.flush();
+                out.close();
+                break;
+            case "save":
+                // Signos Vitales
+                SignosVitales sv = new SignosVitales(Integer.parseInt(request.getParameter("sv[id]")));
+
+                int idSV = (sv.getId() == 0) ? (test.getID_SM("signosVitales") + 1) : sv.getId();
+
+                sv.setPeso(Integer.parseInt(request.getParameter("sv[peso]")));
+                sv.setTalla(Integer.parseInt(request.getParameter("sv[talla]")));
+                sv.setTemperatura(Integer.parseInt(request.getParameter("sv[temperatura]")));
+                sv.setPresion(request.getParameter("sv[presion]"));
+                sv.setFrecuenciaC(Integer.parseInt(request.getParameter("sv[frecuenciaC]")));
+                sv.setFum(test.fechaSQL(request.getParameter("sv[fum]")));
+                sv.setFuc(test.fechaSQL(request.getParameter("sv[fuc]")));
+                new SignosVitalesDaoImp().save(sv);
+                sv.setId(idSV);
+                // Signos Vitales
+
+                Consulta consulta = new Consulta(0);
+                int idConsulta = (consulta.getId() == 0) ? (test.getID_SM("consulta") + 1) : consulta.getId();
+
+                consulta.setMotivo(request.getParameter("dc[motivo]"));
+                consulta.setDiagnostico(request.getParameter("dc[diagnostico]"));
+                consulta.setPrescripcion(request.getParameter("dc[prescripcion]"));
+                consulta.setSintoma(request.getParameter("dc[sintomas]"));
+                consulta.setFecha(test.fechaSQL(request.getParameter("fecha")));
+                // Caso
+                Caso cs = new Caso(Integer.parseInt(request.getParameter("idCaso")));
+                if (cs.getId() == 0) {
+                    int idCaso = (test.getID_SM("caso") + 1);
+                    cs.setIdHistorialClinico(new HistorialClinico(Integer.parseInt(request.getParameter("idHc"))));
+                    new CasoDaoImp().save(cs);
+                    cs.setId(idCaso);
+                }
+                // Caso
+
+                consulta.setIdCaso(cs);
+                consulta.setIdMedicoEspecialidad(new MedicoEspecialidad(Integer.parseInt(request.getParameter("idEspecialidad"))));
+                consulta.setIdMetodo(new Metodos(1));
+                consulta.setIdSignosvitales(sv);
+
+                new ConsultaDaoImp().save(consulta);
+                consulta.setId(idConsulta);
+
+                //Estudios Lab
+                String[] estudLabs = request.getParameterValues("estudLab[]");
+                if (estudLabs != null) {
+                    for (String estudLab : estudLabs) {
+                        ConsultaEstudiosLabs cEstLab = new ConsultaEstudiosLabs();
+                        cEstLab.setIdConsulta(consulta);
+                        cEstLab.setIdDetalleEstudiosLabs(new DetalleEstudiosLabs(Integer.parseInt(estudLab)));
+                        new ConsultaEstudiosLabsDaoImp().save(cEstLab);
+                    }
+                }
+                //Estudios Lab
+                String estuImgs = request.getParameter("estuImg");
+                if (estuImgs != null) {
+                    estImg_ob[] estuImgs_a = gson.fromJson(estuImgs, estImg_ob[].class);
+                    for (estImg_ob img_ob : estuImgs_a) {
+                        ConsultaEstudiosImagen cEstImg = new ConsultaEstudiosImagen();
+                        cEstImg.setIdConsulta(consulta);
+                        cEstImg.setIdDetalleEstudiosImagen(new DetallesEstudiosImg(img_ob.getId()));
+                        cEstImg.setDetExtremidad(img_ob.getDetExtre());
+                        new ConsultaEstudiosImagenDaoImp().save(cEstImg);
+                    }
+                }
+
+                out.print("hecho");
                 out.flush();
                 out.close();
                 break;
@@ -115,5 +217,28 @@ public class sConsulta extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+}
+
+class estImg_ob {
+
+    private int id;
+    private String detExtre;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getDetExtre() {
+        return detExtre;
+    }
+
+    public void setDetExtre(String detExtre) {
+        this.detExtre = detExtre;
+    }
 
 }

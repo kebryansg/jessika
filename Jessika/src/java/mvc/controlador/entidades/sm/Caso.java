@@ -36,9 +36,7 @@ public class Caso implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Column(name = "fecha")
-    @Temporal(TemporalType.DATE)
-    private Date fecha;
+    
     @OneToMany(mappedBy = "idCaso")
     private List<Ingresos> ingresosList;
     @JoinColumn(name = "idHistorialClinico", referencedColumnName = "id")
@@ -48,10 +46,15 @@ public class Caso implements Serializable {
     private List<Consulta> consultaList;
 
     public Caso() {
+        this.id =0;
     }
 
     public Caso(Integer id) {
         this.id = id;
+    }
+    public Caso(Integer id,Integer idHistorialClinico) {
+        this.id = id;
+        this.idHistorialClinico = new HistorialClinico(idHistorialClinico);
     }
 
     public Integer getId() {
@@ -62,13 +65,7 @@ public class Caso implements Serializable {
         this.id = id;
     }
 
-    public Date getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
-    }
+    
 
     public List<Ingresos> getIngresosList() {
         return ingresosList;

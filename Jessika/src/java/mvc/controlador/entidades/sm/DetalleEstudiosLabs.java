@@ -48,6 +48,11 @@ public class DetalleEstudiosLabs implements Serializable {
         this.id = id;
     }
 
+    public DetalleEstudiosLabs(Integer id, String descripcion) {
+        this.id = id;
+        this.descripcion = descripcion;
+    }
+
     public Integer getId() {
         return id;
     }
@@ -104,5 +109,5 @@ public class DetalleEstudiosLabs implements Serializable {
     public String toString() {
         return "mvc.controlador.entidades.sm.DetalleEstudiosLabs[ id=" + id + " ]";
     }
-    
+
 }
