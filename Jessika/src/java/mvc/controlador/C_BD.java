@@ -29,6 +29,20 @@ public abstract  class C_BD {
         }
         return res;
     }
+    
+    public ResultSet Procedure(String query)
+    {
+        CallableStatement call;
+        ResultSet res = null;
+        try {
+            call = conexion.prepareCall(query);
+            res = call.executeQuery();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return res;
+    }
+    
     public boolean execute(String query)
     {
         Statement st;

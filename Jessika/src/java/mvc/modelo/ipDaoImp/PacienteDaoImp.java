@@ -14,6 +14,7 @@ import mvc.controlador.con_db;
 import mvc.controlador.entidades.ip.Paciente;
 import mvc.controlador.entidades.ip.Parroquia;
 import mvc.modelo.ipDao.PacienteDao;
+import test.list_count;
 
 /**
  *
@@ -132,10 +133,10 @@ public class PacienteDaoImp implements PacienteDao {
                         + "           ,'" + value.getEtnia() + "'\n"
                         + "           ,'" + value.getDiscapacidad() + "'\n"
                         + "           ,'" + value.getIdParroquia().getId() + "'\n"
-                        + "           ,'" + value.getImagen()+ "'\n"
-                        + "           ,'" + value.getNombreContacto()+ "'\n"
-                        + "           ,'" + value.getMovilContacto()+ "'\n"
-                        + "           ,'" + value.getParentezco()+ "')";
+                        + "           ,'" + value.getImagen() + "'\n"
+                        + "           ,'" + value.getNombreContacto() + "'\n"
+                        + "           ,'" + value.getMovilContacto() + "'\n"
+                        + "           ,'" + value.getParentezco() + "')";
             } else {
                 sql = "UPDATE [dbo].[paciente]\n"
                         + "   SET [cedula] = '" + value.getCedula() + "'\n"
@@ -158,9 +159,9 @@ public class PacienteDaoImp implements PacienteDao {
                         + "      ,[discapacidad] = '" + value.getDiscapacidad() + "'\n"
                         + "      ,[idParroquia] = '" + value.getIdParroquia().getId() + "'\n"
                         + "      ,[imagen] = '" + value.getImagen() + "'\n"
-                        + "      ,[nombreContacto] = '" + value.getNombreContacto()+ "'\n"
-                        + "      ,[movilContacto] = '" + value.getMovilContacto()+ "'\n"
-                        + "      ,[parentezco] = '" + value.getParentezco()+ "'\n"
+                        + "      ,[nombreContacto] = '" + value.getNombreContacto() + "'\n"
+                        + "      ,[movilContacto] = '" + value.getMovilContacto() + "'\n"
+                        + "      ,[parentezco] = '" + value.getParentezco() + "'\n"
                         + " WHERE id = '" + value.getId() + "'";
             }
             conn.execute(sql);
@@ -184,8 +185,10 @@ public class PacienteDaoImp implements PacienteDao {
         this.conn = con_db.open(con_db.MSSQL_IP);
         List<Paciente> list = new ArrayList<>();
         String paginacion = (top != -1) ? "OFFSET " + pag + " ROWS FETCH NEXT " + top + " ROWS ONLY;" : "";
-        //System.out.println("select historialClinico.id as historia , paciente.* from paciente inner join BD_SM.dbo.historialClinico on idPaciente = paciente.id where nombre1 like '%" + filter + "%' or nombre2 like '%" + filter + "%' or apellido1 like '%" + filter + "%' or apellido2 like '%" + filter + "%' or cedula like '%" + filter + "%' order by id " + paginacion);
-        ResultSet rs = this.conn.query("select historialClinico.id as historia , paciente.* from paciente inner join BD_SM.dbo.historialClinico on idPaciente = paciente.id where estado = '1' and (nombre1 like '%" + filter + "%' or nombre2 like '%" + filter + "%' or apellido1 like '%" + filter + "%' or apellido2 like '%" + filter + "%' or cedula like '%" + filter + "%' or historialClinico.id like '%" + filter + "%') order by id " + paginacion);
+        String sql = ("select historialClinico.id as historia , paciente.* from paciente inner join BD_SM.dbo.historialClinico on idPaciente = paciente.id where estado = '1' and (nombre1 like '%" + filter + "%' or nombre2 like '%" + filter + "%' or apellido1 like '%" + filter + "%' or apellido2 like '%" + filter + "%' or cedula like '%" + filter + "%' or historialClinico.id like '%" + filter + "%') order by id " + paginacion);
+        //String sql = "EXEC [dbo].[getPacientes] "+ top +", "+ pag +", '"+filter+"'";
+        System.out.println(sql);
+        ResultSet rs = this.conn.query(sql); //this.conn.query(sql);
         try {
             while (rs.next()) {
                 Paciente value = new Paciente();
@@ -198,6 +201,7 @@ public class PacienteDaoImp implements PacienteDao {
                 value.setApellido2(rs.getNString("apellido2"));
                 value.setCiudad(rs.getNString("ciudad"));
                 value.setDomicilio(rs.getNString("domicilio"));
+                value.setSexo(rs.getBoolean("sexo"));
                 /*value.setDiscapacidad(rs.getInt("discapacidad"));
                 value.setEmail(rs.getNString("email"));
                 value.setEstadoCivil(rs.getString("estadoCivil"));
@@ -208,7 +212,6 @@ public class PacienteDaoImp implements PacienteDao {
                 value.setLugarNacimiento(rs.getNString("lugarNacimiento"));
                 value.setNacionalidad(rs.getString("nacionalidad"));
                 value.setPaisNacimiento(rs.getNString("paisNacimiento"));
-                value.setSexo(rs.getBoolean("sexo"));
                 value.setTelefonoDomicilio(rs.getNString("telefonoDomicilio"));
                 value.setTelefonoOficina(rs.getNString("telefonoOficina"));
                 value.setNombreContacto(rs.getNString("nombreContacto"));
@@ -222,6 +225,39 @@ public class PacienteDaoImp implements PacienteDao {
             this.conn.close();
         }
         return list;
+    }
+
+    @Override
+    public list_count list_count_Filter(String value, int pag, int top) {
+        this.conn = con_db.open(con_db.MSSQL_IP);
+        list_count l = new list_count();
+        List<Paciente> list = new ArrayList<>();
+        String sql = "EXEC [dbo].[getPacientes] "+ top +", "+ pag +", '"+value+"'";
+        System.out.println(sql);
+        ResultSet rs = this.conn.query(sql); //this.conn.query(sql);
+        try {
+            while (rs.next()) {
+                l.setTotal(rs.getInt("registros"));
+                Paciente paciente1 = new Paciente();
+                paciente1.setId(rs.getInt("id"));
+                paciente1.setHistoriaClinica(rs.getInt("historia"));
+                paciente1.setCedula(rs.getNString("cedula"));
+                paciente1.setNombre1(rs.getNString("nombre1"));
+                paciente1.setNombre2(rs.getNString("nombre2"));
+                paciente1.setApellido1(rs.getNString("apellido1"));
+                paciente1.setApellido2(rs.getNString("apellido2"));
+                paciente1.setCiudad(rs.getNString("ciudad"));
+                paciente1.setDomicilio(rs.getNString("domicilio"));
+                paciente1.setSexo(rs.getBoolean("sexo"));
+                list.add(paciente1);
+            }
+            l.setList(list);
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        } finally {
+            this.conn.close();
+        }
+        return l;
     }
 
 }

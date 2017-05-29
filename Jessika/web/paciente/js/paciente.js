@@ -1,7 +1,5 @@
 function validarPaciente(id) {
     $("#optionPaciente[data-id='" + id + "'] .help-block").remove();
-
-
     $.each($("#optionPaciente[data-id='" + id + "'] #tabPacientes input[validate='text']"), function (index, value) {
         if (!validarText(value)) {
             $(value).blur(function () {
@@ -89,7 +87,7 @@ function indexPag(pag, totalList, txt_filter) {
     $.ajax({
         url: 'sPaciente',
         type: 'POST',
-        async: false,
+        //async: false,
         data: {
             filter: txt_filter,
             top: cantList,
@@ -105,13 +103,12 @@ function indexPag(pag, totalList, txt_filter) {
                 td_tr_seleccionar(tablePaciente);
             }
             $('#tablPaciente').bootstrapTable('resetView');
-
         }
     });
-
 }
 
 var defaultOpts = {
+//totalPages: 2,
     visiblePages: 10,
     first: "Primero",
     next: "Siguiente",
@@ -125,10 +122,9 @@ function list_filter() {
     var $pagination = $('#pagPacientes');
     var txt_filter = $("#txt_filterPaciente").val();
     var cantList = $("#cantList").val();
-    var $totalPages = 0;
-    if (txt_filter === "") {
-        $totalPages = 2;
-    } else {
+    var $totalPages = 2;
+    if (txt_filter !== "") {
+        
         $.ajax({
             url: 'sPaciente',
             type: 'POST',
@@ -140,6 +136,8 @@ function list_filter() {
             success: function (response) {
                 $totalPages = response / cantList;
                 $totalPages = Math.ceil($totalPages);
+                //Paginacion
+
             }
         });
     }
@@ -150,7 +148,6 @@ function list_filter() {
         },
         totalPages: $totalPages
     }));
-
 }
 
 function edit(id) {

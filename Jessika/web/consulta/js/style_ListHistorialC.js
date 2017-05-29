@@ -1,7 +1,4 @@
 $(function () {
-
-
-
     $("#tbHC").on("click", "button[name='addHistorialCaso']", function () {
         nomPaciente = $("#con_nombrePaciente").val();
         idCaso = $(this).attr("data-id");
@@ -41,7 +38,6 @@ $(function () {
         $("#con_cedulaPaciente").val($(tds).eq(1).html());
         $("#con_nombrePaciente").val($(tds).eq(2).html());
         $("#con_ciudadPaciente").val($(tds).eq(3).html());
-        //closeModal("ListPaciente");
         $.getScript("consulta/js/consulta.js", function () {
             obtList();
         });

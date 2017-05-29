@@ -28,11 +28,13 @@ import mvc.controlador.entidades.ip.ParienteEnfermedadPaciente;
 import mvc.controlador.entidades.ip.Parientes;
 import mvc.controlador.entidades.ip.Parroquia;
 import mvc.controlador.entidades.sm.HistorialClinico;
+import mvc.modelo.ipDao.PacienteDao;
 import mvc.modelo.ipDaoImp.ObstetricosDaoImp;
 import mvc.modelo.ipDaoImp.PacienteDaoImp;
 import mvc.modelo.ipDaoImp.ParienteEnfermedadPacienteDaoImp;
 import mvc.modelo.ipDaoImp.ParroquiaDaoImp;
 import mvc.modelo.smDaoImp.HistorialClinicoDaoImp;
+import test.list_count;
 import test.test;
 
 /**
@@ -98,8 +100,10 @@ public class sPaciente extends HttpServlet {
         PrintWriter out = response.getWriter();
         String result = "", op = request.getParameter("op");
         List<Paciente> listP = null;
+        list_count l = new list_count();
         //String cedula = request.getParameter("paciente[cedula]");
         Paciente paciente = new Paciente(0);
+        PacienteDao pacienteDao = new PacienteDaoImp();
         //Gson gson = new Gson();
         //Gson gson = new GsonBuilder().registerTypeAdapter(java.util.Date.class, new BidirectionalDateSerializer()).create();
         final String FORMATO_FECHA = "yyyy-MM-dd";
@@ -110,7 +114,6 @@ public class sPaciente extends HttpServlet {
                 new HistorialClinicoDaoImp().delete(Integer.parseInt(request.getParameter("id")));
                 break;
             case "list":
-
                 listP = new PacienteDaoImp().list_Filter(request.getParameter("filter"), 0, -1);
                 out.print(listP.size());
                 out.flush();
@@ -120,24 +123,28 @@ public class sPaciente extends HttpServlet {
                 String filter = request.getParameter("filter");
                 int topSQL = Integer.parseInt(request.getParameter("top"));
                 int inicioSQL = Integer.parseInt(request.getParameter("pag"));
-
-                listP = new PacienteDaoImp().list_Filter(filter, inicioSQL, topSQL);
-
                 String listString = "";
-                for (Paciente paciente1 : listP) {
+
+                l = new PacienteDaoImp().list_count_Filter(filter, inicioSQL, topSQL);
+
+                for (Object object : l.getList()) {
+                    Paciente paciente1 = (Paciente) object;
                     listString += "<tr data-id='" + paciente1.getId() + "' >";
                     listString += "<td>" + paciente1.getHistoriaClinica() + "</td>";
                     listString += "<td>" + paciente1.getCedula() + "</td>";
                     listString += "<td>" + (paciente1.getApellido1() + " " + paciente1.getApellido2() + " " + paciente1.getNombre1() + " " + paciente1.getNombre2()).toUpperCase() + "</td>";
                     listString += "<td>" + paciente1.getCiudad() + "</td>";
                     listString += "<td>" + paciente1.getDomicilio() + "</td>";
+                    listString += "<td>" + ((paciente1.getSexo()) ? "1" : "0") + "</td>";
                     listString += "<td>";
                     listString += "<button name='editPaciente' data-id='" + paciente1.getId() + "'  style='margin-right: 2px;' class='btn btn-primary'><span class='glyphicon glyphicon-pencil'></span> </button>";
                     listString += "<button name='deletPaciente' data-id='" + paciente1.getId() + "' class='btn btn-danger'><span class='glyphicon glyphicon-trash'></span> </button>";
                     listString += "</td>";
                     listString += "</tr>";
                 }
-                result = "{\"list\": \"" + listString + "\"}";
+
+                result = "{\"count\": \"" + l.getTotal() + "\"  ,\"list\": \"" + listString + "\"}";
+                System.out.println(result);
                 out.print(result);
                 out.flush();
                 out.close();
@@ -176,11 +183,11 @@ public class sPaciente extends HttpServlet {
                 paciente.setDiscapacidad(request.getParameter("paciente[discapacidad]").equals("true") ? 1 : 0);
                 paciente.setCiudad(request.getParameter("paciente[ciudad]"));
                 paciente.setEstadoCivil(request.getParameter("paciente[estadoCivil]"));
-                
+
                 paciente.setNombreContacto(request.getParameter("paciente[nombreContacto]"));
                 paciente.setMovilContacto(request.getParameter("paciente[movilContacto]"));
                 paciente.setParentezco(request.getParameter("paciente[parentezco]"));
-                
+
                 paciente.setTelefonoOficina(request.getParameter("paciente[telOficina]"));
                 Boolean sexo = request.getParameter("paciente[genero]").equals("1") ? true : false;
                 paciente.setSexo(sexo);

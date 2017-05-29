@@ -4,7 +4,12 @@
     Author     : Deivi
 --%>
 
+<%@page import="java.util.Date"%>
+<%@page import="mvc.modelo.smDaoImp.ExcelDaoImp"%>
+<%@page import="mvc.modelo.smDao.ExcelDao"%>
+<%@page import="mvc.modelo.smDao.ExcelDao"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -20,6 +25,9 @@
         <link href="resources/font-awesome/css/custom.css" rel="stylesheet">    
      <!-- GOOGLE FONTS-->
    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+    <script src="resources/js/jquery.min.js" type="text/javascript" ></script>
+     <script src="resources/js/validate.js" type="text/javascript"></script>
+       
 
 </head>
     <style>
@@ -30,6 +38,14 @@
         
     </style>
 <body>
+    <%
+        
+         HttpSession sesion = request.getSession();
+        if(sesion.getAttribute("usuario") != null)
+        {
+            response.sendRedirect("home.jsp");
+        }
+    %>
     <div class="container">
         <div class="row text-center ">
             <div class="col-md-12">
@@ -52,12 +68,14 @@
                                        <br />
                                      <div class="form-group input-group">
                                             <span class="input-group-addon"><i class="fa fa-tag"  ></i></span>
-                                            <input id="txtUsuario" type="text" class="form-control" placeholder="Usuario " />
+                                            <input  id="txtUsuario" validate="text" type="text" class="form-control" placeholder="Usuario " />
                                         </div>
-                                                                              <div class="form-group input-group">
+                                       <div class="form-group input-group">
                                             <span class="input-group-addon"><i class="fa fa-lock"  ></i></span>
-                                            <input id="txtClave" type="password" class="form-control"  placeholder="Contraseña" />
+                                            <input id="txtClave" validate="text" type="password" class="form-control"  placeholder="Contraseña" />
                                         </div>
+                                       
+                                       
                                     <div class="form-group">
                                             <label class="checkbox-inline">
                                                 <input type="checkbox" /> Recordarme
@@ -67,7 +85,7 @@
                                             </span>
                                         </div>
                                      
-                                     <a href="home.jsp" class="btn btn-primary ">Iniciar sesión</a>
+                                       <a href="#"  id="btnLogin" class="btn btn-primary ">Iniciar sesión</a>
                                     
                                     </form>
                             </div>
@@ -82,13 +100,13 @@
 
      <!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->
     <!-- JQUERY SCRIPTS -->
-    <script src="assets/js/jquery-1.10.2.js"></script>
-      <!-- BOOTSTRAP SCRIPTS -->
-    <script src="assets/js/bootstrap.min.js"></script>
-    <!-- METISMENU SCRIPTS -->
-    <script src="assets/js/jquery.metisMenu.js"></script>
-      <!-- CUSTOM SCRIPTS -->
-    <script src="assets/js/custom.js"></script>
+    
    
 </body>
+    <script type="text/javascript" src="resources/js/alertify.min.js" async="async"></script>
+        <script type="text/javascript" src="resources/js/alertify.js" async="async"></script>
+    
+    <link rel="stylesheet" href="resources/css/alertify.core.css" />
+        <link rel="stylesheet" href="resources/css/alertify.default.css" >
+            <script type="text/javascript" src="usuario/login.js"></script>
 </html>

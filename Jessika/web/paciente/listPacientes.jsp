@@ -30,12 +30,13 @@
                     <table  data-toggle="table" id="tablPaciente" data-height="300">
                         <thead style="font-weight: bold;">
                             <tr>
-                                <th >H. Clinica</th>
-                                <th >Cèdula</th>
-                                <th >Apellidos y Nombres</th>
-                                <th >Ciudad</th>
-                                <th >Domicilio</th>
-                                <th >Acciòn</th>
+                                <th data-field="hc" >H. Clinica</th>
+                                <th data-field="cedula" >Cèdula</th>
+                                <th data-field="nombres" >Apellidos y Nombres</th>
+                                <th data-field="ciudad" >Ciudad</th>
+                                <th data-field="domicilio" >Domicilio</th>
+                                <th data-field="sexo">Sexo</th>
+                                <th data-field="accion" >Acciòn</th>
                             </tr>
                         </thead>
                         <tbody id="tablePaciente">
@@ -49,7 +50,19 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="pull-right">
-                    <ul id="pagPacientes" class="pagination"></ul>    
+                    <!--<ul id="pagPacientes" class="pagination"></ul>    -->
+                    <ul id="pagPacientes" class="pagination">
+                        <li>
+                            <a href="#" aria-label="Anterior">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" aria-label="Siguiente">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
                 </div>
 
             </div>
@@ -75,6 +88,6 @@
     </div>
 </div>
 <script src="resources/js/configuracionInicial.js" type="text/javascript" ></script> 
+<script src="resources/bootstrap/table/bootstrap-table.min.js" type="text/javascript"></script>
 <script src="paciente/js/styleListPaciente.js" type="text/javascript"></script>
 
-<script src="resources/bootstrap/table/bootstrap-table.min.js" type="text/javascript"></script>

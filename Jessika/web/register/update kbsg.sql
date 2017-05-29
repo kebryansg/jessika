@@ -63,3 +63,50 @@ INSERT INTO BD_SM.dbo.detallesEstudiosImg(idEstudiosImg, descripcion, extremidad
 INSERT INTO BD_SM.dbo.detallesEstudiosImg(idEstudiosImg, descripcion, extremidades) VALUES(3, 'rodilla', '1');
 INSERT INTO BD_SM.dbo.detallesEstudiosImg(idEstudiosImg, descripcion, extremidades) VALUES(3, 'pie', '1');
 INSERT INTO BD_SM.dbo.detallesEstudiosImg(idEstudiosImg, descripcion, extremidades) VALUES(3, 'huesos largos', '1');
+
+
+
+---- 29 - 05 - 2017
+-- En la BD-IP
+create PROCEDURE getPacientes @trows int,
+@inicio int,
+@buscar NVARCHAR(100) as begin declare @total_registros int
+set
+@total_registros =(
+	select
+		count(*)
+	from
+		paciente inner join BD_SM.dbo.historialClinico on
+		idPaciente = paciente.id
+	where
+		estado = '1'
+		and(
+			nombre1 like '%'+ @buscar +'%'
+			or nombre2 like '%'+ @buscar +'%'
+			or apellido1 like '%'+ @buscar +'%'
+			or apellido2 like '%'+ @buscar +'%'
+			or cedula like '%'+ @buscar +'%'
+			or historialClinico.id like '%'+ @buscar +'%'
+		)
+);
+
+select
+	@total_registros registros,
+	historialClinico.id as historia,
+	paciente.*
+from
+	paciente inner join BD_SM.dbo.historialClinico on
+	idPaciente = paciente.id
+where
+	estado = '1'
+	and(
+		nombre1 like '%'+ @buscar +'%'
+		or nombre2 like '%'+ @buscar +'%'
+		or apellido1 like '%'+ @buscar +'%'
+		or apellido2 like '%'+ @buscar +'%'
+		or cedula like '%%'
+		or historialClinico.id like '%'+ @buscar +'%'
+	)
+order by
+	id OFFSET @inicio ROWS FETCH NEXT @trows ROWS ONLY;
+end

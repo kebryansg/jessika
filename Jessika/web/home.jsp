@@ -32,13 +32,13 @@
         <link href="resources/font-awesome/css/font-awesome.min.css" rel="stylesheet">
         <link href="resources/bootstrap/table/bootstrap-table.min.css" rel="stylesheet" type="text/css"/>
 
-        
-       
+
+
         <script src="resources/js/jquery.min.js" type="text/javascript" ></script>
         <script src="resources/bootstrap/js/bootstrap.min.js" type="text/javascript"  ></script>
 
         <!--    desde aqui mis links -->
-       
+
 
         <script type="text/javascript" src="resources/js/moment.js" async="async"></script>
         <!--<script type="text/javascript" src="resources/bootstrap/js/bootstrap-datetimepicker.min.js"></script>-->
@@ -50,7 +50,7 @@
         <script type="text/javascript" src="resources/js/alertify.js" async="async"></script>
         <link rel="stylesheet" href="resources/css/alertify.core.css" />
         <link rel="stylesheet" href="resources/css/alertify.default.css" > />
-        <script src="resources/js/jquery.twbsPagination.js" type="text/javascript" ></script>
+        <!--<script src="resources/js/jquery.twbsPagination.js" type="text/javascript" ></script>-->
         <script src="resources/js/validate.js" type="text/javascript"></script>
         <script src="resources/js/style.js" type="text/javascript"></script>
         <script src="resources/js/home.js" type="text/javascript"></script>
@@ -69,7 +69,14 @@
     </head>
 
     <body>
+        <%
+            HttpSession sesion = request.getSession();
+            //if(sesion.getAttribute("usuario") == null)
+            if (false) {
+                response.sendRedirect("login.jsp");
 
+            }
+        %>
         <div id="wrapper">
 
             <!-- Navigation -->
@@ -82,32 +89,22 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="index.html">Jessika 2.0</a>
+                    <a class="navbar-brand" href="home.jsp">Jessika 3.0</a>
                 </div>
                 <!-- Top Menu Items -->
                 <ul class="nav navbar-right top-nav">
 
 
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> John Smith <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <%=session.getAttribute("nombresUsuario")%> <b class="caret"></b></a>
+                        <ul class="dropdown-menu">                            
                             <li>
-                                <a href="#"><i class="fa fa-fw fa-user"></i> Perfil</a>
-                            </li>
-                            <li>
-                                <a href="#"><i class="fa fa-fw fa-envelope"></i> Inbox</a>
-                            </li>
-                            <li>
-                                <a href="#"><i class="fa fa-fw fa-gear"></i> Configuracion</a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a href="#"><i class="fa fa-fw fa-power-off"></i> Salir</a>
+                                <a id="aSalida" href="#"><i class="fa fa-fw fa-power-off"></i> Salir</a>
                             </li>
                         </ul>
                     </li>
-                    
-                    
+
+
                 </ul>
                 <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
                 <div class="collapse navbar-collapse navbar-ex1-collapse" id="TabAdm">
@@ -130,7 +127,7 @@
                             <a href="javascript:;" data-toggle="collapse" data-target="#consultas"> Consultas <i class="fa fa-fw fa-caret-down"></i></a>
                             <ul id="consultas" class="collapse">
                                 <li>
-                                    <a data-url="consulta/newConsulta.jsp" data-title="Registrar Consulta" href="#">&nbsp; Registrar</a>
+                                    <a data-url="consulta/ListHistorialC.jsp" data-title="Registrar Consulta" href="#">&nbsp; Registrar</a>
                                 </li>                            
                             </ul>
                         </li>
@@ -162,16 +159,28 @@
                             </ul>
                         </li>
                         <li>
-                        <a href="javascript:;" data-toggle="collapse" data-target="#reportes">Reportes<i class="fa fa-fw fa-caret-down"></i></a>
-                        <ul id="reportes" class="collapse">
-                            <li>
-                                <a  data-url="" data-title="Ingresos" href="#"><i class="fa fa-user fa-fw" aria-hidden="true"></i>&nbsp; Hospitalizaciones</a>
-                            </li>
-                            <li>
-                                <a data-url="" data-title="Mantenimiento Ingresos" href="#"><i class="fa fa-address-book fa-fw" aria-hidden="true"></i>&nbsp; Consultas</a>
-                            </li>                            
-                        </ul>
-                    </li>
+                            <a href="javascript:;" data-toggle="collapse" data-target="#reportes">Reportes<i class="fa fa-fw fa-caret-down"></i></a>
+                            <ul id="reportes" class="collapse">
+                                <li>
+                                    <a  data-url="" data-title="Ingresos" href="#"><i class="fa fa-user fa-fw" aria-hidden="true"></i>&nbsp; Hospitalizaciones</a>
+                                </li>
+                                <li>
+                                    <a data-url="" data-title="Mantenimiento Ingresos" href="#"><i class="fa fa-address-book fa-fw" aria-hidden="true"></i>&nbsp; Consultas</a>
+                                </li>                            
+                            </ul>
+                            <a href="javascript:;" data-toggle="collapse" data-target="#inec">Inec<i class="fa fa-fw fa-caret-down"></i></a>
+                            <ul id="inec" class="collapse">
+                                <li>
+                                    <a  data-url="inec/ingresosInec.jsp" data-title="Ingresos" href="#"><i class="fa fa-user fa-fw" aria-hidden="true"></i>&nbsp; Hospitalizaciones</a>
+                                </li>
+                                <li>
+                                    <a data-url="" data-title="Mantenimiento Ingresos" href="#"><i class="fa fa-address-book fa-fw" aria-hidden="true"></i>&nbsp; Camas</a>
+                                </li>                            
+                                <li>
+                                    <a data-url="" data-title="Mantenimiento Ingresos" href="#"><i class="fa fa-address-book fa-fw" aria-hidden="true"></i>&nbsp; RAS</a>
+                                </li>                            
+                            </ul>
+                        </li>
                     </ul>
                 </div>
                 <!-- /.navbar-collapse -->
@@ -181,36 +190,70 @@
 
                 <div class="container-fluid">
 
-                <!-- Page Heading -->
-                
-                <div class="row">
-                    <div class="col-sm-12">                        
-                        <div class="panel panel-default" id="panel">
-                            <div class="panel-heading">
-                                <h3 class="panel-title" id="titulo"> </h3>
+                    <!-- Page Heading -->
+
+                    <div class="row">
+                        <div class="col-sm-12">                        
+                            <div class="panel panel-default" id="panel">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title" id="titulo"> </h3>
+                                </div>
+                                <div id="contenido" class="panel-body">
+                                    
+                                </div>
                             </div>
-                            <div id="contenido" class="panel-body">
-                            </div>
+                            <!-- /.col-sm-4 -->
+
                         </div>
-                        <!-- /.col-sm-4 -->
+                        <!-- /.row -->
 
+
+                        <!-- / contenido -->            
                     </div>
-                    <!-- /.row -->
+                    <!-- /.container-fluid -->
 
-
-                    <!-- / contenido -->            
                 </div>
-                <!-- /.container-fluid -->
+                <!-- /#page-wrapper -->
 
             </div>
-            <!-- /#page-wrapper -->
+            <!-- /#wrapper -->
 
-        </div>
-        <!-- /#wrapper -->
-
-        <script type="text/javascript">
-            $("#contenido").load("consulta/ListHistorialC.jsp");
-        </script>
-
+            <script type="text/javascript">
+                
+            </script>
+            <script type="text/javascript" src="usuario/login.js"></script>
+            <div class="modal fade" id="modalConfiguracion" role="dialog">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Configuración</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label class="form-control-label">Usuario</label>
+                                    <input validate="text" type="text" class="form-control" id="recipient-name">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-control-label">Contraseña Actual</label>
+                                    <input validate="text" type="text" class="form-control" id="recipient-name">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-control-label">Nueva Contraseña</label>
+                                    <input validate="text" type="text" class="form-control" id="recipient-name">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-control-label">Confirmar Contraseña</label>
+                                    <input validate="text" type="text" class="form-control" id="recipient-name">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
     </body>
 </html>

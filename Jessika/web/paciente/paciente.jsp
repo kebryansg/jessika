@@ -78,7 +78,7 @@
                                     </div>
                                     <div id="contenedorImg" >
                                         <div>
-                                            <img src="resources/img/user.png" id="pac_imagen" edit="resources/img/user.png" class="img-thumbnail" height="150" width="150"/>  
+                                            <img src="resources/img/iconperson.png" id="pac_imagen" edit="resources/img/iconperson.png" class="img-thumbnail" height="150" width="150"/>  
                                         </div>
 
                                         <div class="btn-foto" >
