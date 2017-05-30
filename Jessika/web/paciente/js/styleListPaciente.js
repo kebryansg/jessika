@@ -1,5 +1,14 @@
-//$("#tablPaciente").bootstrapTable('hideColumn', 'sexo');
+$("table").bootstrapTable();
+
 var xhrRequest = [];
+
+function td_tr_seleccionar(tbody) {
+    $.each($(tbody).find("tr"), function (index, tr) {
+        var id = $(tr).attr("data-id");
+        $(tr).find("td:last").html("");
+        $(tr).find("td:last").html('<button name="SeleccionarPaciente" data-dismiss="modal" class="btn btn-info">Seleccionar</button>');
+    });
+}
 function loadPaginacion(total) {
     $.each($("#pagPacientes li"), function (i, li) {
         if ($(li).find("a[aria-label]").length === 0) {
@@ -12,18 +21,38 @@ function loadPaginacion(total) {
     }
     $("#pagPacientes li").first().after(li);
 }
-
-function loadList(bandera, pag) {
-    $.each(xhrRequest, function (idx, jqXHR)
-    {
+$.xhrPool = [];
+$.xhrPool.abortAll = function () {
+    $(this).each(function (idx, jqXHR) {
         jqXHR.abort();
     });
-    var xhr = null;
+    $.xhrPool.length = 0;
+};
+
+function loadList(bandera, pag) {
+    /*$.each(xhrRequest, function (idx, jqXHR)
+     {
+     jqXHR.abort();
+     });*/
+    //var xhr = null;
+    
+    
+    $.xhrPool.abortAll();
+    
     var txt_filter = $("#txt_filterPaciente").val();
     var cantList = $("#cantList").val();
-    xhr = $.ajax({
+    /*xhr = */ $.ajax({
         url: 'sPaciente',
         type: 'POST',
+        beforeSend: function (jqXHR) {
+            $.xhrPool.push(jqXHR);
+        },
+        complete: function (jqXHR) {
+            var index = $.xhrPool.indexOf(jqXHR);
+            if (index > -1) {
+                $.xhrPool.splice(index, 1);
+            }
+        },
         data: {
             filter: txt_filter,
             top: cantList,
@@ -47,12 +76,13 @@ function loadList(bandera, pag) {
             $('#tablPaciente').bootstrapTable('resetView');
         }
     });
-    xhrRequest.push(xhr);
+    //xhrRequest.push(xhr);
 }
 
 $(function () {
 
     loadList(true, 1);
+    
 
     $("#contenido").on("click", "#pagPacientes li a[aria-label]", function (e) {
         li_old = $("#pagPacientes li[class='active']");
@@ -80,7 +110,7 @@ $(function () {
 
 
 
-    $('#editPaciente .modal-body').load("paciente/paciente.jsp");
+    //$('#editPaciente .modal-body').load("paciente/paciente.jsp");
 
     $("#contenido").on("change", "#cantList", function () {
         loadList(true, 1);
@@ -101,8 +131,7 @@ $(function () {
 
 $("#contenido").on("click", "#tablePaciente button[name='editPaciente']", function () {
     var id = $(this).attr("data-id");
-    $.getScript("paciente/js/paciente.js", function () {
+    $("#contenido").load("paciente/paciente.jsp",function(){
         edit(id);
     });
-    openModal("editPaciente");
 });

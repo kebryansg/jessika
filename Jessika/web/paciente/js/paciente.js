@@ -155,6 +155,7 @@ function edit(id) {
         url: 'sPaciente',
         type: 'POST',
         async: false,
+        cache: false,
         data: {
             id: id,
             op: 'edit'

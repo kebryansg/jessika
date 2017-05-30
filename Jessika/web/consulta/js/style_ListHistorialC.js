@@ -1,4 +1,9 @@
+$.ajaxSetup({
+    cache: true
+});
+
 $(function () {
+
     $("#tbHC").on("click", "button[name='addHistorialCaso']", function () {
         nomPaciente = $("#con_nombrePaciente").val();
         idCaso = $(this).attr("data-id");
@@ -18,8 +23,7 @@ $(function () {
                 $("#PacienteId").val(nomPaciente);
                 $("#PacienteId").attr("data-hc", hc);
             });
-        }
-        else{
+        } else {
             alertify.success("Paciente no seleccionado...!");
         }
     });
@@ -43,10 +47,6 @@ $(function () {
         });
     });
 
-
-    $("#contenido").on("click", "#pac_Buscar", function (e) {
-        openModal("ListPaciente");
-    });
 
     $("#pac_Cargar").click(function () {
         limpiarDivPaciente();
@@ -83,11 +83,7 @@ function modalListPaciente() {
     $("#ListPaciente .modal-body").load("paciente/listPacientes.jsp", function () {
         var tablePaciente = $("#tablePaciente");
         $(tablePaciente).attr("modal", "1");
-
-        $.getScript("paciente/js/paciente.js", function () {
-            td_tr_seleccionar(tablePaciente);
-        });
-
+        td_tr_seleccionar(tablePaciente);
     });
 }
 function limpiarDivPaciente() {

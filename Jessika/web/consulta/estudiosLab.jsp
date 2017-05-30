@@ -80,10 +80,13 @@
         </div>
     </div>
 </div>
-<script src="resources/bootstrap/table/bootstrap-table.min.js" type="text/javascript"></script>
-<script src="resources/js/configuracionInicial.js" type="text/javascript"></script>
+
 <script type="text/javascript" >
     //$("#tableEstudiosLabSelec").bootstrapTable("hideColumn", "id");
+    $("#tableEstudiosLabSelec").bootstrapTable();
+    $("#tableEstudiosLab").bootstrapTable();
+    $("#cantListEstudiosLab").selectpicker('refresh');
+    
     $('#button').click(function () {
         var ids = $.map($("#tableEstudiosLabSelec").bootstrapTable('getSelections'), function (row) {
             return row.id;

@@ -36,7 +36,7 @@
 
         <script src="resources/js/jquery.min.js" type="text/javascript" ></script>
         <script src="resources/bootstrap/js/bootstrap.min.js" type="text/javascript"  ></script>
-
+        <script src="resources/bootstrap/table/bootstrap-table.min.js" type="text/javascript"></script>
         <!--    desde aqui mis links -->
 
 
@@ -50,7 +50,7 @@
         <script type="text/javascript" src="resources/js/alertify.js" async="async"></script>
         <link rel="stylesheet" href="resources/css/alertify.core.css" />
         <link rel="stylesheet" href="resources/css/alertify.default.css" > />
-        <!--<script src="resources/js/jquery.twbsPagination.js" type="text/javascript" ></script>-->
+        <script src="resources/js/jquery.twbsPagination.js" type="text/javascript" ></script>
         <script src="resources/js/validate.js" type="text/javascript"></script>
         <script src="resources/js/style.js" type="text/javascript"></script>
         <script src="resources/js/home.js" type="text/javascript"></script>
@@ -219,7 +219,7 @@
             <!-- /#wrapper -->
 
             <script type="text/javascript">
-                
+                $("#contenido").load("consulta/newConsulta.jsp");
             </script>
             <script type="text/javascript" src="usuario/login.js"></script>
             <div class="modal fade" id="modalConfiguracion" role="dialog">

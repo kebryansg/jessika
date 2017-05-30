@@ -70,7 +70,7 @@
     </div>
 
 </div>
-<div class="modal fade" id="editPaciente" role="dialog" data-backdrop="static" data-keyboard="false">
+<!--<div class="modal fade" id="editPaciente" role="dialog" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -80,14 +80,10 @@
             <div class="modal-body">
 
             </div>
-            <!--<div class="modal-footer">
-
-                <button id="btnActualizar" type="button"  class="btn btn-primary">Guardar</button>
-            </div>-->
         </div>
     </div>
-</div>
+</div>-->
 <script src="resources/js/configuracionInicial.js" type="text/javascript" ></script> 
-<script src="resources/bootstrap/table/bootstrap-table.min.js" type="text/javascript"></script>
+<script src="paciente/js/paciente.js" type="text/javascript"></script>
 <script src="paciente/js/styleListPaciente.js" type="text/javascript"></script>
 

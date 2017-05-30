@@ -8,7 +8,7 @@
         </div>
         <div class="form-group col-md-4">
             <button class="btn btn-info" id="pac_Cargar" >Cargar</button>    
-            <button class="btn btn-info" id="pac_Buscar" ><i class="glyphicon glyphicon-search"></i> Buscar Paciente</button>    
+            <button class="btn btn-info" id="pac_Buscar" data-toggle="modal" data-target="#ListPaciente" ><i class="glyphicon glyphicon-search"></i> Buscar Paciente</button>    
         </div>
     </div>
     <div class="row">
@@ -86,16 +86,13 @@
                 <h4 class="modal-title">Elegir pacientes</h4>
             </div>
             <div class="modal-body">
-
+                
             </div>
-            <!--<div class="modal-footer">
-
-                <button id="btnActualizar" type="button"  class="btn btn-primary">Guardar</button>
-            </div>-->
         </div>
     </div>
 </div>
-
-<script src="resources/bootstrap/table/bootstrap-table.min.js" type="text/javascript"></script>
-<script src="resources/js/configuracionInicial.js" type="text/javascript"></script>
+<!--<script src="resources/js/configuracionInicial.js" type="text/javascript"></script>-->
 <script src="consulta/js/style_ListHistorialC.js" type="text/javascript"></script>
+<script type="text/javascript">
+    $("tbHC").bootstrapTable();
+</script>

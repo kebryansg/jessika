@@ -88,9 +88,14 @@
         </div>
     </div>
 </div>
-<script src="resources/bootstrap/table/bootstrap-table.min.js" type="text/javascript"></script>
-<script src="resources/js/configuracionInicial.js" type="text/javascript"></script>
+
 <script type="text/javascript" >
+    
+    $("#tableEstudiosImg").bootstrapTable();
+    $("#tableEstudiosImgSelec").bootstrapTable();
+    $("#cantListEstudiosImg").selectpicker('refresh');
+    
+    
     $.getScript("consulta/js/estudioImg.js", function () {
         TipoEstudiosImg_load($("#cboTipoEstudiosImg"));
         EstudiosImg_load($("#cboEstudiosImg"));

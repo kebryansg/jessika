@@ -99,25 +99,24 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label class="control-label">Motivo</label>
-                    <textarea class="form-control" validate="text" rows="3" id="con_Motivo"></textarea>
+                    <textarea class="form-control" validate="text" rows="2" id="con_Motivo"></textarea>
                 </div>
                 <div class="form-group">
                     <label class="control-label">Sintomas</label>
-                    <textarea class="form-control" validate="text" rows="3" id="con_Sintomas"></textarea>
+                    <textarea class="form-control" validate="text" rows="2" id="con_Sintomas"></textarea>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
                     <label class="control-label">Diagnostico</label>
-                    <textarea class="form-control" validate="text" rows="3" id="con_Diagnostico"></textarea>
+                    <textarea class="form-control" validate="text" rows="2" id="con_Diagnostico"></textarea>
                 </div>
                 <div class="form-group">
                     <label class="control-label">Prescripciòn</label>
-                    <textarea class="form-control" validate="text" rows="3" id="con_Prescripcion"></textarea>
+                    <textarea class="form-control" validate="text" rows="2" id="con_Prescripcion"></textarea>
                 </div>
             </div>
         </div>
-        <hr>
         <div class="row">
             <div class="form-group has-error col-md-3" id="showLabs">
                 <button class="btn btn-danger" onclick="openModal('estLab')">Estudios Laboratorios</button>
@@ -162,4 +161,5 @@
         </div>
     </div>
 </div>
+<script src="resources/js/configuracionInicial.js" type="text/javascript"></script>
 <script src="consulta/js/styleConsulta.js" type="text/javascript"></script>
