@@ -80,22 +80,3 @@ function obtenerEstudiosImg() {
     });
     return JSON.stringify(imgArreglo);
 }
-function obtList() {
-    $.ajax({
-        url: "sConsulta",
-        data: {
-            op: "list",
-            idHc: $("#con_historiaPaciente").val(),
-            filter: ""
-                    //fecha: $("#con_Fecha").val()
-        },
-        type: 'POST',
-        async: false,
-        success: function (data) {
-            //alertify.success("Registrado correctamente...!");
-            $("#tbHC tbody").html(data);
-            $('#tbHC').bootstrapTable('resetView');
-        }
-
-    });
-}

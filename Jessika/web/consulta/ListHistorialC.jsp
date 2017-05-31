@@ -21,9 +21,12 @@
             <input class="form-control solo-numero" readonly  id="con_cedulaPaciente" placeholder="Cedula Paciente" type="text" >
         </div>
         <div class="form-group col-md-4">
-
             <label class="control-label" for="con_nombrePaciente">Paciente:</label>
             <input class="form-control solo-numero" readonly  id="con_nombrePaciente" placeholder="Nombre Paciente" type="text" >
+        </div>
+        <div class="form-group col-md-4 hidden">
+            <label class="control-label" for="con_sexoPaciente">Sexo:</label>
+            <input class="form-control solo-numero" readonly  id="con_sexoPaciente" placeholder="Nombre Paciente" type="text" >
         </div>
     </div>  
     <hr>

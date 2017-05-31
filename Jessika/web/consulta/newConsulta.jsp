@@ -57,40 +57,52 @@
                 <div class="well" id="sv_id" data-id="0" style="background-color: #fff;">
                     <div class="form-group col-md-2">
                         <label class="form-control-label">Peso:</label>
-                        <input validate="text" type="text" class="form-control solo-numero" placeholder="kg" id="sv_Peso">
+                        <input validate="text" type="text" class="form-control " placeholder="kg - lb" id="sv_Peso">
                     </div>
                     <div class="form-group col-md-2">
                         <label class="form-control-label">Talla:</label>
-                        <input validate="text" type="text" class="form-control solo-numero" placeholder="cm" id="sv_Talla">
+                        <input validate="text" type="text" class="form-control " placeholder="cm" id="sv_Talla">
                     </div>
                     <div class="form-group col-md-2">
                         <label class="form-control-label">Temp.:</label>
-                        <input validate="text" type="text" class="form-control solo-numero" placeholder="ºC" id="sv_Temperatura">
+                        <input validate="text" type="text" class="form-control " placeholder="ºC" id="sv_Temperatura">
                     </div>
                     <div class="form-group col-md-3">
                         <label class="form-control-label">F. Cardìaca:</label>
-                        <input validate="text" type="text" class="form-control solo-numero" placeholder="x Min." id="sv_Frecuencia">
+                        <input validate="text" type="text" class="form-control " placeholder="x Min." id="sv_Frecuencia">
                     </div>
                     <div class="form-group col-md-3">
                         <label class="form-control-label">Presiòn Arterial:</label>
-                        <input validate="text" type="text" class="form-control solo-numero" placeholder="mmHg" id="sv_Presion">
+                        <input validate="text" type="text" class="form-control " placeholder="mmHg" id="sv_Presion">
+                    </div>
+
+                    <div id="div_femenino">
+                        <div class="form-group col-md-3">
+                            <label class="form-control-label">FUM:</label>
+                            <div class="input-group date form_date" data-date="" data-date-format="yyyy-mm-dd">
+                                <input class="form-control" validate="date" id="sv_FUM" size="16" type="text" value="" readonly>
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                            </div>  
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label class="form-control-label">FUC:</label>
+                            <div class="input-group date form_date" data-date="" data-date-format="yyyy-mm-dd">
+                                <input class="form-control" validate="date" id="sv_FUC" size="16" type="text" value="" readonly>
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                            </div>  
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label class="control-label" for="cboEstadoFemenino">Periodo:</label>
+                            <select class="form-control selectpicker" validate="select" id="cboEstadoFemenino">
+                                <option value="0">Ninguna</option>
+                                <option value="1">Prenatal</option>
+                                <option value="2">Parto</option>
+                                <option value="3">Post-parto</option>
+                            </select>
+                        </div>
                     </div>
 
 
-                    <div class="form-group col-md-6">
-                        <label class="form-control-label">FUM:</label>
-                        <div class="input-group date form_date" data-date="" data-date-format="yyyy-mm-dd">
-                            <input class="form-control" validate="date" id="sv_FUM" size="16" type="text" value="" readonly>
-                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                        </div>  
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label class="form-control-label">FUC:</label>
-                        <div class="input-group date form_date" data-date="" data-date-format="yyyy-mm-dd">
-                            <input class="form-control" validate="date" id="sv_FUC" size="16" type="text" value="" readonly>
-                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                        </div>  
-                    </div>
                     <div class="clearfix"></div>
                 </div>
             </div>

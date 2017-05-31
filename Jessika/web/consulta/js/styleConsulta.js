@@ -2,6 +2,9 @@ $(document).ready(function () {
 
     $("#estLab .modal-body").load("consulta/estudiosLab.jsp");
     $("#estImg .modal-body").load("consulta/estudiosImg.jsp");
+    
+    
+    
 
     $("#estImg").on('hide.bs.modal', function (e) {
         trs = $("#tableEstudiosImgSelec tbody tr[data-index]");

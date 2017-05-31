@@ -27,7 +27,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="table-responsive ">
-                    <table  data-toggle="table" id="tablPaciente" data-height="300">
+                    <table  data-toggle="table" data-unique-id="hc" id="tablPaciente" data-height="300">
                         <thead style="font-weight: bold;">
                             <tr>
                                 <th data-field="hc" >H. Clinica</th>
@@ -37,12 +37,13 @@
                                 <th data-field="domicilio" >Domicilio</th>
                                 <th data-field="sexo">Sexo</th>
                                 <th data-field="accion" >Acciòn</th>
+                                <th data-field="seleccionar" >Accion</th>
                             </tr>
                         </thead>
-                        <tbody id="tablePaciente">
+                        <!--<tbody id="tablePaciente">
 
 
-                        </tbody>
+                        </tbody>-->
                     </table>
                 </div>
             </div>       

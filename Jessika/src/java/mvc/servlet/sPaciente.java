@@ -126,25 +126,25 @@ public class sPaciente extends HttpServlet {
                 String listString = "";
 
                 l = new PacienteDaoImp().list_count_Filter(filter, inicioSQL, topSQL);
+                List<String> resultList = new ArrayList();
 
                 for (Object object : l.getList()) {
                     Paciente paciente1 = (Paciente) object;
-                    listString += "<tr data-id='" + paciente1.getId() + "' >";
-                    listString += "<td>" + paciente1.getHistoriaClinica() + "</td>";
-                    listString += "<td>" + paciente1.getCedula() + "</td>";
-                    listString += "<td>" + (paciente1.getApellido1() + " " + paciente1.getApellido2() + " " + paciente1.getNombre1() + " " + paciente1.getNombre2()).toUpperCase() + "</td>";
-                    listString += "<td>" + paciente1.getCiudad() + "</td>";
-                    listString += "<td>" + paciente1.getDomicilio() + "</td>";
-                    listString += "<td>" + ((paciente1.getSexo()) ? "1" : "0") + "</td>";
-                    listString += "<td>";
-                    listString += "<button name='editPaciente' data-id='" + paciente1.getId() + "'  style='margin-right: 2px;' class='btn btn-primary'><span class='glyphicon glyphicon-pencil'></span> </button>";
-                    listString += "<button name='deletPaciente' data-id='" + paciente1.getId() + "' class='btn btn-danger'><span class='glyphicon glyphicon-trash'></span> </button>";
-                    listString += "</td>";
-                    listString += "</tr>";
+
+                    resultList.add("{"
+                            + "\"hc\":  \"" + paciente1.getHistoriaClinica() + "\""
+                            + ",\"cedula\": \"" + paciente1.getCedula() + "\""
+                            + ",\"nombres\": \"" + (paciente1.getApellido1() + " " + paciente1.getApellido2() + " " + paciente1.getNombre1() + " " + paciente1.getNombre2()).toUpperCase() + "\""
+                            + ",\"ciudad\": \"" + paciente1.getCiudad() + "\""
+                            + ",\"domicilio\": \"" + paciente1.getDomicilio() + "\""
+                            + ",\"sexo\": \"" + ((paciente1.getSexo()) ? "1" : "0") + "\""
+                            + ",\"accion\": \"<button name='editPaciente' data-id='" + paciente1.getId() + "'  style='margin-right: 2px;' class='btn btn-primary'><span class='glyphicon glyphicon-pencil'></span> </button>"
+                            + "<button name='deletPaciente' data-id='" + paciente1.getId() + "' class='btn btn-danger'><span class='glyphicon glyphicon-trash'></span> </button>\""
+                            + ",\"seleccionar\": \"<button name='SeleccionarPaciente' data-dismiss='modal' class='btn btn-info'>Seleccionar</button>\""
+                            + "}");
                 }
 
-                result = "{\"count\": \"" + l.getTotal() + "\"  ,\"list\": \"" + listString + "\"}";
-                System.out.println(result);
+                result = "{\"count\": \"" + l.getTotal() + "\"  , \"list\": [" + String.join(",", resultList) + "]}";
                 out.print(result);
                 out.flush();
                 out.close();
