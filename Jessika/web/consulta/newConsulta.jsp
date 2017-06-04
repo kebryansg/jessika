@@ -7,12 +7,12 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
-                <div class="pull-right">
+                <div class="pull-right form-group">
                     <button class="btn btn-info" id="btnCancelarConsulta">Cancelar</button>
                     <button class="btn btn-info" id="btnGuardarConsulta">Guardar</button>
                 </div>
 
-                <div class="pull-left">
+                <div class="pull-left form-group">
                     <div class="form-inline">
                         <div class="form-group">
                             <label for="casoId" class="control-label" >Nº Caso: </label>
@@ -29,7 +29,6 @@
         <hr>
         <div class="row">
             <div class="col-md-3">
-                <br>
                 <div class="form-group">
                     <label class="control-label" for="con_Fecha">Fecha</label>
                     <div class="input-group date form_date" data-date="" data-date-format="yyyy-mm-dd">
@@ -39,7 +38,7 @@
                 </div>
                 <div class="form-group">
                     <label class="control-label" for="cboEspecialidadMedico">Especilidad</label>
-                    <select class="form-control selectpicker" validate="select" data-live-search="true" id="cboEspecialidadMedico">
+                    <select class="form-control selectpicker" validate="select" id="cboEspecialidadMedico">
                         <option value="0">Seleccione</option>
                         <%
                             List<MedicoEspecialidad> list = new MedicoEspecialidadDaoImp().list(2068);
@@ -54,56 +53,66 @@
 
             </div>
             <div class="col-md-9">
-                <div class="well" id="sv_id" data-id="0" style="background-color: #fff;">
-                    <div class="form-group col-md-2">
-                        <label class="form-control-label">Peso:</label>
-                        <input validate="text" type="text" class="form-control " placeholder="kg - lb" id="sv_Peso">
-                    </div>
-                    <div class="form-group col-md-2">
-                        <label class="form-control-label">Talla:</label>
-                        <input validate="text" type="text" class="form-control " placeholder="cm" id="sv_Talla">
-                    </div>
-                    <div class="form-group col-md-2">
-                        <label class="form-control-label">Temp.:</label>
-                        <input validate="text" type="text" class="form-control " placeholder="ºC" id="sv_Temperatura">
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label class="form-control-label">F. Cardìaca:</label>
-                        <input validate="text" type="text" class="form-control " placeholder="x Min." id="sv_Frecuencia">
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label class="form-control-label">Presiòn Arterial:</label>
-                        <input validate="text" type="text" class="form-control " placeholder="mmHg" id="sv_Presion">
-                    </div>
-
-                    <div id="div_femenino">
-                        <div class="form-group col-md-3">
-                            <label class="form-control-label">FUM:</label>
-                            <div class="input-group date form_date" data-date="" data-date-format="yyyy-mm-dd">
-                                <input class="form-control" validate="date" id="sv_FUM" size="16" type="text" value="" readonly>
-                                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                            </div>  
-                        </div>
-                        <div class="form-group col-md-3">
-                            <label class="form-control-label">FUC:</label>
-                            <div class="input-group date form_date" data-date="" data-date-format="yyyy-mm-dd">
-                                <input class="form-control" validate="date" id="sv_FUC" size="16" type="text" value="" readonly>
-                                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                            </div>  
-                        </div>
-                        <div class="form-group col-md-3">
-                            <label class="control-label" for="cboEstadoFemenino">Periodo:</label>
-                            <select class="form-control selectpicker" validate="select" id="cboEstadoFemenino">
-                                <option value="0">Ninguna</option>
-                                <option value="1">Prenatal</option>
-                                <option value="2">Parto</option>
-                                <option value="3">Post-parto</option>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="control-label" for="cboTipoConsulta">Tipo Consulta:</label>
+                            <select class="form-control selectpicker"  validate="select" id="cboTipoConsulta">
+                                <option value="1" >Ambulatoria</option>
+                                <option value="2">Prevenciòn</option>
                             </select>
                         </div>
                     </div>
-
-
-                    <div class="clearfix"></div>
+                    <div class="col-md-8">
+                        <div class="form-group" id="groupCausa">
+                            <label class="control-label" for="cboCausa">Causa:</label>
+                            <select class="form-control selectpicker with-ajax" data-live-search="true" data validate="select" id="cboCausa">
+                            </select>
+                        </div>
+                        <div class="form-group" id="groupMetodos">
+                            <label class="control-label" for="cboTipoConsulta">Metodos:</label>
+                            <select class="form-control selectpicker" data-size="6" data validate="select" id="cboTipoConsulta">
+                                <option value="0">Seleccione</option>
+                                <optgroup label="Planificaciòn Familiar">
+                                    <option class="sMasculino">Dispositivo Intrauterino</option>
+                                    <option>Gestàgenos Orales</option>
+                                    <option>Inyectable</option>
+                                    <option>Preservativos</option>
+                                    <option class="sMasculino">Implantes</option>
+                                    <option class="sFemenino">Vasectomia</option>
+                                    <option class="sMasculino">Salpingectomìa</option>
+                                    <option>Otros</option>
+                                </optgroup>
+                                <optgroup label="Detecciòn oportuna de cancer">
+                                    <option class="sMasculino">Cèrvicouterino</option>
+                                    <option class="sFemenino">Prospata</option>
+                                    <option>Mamario</option>
+                                    <option>Pulmonar</option>
+                                    <option>Gàstrico</option>
+                                    <option>Hepàtico</option>
+                                    <option>Colorrectal</option>
+                                    <option>Piel</option>
+                                </optgroup>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <button class="btn btn-danger" data-toggle="modal" data-target="#signosVitales" >Signos Vitales</button>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group has-error" id="showLabs">
+                            <button class="btn btn-danger" onclick="openModal('estLab')">Estudios Laboratorios</button>
+                            <span class="help-block">Ningun estudio de laboratorio.</span>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group has-error" id="showImgs">
+                            <button class="btn btn-danger" data-toggle="modal" data-target="#estImg">Estudios Imagenes</button>
+                            <span class="help-block">Ningun estudio de imagenes.</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -127,16 +136,6 @@
                     <label class="control-label">Prescripciòn</label>
                     <textarea class="form-control" validate="text" rows="2" id="con_Prescripcion"></textarea>
                 </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="form-group has-error col-md-3" id="showLabs">
-                <button class="btn btn-danger" onclick="openModal('estLab')">Estudios Laboratorios</button>
-                <span class="help-block">Ningun estudio de laboratorio.</span>
-            </div>
-            <div class="form-group has-error col-md-3" id="showImgs">
-                <button class="btn btn-danger" data-toggle="modal" data-target="#estImg">Estudios Imagenes</button>
-                <span class="help-block">Ningun estudio de imagenes.</span>
             </div>
         </div>
     </div>
@@ -173,5 +172,70 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="signosVitales" tabindex="-1" role="dialog" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog" >
+        <div class="modal-content">
+            <div class="modal-header">
+                <!--<button type="button" class="close" data-dismiss="modal">&times;</button>-->
+                <button type="button" data-dismiss="modal"  class="btn btn-primary" style="float: right;">Guardar</button>
+                <h4 class="modal-title">Signos Vitales</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group col-md-3">
+                    <label class="form-control-label">Peso:</label>
+                    <input validate="text" type="text" class="form-control " placeholder="kg - lb" id="sv_Peso">
+                </div>
+                <div class="form-group col-md-3">
+                    <label class="form-control-label">Talla:</label>
+                    <input validate="text" type="text" class="form-control " placeholder="cm" id="sv_Talla">
+                </div>
+                <div class="form-group col-md-3">
+                    <label class="form-control-label">Temp.:</label>
+                    <input validate="text" type="text" class="form-control " placeholder="ºC" id="sv_Temperatura">
+                </div>
+                <div class="form-group col-md-3">
+                    <label class="form-control-label">F. Cardìaca:</label>
+                    <input validate="text" type="text" class="form-control " placeholder="x Min." id="sv_Frecuencia">
+                </div>
+                <div class="form-group col-md-3">
+                    <label class="form-control-label">Presiòn Arterial:</label>
+                    <input validate="text" type="text" class="form-control " placeholder="mmHg" id="sv_Presion">
+                </div>
+                <div class="clearfix"></div>
+                <div id="div_femenino">
+                    <div class="form-group col-md-4">
+                        <label class="form-control-label">FUM:</label>
+                        <div class="input-group date form_date" data-date="" data-date-format="yyyy-mm-dd">
+                            <input class="form-control" validate="date" id="sv_FUM" size="16" type="text" value="" readonly>
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                        </div>  
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label class="form-control-label">FUC:</label>
+                        <div class="input-group date form_date" data-date="" data-date-format="yyyy-mm-dd">
+                            <input class="form-control" validate="date" id="sv_FUC" size="16" type="text" value="" readonly>
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                        </div>  
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label class="control-label" for="cboEstadoFemenino">Periodo:</label>
+                        <select class="form-control selectpicker" validate="select" id="cboEstadoFemenino">
+                            <option value="0">Ninguna</option>
+                            <option value="1">Prenatal</option>
+                            <option value="2">Parto</option>
+                            <option value="3">Post-parto</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+</div>
 <script src="resources/js/configuracionInicial.js" type="text/javascript"></script>
 <script src="consulta/js/styleConsulta.js" type="text/javascript"></script>
+<script>
+
+
+
+</script>

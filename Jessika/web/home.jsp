@@ -41,7 +41,6 @@
 
 
         <script type="text/javascript" src="resources/js/moment.js" async="async"></script>
-        <!--<script type="text/javascript" src="resources/bootstrap/js/bootstrap-datetimepicker.min.js"></script>-->
         <script type="text/javascript" src="resources/bootstrap/js/bootstrap-datetimepicker.js" ></script>        
         <script src="resources/bootstrap/js/bootstrap-datetimepicker.es.js" type="text/javascript" ></script>
 
@@ -54,17 +53,12 @@
         <script src="resources/js/validate.js" type="text/javascript"></script>
         <script src="resources/js/style.js" type="text/javascript"></script>
         <script src="resources/js/home.js" type="text/javascript"></script>
-        <!--<script src="resources/js/tabPanel.js" type="text/javascript" > ></script>-->
 
 
         <link rel="stylesheet" href="resources/bootstrap/css/bootstrap-select.min.css" >
+        <link href="resources/bootstrap/css/ajax-bootstrap-select.min.css" rel="stylesheet" type="text/css"/>
         <script src="resources/bootstrap/js/bootstrap-select.min.js"></script>
-        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-        <!--[if lt IE 9]>
-            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-        <![endif]-->
+        <script src="resources/bootstrap/js/ajax-bootstrap-select.min.js" type="text/javascript"></script>
 
     </head>
 

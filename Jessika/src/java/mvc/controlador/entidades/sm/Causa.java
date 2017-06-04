@@ -37,10 +37,15 @@ public class Causa implements Serializable {
     private List<Metodos> metodosList;
 
     public Causa() {
+        this.id = 0;
     }
 
     public Causa(Integer id) {
         this.id = id;
+    }
+    public Causa(Integer id, String descripcion) {
+        this.id = id;
+        this.descripcion = descripcion;
     }
 
     public Integer getId() {

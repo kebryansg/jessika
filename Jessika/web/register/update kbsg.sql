@@ -110,3 +110,9 @@ where
 order by
 	id OFFSET @inicio ROWS FETCH NEXT @trows ROWS ONLY;
 end
+
+
+-- 03 Junio 2017
+ALTER TABLE BD_SM.dbo.metodos DROP CONSTRAINT FK_metodos_causa go
+ALTER TABLE BD_SM.dbo.metodos ADD idTipoConsulta int go
+ALTER TABLE BD_SM.dbo.metodos ADD CONSTRAINT metodos_tipoConsulta_FK FOREIGN KEY (idTipoConsulta) REFERENCES BD_SM.dbo.tipoConsulta(id) go

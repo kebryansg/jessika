@@ -47,7 +47,11 @@ $(function () {
                 $("#PacienteId").val(nomPaciente);
                 $("#PacienteId").attr("data-hc", hc);
                 if (sexo === "1") {
-                    //$("#div_femenino").hide();
+                    $("#div_femenino").hide();
+                    $(".sMasculino").closest("li").attr("class","disabled");
+                }
+                else{
+                    $(".sFemenino").closest("li").attr("class","disabled");
                 }
             });
         } else {

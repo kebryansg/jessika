@@ -1,16 +1,60 @@
+var optionsCboCausa = {
+    ajax: {
+        url: 'sConsulta',
+        type: 'POST',
+        dataType: 'json',
+        data: {
+            q: '{{{q}}}',
+            op: "select"
+        }
+    },
+    locale: {
+        emptyTitle: 'Ingresa la causa'
+    },
+    // log: 3,
+    preprocessData: function (data) {
+        var i, l = data.length, array = [];
+        if (l) {
+            for (i = 0; i < l; i++) {
+                array.push($.extend(true, data[i], {
+                    text: data[i].descripcion,
+                    value: data[i].id,
+                    data: {
+                        subtext: ""
+                    }
+                }));
+            }
+        }
+        return array;
+    },
+    preserveSelected: false
+};
+//$('.selectpicker').selectpicker().filter('.with-ajax').ajaxSelectPicker(optionsCboCausa);
+$('#cboCausa').ajaxSelectPicker(optionsCboCausa);
+$('select').trigger('change');
 $(document).ready(function () {
 
+    $("#cboTipoConsulta").on("changed.bs.select", function (e) {
+        idTipoConsulta = $("#cboTipoConsulta").val();
+        if (idTipoConsulta === "1") {
+            $("#groupCausa").show();
+            $("#groupMetodos").hide();
+        } else {
+            $("#groupMetodos").show();
+            $("#groupCausa").hide();
+        }
+    });
+
+    $("#groupMetodos").hide();
     $("#estLab .modal-body").load("consulta/estudiosLab.jsp");
     $("#estImg .modal-body").load("consulta/estudiosImg.jsp");
-    
-    
-    
+
 
     $("#estImg").on('hide.bs.modal', function (e) {
         trs = $("#tableEstudiosImgSelec tbody tr[data-index]");
         $.each(trs, function (index, i) {
             if ($(i).find("input[name='ext_estI']").length > 0) {
-                if($(i).find("input[name='ext_estI']:checked").length === 0){
+                if ($(i).find("input[name='ext_estI']:checked").length === 0) {
                     alert("Informacion incompleta...!");
                     e.preventDefault();
                 }
@@ -60,9 +104,9 @@ $(document).ready(function () {
             $("#showLabs button").addClass("btn-success");
         }
     });
-    
-    
-    
+
+
+
 
 
 

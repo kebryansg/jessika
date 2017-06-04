@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import mvc.controlador.entidades.ip.Paciente;
 import mvc.controlador.entidades.sm.Caso;
+import mvc.controlador.entidades.sm.Causa;
 import mvc.controlador.entidades.sm.Consulta;
 import mvc.controlador.entidades.sm.ConsultaEstudiosImagen;
 import mvc.controlador.entidades.sm.ConsultaEstudiosLabs;
@@ -32,6 +33,7 @@ import mvc.controlador.entidades.sm.Metodos;
 import mvc.controlador.entidades.sm.SignosVitales;
 import mvc.modelo.ipDaoImp.PacienteDaoImp;
 import mvc.modelo.smDaoImp.CasoDaoImp;
+import mvc.modelo.smDaoImp.CausaDaoImp;
 import mvc.modelo.smDaoImp.ConsultaDaoImp;
 import mvc.modelo.smDaoImp.ConsultaEstudiosImagenDaoImp;
 import mvc.modelo.smDaoImp.ConsultaEstudiosLabsDaoImp;
@@ -107,6 +109,16 @@ public class sConsulta extends HttpServlet {
         String result = "";
         String op = request.getParameter("op");
         switch (op) {
+            case "select": 
+                List<Causa> list_causa = new CausaDaoImp().list_filter(request.getParameter("q"));
+                if(list_causa.isEmpty()){
+                    list_causa.add(new Causa(0,request.getParameter("q").toUpperCase()));
+                }
+                result = gson.toJson(list_causa);
+                out.print(result);
+                out.flush();
+                out.close();
+                break;
             case "list":
                 List<Consulta> list = new CasoDaoImp().listConsulta(Integer.parseInt(request.getParameter("idHc")), "", "", request.getParameter("filter"), 0, 5);
                 for (Consulta con : list) {
