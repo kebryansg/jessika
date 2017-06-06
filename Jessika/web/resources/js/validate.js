@@ -15,7 +15,7 @@ function validarText(value) {
 }
 
 function validarSelect(value) {
-    var bandera = true;
+    /*var bandera = true;
     var valor= "#"+$(value).attr("id") + 'help'; 
          $(valor).remove();
     if ($(value).val() === "0" || $(value).val() === null ) {
@@ -25,6 +25,18 @@ function validarSelect(value) {
         } else
         {
             $(value).closest("div").removeClass("has-error");
+        } 
+    return bandera;*/
+    var valor= "#"+$(value).attr("id") + 'help'; 
+         $(valor).remove();
+    if ($(value).val() === "0" || $(value).val() === null ) {
+            $(value).closest(".form-group").addClass("has-error");
+            $(value).after('<span id="' + $(value).attr("id") + 'help" class="help-block">Sin seleccionar</span');
+            $(value).closest(".form-group").css("margin-bottom","30px");
+            bandera=false;
+        } else
+        {
+            $(value).closest(".form-group").removeClass("has-error");
         } 
     return bandera;
 }

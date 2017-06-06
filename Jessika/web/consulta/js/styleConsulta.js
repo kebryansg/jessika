@@ -79,7 +79,8 @@ $(document).ready(function () {
     });
 
     $("#btnGuardarConsulta").click(function () {
-        saveConsulta();
+        //saveConsulta();
+        validarConsulta();
     });
 
 });
@@ -135,6 +136,26 @@ function saveConsulta() {
             alertify.success("Registrado correctamente...!");
         }
     });
+}
+function validarConsulta(){
+    $("#consulta_div .help-block").remove();
+    bandera = true;
+    $.each($("#consulta_div select[validate='select']"),function(i,value){
+        if (!validarSelect(value)) {
+            $(value).blur(function () {
+                validarSelect(value);
+            });
+        }
+    });
+    $.each($("#consulta_div input[validate='date']"), function (index, value) {
+        if (!validarDate(value)) {
+            $(value).change(function () {
+                validarDate(value);
+            });
+        }
+    });
+    
+    return bandera;
 }
 function obtenerSignosVitales() {
     sv = {

@@ -149,10 +149,10 @@ public class sConsulta extends HttpServlet {
                 // Signos Vitales
 
                 Consulta consulta = new Consulta(0);
-                consulta.setMotivo(request.getParameter("dc[motivo]"));
-                consulta.setDiagnostico(request.getParameter("dc[diagnostico]"));
-                consulta.setPrescripcion(request.getParameter("dc[prescripcion]"));
-                consulta.setSintoma(request.getParameter("dc[sintomas]"));
+                consulta.setMotivo(request.getParameter("dc[motivo]").toUpperCase());
+                consulta.setDiagnostico(request.getParameter("dc[diagnostico]").toUpperCase());
+                consulta.setPrescripcion(request.getParameter("dc[prescripcion]").toUpperCase());
+                consulta.setSintoma(request.getParameter("dc[sintomas]").toUpperCase());
                 consulta.setFecha(test.fechaSQL(request.getParameter("fecha")));
                 
                 // Caso

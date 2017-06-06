@@ -4,7 +4,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <div class="contenedor-tabs">
-    <div class="container-fluid">
+    <div class="container-fluid" id="consulta_div">
         <div class="row">
             <div class="col-md-12">
                 <div class="pull-right form-group">

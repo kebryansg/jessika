@@ -78,7 +78,7 @@ public class CasoDaoImp implements CasoDao {
         try {
             while (rs.next()) {
                 Consulta value = new Consulta(0);
-                value.setMotivo(rs.getNString("motivo"));
+                value.setMotivo(rs.getString("motivo"));
                 value.setFecha(rs.getDate("fecha"));
                 value.setIdCaso(new Caso(rs.getInt("casoId"), idHistoriaC));
                 list.add(value);
