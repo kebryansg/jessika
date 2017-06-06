@@ -44,6 +44,10 @@
         <servlet-name>sEstudioImg</servlet-name>
         <servlet-class>mvc.servlet.sEstudioImg</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>sTipoConsulta</servlet-name>
+        <servlet-class>mvc.servlet.sTipoConsulta</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>pruebaCombo</servlet-name>
         <url-pattern>/pruebaCombo</url-pattern>
@@ -87,6 +91,10 @@
     <servlet-mapping>
         <servlet-name>sExcel</servlet-name>
         <url-pattern>/sExcel</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>sTipoConsulta</servlet-name>
+        <url-pattern>/sTipoConsulta</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

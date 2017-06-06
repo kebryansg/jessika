@@ -5,8 +5,10 @@
  */
 package mvc.modelo.smDaoImp;
 
+import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import mvc.controlador.C_BD;
 import mvc.controlador.con_db;
 import mvc.controlador.entidades.sm.SignosVitales;
@@ -25,7 +27,28 @@ public class SignosVitalesDaoImp implements SignosVitalesDao{
         String sql = "";
         try {
             if (value.getId() == 0) {
-                sql = "INSERT INTO [dbo].[signosVitales]([peso],[talla],[presion],[temperatura],[fum],[fuc],[frecuenciaC]) VALUES('" + value.getPeso()+ "','" + value.getTalla()+ "','" + value.getPresion()+ "','" + value.getTemperatura()+ "','" + test.test.SQLSave(value.getFum())+ "','" + test.test.SQLSave(value.getFuc())+ "','" + value.getFrecuenciaC()+ "')";
+                CallableStatement call = this.conn.getConexion().prepareCall("{call dbo.saveSignosVitales(?,?,?,?,?,?,?,?,?)}") ;
+                call.setNString("peso", value.getPeso());
+                call.setNString("temperatura", value.getTemperatura());
+                call.setNString("presion", value.getPresion());
+                call.setNString("talla", value.getTalla());
+                call.setNString("frecuencia", value.getFrecuenciaC());
+                if(value.getFum() == null){
+                    call.setNull("fum", Types.DATE);
+                }
+                else{
+                    call.setDate("fum",new java.sql.Date(value.getFuc().getTime()));
+                }
+                if(value.getFuc() == null){
+                    call.setNull("fuc", Types.DATE);
+                }
+                else{
+                    call.setDate("fuc",new java.sql.Date(value.getFuc().getTime()));
+                }
+                call.setString("periodo", value.getPeriodo());
+                call.registerOutParameter("id", Types.INTEGER);
+                call.execute();
+                value.setId(call.getInt("id"));
             } else {
                 sql = "UPDATE [dbo].[signosVitales]\n"
                         + "   SET [peso] = '" + value.getPeso()+ "'\n"
@@ -35,6 +58,7 @@ public class SignosVitalesDaoImp implements SignosVitalesDao{
                         + "   SET [fum] = '" + test.test.SQLSave(value.getFum())+ "'\n"
                         + "   SET [fuc] = '" + test.test.SQLSave(value.getFuc())+ "'\n"
                         + "   SET [frecuenciaC] = '" + value.getFrecuenciaC()+ "'\n"
+                        + "   SET [periodo] = '" + value.getPeriodo()+ "'\n"
                         + " WHERE id = '" + value.getId() + "'";
             }
             conn.execute(sql);
@@ -56,13 +80,14 @@ public class SignosVitalesDaoImp implements SignosVitalesDao{
         try {
             while (rs.next()) {
                 value.setId(rs.getInt("id"));
-                value.setPeso(rs.getInt("peso"));
-                value.setTalla(rs.getInt("talla"));
+                value.setPeso(rs.getNString("peso"));
+                value.setTalla(rs.getNString("talla"));
                 value.setPresion(rs.getNString("presion"));
-                value.setTemperatura(rs.getInt("temperatura"));
+                value.setPeriodo(rs.getString("periodo"));
+                value.setTemperatura(rs.getNString("temperatura"));
                 value.setFum(rs.getDate("fum"));
                 value.setFuc(rs.getDate("fuc"));
-                value.setTemperatura(rs.getInt("frecuenciaC"));
+                value.setTemperatura(rs.getNString("frecuenciaC"));
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());

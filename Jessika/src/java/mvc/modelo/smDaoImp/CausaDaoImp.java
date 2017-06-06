@@ -1,7 +1,9 @@
 package mvc.modelo.smDaoImp;
 
+import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 import mvc.controlador.C_BD;
@@ -15,15 +17,35 @@ public class CausaDaoImp implements CausaDao {
 
     @Override
     public boolean save(Causa value) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.conn = con_db.open(con_db.MSSQL_SM);
+        try {
+            if (value.getId() == 0) {
+                CallableStatement call = this.conn.getConexion().prepareCall("{call dbo.saveCausa(?, ?)}") ;
+                call.setString(1, value.getDescripcion());
+                call.registerOutParameter("id", Types.INTEGER);
+                call.execute();
+                value.setId(call.getInt("id"));
+            } else {
+                /*sql = "UPDATE [dbo].[caso]\n"
+                        + "   SET [idHistorialClinico] = '" + value.getIdHistorialClinico() + "'\n"
+                        + " WHERE id = '" + value.getId() + "'";*/
+            }
+            //conn.execute(sql);
+            return true;
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            return false;
+        } finally {
+            this.conn.close();
+        }
     }
 
     @Override
     public List<Causa> list_filter(String value) {
         this.conn = con_db.open(con_db.MSSQL_SM);
         List<Causa> list = new ArrayList<>();
-        ResultSet rs = this.conn.query("SELECT * FROM CAUSA WHERE UPPER(descripcion) LIKE '%" + value + "%'");
-        System.out.println("SELECT * FROM CAUSA WHERE UPPER(descripcion) LIKE '%" + value + "%'");
+        String sql = ("SELECT * FROM CAUSA WHERE (descripcion) LIKE '%" + value + "%'");
+        ResultSet rs = this.conn.query(sql);
         try {
             while (rs.next()) {
                 Causa causa = new Causa(rs.getInt("id"));

@@ -11,11 +11,8 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -35,11 +32,16 @@ public class Metodos implements Serializable {
     private Integer id;
     @Column(name = "descripcion")
     private String descripcion;
-    @JoinColumn(name = "idCausa", referencedColumnName = "id")
-    @ManyToOne
-    private Causa idCausa;
-    @OneToMany(mappedBy = "idMetodo")
-    private List<Consulta> consultaList;
+    private int idTipoConsulta;
+    private List<DetallesMetodos> list;
+
+    public List<DetallesMetodos> getList() {
+        return list;
+    }
+
+    public void setList(List<DetallesMetodos> list) {
+        this.list = list;
+    }
 
     public Metodos() {
     }
@@ -64,20 +66,12 @@ public class Metodos implements Serializable {
         this.descripcion = descripcion;
     }
 
-    public Causa getIdCausa() {
-        return idCausa;
+    public int getIdTipoConsulta() {
+        return idTipoConsulta;
     }
 
-    public void setIdCausa(Causa idCausa) {
-        this.idCausa = idCausa;
-    }
-
-    public List<Consulta> getConsultaList() {
-        return consultaList;
-    }
-
-    public void setConsultaList(List<Consulta> consultaList) {
-        this.consultaList = consultaList;
+    public void setIdTipoConsulta(int idTipoConsulta) {
+        this.idTipoConsulta = idTipoConsulta;
     }
 
     @Override

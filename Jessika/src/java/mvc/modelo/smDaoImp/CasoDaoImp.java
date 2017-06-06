@@ -1,7 +1,9 @@
 package mvc.modelo.smDaoImp;
 
+import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 import mvc.controlador.C_BD;
@@ -21,7 +23,11 @@ public class CasoDaoImp implements CasoDao {
         String sql = "";
         try {
             if (value.getId() == 0) {
-                sql = "INSERT INTO [dbo].[caso]([idHistorialClinico]) VALUES('" + value.getIdHistorialClinico().getId() + "')";
+                CallableStatement call = this.conn.getConexion().prepareCall("{call dbo.saveCaso(?, ?)}");
+                call.setInt("hc", value.getIdHistorialClinico().getId());
+                call.registerOutParameter("id", Types.INTEGER);
+                call.execute();
+                value.setId(call.getInt("id"));
             } else {
                 sql = "UPDATE [dbo].[caso]\n"
                         + "   SET [idHistorialClinico] = '" + value.getIdHistorialClinico() + "'\n"
@@ -74,7 +80,7 @@ public class CasoDaoImp implements CasoDao {
                 Consulta value = new Consulta(0);
                 value.setMotivo(rs.getNString("motivo"));
                 value.setFecha(rs.getDate("fecha"));
-                value.setIdCaso(new Caso(rs.getInt("casoId"),idHistoriaC));
+                value.setIdCaso(new Caso(rs.getInt("casoId"), idHistoriaC));
                 list.add(value);
             }
         } catch (SQLException ex) {

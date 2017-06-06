@@ -38,7 +38,7 @@ public abstract  class C_BD {
             call = conexion.prepareCall(query);
             res = call.executeQuery();
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         return res;
     }

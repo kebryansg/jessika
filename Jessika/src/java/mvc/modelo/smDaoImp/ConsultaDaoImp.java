@@ -1,7 +1,9 @@
 package mvc.modelo.smDaoImp;
 
+import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import mvc.controlador.C_BD;
 import mvc.controlador.con_db;
 import mvc.controlador.entidades.sm.Caso;
@@ -21,19 +23,31 @@ public class ConsultaDaoImp implements ConsultaDao {
         String sql = "";
         try {
             if (value.getId() == 0) {
-                sql = "INSERT INTO [dbo].[consulta]([idMedico_Especialidad],[idMetodo],[idSignosvitales],[idCaso],[fecha],[motivo],[diagnostico],[prescripcion],[sintomas]) "
-                        + "VALUES(" + value.getIdMedicoEspecialidad().getId() + ", " + value.getIdMetodo().getId() + ", " + value.getIdSignosvitales().getId() + ", " + value.getIdCaso().getId() + ", '" + test.test.SQLSave(value.getFecha()) + "', '" + value.getMotivo() + "', '" + value.getDiagnostico() + "', '" + value.getPrescripcion() + "', '" + value.getSintoma() + "');";
+                CallableStatement call = this.conn.getConexion().prepareCall("{call dbo.saveConsulta(?,?,?,?,?,?,?,?,?,?,?)}");
+                call.setInt("idMedico_Especialidad", value.getIdMedicoEspecialidad().getId());
+                call.setInt("idSignosvitales", value.getIdSignosvitales().getId());
+                call.setInt("idCaso", value.getIdCaso().getId());
+                call.setInt("idMetodo", value.getIdMetodo());
+                call.setInt("idTipoConsulta", value.getIdTipoConsulta());
+                call.setString("motivo", value.getMotivo());
+                call.setString("diagnostico", value.getDiagnostico());
+                call.setString("prescripcion", value.getPrescripcion());
+                call.setString("sintomas", value.getSintoma());
+                call.registerOutParameter("id", Types.INTEGER);
+                call.setDate("fecha", new java.sql.Date(value.getFecha().getTime()));
+                call.execute();
+                value.setId(call.getInt("id"));
             } else {
                 sql = "UPDATE [dbo].[consulta]\n"
-                        + "   SET [idMedico_Especialidad] = '" + value.getIdMedicoEspecialidad().getId()+ "'\n"
+                        + "   SET [idMedico_Especialidad] = '" + value.getIdMedicoEspecialidad().getId() + "'\n"
                         + "   SET [fecha] = '" + test.test.SQLSave(value.getFecha()) + "'\n"
-                        + "   SET [motivo] = '" + value.getMotivo()+ "'\n"
-                        + "   SET [diagnostico] = '" + value.getDiagnostico()+ "'\n"
-                        + "   SET [prescripcion] = '" + value.getPrescripcion()+ "'\n"
-                        + "   SET [sintomas] = '" + value.getSintoma()+ "'\n"
+                        + "   SET [motivo] = '" + value.getMotivo() + "'\n"
+                        + "   SET [diagnostico] = '" + value.getDiagnostico() + "'\n"
+                        + "   SET [prescripcion] = '" + value.getPrescripcion() + "'\n"
+                        + "   SET [sintomas] = '" + value.getSintoma() + "'\n"
                         + " WHERE id = '" + value.getId() + "'";
             }
-            conn.execute(sql);
+            //conn.execute(sql);
             System.out.println(sql);
             return true;
         } catch (Exception ex) {
@@ -60,7 +74,7 @@ public class ConsultaDaoImp implements ConsultaDao {
                 value.setIdCaso(new Caso(rs.getInt("idCaso")));
                 value.setIdMedicoEspecialidad(new MedicoEspecialidad(rs.getInt("idMedico_Especialidad")));
                 value.setIdSignosvitales(new SignosVitales(rs.getInt("idSignosvitales")));
-                value.setIdMetodo(new Metodos(rs.getInt("idMetodo")));
+                value.setIdMetodo(rs.getInt("idMetodo"));
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());

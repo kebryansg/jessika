@@ -47,9 +47,13 @@ public class Consulta implements Serializable {
     @JoinColumn(name = "idMedico_Especialidad", referencedColumnName = "id")
     @ManyToOne
     private MedicoEspecialidad idMedicoEspecialidad;
-    @JoinColumn(name = "idMetodo", referencedColumnName = "id")
-    @ManyToOne
-    private Metodos idMetodo;
+    //@JoinColumn(name = "idMetodo", referencedColumnName = "id")
+    //@ManyToOne
+    private int idMetodo;
+    private int idTipoConsulta;
+
+    
+    
     @JoinColumn(name = "idSignosvitales", referencedColumnName = "id")
     @ManyToOne
     private SignosVitales idSignosvitales;
@@ -67,6 +71,14 @@ public class Consulta implements Serializable {
     private String diagnostico;
     @Column(name = "sintoma")
     private String sintoma;
+    
+    public int getIdTipoConsulta() {
+        return idTipoConsulta;
+    }
+
+    public void setIdTipoConsulta(int idTipoConsulta) {
+        this.idTipoConsulta = idTipoConsulta;
+    }
 
     public String getMotivo() {
         return motivo;
@@ -174,11 +186,11 @@ public class Consulta implements Serializable {
         this.idMedicoEspecialidad = idMedicoEspecialidad;
     }
 
-    public Metodos getIdMetodo() {
+    public int getIdMetodo() {
         return idMetodo;
     }
 
-    public void setIdMetodo(Metodos idMetodo) {
+    public void setIdMetodo(int idMetodo) {
         this.idMetodo = idMetodo;
     }
 

@@ -35,30 +35,34 @@ public class SignosVitales implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Column(name = "peso")
-    private Integer peso;
+    private String peso;
     @Column(name = "talla")
-    private Integer talla;
+    private String talla;
     @Column(name = "presion")
     private String presion;
     @Column(name = "temperatura")
-    private Integer temperatura;
+    private String temperatura;
     @Column(name = "frecuenciaC")
-    private Integer frecuenciaC;
+    private String frecuenciaC;
     @Column(name = "fum")
     @Temporal(TemporalType.DATE)
     private Date fum;
     @Column(name = "fuc")
     @Temporal(TemporalType.DATE)
     private Date fuc;
+    @Column(name = "periodo")
+    private String periodo;
     @OneToMany(mappedBy = "idSignosvitales")
     private List<Consulta> consultaList;
 
     public SignosVitales() {
         this.id = 0;
+        this.frecuenciaC = this.presion = this.talla = this.peso = this.temperatura = this.periodo = "";
     }
 
     public SignosVitales(Integer id) {
         this.id = id;
+        this.frecuenciaC = this.presion = this.talla = this.peso = this.temperatura = this.periodo = "";
     }
 
     public Integer getId() {
@@ -69,28 +73,35 @@ public class SignosVitales implements Serializable {
         this.id = id;
     }
 
-    public Integer getPeso() {
+    public String getPeriodo() {
+        return periodo;
+    }
+
+    public void setPeriodo(String periodo) {
+        this.periodo = periodo;
+    }
+
+    public String getPeso() {
         return peso;
     }
 
-    public void setPeso(Integer peso) {
+    public void setPeso(String peso) {
         this.peso = peso;
     }
 
-    public Integer getFrecuenciaC() {
+    public String getFrecuenciaC() {
         return frecuenciaC;
     }
 
-    public void setFrecuenciaC(Integer frecuenciaC) {
+    public void setFrecuenciaC(String frecuenciaC) {
         this.frecuenciaC = frecuenciaC;
     }
-    
 
-    public Integer getTalla() {
+    public String getTalla() {
         return talla;
     }
 
-    public void setTalla(Integer talla) {
+    public void setTalla(String talla) {
         this.talla = talla;
     }
 
@@ -102,11 +113,11 @@ public class SignosVitales implements Serializable {
         this.presion = presion;
     }
 
-    public Integer getTemperatura() {
+    public String getTemperatura() {
         return temperatura;
     }
 
-    public void setTemperatura(Integer temperatura) {
+    public void setTemperatura(String temperatura) {
         this.temperatura = temperatura;
     }
 
@@ -158,5 +169,5 @@ public class SignosVitales implements Serializable {
     public String toString() {
         return "mvc.controlador.entidades.sm.SignosVitales[ id=" + id + " ]";
     }
-    
+
 }

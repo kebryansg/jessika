@@ -41,7 +41,7 @@
                     <select class="form-control selectpicker" validate="select" id="cboEspecialidadMedico">
                         <option value="0">Seleccione</option>
                         <%
-                            List<MedicoEspecialidad> list = new MedicoEspecialidadDaoImp().list(2068);
+                            List<MedicoEspecialidad> list = new MedicoEspecialidadDaoImp().list(2070);
                             for (MedicoEspecialidad m_e : list) {
                         %>
                         <option value="<%= m_e.getId()%>"><%= m_e.getIdEspecialidad().getDescripcion()%></option>
@@ -58,8 +58,8 @@
                         <div class="form-group">
                             <label class="control-label" for="cboTipoConsulta">Tipo Consulta:</label>
                             <select class="form-control selectpicker"  validate="select" id="cboTipoConsulta">
-                                <option value="1" >Ambulatoria</option>
-                                <option value="2">Prevenciòn</option>
+                                <!--<option value="1" >Ambulatoria</option>
+                                <option value="2">Prevenciòn</option>-->
                             </select>
                         </div>
                     </div>
@@ -70,12 +70,12 @@
                             </select>
                         </div>
                         <div class="form-group" id="groupMetodos">
-                            <label class="control-label" for="cboTipoConsulta">Metodos:</label>
-                            <select class="form-control selectpicker" data-size="6" data validate="select" id="cboTipoConsulta">
-                                <option value="0">Seleccione</option>
+                            <label class="control-label" for="cboMetodos">Metodos:</label>
+                            <select class="form-control selectpicker" data-size="6" data validate="select" id="cboMetodos">
+                                <!--<option value="0">Seleccione</option>
                                 <optgroup label="Planificaciòn Familiar">
-                                    <option class="sMasculino">Dispositivo Intrauterino</option>
-                                    <option>Gestàgenos Orales</option>
+                                    <option value="1" class="sMasculino">Dispositivo Intrauterino</option>
+                                    <option value="1" >Gestàgenos Orales</option>
                                     <option>Inyectable</option>
                                     <option>Preservativos</option>
                                     <option class="sMasculino">Implantes</option>
@@ -92,7 +92,7 @@
                                     <option>Hepàtico</option>
                                     <option>Colorrectal</option>
                                     <option>Piel</option>
-                                </optgroup>
+                                </optgroup>-->
                             </select>
                         </div>
                     </div>
@@ -180,7 +180,7 @@
                 <button type="button" data-dismiss="modal"  class="btn btn-primary" style="float: right;">Guardar</button>
                 <h4 class="modal-title">Signos Vitales</h4>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" id="sv_id" data-id="0">
                 <div class="form-group col-md-3">
                     <label class="form-control-label">Peso:</label>
                     <input validate="text" type="text" class="form-control " placeholder="kg - lb" id="sv_Peso">
@@ -218,8 +218,8 @@
                         </div>  
                     </div>
                     <div class="form-group col-md-4">
-                        <label class="control-label" for="cboEstadoFemenino">Periodo:</label>
-                        <select class="form-control selectpicker" validate="select" id="cboEstadoFemenino">
+                        <label class="control-label" for="sv_Periodo">Periodo:</label>
+                        <select class="form-control selectpicker" validate="select" id="sv_Periodo">
                             <option value="0">Ninguna</option>
                             <option value="1">Prenatal</option>
                             <option value="2">Parto</option>

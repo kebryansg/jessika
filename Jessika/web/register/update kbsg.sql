@@ -116,3 +116,129 @@ end
 ALTER TABLE BD_SM.dbo.metodos DROP CONSTRAINT FK_metodos_causa go
 ALTER TABLE BD_SM.dbo.metodos ADD idTipoConsulta int go
 ALTER TABLE BD_SM.dbo.metodos ADD CONSTRAINT metodos_tipoConsulta_FK FOREIGN KEY (idTipoConsulta) REFERENCES BD_SM.dbo.tipoConsulta(id) go
+ALTER TABLE BD_SM.dbo.consulta DROP CONSTRAINT FK_consulta_metodos go
+ALTER TABLE BD_SM.dbo.causa ADD idTipoConsulta int
+ALTER TABLE BD_SM.dbo.causa ADD CONSTRAINT causa_tipoConsulta_FK FOREIGN KEY (idTipoConsulta) REFERENCES BD_SM.dbo.tipoConsulta(id) go
+ALTER TABLE BD_SM.dbo.signosVitales ADD periodo CHAR(1)
+
+create table detallesMetodos(
+id int IDENTITY(1,1) not NULL,
+descripcion nVARCHAR(50) ,
+sexo char(1),
+CONSTRAINT PK_detallesMetodos PRIMARY KEY (id)
+);
+
+
+insert into tipoConsulta(descripcion) VALUES('AMBULATORIA'),('PREVENCION');
+insert into metodos (descripcion,idTipoConsulta) VALUES('Planificacion Familiar',2),('Deteccion de cancer',2)
+
+-- 05 Junio 2017
+alter table causa drop COLUMN descripcion
+alter table causa add descripcion TEXT
+alter table consulta add idTipoConsulta int
+
+
+alter table consulta drop COLUMN motivo
+alter table consulta drop COLUMN diagnostico
+alter table consulta drop COLUMN prescripcion
+alter table consulta drop COLUMN sintomas
+
+alter table consulta add motivo TEXT
+alter table consulta add diagnostico TEXT
+alter table consulta add prescripcion TEXT
+alter table consulta add sintomas TEXT
+
+ALTER TABLE BD_SM.dbo.consulta ADD CONSTRAINT consulta_tipoConsulta_FK FOREIGN KEY (idTipoConsulta) REFERENCES BD_SM.dbo.tipoConsulta(id) go
+
+
+CREATE PROCEDURE saveCausa
+@descripcion text,
+@id int OUTPUT
+as
+BEGIN
+	insert into causa(descripcion,idTipoConsulta) values(@descripcion,1)
+	SELECT Top 1  @id = id from causa order by id desc
+END
+
+create PROCEDURE saveConsulta
+@idMedico_Especialidad int,
+@idSignosvitales int,
+@idCaso int,
+@fecha DATE,
+@idMetodo int,
+@idTipoConsulta int,
+@motivo text,
+@diagnostico text,
+@prescripcion TEXT,
+@sintomas TEXT,
+@id int OUTPUT
+AS
+BEGIN
+	INSERT INTO BD_SM.dbo.consulta
+	(idMedico_Especialidad, idMetodo, idSignosvitales, idCaso, fecha, idTipoConsulta, 
+	motivo, diagnostico, prescripcion, sintomas)
+	VALUES(@idMedico_Especialidad, @idMetodo, @idSignosvitales, @idCaso, @fecha, @idTipoConsulta, @motivo, @diagnostico, @prescripcion, @sintomas);
+	SELECT Top 1  @id = id from BD_SM.dbo.consulta order by id desc
+
+END 
+
+create PROCEDURE saveConsulta
+@idMedico_Especialidad int,
+@idSignosvitales int,
+@idCaso int,
+@fecha DATE,
+@idMetodo int,
+@idTipoConsulta int,
+@motivo text,
+@diagnostico text,
+@prescripcion TEXT,
+@sintomas TEXT,
+@id int OUTPUT
+AS
+BEGIN
+	INSERT INTO BD_SM.dbo.consulta
+	(idMedico_Especialidad, idMetodo, idSignosvitales, idCaso, fecha, idTipoConsulta, 
+	motivo, diagnostico, prescripcion, sintomas)
+	VALUES(@idMedico_Especialidad, @idMetodo, @idSignosvitales, @idCaso, @fecha, @idTipoConsulta, @motivo, @diagnostico, @prescripcion, @sintomas);
+	SELECT Top 1  @id = id from BD_SM.dbo.consulta order by id desc
+
+END 
+
+alter table signosvitales drop COLUMN talla
+alter table signosvitales drop COLUMN peso
+alter table signosvitales drop COLUMN temperatura
+
+alter table signosvitales add peso NVARCHAR(50)
+alter table signosvitales add talla NVARCHAR(50)
+alter table signosvitales add temperatura NVARCHAR(50)
+
+
+create PROCEDURE saveSignosVitales
+@peso NVARCHAR(50),
+@talla NVARCHAR(50),
+@temperatura NVARCHAR(50),
+@presion NVARCHAR(50),
+@fum DATE,
+@fuc DATE,
+@frecuencia NVARCHAR(50),
+@periodo char(1),
+@id int OUTPUT
+AS
+BEGIN
+	INSERT INTO BD_SM.dbo.signosVitales
+	(presion, fum, fuc, frecuenciaC, periodo, peso, talla, temperatura)
+	VALUES(@presion, @fum, @fuc, @frecuencia, @periodo, @peso, @talla, @temperatura);
+	SELECT Top 1  @id = id from BD_SM.dbo.signosVitales order by id desc
+
+END
+
+CREATE PROCEDURE saveCaso
+@hc int,
+@id int OUTPUT
+AS
+BEGIN
+	INSERT INTO BD_SM.dbo.caso(idHistorialClinico) VALUES(@hc);
+	SELECT Top 1  @id = id from BD_SM.dbo.caso order by id desc
+END 
+
+
