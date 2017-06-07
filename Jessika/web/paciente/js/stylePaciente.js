@@ -57,12 +57,13 @@ $(function () {
     });
     
     $("#contenido").on("click", "#cancelPaciente", function () {
-        var id = pestañaActive();
+        var id = $("#savePaciente").attr("data-id");
 
         if (id === "0") {
             limpiarPaciente();
         } else {
-            $(getCurrentTab()).find(".closeTab").click();
+            
+            $("#contenido").load("paciente/listPacientes.jsp");
         }
 
     });
