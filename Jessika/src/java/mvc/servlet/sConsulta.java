@@ -100,7 +100,7 @@ public class sConsulta extends HttpServlet {
             case "select":
                 List<Causa> list_causa = new CausaDaoImp().list_filter(request.getParameter("q"));
                 if (list_causa.isEmpty()) {
-                    list_causa.add(new Causa(0, request.getParameter("q").toUpperCase()));
+                    list_causa.add(new Causa(-1, request.getParameter("q").toUpperCase()));
                 }
                 result = gson.toJson(list_causa);
                 out.print(result);
@@ -154,7 +154,7 @@ public class sConsulta extends HttpServlet {
                 consulta.setPrescripcion(request.getParameter("dc[prescripcion]").toUpperCase());
                 consulta.setSintoma(request.getParameter("dc[sintomas]").toUpperCase());
                 consulta.setFecha(test.fechaSQL(request.getParameter("fecha")));
-                
+
                 // Caso
                 Caso cs = new Caso(Integer.parseInt(request.getParameter("idCaso")));
                 if (cs.getId() == 0) {
@@ -166,15 +166,16 @@ public class sConsulta extends HttpServlet {
                 consulta.setIdCaso(cs);
                 consulta.setIdMedicoEspecialidad(new MedicoEspecialidad(Integer.parseInt(request.getParameter("idEspecialidad"))));
                 consulta.setIdSignosvitales(sv);
-                
+
                 consulta.setIdTipoConsulta(Integer.parseInt(request.getParameter("dc[idTipoConsulta]")));
                 if (consulta.getIdTipoConsulta() == 1) {
-                    Causa causa = new Causa(Integer.parseInt(request.getParameter("dc[idMetodo][id]")), request.getParameter("dc[idMetodo][descripcion]"));
-                    if (causa.getId()== 0) {
+                    String idCausa = request.getParameter("dc[idMetodo][id]");
+                    Causa causa = new Causa(idCausa.equals("-1") ? 0 : Integer.parseInt(idCausa), request.getParameter("dc[idMetodo][descripcion]"));
+                    if (causa.getId() == 0) {
                         new CausaDaoImp().save(causa);
                     }
                     consulta.setIdMetodo(causa.getId());
-                }else{
+                } else {
                     Metodos metodo = new Metodos(Integer.parseInt(request.getParameter("dc[idMetodo][id]")));
                     consulta.setIdMetodo(metodo.getId());
                 }

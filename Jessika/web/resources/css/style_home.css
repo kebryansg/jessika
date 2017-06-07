@@ -1,6 +1,9 @@
 .disabledTab {
     pointer-events: none;
 }
+.error_input{
+    margin-bottom: 30px;
+}
 .bx{
     outline: 1px blue solid;
 }

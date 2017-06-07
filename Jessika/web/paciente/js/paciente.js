@@ -9,10 +9,17 @@ function validarPaciente(id) {
     });
     $.each($("#optionPaciente[data-id='" + id + "'] #tabPacientes select[validate='select']"), function (index, value) {
         if (!validarSelect(value)) {
-            $(value).blur(function () {
+            $(value).on("change", function () {
                 validarSelect(value);
             });
         }
+
+
+        /*if (!validarSelect(value)) {
+         $(value).blur(function () {
+         validarSelect(value);
+         });
+         }*/
     });
     $.each($("#optionPaciente[data-id='" + id + "'] #tabPacientes input[validate='date']"), function (index, value) {
         if (!validarDate(value)) {
@@ -124,7 +131,7 @@ function list_filter() {
     var cantList = $("#cantList").val();
     var $totalPages = 2;
     if (txt_filter !== "") {
-        
+
         $.ajax({
             url: 'sPaciente',
             type: 'POST',

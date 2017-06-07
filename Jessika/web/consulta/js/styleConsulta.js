@@ -80,7 +80,12 @@ $(document).ready(function () {
 
     $("#btnGuardarConsulta").click(function () {
         //saveConsulta();
-        validarConsulta();
+        if(validarConsulta()){
+            saveConsulta();
+        }
+        else{
+            alertify.success("Incovenientes en la informaciòn");
+        }
     });
 
 });
@@ -137,16 +142,29 @@ function saveConsulta() {
         }
     });
 }
-function validarConsulta(){
+function validarConsulta() {
     $("#consulta_div .help-block").remove();
-    bandera = true;
-    $.each($("#consulta_div select[validate='select']"),function(i,value){
-        if (!validarSelect(value)) {
-            $(value).blur(function () {
-                validarSelect(value);
+    
+    $("#consulta_div select[validate='select']").closest(".form-group").removeClass("has-error");
+    $("#consulta_div select[validate='select']").closest(".form-group").removeClass("error_input");
+    cbos = [];
+    cbos.push($("#cboEspecialidadMedico"));
+    switch ($("#cboTipoConsulta").val()) {
+        case "1":
+            cbos.push($("#cboCausa"));
+            break;
+        case "2":
+            cbos.push($("#cboMetodos"));
+            break;
+    }
+    $.each(cbos, function (i, cbo) {
+        if (!validarSelect(cbo)) {
+            $(cbo).on("change", function () {
+                validarSelect(cbo);
             });
         }
     });
+    
     $.each($("#consulta_div input[validate='date']"), function (index, value) {
         if (!validarDate(value)) {
             $(value).change(function () {
@@ -154,8 +172,16 @@ function validarConsulta(){
             });
         }
     });
-    
-    return bandera;
+    $.each($("#sv_id input[validate='text']"), function (index, value) {
+        if (!validarText(value)) {
+            $(value).change(function () {
+                validarText(value);
+            });
+        }
+    });
+
+
+    return $("#consulta_div .help-block").length === 0;
 }
 function obtenerSignosVitales() {
     sv = {
@@ -177,7 +203,7 @@ function obtenerDescripcion() {
         prescripcion: $("#con_Prescripcion").val(),
         diagnostico: $("#con_Diagnostico").val(),
         sintomas: $("#con_Sintomas").val(),
-        idTipoConsulta: $("#cboTipoConsulta").val() ,
+        idTipoConsulta: $("#cboTipoConsulta").val(),
         idMetodo: {
             id: ($("#groupCausa").is(":visible")) ? $("#cboCausa").val() : $("#cboMetodos").val(),
             descripcion: ($("#groupCausa").is(":visible")) ? $("#cboCausa").text() : ""
