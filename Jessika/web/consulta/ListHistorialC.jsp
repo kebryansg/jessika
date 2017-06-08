@@ -32,7 +32,7 @@
     <hr>
     <div class="row">
         <div class="col-md-2">
-            <select class="form-control selectpicker" validate="select" data-live-search="true" >
+            <select class="form-control selectpicker" validate="select"  >
                 <option value="5">5</option>
                 <option value="5">10</option>
                 <option value="5">20</option>

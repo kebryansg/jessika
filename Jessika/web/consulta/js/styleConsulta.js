@@ -143,7 +143,7 @@ function saveConsulta() {
     });
 }
 function validarConsulta() {
-    $("#consulta_div .help-block").remove();
+    $("#consulta_div .help-block").not("[data-exonerado]").remove();
     
     $("#consulta_div select[validate='select']").closest(".form-group").removeClass("has-error");
     $("#consulta_div select[validate='select']").closest(".form-group").removeClass("error_input");

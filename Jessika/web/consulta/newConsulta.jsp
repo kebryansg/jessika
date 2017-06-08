@@ -52,9 +52,10 @@
                 </div>
 
             </div>
-            <div class="col-md-9">
-                <div class="row">
-                    <div class="col-md-3">
+
+            <div class="col-md-6">
+                <div class="row flex-parent">
+                    <div class="col-md-6">
                         <div class="form-group">
                             <label class="control-label" for="cboTipoConsulta">Tipo Consulta:</label>
                             <select class="form-control selectpicker"  validate="select" id="cboTipoConsulta">
@@ -63,7 +64,12 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-md-8">
+                    <div class="col-md-4 flex-child">
+                        <button class="btn btn-danger form-control" data-toggle="modal" data-target="#signosVitales" >Signos Vitales</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
                         <div class="form-group" id="groupCausa">
                             <label class="control-label" for="cboCausa">Causa:</label>
                             <select class="form-control selectpicker with-ajax" data-live-search="true" data validate="select" id="cboCausa">
@@ -96,25 +102,21 @@
                             </select>
                         </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-3">
-                        <button class="btn btn-danger" data-toggle="modal" data-target="#signosVitales" >Signos Vitales</button>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group has-error" id="showLabs">
-                            <button class="btn btn-danger" onclick="openModal('estLab')">Estudios Laboratorios</button>
-                            <span class="help-block">Ningun estudio de laboratorio.</span>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group has-error" id="showImgs">
-                            <button class="btn btn-danger" data-toggle="modal" data-target="#estImg">Estudios Imagenes</button>
-                            <span class="help-block">Ningun estudio de imagenes.</span>
-                        </div>
-                    </div>
+
                 </div>
             </div>
+
+            <div class="col-md-3">
+                <div class="form-group has-error" id="showLabs">
+                    <button class="btn btn-danger" onclick="openModal('estLab')">Estudios Laboratorios</button>
+                    <span class="help-block" data-exonerado>Ningun estudio de laboratorio.</span>
+                </div>
+                <div class="form-group has-error" id="showImgs">
+                    <button class="btn btn-danger" data-toggle="modal" data-target="#estImg">Estudios Imagenes</button>
+                    <span class="help-block" data-exonerado>Ningun estudio de imagenes.</span>
+                </div>
+            </div>
+
         </div>
         <div class="row">
             <div class="col-md-6">

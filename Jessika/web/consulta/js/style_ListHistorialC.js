@@ -48,10 +48,10 @@ $(function () {
                 $("#PacienteId").attr("data-hc", hc);
                 if (sexo === "1") {
                     $("#div_femenino").hide();
-                    $(".sMasculino").closest("li").attr("class","disabled");
+                    $(".sFemenino").closest("li").attr("class","disabled");
                 }
                 else{
-                    $(".sFemenino").closest("li").attr("class","disabled");
+                    $(".sMasculino").closest("li").attr("class","disabled");
                 }
             });
         } else {
@@ -77,7 +77,6 @@ $(function () {
         //alert($("#tablPaciente").bootstrapTable('getRowByUniqueId', $(tds).eq(0).html()).sexo);
         obtList();
     });
-
 
     $("#pac_Cargar").click(function () {
         limpiarDivPaciente();
