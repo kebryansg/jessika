@@ -49,7 +49,7 @@ public class CausaDaoImp implements CausaDao {
         try {
             while (rs.next()) {
                 Causa causa = new Causa(rs.getInt("id"));
-                causa.setDescripcion(rs.getNString("descripcion").toUpperCase());
+                causa.setDescripcion(rs.getString("descripcion").toUpperCase());
                 list.add(causa);
             }
         } catch (SQLException ex) {
