@@ -3,6 +3,7 @@ $.ajaxSetup({
 });
 
 function obtList() {
+    
     $.ajax({
         url: "sConsulta",
         data: {
@@ -11,10 +12,12 @@ function obtList() {
             filter: ""
                     //fecha: $("#con_Fecha").val()
         },
+        dataType: 'json',
         type: 'POST',
         async: false,
         success: function (data) {
-            $("#tbHC tbody").html(data);
+            alert(data);
+            $("#tbHC").bootstrapTable("load",data);
             $('#tbHC').bootstrapTable('resetView');
         }
     });
@@ -48,10 +51,9 @@ $(function () {
                 $("#PacienteId").attr("data-hc", hc);
                 if (sexo === "1") {
                     $("#div_femenino").hide();
-                    $(".sFemenino").closest("li").attr("class","disabled");
-                }
-                else{
-                    $(".sMasculino").closest("li").attr("class","disabled");
+                    $(".sFemenino").closest("li").attr("class", "disabled");
+                } else {
+                    $(".sMasculino").closest("li").attr("class", "disabled");
                 }
             });
         } else {
@@ -64,6 +66,27 @@ $(function () {
     $('#ListPaciente').on('shown.bs.modal', function () {
         $("#ListPaciente table").bootstrapTable('resetView');
     });
+
+    $('#viewHistorialCaso').on('shown.bs.modal', function () {
+        $("#viewHistorialCaso table").bootstrapTable('resetView');
+    });
+    $("#tbHC").on("click", "button[name='viewHistorialCaso']", function () {
+        $.ajax({
+            url: "sConsulta",
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                caso: $(this).attr("data-id"),
+                op: "detCaso"
+            },
+            success: function (data) {
+                $("#viewHistorialCaso table").bootstrapTable('load', data);
+                
+            }
+        });
+    });
+
+
 
 
     $("#contenido").on("click", "#tablPaciente button[name='SeleccionarPaciente']", function () {

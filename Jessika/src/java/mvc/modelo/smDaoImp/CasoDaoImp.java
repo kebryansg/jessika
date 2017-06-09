@@ -91,4 +91,30 @@ public class CasoDaoImp implements CasoDao {
         return list;
     }
 
+    @Override
+    public List<Consulta> listDetConsulta(int idCaso) {
+        this.conn = con_db.open(con_db.MSSQL_SM);
+        List<Consulta> list = new ArrayList<>();
+        try {
+            CallableStatement call = this.conn.getConexion().prepareCall("{call dbo.listConsultaCaso(?)}");
+            call.setInt("idCaso", idCaso);
+            call.execute();
+            ResultSet rs = call.getResultSet();
+            while (rs.next()) {
+                Consulta value = new Consulta(rs.getInt("id"));
+                value.setIdCaso(new Caso(rs.getInt("caso")));
+                value.setFecha(rs.getDate("fecha"));
+                value.setMotivo(rs.getString("motivo"));
+                value.setSintoma(rs.getString("tipo"));
+                value.setPrescripcion(rs.getString("Especialidad"));
+                list.add(value);
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        } finally {
+            this.conn.close();
+        }
+        return list;
+    }
+
 }

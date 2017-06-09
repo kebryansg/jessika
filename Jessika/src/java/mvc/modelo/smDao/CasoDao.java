@@ -17,4 +17,5 @@ public interface CasoDao {
     public boolean save(Caso value);
     public Caso edit(int id);
     public List<Consulta> listConsulta(int idHistoriaC, String fechaInicial, String fechaFinal, String filter, int pag, int top);
+    public List<Consulta> listDetConsulta(int idCaso);
 }

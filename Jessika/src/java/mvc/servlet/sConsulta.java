@@ -96,7 +96,26 @@ public class sConsulta extends HttpServlet {
         Gson gson = new GsonBuilder().setDateFormat(FORMATO_FECHA).create();
         String result = "";
         String op = request.getParameter("op");
+        List<String> resultList = new ArrayList();
         switch (op) {
+            case "detCaso":
+                List<Consulta> list_detCaso = new CasoDaoImp().listDetConsulta(Integer.parseInt(request.getParameter("caso")));
+
+                for (Consulta consulta : list_detCaso) {
+                    resultList.add("{"
+                            + "\"id\" : \"" + consulta.getId() + "\","
+                            + "\"caso\" : \"" + consulta.getIdCaso().getId() + "\","
+                            + "\"fecha\" : \"" + consulta.getFecha() + "\","
+                            + "\"tipo\" : \"" + consulta.getSintoma() + "\","
+                            + "\"motivo\" : \"" + consulta.getMotivo() + "\","
+                            + "\"especialidad\" : \"" + consulta.getPrescripcion() + "\""
+                            + "}");
+
+                }
+                out.print("[" + String.join(",", resultList) + "]");
+                out.flush();
+                out.close();
+                break;
             case "select":
                 List<Causa> list_causa = new CausaDaoImp().list_filter(request.getParameter("q"));
                 if (list_causa.isEmpty()) {
@@ -110,14 +129,13 @@ public class sConsulta extends HttpServlet {
             case "list":
                 List<Consulta> list = new CasoDaoImp().listConsulta(Integer.parseInt(request.getParameter("idHc")), "", "", request.getParameter("filter"), 0, 5);
                 for (Consulta con : list) {
-                    result += "<tr>";
-                    result += "<td>" + test.SQLSave(con.getFecha()) + "</td>";
-                    result += "<td>" + con.getMotivo() + "</td>";
-                    result += "<td><button name=\"addHistorialCaso\" data-id=\"" + con.getIdCaso().getId() + "\" class=\"btn btn-info\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"Agregar al caso..!\"> <i class=\"glyphicon glyphicon-plus\"></i> </button>\n"
-                            + "                                <button name=\"viewHistorialCaso\" class=\"btn btn-info\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"Historial caso..!\" > <i class=\"glyphicon glyphicon-align-justify\"></i> </button></td>";
-                    result += "</tr>";
+                    resultList.add("{"
+                            + "\"fecha\": \"" + test.SQLSave(con.getFecha()) + "\","
+                            + "\"motivo\": \"" + con.getMotivo() + "\","
+                            + "\"accion\": \"<button name='addHistorialCaso' data-id='" + con.getIdCaso().getId() + "' class='btn btn-info' data-toggle='tooltip' data-placement='top' title='Agregar al caso..!'> <i class='glyphicon glyphicon-plus'></i> </button> <button name='viewHistorialCaso' data-id='" + con.getIdCaso().getId() + "' data-toggle='modal' data-target='#viewHistorialCaso' class='btn btn-info' data-toggle='tooltip' data-placement='top' title='Historial caso..!' > <i class='glyphicon glyphicon-align-justify'></i> </button>\""
+                            + "}");
                 }
-                out.print(result);
+                out.print("[" + String.join(",", resultList) + "]");
                 out.flush();
                 out.close();
                 break;
@@ -135,6 +153,8 @@ public class sConsulta extends HttpServlet {
                 out.close();
                 break;
             case "save":
+
+                // <editor-fold defaultstate="collapsed" desc="Save">
                 // Signos Vitales
                 SignosVitales sv = new SignosVitales(Integer.parseInt(request.getParameter("sv[id]")));
                 sv.setPeso(request.getParameter("sv[peso]"));
@@ -207,6 +227,8 @@ public class sConsulta extends HttpServlet {
                 out.print("hecho");
                 out.flush();
                 out.close();
+// </editor-fold >
+
                 break;
         }
 

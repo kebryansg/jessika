@@ -38,20 +38,20 @@
                 <option value="5">20</option>
             </select>
         </div>
-            <!--<div class="form-group col-md-3">
-                <label class="control-label" for="con_Fecha">Fecha Inicio</label>
-                <div class="input-group date form_date" data-date="" data-date-format="yyyy-mm-dd">
-                    <input class="form-control" validate="date" id="con_Fecha" size="16" type="text" value="" readonly>
-                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                </div>    
-            </div>
-            <div class="form-group col-md-3">
-                <label class="control-label" for="con_Fecha">Fecha Final</label>
-                <div class="input-group date form_date" data-date="" data-date-format="yyyy-mm-dd">
-                    <input class="form-control" validate="date" id="con_Fecha" size="16" type="text" value="" readonly>
-                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                </div>    
-            </div>-->
+        <!--<div class="form-group col-md-3">
+            <label class="control-label" for="con_Fecha">Fecha Inicio</label>
+            <div class="input-group date form_date" data-date="" data-date-format="yyyy-mm-dd">
+                <input class="form-control" validate="date" id="con_Fecha" size="16" type="text" value="" readonly>
+                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+            </div>    
+        </div>
+        <div class="form-group col-md-3">
+            <label class="control-label" for="con_Fecha">Fecha Final</label>
+            <div class="input-group date form_date" data-date="" data-date-format="yyyy-mm-dd">
+                <input class="form-control" validate="date" id="con_Fecha" size="16" type="text" value="" readonly>
+                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+            </div>    
+        </div>-->
         <div class="col-md-4 col-md-offset-6"> 
             <div class="form-inline">
                 <input class="form-control" style="width: 150px;" placeholder="Buscar" id="txt_filterHistorialC">
@@ -65,13 +65,14 @@
             <div class="table-responsive">
                 <table data-toggle="table" data-height="300" id="tbHC" >
                     <thead>
-                    <th>Fecha</th>
-                    <th>Motivo</th>
-                    <th>Accion</th>
+                        <tr>
+                            <th data-field="fecha">Fecha</th>
+                            <th data-field="motivo">Motivo</th>
+                            <th data-field="accion" data-align="center">Accion</th>
+                        </tr>
+
                     </thead>
-                    <tbody>
-                        
-                    </tbody>
+
                 </table>
             </div>
         </div>
@@ -89,11 +90,36 @@
                 <h4 class="modal-title">Elegir pacientes</h4>
             </div>
             <div class="modal-body">
-                
+
             </div>
         </div>
     </div>
 </div>
+<div class="modal fade" id="viewHistorialCaso" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Historial del Caso</h4>
+            </div>
+            <div class="modal-body">
+                <table data-toggle="table" data-height="300">
+                    <thead>
+                        <tr>
+                            <th data-field="id" data-align="center">ID</th>
+                            <th data-field="caso">Caso</th>
+                            <th data-field="fecha">Fecha</th>
+                            <th data-field="tipo">Tipo Consulta</th>
+                            <th data-field="motivo">Causa - Motivo</th>
+                            <th data-field="especialidad">Especialidad</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+viewHistorialCaso
 <!--<script src="resources/js/configuracionInicial.js" type="text/javascript"></script>-->
 <script src="consulta/js/style_ListHistorialC.js" type="text/javascript"></script>
 <script type="text/javascript">
