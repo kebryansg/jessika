@@ -1,12 +1,11 @@
 
 package mvc.modelo.smDao;
 
-import java.util.List;
-import mvc.controlador.entidades.sm.DetallesEstudiosImg;
 import mvc.controlador.entidades.sm.EstudioImagen;
+import test.list_count;
 
 
 public interface EstudiosImgDao {
     public EstudioImagen edit(int id);
-    public List<DetallesEstudiosImg> list_det(int idTipoEstudiosImg, int idEstudiosImg,String filter, int pag, int top);
+    public list_count list_det(int idTipoEstudiosImg, int idEstudiosImg,String filter, int pag, int top);
 }

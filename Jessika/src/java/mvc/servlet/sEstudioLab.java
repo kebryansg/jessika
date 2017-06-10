@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -19,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 import mvc.controlador.entidades.sm.DetalleEstudiosLabs;
 import mvc.controlador.entidades.sm.EstudiosLaboratorio;
 import mvc.modelo.smDaoImp.EstudiosLaboratorioDaoImp;
+import test.list_count;
 
 /**
  *
@@ -82,13 +84,12 @@ public class sEstudioLab extends HttpServlet {
         response.setContentType("text/plain");
         PrintWriter out = response.getWriter();
         String result = "", op = request.getParameter("op");
-
+        List<String> resultList = new ArrayList<>();
+        list_count l = new list_count();
         final String FORMATO_FECHA = "yyyy-MM-dd";
         final DateFormat DF = new SimpleDateFormat(FORMATO_FECHA);
         Gson gson = new GsonBuilder().setDateFormat(FORMATO_FECHA).create();
-        
         int categoria = 0;
-        
         switch (op) {
             case "list_cbo":
                 List<EstudiosLaboratorio> list = new EstudiosLaboratorioDaoImp().list();
@@ -102,26 +103,17 @@ public class sEstudioLab extends HttpServlet {
                 break;
             case "detalle":
                 categoria = Integer.parseInt(request.getParameter("categoria"));
-                List<DetalleEstudiosLabs> listDet = new EstudiosLaboratorioDaoImp().list_Det(categoria, request.getParameter("filter"), Integer.parseInt(request.getParameter("pag")), Integer.parseInt(request.getParameter("top")));
+                l = new EstudiosLaboratorioDaoImp().list_Det(categoria, request.getParameter("filter"), Integer.parseInt(request.getParameter("pag")), Integer.parseInt(request.getParameter("top")));
 
-                for (DetalleEstudiosLabs detalleEstudiosLabs : listDet) {
-                    result += "<tr data-id='" + detalleEstudiosLabs.getId() + "'>";
-                    if(categoria == 0){
-                        result += "<td class=\"col-xs-2\"> " + detalleEstudiosLabs.getIdEstudiosLab().getDescripcion()+ " </td>";
-                    }
-                    result += "<td class=\"col-xs-6\"> " + detalleEstudiosLabs.getDescripcion() + " </td>";
-                    result += "<td class=\"col-xs-1\"> <button name='estlab' class='btn btn-info'>Seleccionar</button> </td>";
-                    result += "</tr>";
+                for (Object object : l.getList()) {
+                    DetalleEstudiosLabs detalleEstudiosLabs = (DetalleEstudiosLabs) object;
+                    resultList.add("{ "
+                            + "\"ID\" : \"" + detalleEstudiosLabs.getId() + "\","
+                            + "\"categoria\" : \"" + detalleEstudiosLabs.getIdEstudiosLab().getDescripcion() + "\","
+                            + "\"estudio\" : \"" + detalleEstudiosLabs.getDescripcion() + "\""
+                            + "}");
                 }
-
-                out.print(result);
-                out.flush();
-                out.close();
-                break;
-
-            case "list_size":
-                categoria = Integer.parseInt(request.getParameter("categoria"));
-                result = String.valueOf(new EstudiosLaboratorioDaoImp().list_Det(categoria, request.getParameter("filter"), 0, -1).size());
+                result = "{\"count\": \"" + l.getTotal() + "\"  , \"list\": [" + String.join(",", resultList) + "]}";
                 out.print(result);
                 out.flush();
                 out.close();

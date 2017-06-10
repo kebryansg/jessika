@@ -1,14 +1,19 @@
 package mvc.modelo.smDaoImp;
 
+import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import mvc.controlador.C_BD;
 import mvc.controlador.con_db;
 import mvc.controlador.entidades.sm.DetalleEstudiosLabs;
 import mvc.controlador.entidades.sm.EstudiosLaboratorio;
 import mvc.modelo.smDao.EstudiosLaboratorioDao;
+import test.list_count;
 
 public class EstudiosLaboratorioDaoImp implements EstudiosLaboratorioDao {
 
@@ -52,26 +57,51 @@ public class EstudiosLaboratorioDaoImp implements EstudiosLaboratorioDao {
     }
 
     @Override
-    public List<DetalleEstudiosLabs> list_Det(int categoria, String filter, int pag, int top) {
+    public list_count list_Det(int categoria, String filter, int pag, int top) {
         this.conn = con_db.open(con_db.MSSQL_SM);
         List<DetalleEstudiosLabs> list = new ArrayList<>();
-        String paginacion = (top != -1) ? "OFFSET " + pag + " ROWS FETCH NEXT " + top + " ROWS ONLY;" : "";
-        String categoriaSQL = (categoria != 0) ? ("and el.id = " + categoria) : "";
-        System.out.println("select del.id del_id, del.descripcion del_descripcion, el.id el_id, el.descripcion el_descripcion from dbo.estudiosLaboratorio el inner join dbo.detalleEstudiosLabs del on el.id = del.idEstudiosLab where (del.descripcion like '%" + filter + "%')  " + categoriaSQL + " order by del.id " + paginacion);
-        ResultSet rs = this.conn.query("select del.id del_id, del.descripcion del_descripcion, el.id el_id, el.descripcion el_descripcion from dbo.estudiosLaboratorio el inner join dbo.detalleEstudiosLabs del on el.id = del.idEstudiosLab where (del.descripcion like '%" + filter + "%')  " + categoriaSQL + " order by del.id " + paginacion);
+        list_count l = new list_count();
+        CallableStatement call;
         try {
+            call = this.conn.getConexion().prepareCall("{call dbo.viewEstudiosLab(?,?,?,?,?)}");
+            call.setString("filtro", filter);
+            call.setInt("tops", top);
+            call.setInt("pag", pag);
+            call.setInt("categoria", categoria);
+            call.registerOutParameter("registros", Types.INTEGER);
+            call.execute();
+            ResultSet rs = call.getResultSet();
             while (rs.next()) {
                 DetalleEstudiosLabs detEst = new DetalleEstudiosLabs(rs.getInt("del_id"));
                 detEst.setIdEstudiosLab(new EstudiosLaboratorio(rs.getInt("el_id"), rs.getNString("el_descripcion")));
                 detEst.setDescripcion(rs.getNString("del_descripcion").toUpperCase());
                 list.add(detEst);
             }
+            l.setList(list);
+            l.setTotal(call.getInt("registros"));
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return l;
+        /*String paginacion = (top != -1) ? "OFFSET " + pag + " ROWS FETCH NEXT " + top + " ROWS ONLY;" : "";
+        String categoriaSQL = (categoria != 0) ? ("and el.id = " + categoria) : "";
+        System.out.println("select del.id del_id, del.descripcion del_descripcion, el.id el_id, el.descripcion el_descripcion from dbo.estudiosLaboratorio el inner join dbo.detalleEstudiosLabs del on el.id = del.idEstudiosLab where (del.descripcion like '%" + filter + "%')  " + categoriaSQL + " order by del.id " + paginacion);
+        ResultSet rs = this.conn.query("select del.id del_id, del.descripcion del_descripcion, el.id el_id, el.descripcion el_descripcion from dbo.estudiosLaboratorio el inner join dbo.detalleEstudiosLabs del on el.id = del.idEstudiosLab where (del.descripcion like '%" + filter + "%')  " + categoriaSQL + " order by del.id " + paginacion);
+        try {
+            while (rs.next()) {
+                l.setTotal(rs.getInt("registros"));
+                DetalleEstudiosLabs detEst = new DetalleEstudiosLabs(rs.getInt("del_id"));
+                detEst.setIdEstudiosLab(new EstudiosLaboratorio(rs.getInt("el_id"), rs.getNString("el_descripcion")));
+                detEst.setDescripcion(rs.getNString("del_descripcion").toUpperCase());
+                list.add(detEst);
+            }
+            l.setList(list);
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         } finally {
             this.conn.close();
-        }
-        return list;
+        }*/
+        
     }
 
 }

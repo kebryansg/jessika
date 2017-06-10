@@ -119,7 +119,6 @@
         </div>
     </div>
 </div>
-viewHistorialCaso
 <!--<script src="resources/js/configuracionInicial.js" type="text/javascript"></script>-->
 <script src="consulta/js/style_ListHistorialC.js" type="text/javascript"></script>
 <script type="text/javascript">

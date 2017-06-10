@@ -236,8 +236,3 @@
 </div>
 <script src="resources/js/configuracionInicial.js" type="text/javascript"></script>
 <script src="consulta/js/styleConsulta.js" type="text/javascript"></script>
-<script>
-
-
-
-</script>

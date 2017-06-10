@@ -241,4 +241,57 @@ BEGIN
 	SELECT Top 1  @id = id from BD_SM.dbo.caso order by id desc
 END 
 
+-- 9 / Junio / 2017
+CREATE PROCEDURE listConsultaCaso
+@idCaso int
+AS
+BEGIN
+	select con.id id, con.idCaso caso,  con.fecha Fecha,tc.descripcion tipo, 
+	case tc.id
+	WHEN 1 THEN (select ca.descripcion from dbo.causa ca where con.idMetodo = ca.id) 
+	WHEN 2 THEN (select dmt.descripcion from dbo.detallesMetodos dmt where con.idMetodo = dmt.id)
+	END motivo,esp.descripcion Especialidad from dbo.consulta con
+	inner join dbo.medico_especialidad m_e on m_e.id = con.idMedico_Especialidad
+	inner join dbo.especialidad esp on esp.id = m_e.idEspecialidad
+	inner join dbo.tipoConsulta  tc on tc.id = con.idTipoConsulta
+	where con.idCaso = @idCaso ORDER BY con.fecha asc;	
+END 
 
+-- 10 / Junio /2017
+Create PROCEDURE viewEstudiosImg
+@filtro NVARCHAR(100),
+@tops int,
+@pag int,
+@tipoEstudio int,
+@estImg int,
+@registros int OUTPUT
+AS
+BEGIN
+	set @registros = (select count(*) from dbo.detallesEstudiosImg det_est_i inner join dbo.estudioImagen est_i on est_i.id = det_est_i.idEstudiosImg inner join dbo.tipoEstudioImg t_est on est_i.idTipoEstudioImg = t_est.id 
+		where (det_est_i.descripcion like '%'+ @filtro +'%')  
+		and ((@tipoEstudio = 0) or (t_est.id = @tipoEstudio)) 
+		and ((@estImg = 0) or (est_i.id = @estImg)));
+	select t_est.descripcion t_descripcion, det_est_i.id, det_est_i.descripcion, det_est_i.extremidades from dbo.detallesEstudiosImg det_est_i inner join dbo.estudioImagen est_i on est_i.id = det_est_i.idEstudiosImg inner join dbo.tipoEstudioImg t_est on est_i.idTipoEstudioImg = t_est.id 
+		where (det_est_i.descripcion like '%'+ @filtro +'%')  
+		and ((@tipoEstudio = 0) or (t_est.id = @tipoEstudio)) 
+		and ((@estImg = 0) or (est_i.id = @estImg)) 
+		order by det_est_i.id 
+		OFFSET @pag ROWS FETCH NEXT @tops ROWS ONLY;
+END
+
+
+CREATE procedure viewEstudiosLab
+@filtro NVARCHAR(100),
+@tops int,
+@pag int,
+@categoria int,
+@registros int OUTPUT
+AS
+BEGIN
+	set @registros = (select COUNT(*) from dbo.estudiosLaboratorio el inner join dbo.detalleEstudiosLabs del on el.id = del.idEstudiosLab 
+	where (del.descripcion like '%'+ @filtro +'%')  and  ((@categoria = 0) or (el.id = @categoria)));
+	
+	select del.id del_id, del.descripcion del_descripcion, el.id el_id, el.descripcion el_descripcion from dbo.estudiosLaboratorio el inner join dbo.detalleEstudiosLabs del on el.id = del.idEstudiosLab 
+	where (del.descripcion like '%'+ @filtro +'%') and ((@categoria = 0) or (el.id = @categoria))
+	order by del.id OFFSET @pag ROWS FETCH NEXT @tops ROWS ONLY;
+END

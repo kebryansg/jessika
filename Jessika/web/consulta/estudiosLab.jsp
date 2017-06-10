@@ -29,18 +29,24 @@
         </div>
     </div>    
     <br>
+    <div id="toolbarEstudiosLab">
+        <button id="btnSelecc" class="btn btn-default">Agregar</button>
+    </div>
     <div class="row">
         <div class="col-md-12">
             <div class="table-responsive">
-                <table data-toggle="table" data-height="300" id="tableEstudiosLab">
+                <table data-toggle="table" 
+                       data-toolbar="#toolbarEstudiosLab" 
+                       data-click-to-select="true"
+                       data-height="300" id="tableEstudiosLab">
                     <thead style="font-weight: bold;">
                         <tr>
+                            <th data-field="state" data-checkbox="true"></th>
+                            <th data-field="ID" data-align="center">Codigo</th>
                             <th data-field="categoria">Categoria</th>
                             <th data-field="estudio">Estudio de laboratorio</th>
-                            <th data-field="seleccion">Accion</th>
                         </tr>
                     </thead>
-                    <tbody ></tbody>
                 </table>
             </div>
 
@@ -49,28 +55,36 @@
     <div class="row">
         <div class="col-md-12">
             <div class="pull-right">
-                <ul id="pagEstudiosLab" class="pagination"></ul>    
+                <ul id="pagEstudiosLab" class="pagination">
+                    <li>
+                        <a href="#" aria-label="Anterior">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" aria-label="Siguiente">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
             </div>
 
         </div>
     </div>
-    <hr>
-    <div class="row">
-        <div class="col-md-12">
-            <div class="pull-left">
-                <button id="button" class="btn btn-default">Remover</button>    
-            </div>    
-        </div>
+    <div class="toolbarEstudiosLabSelec">
+        <button id="btnRemover" class="btn btn-default">Remover</button>    
     </div>
     <div class="row">
         <div class="col-md-12">
-
             <div class="table-responsive">
-                <table id="tableEstudiosLabSelec" data-toggle="table" data-height="300">
+                <table id="tableEstudiosLabSelec" 
+                       data-toolbar="#toolbarEstudiosLabSelec"  
+                       data-click-to-select="true"
+                       data-toggle="table" data-height="250">
                     <thead style="font-weight: bold;">
                         <tr>
                             <th data-field="state" data-checkbox="true"></th>
-                            <th data-field="id">ID</th>
+                            <th data-field="id" data-align="center">Codigo</th>
                             <th data-field="estudio">Estudio de laboratorio</th>
                         </tr>
                     </thead>
@@ -80,62 +94,4 @@
         </div>
     </div>
 </div>
-
-<script type="text/javascript" >
-    //$("#tableEstudiosLabSelec").bootstrapTable("hideColumn", "id");
-    $("#tableEstudiosLabSelec").bootstrapTable();
-    $("#tableEstudiosLab").bootstrapTable();
-    $("#cantListEstudiosLab").selectpicker('refresh');
-    
-    $('#button').click(function () {
-        var ids = $.map($("#tableEstudiosLabSelec").bootstrapTable('getSelections'), function (row) {
-            return row.id;
-        });
-        $("#tableEstudiosLabSelec").bootstrapTable('remove', {
-            field: 'id',
-            values: ids
-        });
-    });
-
-
-    $.getScript("consulta/js/estudioLab.js", function () {
-        cboCategoria_load($("#cboCategoria"));
-        list_filter_estLab();
-    });
-
-    $("#cboCategoria").on("changed.bs.select", function () {
-        list_filter_estLab();
-    });
-
-    $("#cantListEstudiosLab").on("changed.bs.select", function () {
-        list_filter_estLab();
-    });
-    $("#txt_filterEstudiosLab").keyup(function () {
-        list_filter_estLab();
-    });
-    $("#tableEstudiosLab").on("click", "button[name='estlab']", function () {
-        cat = $("#cboCategoria").val();
-        var rows = [];
-        var tr = $(this).closest("tr");//.find("td:eq("+ ((cat === "0")? "1":"0") +")");
-        rows.push({
-            id: $(tr).attr("data-id"),
-            estudio: $(tr).find("td:eq(" + ((cat === "0") ? "1" : "0") + ")").html()
-        });
-        bandera = true;
-        $.each($("#tableEstudiosLabSelec tbody tr"), function (index, trs) {
-            if ($(trs).find("td:eq(1)").html() === $(tr).attr("data-id")) {
-                bandera = false;
-                return;
-            }
-        });
-        if (bandera) {
-            $("#tableEstudiosLabSelec").bootstrapTable("append", rows);
-        }
-    });
-    $("#tableEstudiosLabSelec").on("click", "button[name='estlab_del']", function () {
-        $(this).closest("tr").remove();
-    });
-
-</script>
-
-
+<script src="consulta/js/estudioLab.js" type="text/javascript"></script>

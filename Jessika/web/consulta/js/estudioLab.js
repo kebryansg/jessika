@@ -1,3 +1,15 @@
+table = $("#tableEstudiosLab");
+paginacion = ("#pagEstudiosLab");
+var idLabs = [];
+
+
+$("#tableEstudiosLabSelec").bootstrapTable();
+$(table).bootstrapTable();
+$("#cantListEstudiosLab").selectpicker('refresh');
+
+cboCategoria_load($("#cboCategoria"));
+loadListEstudiosLab(true, 1);
+
 function cboCategoria_load(cbo) {
     $.ajax({
         url: 'sEstudioLab',
@@ -12,69 +24,110 @@ function cboCategoria_load(cbo) {
         }
     });
 }
-var defaultOpt = {
-    visiblePages: 10,
-    first: "Primero",
-    next: "Siguiente",
-    last: "Ultimo",
-    prev: "Anterior"
-};
-function list_filter_estLab() {
-    var tablePaciente = $("#tableEstudiosLab tbody");
-    $(tablePaciente).html("");
-    var $pagination = $('#pagEstudiosLab');
+
+function loadPaginacionEstudiosLab(total) {
+    $.each($(paginacion + " li"), function (i, li) {
+        if ($(li).find("a[aria-label]").length === 0) {
+            $(li).remove();
+        }
+    });
+    li = '';
+    for (var c = 0; c < total; c++) {
+        li += ('<li ' + ((c === 0) ? 'class="active"' : '') + ' ><a href="#">' + (c + 1) + '</a></li>');
+    }
+    $(paginacion + " li").first().after(li);
+}
+
+function loadListEstudiosLab(bandera, pag) {
     var categoria = $('#cboCategoria').val();
     var txt_filter = $("#txt_filterEstudiosLab").val();
     var cantList = $("#cantListEstudiosLab").val();
-    var $totalPages = 0;
-    if (txt_filter === "" && categoria === "0") {
-        $totalPages = 2;
-    } else {
-        $.ajax({
-            url: 'sEstudioLab',
-            type: 'POST',
-            async: false,
-            data: {
-                op: 'list_size',
-                filter: txt_filter,
-                categoria: categoria
-            },
-            success: function (response) {
-                $totalPages = response / cantList;
-                $totalPages = Math.ceil($totalPages);
-            }
-        });
-    }
-    $pagination.twbsPagination('destroy');
-    $pagination.twbsPagination($.extend({}, defaultOpt, {
-        onPageClick: function (event, pag) {
-            indexPagEstudioLab(pag, cantList, txt_filter, categoria);
-        },
-        totalPages: $totalPages
-    }));
-
-}
-function indexPagEstudioLab(pag, totalList, txt_filter, categoria) {
-    var cantList = totalList;
     $.ajax({
         url: 'sEstudioLab',
         type: 'POST',
-        async: false,
         data: {
-            filter: txt_filter,
-            top: cantList,
-            categoria: categoria,
+            op: 'detalle',
+            filter: (txt_filter === null ? "" : txt_filter),
             pag: ((pag - 1) * cantList),
-            op: 'detalle'
+            top: cantList,
+            categoria: categoria
         },
         success: function (response) {
-            if (categoria !== "0") {
-                $("#tableEstudiosLab").bootstrapTable('hideColumn', 'categoria');
-            } else {
-                $("#tableEstudiosLab").bootstrapTable('showColumn', 'categoria');
+            var obj = $.parseJSON(response);
+            $totalPages = obj.count / cantList;
+            $totalPages = Math.ceil($totalPages);
+            if (bandera) {
+                loadPaginacionEstudiosLab($totalPages);
             }
-            $("#tableEstudiosLab  tbody").html(response);
-            $('table').bootstrapTable('resetView');
+            $(table).bootstrapTable('load', obj.list);
+            $(table).bootstrapTable('resetView');
         }
     });
 }
+
+$(function () {
+    $("#contenido").on("click", paginacion + " li a[aria-label]", function (e) {
+        li_old = $(paginacion + " li[class='active']");
+        li = undefined;
+        switch ($(this).attr("aria-label")) {
+            case "Anterior":
+                li = $(li_old).prev();
+                break;
+            case "Siguiente":
+                li = $(li_old).next();
+                break;
+        }
+        if ($(li).find("a[aria-label]").length === 0) {
+            $(li).toggleClass("active");
+            $(li_old).toggleClass("active");
+            loadListEstudiosLab(false, $(li).find("a").html());
+        }
+    });
+    $("#contenido").on("click", paginacion + " li:not([class='active']) a:not([aria-label])", function (e) {
+        li = $(this).closest("li");
+        $(paginacion + " li[class='active']").toggleClass("active");
+        $(li).toggleClass("active");
+        loadListEstudiosLab(false, $(this).html());
+    });
+});
+
+$('#btnRemover').click(function () {
+    var ids = $.map($("#tableEstudiosLabSelec").bootstrapTable('getSelections'), function (row) {
+        idLabs.splice($.inArray(row.id, idLabs), 1);
+        return row.id;
+    });
+    $("#tableEstudiosLabSelec").bootstrapTable('remove', {
+        field: 'id',
+        values: ids
+    });
+
+});
+
+
+$("#cboCategoria").on("changed.bs.select", function () {
+    loadListEstudiosLab(true, 1);
+});
+
+$("#cantListEstudiosLab").on("changed.bs.select", function () {
+    loadListEstudiosLab(true, 1);
+});
+$("#txt_filterEstudiosLab").keyup(function (e) {
+    if (e.keyCode === 8 && $(this).val() === "") {
+        loadListEstudiosLab(true, 1);
+    } else if (e.keyCode === 13) {
+        loadListEstudiosLab(true, 1);
+    }
+});
+$("#btnSelecc").click(function () {
+    $.each($("#tableEstudiosLab").bootstrapTable('getSelections'), function (i, item) {
+        if ($.inArray(item.ID, idLabs) === -1) {
+            $("#tableEstudiosLabSelec").bootstrapTable("append", {
+                id: item.ID,
+                estudio: item.estudio
+            });
+            idLabs.push(item.ID);
+        }
+    });
+    $("#tableEstudiosLab").bootstrapTable('uncheckAll');
+});
+

@@ -16,7 +16,6 @@ function obtList() {
         type: 'POST',
         async: false,
         success: function (data) {
-            alert(data);
             $("#tbHC").bootstrapTable("load",data);
             $('#tbHC').bootstrapTable('resetView');
         }

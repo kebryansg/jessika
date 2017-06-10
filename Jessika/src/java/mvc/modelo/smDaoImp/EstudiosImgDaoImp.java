@@ -1,8 +1,10 @@
 
 package mvc.modelo.smDaoImp;
 
+import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 import mvc.controlador.C_BD;
@@ -11,6 +13,7 @@ import mvc.controlador.entidades.sm.DetallesEstudiosImg;
 import mvc.controlador.entidades.sm.EstudioImagen;
 import mvc.controlador.entidades.sm.TipoEstudioImg;
 import mvc.modelo.smDao.EstudiosImgDao;
+import test.list_count;
 
 public class EstudiosImgDaoImp implements EstudiosImgDao{
     C_BD conn;
@@ -21,20 +24,21 @@ public class EstudiosImgDaoImp implements EstudiosImgDao{
     }
 
     @Override
-    public List<DetallesEstudiosImg> list_det(int idTipoEstudiosImg, int idEstudiosImg,String filter, int pag, int top) {
+    public list_count list_det(int idTipoEstudiosImg, int idEstudiosImg,String filter, int pag, int top) {
         this.conn = con_db.open(con_db.MSSQL_SM);
         List<DetallesEstudiosImg> list = new ArrayList<>();
-        String paginacion = (top != -1) ? "OFFSET " + pag + " ROWS FETCH NEXT " + top + " ROWS ONLY;" : "";
-        String tipoSQL = (idTipoEstudiosImg != 0) ? (" and t_est.id = " + idTipoEstudiosImg) : "";
-        String estudioSQL = (idEstudiosImg != 0) ? (" and est_i.id = " + idEstudiosImg) : "";
-        String sql =("select t_est.descripcion t_descripcion, det_est_i.id, det_est_i.descripcion, det_est_i.extremidades from dbo.detallesEstudiosImg det_est_i inner join dbo.estudioImagen est_i on est_i.id = det_est_i.idEstudiosImg inner join dbo.tipoEstudioImg t_est on est_i.idTipoEstudioImg = t_est.id "
-                + "where (det_est_i.descripcion like '%"+ filter +"%') "
-                + tipoSQL
-                + estudioSQL
-                + " order by det_est_i.id " + paginacion);
-        System.out.println(sql);
-        ResultSet rs = this.conn.query(sql);
+        list_count l = new list_count();
+        CallableStatement call;
         try {
+            call = this.conn.getConexion().prepareCall("{call dbo.viewEstudiosImg(?,?,?,?,?,?)}");
+            call.setString("filtro", filter);
+            call.setInt("tops", top);
+            call.setInt("pag", pag);
+            call.setInt("tipoEstudio", idTipoEstudiosImg);
+            call.setInt("estImg", idEstudiosImg);
+            call.registerOutParameter("registros", Types.INTEGER);
+            call.execute();
+            ResultSet rs = call.getResultSet();
             while (rs.next()) {
                 DetallesEstudiosImg value = new DetallesEstudiosImg(rs.getInt("id"));
                 value.setDescripcion(rs.getNString("descripcion"));
@@ -45,12 +49,15 @@ public class EstudiosImgDaoImp implements EstudiosImgDao{
                 
                 list.add(value);
             }
+            l.setList(list);
+            l.setTotal(call.getInt("registros"));
+            System.out.println("total :" + call.getInt("registros"));
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         } finally {
             this.conn.close();
         }
-        return list;
+        return l;
     }
     
 }

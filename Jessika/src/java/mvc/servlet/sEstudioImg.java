@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -21,6 +22,7 @@ import mvc.controlador.entidades.sm.EstudioImagen;
 import mvc.controlador.entidades.sm.TipoEstudioImg;
 import mvc.modelo.smDaoImp.EstudiosImgDaoImp;
 import mvc.modelo.smDaoImp.TipoEstudiosImgDaoImp;
+import test.list_count;
 
 /**
  *
@@ -85,6 +87,8 @@ public class sEstudioImg extends HttpServlet {
         PrintWriter out = response.getWriter();
         String result = "", op = request.getParameter("op");
         int tipoEst = 0, est = 0;
+        list_count l = new list_count();
+        List<String> resultList = new ArrayList<>();
 
         final String FORMATO_FECHA = "yyyy-MM-dd";
         final DateFormat DF = new SimpleDateFormat(FORMATO_FECHA);
@@ -114,25 +118,23 @@ public class sEstudioImg extends HttpServlet {
                 out.close();
                 break;
             case "list_DetEstudioImg":
+
                 tipoEst = Integer.parseInt(request.getParameter("idTipo"));
                 est = Integer.parseInt(request.getParameter("idEstudio"));
-                List<DetallesEstudiosImg> list_detEstI = new EstudiosImgDaoImp().list_det(tipoEst,est,request.getParameter("filter"), Integer.parseInt(request.getParameter("pag")), Integer.parseInt(request.getParameter("top")));
-                //result += "<option value='0'>Seleccione</option>";
-                for (DetallesEstudiosImg detallesEstudiosImg : list_detEstI) {
-                    result += "<tr data-id='"+ detallesEstudiosImg.getId() +"' >";
-                    result += "<td> " + detallesEstudiosImg.getIdEstudiosImg().getIdTipoEstudioImg().getDescripcion().toUpperCase()+ " </td>";
-                    result += "<td>" + detallesEstudiosImg.getDescripcion().toUpperCase()+ "</td>";
-                    result += "<td><button class='btn btn-info' name='estimg' data-ext='"+ detallesEstudiosImg.getExtremidades() +"'>Seleccionar</button></td>";
-                    result += "</tr>";
+                l = new EstudiosImgDaoImp().list_det(tipoEst, est, request.getParameter("filter"), Integer.parseInt(request.getParameter("pag")), Integer.parseInt(request.getParameter("top")));
+                
+                for (Object object : l.getList()) {
+                    DetallesEstudiosImg detallesEstudiosImg = (DetallesEstudiosImg) object;
+                    resultList.add("{"
+                            + "\"ID\" : \"" + detallesEstudiosImg.getId() + "\","
+                            + "\"tipoEstudio\" : \"" + detallesEstudiosImg.getIdEstudiosImg().getIdTipoEstudioImg().getDescripcion().toUpperCase() + "\","
+                            + "\"estudio\" : \"" + detallesEstudiosImg.getDescripcion().toUpperCase() + "\","
+                            + "\"extremidad\" : \""+ detallesEstudiosImg.getExtremidades() +"\""
+                            + "}");
+
                 }
-                out.print(result);
-                out.flush();
-                out.close();
-                break;
-            case "list_size":
-                tipoEst = Integer.parseInt(request.getParameter("idTipo"));
-                est = Integer.parseInt(request.getParameter("idEstudio"));
-                result = String.valueOf(new EstudiosImgDaoImp().list_det(tipoEst,est, request.getParameter("filter"), 0, -1).size());
+
+                result = "{\"count\": \"" + l.getTotal() + "\"  , \"list\": [" + String.join(",", resultList) + "]}";
                 out.print(result);
                 out.flush();
                 out.close();
