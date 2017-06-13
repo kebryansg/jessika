@@ -5,6 +5,8 @@
  */
 package mvc.modelo.smDaoImp;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.Date;
 import mvc.modelo.smDao.ExcelDao;
 import java.io.File;
@@ -26,7 +28,12 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import mvc.controlador.C_BD;
+import mvc.controlador.entidades.sm.Establecimiento;
+import mvc.modelo.smDao.EstablecimientoDao;
 import org.apache.poi.xssf.usermodel.XSSFFormulaEvaluator;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
+import java.io.BufferedWriter;
 
 /**
  *
@@ -35,7 +42,7 @@ import org.apache.poi.xssf.usermodel.XSSFFormulaEvaluator;
 public class ExcelDaoImp implements ExcelDao {
 C_BD conn;
     @Override
-    public boolean generarExcelIngresos(Date fecha,String path,String nombreEstablecimiento) {
+    public String generarExcelIngresos(Date fecha,String path,String nombreEstablecimiento) {
         try
         {
             Connection conexion;          
@@ -44,12 +51,8 @@ C_BD conn;
             cStmt.setDate(1, new java.sql.Date(fecha.getTime()));
             cStmt.execute();    
             final ResultSet rs = cStmt.getResultSet(); 
-            
-            //Excel objExcel= new Excel(new File("c:\\agosto.xlsx"), new File("c:\\agosto.xlsx"));                       
-            //FileInputStream fileInputStream = new FileInputStream("./xlsx/plantillaIngresosMensuales2017.xlsx");
-            //File file = new File("/xlsx/plantillaIngresosMensuales2017.xlsx");
-            int r=5;
-            XSSFWorkbook wb = new XSSFWorkbook(path);
+            int r=5;            
+            XSSFWorkbook wb = new XSSFWorkbook(path+"plantillaIngresosMensuales2017.xlsx");
             XSSFSheet sheet = wb.getSheetAt(0);
             
             int c=5;
@@ -102,15 +105,6 @@ C_BD conn;
                      //FECHA NACIMIENTO "DÍA DD"
                      cell= row.getCell(19);
                      cell.setCellValue(rs.getInt("DiaNacimiento"));
-                     
-                    /*//Formula                    
-                    cell= row.getCell(20);
-                    String strFormula= "CONCATENAR(R"+String.valueOf(r)+";\"/\";S"+String.valueOf(r)+" ;\"/\";T"+String.valueOf(r)+"  )";
-                    cell.setCellType(XSSFCell.CELL_TYPE_FORMULA);
-                    cell.setCellFormula(strFormula);
-                    //cell.setCellValue(row.getCell(20).toString());
-                     */
-                     
                      //"Condición de la edad
                      cell= row.getCell(21);
                      cell.setCellValue(rs.getInt("condicionEdad"));
@@ -189,19 +183,300 @@ C_BD conn;
             dateFormat =new SimpleDateFormat("MM");
             int mes=Integer.parseInt(dateFormat.format(fecha));
             String[] meses = {"Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciemrbre"};            
-            FileOutputStream fileOut = new FileOutputStream("D:\\Ingresos "+meses[mes-1]+" del "+anio+" "+nombreEstablecimiento+" .xlsx");
+            EstablecimientoDao establecimiento= new EstablecimientoDaoImp();
+            List<Establecimiento> list= establecimiento.list();              
+            for (Establecimiento value : list)
+            {
+                nombreEstablecimiento=value.getNombre();
+            }
+            
+            FileOutputStream fileOut = new FileOutputStream(path+meses[mes-1]+" del "+anio+" "+nombreEstablecimiento+".xlsx");
             wb.write(fileOut);
             fileOut.flush();
             fileOut.close();
-            return true;
+            return meses[mes-1]+" del "+anio+" "+nombreEstablecimiento+".xlsx";
+           
+            
         }
         catch(Exception ex)
         {
-            return false;
+            return "";
             
             
         }
         
+    }
+
+    @Override
+    public String generarExcelCamas(Date fecha, String path) {
+        try
+        {
+            Connection conexion;          
+            conexion = con_db.open(con_db.MSSQL_SM).getConexion();
+            CallableStatement cStmt=conexion.prepareCall("{call obtenerCamasMensuales(?)}"); 
+            cStmt.setDate(1, new java.sql.Date(fecha.getTime()));
+            cStmt.execute();    
+            final ResultSet rs = cStmt.getResultSet(); 
+            int r=5;
+            File f= new File(path+"Formulario_digital_Camas_2017.xlsx");
+            FileInputStream fileInputStream = new FileInputStream(f);
+            XSSFWorkbook wb = new XSSFWorkbook(fileInputStream);
+            XSSFSheet sheet = wb.getSheetAt(0);
+            
+            XSSFRow row;
+            XSSFCell cell=null;
+            //Calendar cal = new GregorianCalendar.cal(); 
+            Calendar cal = GregorianCalendar.getInstance();
+            cal.setTime(fecha);
+            // Get the number of days in that month 
+            int totalDiasMes = cal.getActualMaximum(Calendar.DAY_OF_MONTH); 
+            while(rs.next())            
+            {
+                
+                //Encabezado del excel 
+                //Nombre establecimiento
+                row = sheet.getRow(2);
+                cell= row.getCell(4);                     
+                cell.setCellValue(rs.getString("nombre"));
+                //provincia
+                row = sheet.getRow(3);
+                cell= row.getCell(4);                     
+                cell.setCellValue(rs.getString("provincia"));
+                //canton
+                row = sheet.getRow(4);
+                cell= row.getCell(4);                     
+                cell.setCellValue(rs.getString("canton"));
+                //parroquia
+                row = sheet.getRow(5);
+                cell= row.getCell(4);                     
+                cell.setCellValue(rs.getString("parroquia"));
+                //direccion
+                row = sheet.getRow(6);
+                cell= row.getCell(4);                     
+                cell.setCellValue(rs.getString("direccion"));
+                //encargado
+                row = sheet.getRow(7);
+                cell= row.getCell(4);                     
+                cell.setCellValue(rs.getString("encargado"));
+                //encargado
+                row = sheet.getRow(7);
+                cell= row.getCell(4);                     
+                cell.setCellValue(rs.getString("encargado"));                
+                //telefono - email
+                row = sheet.getRow(8);
+                cell= row.getCell(4);                     
+                cell.setCellValue(rs.getString("telefono")+"-"+rs.getString("email"));
+                int camas=(5+(6*(cal.get(Calendar.MONTH))));
+                int cRs=10;
+                int i=17;
+                int individual=-1,doble=-1,total;
+                int totalCamas=0,totalIndividual=0,totalDoble=0;
+                //camas 
+                while(i<29)                
+                {
+                    //par
+                    if(camas%2==0)
+                        doble=rs.getInt(cRs);
+                    else 
+                        individual=rs.getInt(cRs);
+                    row = sheet.getRow(i);
+                    cell= row.getCell(camas);                     
+                    cell.setCellValue(rs.getInt(cRs));                    
+                    camas++;                    
+                    if(camas==(5+(6*(cal.get(Calendar.MONTH))))+2)
+                    {
+                        totalIndividual=totalIndividual+individual;
+                        totalDoble=totalDoble+doble;
+                        totalCamas=totalCamas+(individual+doble);
+                        camas=5+(6*(cal.get(Calendar.MONTH)));
+                        cell= row.getCell(camas-1);
+                        cell.setCellValue(individual+doble);   
+                        i++;
+                    } 
+                    cRs++;
+                } 
+                camas=(5+(6*(cal.get(Calendar.MONTH))));
+                
+                //dias pacientes            
+                row = sheet.getRow(37);
+                cell= row.getCell(camas-1);
+                cell.setCellValue(rs.getInt(36));
+                //dias pacientes                            
+                cell= row.getCell(camas);
+                cell.setCellValue(rs.getInt(36));
+                //dias pacientes                            
+                cell= row.getCell(camas+1);
+                cell.setCellValue(rs.getInt(36));
+                
+                 //dias camas
+                row = sheet.getRow(38);
+                cell= row.getCell(camas-1);
+                cell.setCellValue(totalCamas*totalDiasMes);
+                //dias camas
+                cell= row.getCell(camas);
+                cell.setCellValue(totalIndividual*totalDiasMes);
+                //dias camas
+                cell= row.getCell(camas+1);
+                cell.setCellValue(totalDoble*totalDiasMes);
+                
+            }
+            //refresco las formulas del libro
+             XSSFFormulaEvaluator.evaluateAllFormulaCells(wb);    
+             File excelFileName= new File(path+"Formulario_digital_Camas_2017.xlsx");
+            //FileOutputStream fileOut = new FileOutputStream(path+"camasGenerado.xlsx");            
+            FileOutputStream fileOut = new FileOutputStream(excelFileName);
+            wb.write(fileOut);
+            fileOut.flush();
+            fileOut.close();
+            return "Formulario_digital_Camas_2017.xlsx";
+        }
+        catch(Exception ex)
+        {
+            return "";
+        }
+    }
+
+    @Override
+    public String generarExcelCamasIndividual(Date fecha, String path) {
+        try
+        {
+            Connection conexion;          
+            conexion = con_db.open(con_db.MSSQL_SM).getConexion();
+            CallableStatement cStmt=conexion.prepareCall("{call obtenerCamasMensuales(?)}"); 
+            cStmt.setDate(1, new java.sql.Date(fecha.getTime()));
+            cStmt.execute();    
+            final ResultSet rs = cStmt.getResultSet(); 
+            int r=5;
+            File f= new File(path+"Formulario_digital_Camas_ind_2017.xlsx");
+            FileInputStream fileInputStream = new FileInputStream(f);
+            XSSFWorkbook wb = new XSSFWorkbook(fileInputStream);
+            XSSFSheet sheet = wb.getSheetAt(0);
+            
+            XSSFRow row;
+            XSSFCell cell=null;
+            //Calendar cal = new GregorianCalendar.cal(); 
+            Calendar cal = GregorianCalendar.getInstance();
+            cal.setTime(fecha);
+            // Get the number of days in that month 
+            int totalDiasMes = cal.getActualMaximum(Calendar.DAY_OF_MONTH); 
+            while(rs.next())            
+            {
+                
+                //Encabezado del excel 
+                //Nombre establecimiento
+                row = sheet.getRow(2);
+                cell= row.getCell(4);                     
+                cell.setCellValue(rs.getString("nombre"));
+                //provincia
+                row = sheet.getRow(3);
+                cell= row.getCell(4);                     
+                cell.setCellValue(rs.getString("provincia"));
+                //canton
+                row = sheet.getRow(4);
+                cell= row.getCell(4);                     
+                cell.setCellValue(rs.getString("canton"));
+                //parroquia
+                row = sheet.getRow(5);
+                cell= row.getCell(4);                     
+                cell.setCellValue(rs.getString("parroquia"));
+                //direccion
+                row = sheet.getRow(6);
+                cell= row.getCell(4);                     
+                cell.setCellValue(rs.getString("direccion"));
+                //encargado
+                row = sheet.getRow(7);
+                cell= row.getCell(4);                     
+                cell.setCellValue(rs.getString("encargado"));
+                //encargado
+                row = sheet.getRow(7);
+                cell= row.getCell(4);                     
+                cell.setCellValue(rs.getString("encargado"));                
+                //telefono - email
+                row = sheet.getRow(8);
+                cell= row.getCell(4);                     
+                cell.setCellValue(rs.getString("telefono")+"-"+rs.getString("email"));
+                int camas=(5+(6*(cal.get(Calendar.MONTH))));
+                int cRs=10;
+                int i=17;
+                int individual=-1,doble=-1,total;
+                int totalCamas=0,totalIndividual=0,totalDoble=0;
+                //camas 
+                while(i<29)                
+                {
+                    //par
+                    if(camas%2==0)
+                        doble=rs.getInt(cRs);
+                    else 
+                        individual=rs.getInt(cRs);
+                    row = sheet.getRow(i);
+                    cell= row.getCell(camas);                     
+                    cell.setCellValue(rs.getInt(cRs));                    
+                    camas++;                    
+                    if(camas==(5+(6*(cal.get(Calendar.MONTH))))+2)
+                    {
+                        totalIndividual=totalIndividual+individual;
+                        totalDoble=totalDoble+doble;
+                        totalCamas=totalCamas+(individual+doble);
+                        camas=5+(6*(cal.get(Calendar.MONTH)));
+                        cell= row.getCell(camas-1);
+                        cell.setCellValue(individual+doble);   
+                        i++;
+                    } 
+                    cRs++;
+                } 
+                camas=(5+(6*(cal.get(Calendar.MONTH))));
+                
+                //dias pacientes            
+                row = sheet.getRow(37);
+                cell= row.getCell(camas-1);
+                cell.setCellValue(rs.getInt(36));
+                //dias pacientes                            
+                cell= row.getCell(camas);
+                cell.setCellValue(rs.getInt(36));
+                //dias pacientes                            
+                cell= row.getCell(camas+1);
+                cell.setCellValue(rs.getInt(36));
+                
+                 //dias camas
+                row = sheet.getRow(38);
+                cell= row.getCell(camas-1);
+                cell.setCellValue(totalCamas*totalDiasMes);
+                //dias camas
+                cell= row.getCell(camas);
+                cell.setCellValue(totalIndividual*totalDiasMes);
+                //dias camas
+                cell= row.getCell(camas+1);
+                cell.setCellValue(totalDoble*totalDiasMes);
+                
+            }
+            //refresco las formulas del libro
+             XSSFFormulaEvaluator.evaluateAllFormulaCells(wb); 
+             SimpleDateFormat dateFormat = null;
+            dateFormat =new SimpleDateFormat("yyyy");
+            int anio=Integer.parseInt(dateFormat.format(fecha));
+            dateFormat =new SimpleDateFormat("MM");
+            int mes=Integer.parseInt(dateFormat.format(fecha));
+            String[] meses = {"Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciemrbre"};            
+            EstablecimientoDao establecimiento= new EstablecimientoDaoImp();
+            List<Establecimiento> list= establecimiento.list();    
+            String nombreEstablecimiento="";
+            for (Establecimiento value : list)
+            {
+                nombreEstablecimiento=value.getNombre();
+            }
+            
+              FileOutputStream fileOut = new FileOutputStream(path+meses[mes-1]+" del "+anio+" "+nombreEstablecimiento+".xlsx");
+            wb.write(fileOut);
+            fileOut.flush();
+            fileOut.close();
+            return "FormularioCamas.xlsx";
+             
+           
+        }
+        catch(Exception ex)
+        {
+            return "";
+        }
     }
     
     

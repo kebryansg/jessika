@@ -5,27 +5,28 @@
  */
 package mvc.servlet;
 
-import com.google.gson.JsonObject;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintWriter;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import mvc.modelo.smDao.ExcelDao;
-import mvc.modelo.smDaoImp.ExcelDaoImp;
+
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import org.codehaus.jackson.map.ObjectMapper;
+
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
 
 /**
  *
  * @author Deivi
  */
-public class sExcel extends HttpServlet {
+public class sDownloadFile extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -44,10 +45,10 @@ public class sExcel extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet sExcel</title>");            
+            out.println("<title>Servlet sDownloadFile</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet sExcel at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet sDownloadFile at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -80,41 +81,37 @@ public class sExcel extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //processRequest(request, response);
-        JsonObject object = new JsonObject();
-        response.setContentType("text/plain");
-        PrintWriter out = response.getWriter();
-        String result = "", op = request.getParameter("op");
-         ObjectMapper OBJECT_MAPPER = new ObjectMapper();
-         try
-         {
-             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");                                
-             Date fechaReporte = sdf.parse(request.getParameter("fechaReporte"));                    
-             ExcelDao objExcel= new ExcelDaoImp();
-             String absoluteFilesystemPath = getServletContext().getRealPath("/xlsx/");             
-             object.addProperty("egresos", objExcel.generarExcelIngresos(fechaReporte,absoluteFilesystemPath,""));
-             
-         }
-         catch(Exception ex)
-         {
-         }
-         try
-         {
-             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");                                
-             Date fechaReporte = sdf.parse(request.getParameter("fechaReporte"));                    
-             ExcelDao objExcel= new ExcelDaoImp();
-             String absoluteFilesystemPath = getServletContext().getRealPath("/xlsx/");                          
-             object.addProperty("camas", objExcel.generarExcelCamas(fechaReporte,absoluteFilesystemPath));
-             object.addProperty("camasIndividual", objExcel.generarExcelCamasIndividual(fechaReporte,absoluteFilesystemPath));
-         }
-         catch(Exception ex)
-         {
-         }
-         
-         
-         
-         out.println(object);
-         //String json = OBJECT_MAPPER.writeValueAsString(object);
-         //response.getWriter().write(json);
+        	
+		try {
+			// Url con la foto
+			URL url = new URL(
+					"https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/Microsoft_Excel_2013_logo.svg/1200px-Microsoft_Excel_2013_logo.svg.png");
+
+			// establecemos conexion
+			URLConnection urlCon = url.openConnection();
+
+			// Sacamos por pantalla el tipo de fichero
+			System.out.println(urlCon.getContentType());
+
+			// Se obtiene el inputStream de la foto web y se abre el fichero
+			// local.
+			InputStream is = urlCon.getInputStream();
+			FileOutputStream fos = new FileOutputStream("e:/foto.jpg");
+
+			// Lectura de la foto de la web y escritura en fichero local
+			byte[] array = new byte[1000]; // buffer temporal de lectura.
+			int leido = is.read(array);
+			while (leido > 0) {
+				fos.write(array, 0, leido);
+				leido = is.read(array);
+			}
+
+			// cierre de conexion y fichero.
+			is.close();
+			fos.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
     }
 
     /**

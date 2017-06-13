@@ -32,6 +32,7 @@ import mvc.modelo.smDao.IngresosDao;
 public class IngresosDaoImp implements IngresosDao {
 C_BD conn;
 
+
     @Override
     public List<Ingresos> listIngresos(int numeroPaginas, int totalRegistro, Date fechaIngreso, Date fechaSalida) {
          List<Ingresos> list = new ArrayList<>();
@@ -211,9 +212,7 @@ C_BD conn;
                 cStmt.setInt(1, value.getId());
                 cStmt.setInt(15, value.getIdCaso().getId());
             }
-                
-                
-                cStmt.setDate(2,  new java.sql.Date(value.getFechaEntrada().getTime()));
+            cStmt.setDate(2,  new java.sql.Date(value.getFechaEntrada().getTime()));
                 cStmt.setInt(3, value.getIdTipoIngreso().getId());
                 cStmt.setInt(4,value.getIdEspecialidadEgreso().getId());
                 cStmt.setDate(5, new java.sql.Date(value.getFechaEntrada().getTime()));

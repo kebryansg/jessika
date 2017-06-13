@@ -18,7 +18,7 @@
 
         <!-- Bootstrap Core CSS -->
         <link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
+         
         <!-- Custom CSS -->
         <link href="resources/bootstrap/css/sb-admin.css" rel="stylesheet">
         <link href="resources/css/style_home.css" rel="stylesheet" type="text/css"/>
@@ -59,6 +59,8 @@
 
         <link rel="stylesheet" href="resources/bootstrap/css/bootstrap-select.min.css" >
         <script src="resources/bootstrap/js/bootstrap-select.min.js"></script>
+        
+        
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -172,10 +174,7 @@
                         <ul id="inec" class="collapse">
                             <li>
                                 <a  data-url="inec/ingresosInec.jsp" data-title="Ingresos" href="#"><i class="fa fa-user fa-fw" aria-hidden="true"></i>&nbsp; Hospitalizaciones</a>
-                            </li>
-                            <li>
-                                <a data-url="" data-title="Mantenimiento Ingresos" href="#"><i class="fa fa-address-book fa-fw" aria-hidden="true"></i>&nbsp; Camas</a>
-                            </li>                            
+                            </li>                                                  
                             <li>
                                 <a data-url="" data-title="Mantenimiento Ingresos" href="#"><i class="fa fa-address-book fa-fw" aria-hidden="true"></i>&nbsp; RAS</a>
                             </li>                            
@@ -183,10 +182,10 @@
                         <a href="javascript:;" data-toggle="collapse" data-target="#establecimiento">Establecimiento<i class="fa fa-fw fa-caret-down"></i></a>
                         <ul id="establecimiento" class="collapse">
                             <li>
-                                <a  data-url="" data-title="Ingresos" href="#"><i class="fa fa-user fa-fw" aria-hidden="true"></i>&nbsp; Configuración</a>
+                                <a  data-url="configuracion/establecimiento.jsp" data-title="Ingresos" href="#"><i class="fa fa-user fa-fw" aria-hidden="true"></i>&nbsp; Configuración</a>
                             </li>                            
                             <li>
-                                <a data-url="" data-title="Mantenimiento Ingresos" href="#"><i class="fa fa-address-book fa-fw" aria-hidden="true"></i>&nbsp; Camas</a>
+                                <a data-url="configuracion/camasConf.jsp" data-title="Mantenimiento Ingresos" href="#"><i class="fa fa-address-book fa-fw" aria-hidden="true"></i>&nbsp; Camas</a>
                             </li>                                                        
                         </ul>
                     </li>
@@ -308,6 +307,7 @@
                 </div>
                 </div>
                             </div>
+                                    
                         </div>
                         <!-- /.col-sm-4 -->
 
@@ -329,38 +329,6 @@
            // $("#contenido").load("consulta/ListHistorialC.jsp");
         </script>
         <script type="text/javascript" src="usuario/login.js"></script>
-        <div class="modal fade" id="modalConfiguracion" role="dialog">
-            <div class="modal-dialog modal-lg">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal">&times;</button>
-                  <h4 class="modal-title">Configuración</h4>
-                </div>
-                <div class="modal-body">
-                  <div class="modal-body">
-                    <div class="form-group">
-                        <label class="form-control-label">Usuario</label>
-                        <input validate="text" type="text" class="form-control" id="recipient-name">
-                    </div>
-                      <div class="form-group">
-                        <label class="form-control-label">Contraseña Actual</label>
-                        <input validate="text" type="text" class="form-control" id="recipient-name">
-                    </div>
-                      <div class="form-group">
-                        <label class="form-control-label">Nueva Contraseña</label>
-                        <input validate="text" type="text" class="form-control" id="recipient-name">
-                    </div>
-                      <div class="form-group">
-                        <label class="form-control-label">Confirmar Contraseña</label>
-                        <input validate="text" type="text" class="form-control" id="recipient-name">
-                    </div>
-                </div>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                </div>
-              </div>
-            </div>
-          </div>
+      
     </body>
 </html>
