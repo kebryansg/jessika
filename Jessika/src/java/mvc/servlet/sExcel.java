@@ -5,16 +5,20 @@
  */
 package mvc.servlet;
 
+import com.google.gson.JsonObject;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import mvc.modelo.smDao.ExcelDao;
 import mvc.modelo.smDaoImp.ExcelDaoImp;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import org.codehaus.jackson.map.ObjectMapper;
 
 /**
@@ -76,25 +80,41 @@ public class sExcel extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //processRequest(request, response);
+        JsonObject object = new JsonObject();
         response.setContentType("text/plain");
         PrintWriter out = response.getWriter();
         String result = "", op = request.getParameter("op");
          ObjectMapper OBJECT_MAPPER = new ObjectMapper();
-        switch (op) {
-            case "ingresos": 
-                try
-                {
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");                                
-                    Date fechaReporte = sdf.parse(request.getParameter("fechaReporte"));                    
-                    ExcelDao objExcel= new ExcelDaoImp();
-                    String json = OBJECT_MAPPER.writeValueAsString(objExcel.generarExcelIngresos(fechaReporte));
-                    response.getWriter().write(json);
-                }
-                catch(Exception ex)
-                {
-                }
-                break;
-        }
+         try
+         {
+             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");                                
+             Date fechaReporte = sdf.parse(request.getParameter("fechaReporte"));                    
+             ExcelDao objExcel= new ExcelDaoImp();
+             String absoluteFilesystemPath = getServletContext().getRealPath("/xlsx/");             
+             object.addProperty("egresos", objExcel.generarExcelIngresos(fechaReporte,absoluteFilesystemPath,""));
+             
+         }
+         catch(Exception ex)
+         {
+         }
+         try
+         {
+             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");                                
+             Date fechaReporte = sdf.parse(request.getParameter("fechaReporte"));                    
+             ExcelDao objExcel= new ExcelDaoImp();
+             String absoluteFilesystemPath = getServletContext().getRealPath("/xlsx/");                          
+             object.addProperty("camas", objExcel.generarExcelCamas(fechaReporte,absoluteFilesystemPath));
+             object.addProperty("camasIndividual", objExcel.generarExcelCamasIndividual(fechaReporte,absoluteFilesystemPath));
+         }
+         catch(Exception ex)
+         {
+         }
+         
+         
+         
+         out.println(object);
+         //String json = OBJECT_MAPPER.writeValueAsString(object);
+         //response.getWriter().write(json);
     }
 
     /**

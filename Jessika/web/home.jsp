@@ -18,7 +18,7 @@
 
         <!-- Bootstrap Core CSS -->
         <link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
+         
         <!-- Custom CSS -->
         <link href="resources/bootstrap/css/sb-admin.css" rel="stylesheet">
         <link href="resources/css/style_home.css" rel="stylesheet" type="text/css"/>
@@ -153,28 +153,34 @@
                             </ul>
                         </li>
                         <li>
-                            <a href="javascript:;" data-toggle="collapse" data-target="#reportes">Reportes<i class="fa fa-fw fa-caret-down"></i></a>
-                            <ul id="reportes" class="collapse">
-                                <li>
-                                    <a  data-url="" data-title="Ingresos" href="#"><i class="fa fa-user fa-fw" aria-hidden="true"></i>&nbsp; Hospitalizaciones</a>
-                                </li>
-                                <li>
-                                    <a data-url="" data-title="Mantenimiento Ingresos" href="#"><i class="fa fa-address-book fa-fw" aria-hidden="true"></i>&nbsp; Consultas</a>
-                                </li>                            
-                            </ul>
-                            <a href="javascript:;" data-toggle="collapse" data-target="#inec">Inec<i class="fa fa-fw fa-caret-down"></i></a>
-                            <ul id="inec" class="collapse">
-                                <li>
-                                    <a  data-url="inec/ingresosInec.jsp" data-title="Ingresos" href="#"><i class="fa fa-user fa-fw" aria-hidden="true"></i>&nbsp; Hospitalizaciones</a>
-                                </li>
-                                <li>
-                                    <a data-url="" data-title="Mantenimiento Ingresos" href="#"><i class="fa fa-address-book fa-fw" aria-hidden="true"></i>&nbsp; Camas</a>
-                                </li>                            
-                                <li>
-                                    <a data-url="" data-title="Mantenimiento Ingresos" href="#"><i class="fa fa-address-book fa-fw" aria-hidden="true"></i>&nbsp; RAS</a>
-                                </li>                            
-                            </ul>
-                        </li>
+                        <a href="javascript:;" data-toggle="collapse" data-target="#reportes">Reportes<i class="fa fa-fw fa-caret-down"></i></a>
+                        <ul id="reportes" class="collapse">
+                            <li>
+                                <a  data-url="" data-title="Ingresos" href="#"><i class="fa fa-user fa-fw" aria-hidden="true"></i>&nbsp; Hospitalizaciones</a>
+                            </li>
+                            <li>
+                                <a data-url="" data-title="Mantenimiento Ingresos" href="#"><i class="fa fa-address-book fa-fw" aria-hidden="true"></i>&nbsp; Consultas</a>
+                            </li>                            
+                        </ul>
+                        <a href="javascript:;" data-toggle="collapse" data-target="#inec">Inec<i class="fa fa-fw fa-caret-down"></i></a>
+                        <ul id="inec" class="collapse">
+                            <li>
+                                <a  data-url="inec/ingresosInec.jsp" data-title="Ingresos" href="#"><i class="fa fa-user fa-fw" aria-hidden="true"></i>&nbsp; Hospitalizaciones</a>
+                            </li>                                                  
+                            <li>
+                                <a data-url="" data-title="Mantenimiento Ingresos" href="#"><i class="fa fa-address-book fa-fw" aria-hidden="true"></i>&nbsp; RAS</a>
+                            </li>                            
+                        </ul>
+                        <a href="javascript:;" data-toggle="collapse" data-target="#establecimiento">Establecimiento<i class="fa fa-fw fa-caret-down"></i></a>
+                        <ul id="establecimiento" class="collapse">
+                            <li>
+                                <a  data-url="configuracion/establecimiento.jsp" data-title="Ingresos" href="#"><i class="fa fa-user fa-fw" aria-hidden="true"></i>&nbsp; Configuración</a>
+                            </li>                            
+                            <li>
+                                <a data-url="configuracion/camasConf.jsp" data-title="Mantenimiento Ingresos" href="#"><i class="fa fa-address-book fa-fw" aria-hidden="true"></i>&nbsp; Camas</a>
+                            </li>                                                        
+                        </ul>
+                    </li>
                     </ul>
                 </div>
                 <!-- /.navbar-collapse -->
@@ -184,13 +190,62 @@
 
                 <div class="container-fluid">
 
-                    <!-- Page Heading -->
-
-                    <div class="row">
-                        <div class="col-sm-12">                        
-                            <div class="panel panel-default" id="panel">
-                                <div class="panel-heading">
-                                    <h3 class="panel-title" id="titulo"> </h3>
+                <!-- Page Heading -->
+                
+                <div class="row">
+                    <div class="col-sm-12">                        
+                        <div class="panel panel-default" id="panel">
+                            <div class="panel-heading">
+                                <h3 class="panel-title" id="titulo"> </h3>
+                            </div>
+                            <div id="contenido" class="panel-body">
+                                <!-- /. ROW  -->
+                                
+                                <div class="row">
+                                    <div class="col-md-3 col-sm-6 col-xs-6">           
+                                        <div class="panel panel-back noti-box">
+                                            <span class="icon-box bg-color-red set-icon">
+                                                <i class="fa fa-envelope-o"></i>
+                                            </span>
+                                            <div class="text-box" >
+                                                <p class="main-text">120</p>
+                                                <p class="text-muted">Pacientes</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-sm-6 col-xs-6">           
+                                        <div class="panel panel-back noti-box">
+                                            <span class="icon-box bg-color-green set-icon">
+                                                <i class="fa fa-bars"></i>
+                                            </span>
+                                            <div class="text-box" >
+                                                <p class="main-text">30 </p>
+                                                <p class="text-muted">Consultas</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-sm-6 col-xs-6">           
+                                        <div class="panel panel-back noti-box">
+                                            <span class="icon-box bg-color-blue set-icon">
+                                                <i class="fa fa-bell-o"></i>
+                                            </span>
+                                            <div class="text-box" >
+                                                <p class="main-text">240 </p>
+                                                <p class="text-muted">Hospitaliaciones</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-sm-6 col-xs-6">           
+                                        <div class="panel panel-back noti-box">
+                                            <span class="icon-box bg-color-brown set-icon">
+                                                <i class="glyphicon glyphicon-user"></i>
+                                            </span>
+                                            <div class="text-box" >
+                                                <p class="main-text">3</p>
+                                                <p class="text-muted">Usuarios</p>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div id="contenido" class="panel-body">
                                     
@@ -207,7 +262,19 @@
                     <!-- /.container-fluid -->
 
                 </div>
-                <!-- /#page-wrapper -->
+                </div>
+                            </div>
+                                    
+                        </div>
+                        <!-- /.col-sm-4 -->
+
+                    </div>
+                    <!-- /.row -->
+
+
+                    <!-- / contenido -->            
+                </div>
+                <!-- /.container-fluid -->
 
             </div>
             <!-- /#wrapper -->

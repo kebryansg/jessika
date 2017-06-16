@@ -5,22 +5,28 @@
  */
 package mvc.servlet;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintWriter;
+
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import mvc.modelo.smDao.UsuarioDao;
-import mvc.modelo.smDaoImp.UsuarioDaoImp;
-import org.codehaus.jackson.map.ObjectMapper;
+
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
 
 /**
  *
  * @author Deivi
  */
-public class sUsuario extends HttpServlet {
+public class sDownloadFile extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,10 +45,10 @@ public class sUsuario extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet sUsuario</title>");            
+            out.println("<title>Servlet sDownloadFile</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet sUsuario at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet sDownloadFile at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -60,16 +66,7 @@ public class sUsuario extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //processRequest(request, response);
-       String result = "", op = request.getParameter("op");
-       HttpSession sesion = request.getSession();
-       if("close".equals(op))
-       {
-           sesion.invalidate();
-           response.sendRedirect("login.jsp");
-       
-       }
-        
+        processRequest(request, response);
     }
 
     /**
@@ -83,39 +80,38 @@ public class sUsuario extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       // processRequest(request, response);
-       response.setContentType("text/plain");
-       PrintWriter out = response.getWriter();
-       String result = "", op = request.getParameter("op");
-       HttpSession sesion = request.getSession();
-       if("login".equals(op))
-       {
-            String user = request.getParameter("usuario");
-            String clave = request.getParameter("clave");
-            UsuarioDao usuario= new UsuarioDaoImp();
-            String usuarioLogueado=usuario.Login(user, clave);
-            ObjectMapper OBJECT_MAPPER = new ObjectMapper();
-            if(sesion.getAttribute("usuario") == null)
-            {
-                if(!"".equals(usuarioLogueado))
-                {
-                    sesion.setAttribute("usuario", user);
-                    sesion.setAttribute("nombresUsuario", usuarioLogueado);
-                    sesion.setAttribute("nombreEstablecimiento", "Hospital del dia Revelo");
-                    //response.sendRedirect("home.jsp");
-                    String json = OBJECT_MAPPER.writeValueAsString(1);
-                    response.getWriter().write(json);
-                }
-                else
-                {
-                    String json = OBJECT_MAPPER.writeValueAsString(0);
-                    response.getWriter().write(json);
-                    
-                }
-            }            
-       }
-       
-       
+        //processRequest(request, response);
+        	
+		try {
+			// Url con la foto
+			URL url = new URL(
+					"https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/Microsoft_Excel_2013_logo.svg/1200px-Microsoft_Excel_2013_logo.svg.png");
+
+			// establecemos conexion
+			URLConnection urlCon = url.openConnection();
+
+			// Sacamos por pantalla el tipo de fichero
+			System.out.println(urlCon.getContentType());
+
+			// Se obtiene el inputStream de la foto web y se abre el fichero
+			// local.
+			InputStream is = urlCon.getInputStream();
+			FileOutputStream fos = new FileOutputStream("e:/foto.jpg");
+
+			// Lectura de la foto de la web y escritura en fichero local
+			byte[] array = new byte[1000]; // buffer temporal de lectura.
+			int leido = is.read(array);
+			while (leido > 0) {
+				fos.write(array, 0, leido);
+				leido = is.read(array);
+			}
+
+			// cierre de conexion y fichero.
+			is.close();
+			fos.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
     }
 
     /**

@@ -48,6 +48,22 @@
         <servlet-name>sTipoConsulta</servlet-name>
         <servlet-class>mvc.servlet.sTipoConsulta</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>sUpload</servlet-name>
+        <servlet-class>mvc.servlet.sUpload</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>sEstablecimiento</servlet-name>
+        <servlet-class>mvc.servlet.sEstablecimiento</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>sCamas</servlet-name>
+        <servlet-class>mvc.servlet.sCamas</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>sDownloadFile</servlet-name>
+        <servlet-class>mvc.servlet.sDownloadFile</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>pruebaCombo</servlet-name>
         <url-pattern>/pruebaCombo</url-pattern>
@@ -95,6 +111,22 @@
     <servlet-mapping>
         <servlet-name>sTipoConsulta</servlet-name>
         <url-pattern>/sTipoConsulta</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>sUpload</servlet-name>
+        <url-pattern>/sUpload</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>sEstablecimiento</servlet-name>
+        <url-pattern>/sEstablecimiento</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>sCamas</servlet-name>
+        <url-pattern>/sCamas</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>sDownloadFile</servlet-name>
+        <url-pattern>/sDownloadFile</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

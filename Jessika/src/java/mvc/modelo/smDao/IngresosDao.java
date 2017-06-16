@@ -28,6 +28,7 @@ public interface IngresosDao {
     public boolean DeleteMedicamento(int id);
     public boolean guardarMedicamento(Medicamento value);
     public List<Medicamento> list(int idRegistro);
+    public List<Ingresos> listIngresos();
     
     
     

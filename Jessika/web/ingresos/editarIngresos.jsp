@@ -1,3 +1,8 @@
+
+<%@page import="java.util.ArrayList"%>
+<%@page import="mvc.controlador.entidades.sm.Ingresos"%>
+<%@page import="mvc.modelo.smDaoImp.IngresosDaoImp"%>
+<%@page import="mvc.modelo.smDao.IngresosDao"%>
 <%@page import="mvc.modelo.smDaoImp.EspecialidadEgresoDaoImp"%>
 <%@page import="mvc.controlador.entidades.sm.EspecialidadEgreso"%>
 <%@page import="mvc.modelo.smDao.EspecialidadEgresoDao"%>
@@ -47,11 +52,80 @@
             <div class="table-responsive" style="margin: 0 auto; text-align:left">
             <table id="tablaIngresos" class="table table-bordered table-hover table-striped">
                 <thead>
-                    <tr>
-
+                    <tr>                                                       
+                        <th style='display:none;'>No.</th>
+                        <th >Cédula</th>
+                        <th>Apellidos y Nombres</th>
+                        <th style='display:none;' >idTipoIngregos</th>
+                        <th style='display:none;'>idCaso</th>
+                        <th style='display:none;'>Id. Espegreso</th>
+                        <th style='display:none;'>E. Egreso</th>
+                        <th>F. Ingreso</th>
+                        <th>F. Egreso</th>
+                        <th style='display:none;'>Hora</th>
+                        <th  style='display:none;'>Cond. Egreso</th>
+                        <th>D. Egreso</th>
+                        <th style='display:none;' class='col-lg-1'>S. Egreso</th>
+                        <th style='display:none;' class='col-lg-1'>S. Egreso 2</th>
+                        <th style='display:none;' class='col-lg-1'>C. Externa</th>
+                        <th >Cód.</th>
+                        <th style='display:none;' class='col-lg-1'></th>
+                        <th >Acción.</th>
                     </tr>
                 </thead>
                 <tbody>
+                    <%
+                         IngresosDao ingresos= new IngresosDaoImp();
+                         List<Ingresos> lista= ingresos.listIngresos(); 
+                         String valor="btn-group";
+                         int i=0;
+                         String res="";
+                         String []diagnosticos = new String[5];
+                         for (Ingresos elem : lista)
+                         {
+                             diagnosticos[i]=elem.getDefinitivoEgreso();
+                             if(diagnosticos[i].length()>=15)
+                                 res=diagnosticos[i].substring(0, 15)+"... ";                                 
+                             else
+                             res = diagnosticos[i];
+                             if(i==4)
+                                 valor="btn-group dropup";
+                             %>
+                             <tr>
+                                 <td style='display:none;'><%=elem.getId()%></td>
+                                 <td><%=elem.getUnPaciente().getCedula()%></td>
+                                 <td><%=elem.getUnPaciente().getApellido1()+" "+elem.getUnPaciente().getApellido2()+" "+elem.getUnPaciente().getNombre1()+ ' '+elem.getUnPaciente().getNombre1()%></td>
+                                 <td style='display:none;'><%=elem.getIdTipoIngreso().getId()%></td>
+                                 <td style='display:none;'><%=elem.getIdCaso().getId()%></td>
+                                 <td style='display:none;'><%=elem.getIdEspecialidadEgreso().getId() %></td>
+                                 <td style='display:none;'><%=elem.getIdEspecialidadEgreso().getDescripcion() %></td>
+                                 <td><%=elem.getFechaEntrada() %></td>
+                                 <td><%=elem.getFechaSalida()%></td>
+                                 <td style='display:none;'><%=elem.getHora() %></td>
+                                 <td style='display:none;'><%=elem.getCondicionEgreso()%></td>
+                                 <td class='tooltips' id='tooltipDefinitivoEgreso' data-toggle='tooltip' data-placement='left' title="<%=elem.getDefinitivoEgreso() %>"><%=res%></td>
+                                 <td style='display:none;'><%=elem.getSecundarioEgreso() %></td>
+                                 <td style='display:none;'><%=elem.getSecundarioEgreso2() %></td>
+                                 <td style='display:none;'><%=elem.getCausaExterna()%></td>
+                                 <td><%=elem.getCodigoDiagnosticoDefinitivo() %></td>
+                                 <td style='display:none;'><%=elem.getDefinitivoEgreso() %></td>
+                                 <td >
+                                     <button id='botonEditar' class='btn btn-primary'><span class='glyphicon glyphicon-pencil'></span> </button> 
+                                     <button id='btnEliminar' class='btn btn-danger'><span class='glyphicon glyphicon-trash'></span></a></button>
+                                     <div class="<%=valor%>">
+                                         <button id='btnMedicinas' type='button' class='btn btn-warning dropdown-toggle' data-toggle='dropdown'>Medicinas <span class='caret'></span></button>
+                                         <ul class='dropdown-menu' role='menu'>
+                                             <li id='opAgregarMedicina'><a href='#'>Agregar</a></li>
+                                             <li id='opMantenimientoMedicina'><a href='#'>Editar</a></li>
+                                         </ul>
+                                     </div>
+                                 </td>
+                             </tr>
+                             
+                             
+                             <%
+                         }
+                    %>
 
 
                 </tbody>

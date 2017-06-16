@@ -100,13 +100,13 @@ public class sMedico extends HttpServlet {
         {
            MedicoDao med= new MedicoDaoImp();
            Integer bandera =Integer.valueOf(request.getParameter("bandera"));
-                   String buscar =request.getParameter("buscar");
+           String buscar =request.getParameter("buscar");
            Integer totalMostrar =Integer.valueOf(request.getParameter("totalMostrar"));
           Integer  pagina =Integer.valueOf( request.getParameter("pagina"));
            List<Medico> list= med.list(pagina,totalMostrar,bandera, buscar);  
            ObjectMapper OBJECT_MAPPER = new ObjectMapper();
-                 String json = OBJECT_MAPPER.writeValueAsString(list);
-                 response.getWriter().write(json);
+           String json = OBJECT_MAPPER.writeValueAsString(list);
+           response.getWriter().write(json);
            /*for(Medico elem: list)
            {
             out.println("<tr id='"+elem.getId()+"' class='active'>");

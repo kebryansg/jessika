@@ -12,6 +12,7 @@ import java.util.Date;
  * @author Deivi
  */
 public interface ExcelDao {
-    public boolean generarExcelIngresos(Date fecha);
-    
+    public String generarExcelIngresos(Date fecha, String path, String nombreEstablecimiento);
+    public String generarExcelCamas(Date fecha,String path);
+    public String generarExcelCamasIndividual(Date fecha,String path);
 }

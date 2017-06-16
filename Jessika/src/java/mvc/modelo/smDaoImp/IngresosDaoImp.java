@@ -32,6 +32,7 @@ import mvc.modelo.smDao.IngresosDao;
 public class IngresosDaoImp implements IngresosDao {
 C_BD conn;
 
+
     @Override
     public List<Ingresos> listIngresos(int numeroPaginas, int totalRegistro, Date fechaIngreso, Date fechaSalida) {
          List<Ingresos> list = new ArrayList<>();
@@ -211,9 +212,7 @@ C_BD conn;
                 cStmt.setInt(1, value.getId());
                 cStmt.setInt(15, value.getIdCaso().getId());
             }
-                
-                
-                cStmt.setDate(2,  new java.sql.Date(value.getFechaEntrada().getTime()));
+            cStmt.setDate(2,  new java.sql.Date(value.getFechaEntrada().getTime()));
                 cStmt.setInt(3, value.getIdTipoIngreso().getId());
                 cStmt.setInt(4,value.getIdEspecialidadEgreso().getId());
                 cStmt.setDate(5, new java.sql.Date(value.getFechaEntrada().getTime()));
@@ -336,6 +335,60 @@ C_BD conn;
 
             return list;
     }
+
+    @Override
+    public List<Ingresos> listIngresos() {
+        List<Ingresos> list = new ArrayList<>();
+
+              try {  
+                  
+                this.conn= con_db.open(con_db.MSSQL_SM); 
+                ResultSet rs = this.conn.query("SELECT TOP 5 BD_SM.dbo.ingresos.id,  BD_IP.dbo.paciente.cedula, BD_IP.dbo.paciente.nombre1, BD_IP.dbo.paciente.nombre2,\n" +
+"			BD_IP.dbo.paciente.apellido1, BD_IP.dbo.paciente.apellido2,  BD_SM.dbo.ingresos.idTipoIngreso,\n" +
+"			BD_SM.dbo.ingresos.idCaso,BD_SM.dbo.ingresos.idEspecialidadEgreso, BD_SM.dbo.especialidadEgreso.descripcion, BD_SM.dbo.ingresos.fechaEntrada, BD_SM.dbo.ingresos.fechaSalida,\n" +
+"			BD_SM.dbo.ingresos.hora,BD_SM.dbo.ingresos.sos, BD_SM.dbo.ingresos.condicionEgreso,BD_SM.dbo.ingresos.definitivoEgreso,BD_SM.dbo.ingresos.secundarioEgreso,\n" +
+"			BD_SM.dbo.ingresos.secundarioEgreso2, BD_SM.dbo.ingresos.causaExterna,BD_SM.dbo.ingresos.codigoDiagnosticoDefinitivo\n" +
+"			from BD_IP.dbo.paciente inner join BD_SM.dbo.historialClinico on BD_IP.dbo.paciente.id= BD_SM.dbo.historialClinico.idPaciente inner join\n" +
+"			BD_SM.dbo.caso on BD_SM.dbo.caso.idHistorialClinico= BD_SM.dbo.historialClinico.id inner join BD_SM.dbo.ingresos on\n" +
+"			BD_SM.dbo.caso.id= BD_SM.dbo.ingresos.idCaso INNER JOIN BD_SM.dbo.especialidadEgreso on BD_SM.dbo.especialidadEgreso.id= BD_SM.dbo.ingresos.idEspecialidadEgreso\n" +
+"			where BD_SM.dbo.ingresos.estado=1 order by id desc");
+                while (rs.next()) {
+                    Ingresos value = new Ingresos();
+                value.setId(rs.getInt("id"));
+                Paciente unPaciente= new Paciente(rs.getString("cedula"),rs.getString("nombre1"),rs.getString("nombre2"),rs.getString("apellido1"),rs.getString("apellido2"));
+                value.setUnPaciente(unPaciente);
+                value.setIdTipoIngreso(new TipoIngreso(rs.getInt("idTipoIngreso")));
+                value.setIdCaso(new Caso(rs.getInt("idCaso")));
+                value.setIdEspecialidadEgreso(new EspecialidadEgreso(rs.getInt("idEspecialidadEgreso"),rs.getString("descripcion")));
+                value.setFechaEntrada(rs.getDate("fechaEntrada"));
+                value.setFechaSalida(rs.getDate("fechaSalida"));
+                value.setHora(rs.getTime("hora"));
+                //value.setCondicionEgreso(rs.getObject("condicionEgreso", Types.BIT));
+                value.setCondicionEgreso(rs.getInt("condicionEgreso"));
+                value.setDefinitivoEgreso(rs.getString("definitivoEgreso"));
+                value.setSecundarioEgreso(rs.getString("secundarioEgreso"));
+                value.setSecundarioEgreso2(rs.getString("secundarioEgreso2"));
+                value.setCausaExterna(rs.getString("causaExterna"));
+                value.setCodigoDiagnosticoDefinitivo(rs.getString("codigoDiagnosticoDefinitivo"));
+                
+                
+                /*.setIdPaciente(rs.getInt("idPaciente"));
+                value.setNombre1(rs.getString("nombre1"));
+                value.setNombre2(rs.getString("nombre2"));
+                value.setApellido1(rs.getString("apellido1"));
+                value.setApellido2(rs.getString("apellido2"));               
+                value.setCedula(rs.getString("cedula"));   */            
+                list.add(value);
+                }
+            } catch (SQLException ex) {
+                System.out.println(ex.getMessage());
+            } finally {
+                //this.conn.close();
+            }
+
+            return list;
+    }
+    
     
     
     
