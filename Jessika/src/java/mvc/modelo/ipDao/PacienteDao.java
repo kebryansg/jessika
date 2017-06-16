@@ -18,6 +18,7 @@ public interface PacienteDao {
     public List<Paciente> list_Filter(String value,int pag,int top);
     public list_count list_count_Filter(String value,int pag,int top);
     public Paciente edit(int id);
+    public Paciente edit_HC(int hc);
     public boolean save(Paciente value);
     public boolean delete(int id);
 }

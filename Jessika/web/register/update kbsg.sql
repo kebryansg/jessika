@@ -295,3 +295,26 @@ BEGIN
 	where (del.descripcion like '%'+ @filtro +'%') and ((@categoria = 0) or (el.id = @categoria))
 	order by del.id OFFSET @pag ROWS FETCH NEXT @tops ROWS ONLY;
 END
+
+--15/Junio
+CREATE PROCEDURE getConsulta
+@id INT
+AS BEGIN
+	select esp.descripcion especialidad,tc.descripcion tipoConsulta,cs.idHistorialClinico hc, con.* from dbo.consulta con
+	inner join dbo.medico_especialidad m_e on m_e.id = con.idMedico_Especialidad
+	INNER join dbo.especialidad esp on esp.id = m_e.idEspecialidad
+	inner JOIN dbo.tipoConsulta tc on tc.id = con.idTipoConsulta
+	inner join dbo.caso cs on cs.id = con.idCaso
+	where con.id = @id 
+END
+CREATE PROCEDURE getEstudiosImagen
+@id INT
+AS BEGIN
+	SELECT t_ei.id id_te,t_ei.descripcion descripcion_te, ei.id id_ei ,ei.descripcion descripcion_ei, 
+	d_ei.id id_dei, d_ei.descripcion descripcion_dei,c_ei.* from dbo.consultaEstudiosImagen c_ei
+	inner join dbo.detallesEstudiosImg d_ei on c_ei.idDetalleEstudiosImagen = d_ei.id
+	inner join dbo.estudioImagen ei on ei.id = d_ei.idEstudiosImg
+	inner join dbo.tipoEstudioImg t_ei on  t_ei.id = ei.idTipoEstudioImg
+	where c_ei.idConsulta = @id
+END 
+	

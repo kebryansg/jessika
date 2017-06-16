@@ -14,6 +14,7 @@ import mvc.controlador.entidades.sm.TipoConsulta;
  * @author kebryan
  */
 public interface TipoConsultaDao {
+    public TipoConsulta edit(int id);
     public List<TipoConsulta> list();
     public List<Metodos> list_Metodos(int idTipoConsulta);
 }

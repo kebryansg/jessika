@@ -73,13 +73,15 @@ public class ConsultaEstudiosLabsDaoImp implements ConsultaEstudiosLabsDao {
     @Override
     public List<ConsultaEstudiosLabs> list(int idConsulta) {
         this.conn = con_db.open(con_db.MSSQL_SM);
-        ResultSet rs = this.conn.query("select coEst.id, coEst.idConsulta,coEst.idDetalleEstudiosLabs,coEst.valores,detEst.descripcion from consultaEstudiosLabs coEst inner join detalleEstudiosLabs detEst on coEst.idDetalleEstudiosLabs = detEst.id where coEst.idConsulta = '" + idConsulta + "'");
+        ResultSet rs = this.conn.query("select el.id idEstudios,el.descripcion tipoEstudios, coEst.id, coEst.idConsulta,coEst.idDetalleEstudiosLabs,coEst.valores,detEst.descripcion from consultaEstudiosLabs coEst inner join detalleEstudiosLabs detEst on coEst.idDetalleEstudiosLabs = detEst.id inner join dbo.estudiosLaboratorio el on el.id = detEst.idEstudiosLab where coEst.idConsulta = '" + idConsulta + "'");
         List<ConsultaEstudiosLabs> list = new ArrayList<>();
         try {
             while (rs.next()) {
                 ConsultaEstudiosLabs value = new ConsultaEstudiosLabs(rs.getInt("id"));
                 value.setIdConsulta(new Consulta(rs.getInt("idConsulta")));
-                value.setIdDetalleEstudiosLabs(new DetalleEstudiosLabs(rs.getInt("idDetalleEstudiosLabs"), rs.getString("descripcion")));
+                DetalleEstudiosLabs det =new DetalleEstudiosLabs(rs.getInt("idDetalleEstudiosLabs"), rs.getString("descripcion").toUpperCase());
+                det.setIdEstudiosLab(new EstudiosLaboratorio(rs.getInt("idEstudios"), rs.getString("tipoEstudios").toUpperCase()));
+                value.setIdDetalleEstudiosLabs(det);
                 value.setValores(rs.getString("valores"));
                 list.add(value);
             }

@@ -15,6 +15,7 @@ function validarText(value) {
 }
 
 function validarSelect(value) {
+    var bandera = true;
     var valor = "#" + $(value).attr("id") + 'help';
     $(valor).remove();
     if ($(value).val() === "0" || $(value).val() === null) {

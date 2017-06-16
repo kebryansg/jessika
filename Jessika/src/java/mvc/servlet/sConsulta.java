@@ -24,14 +24,18 @@ import mvc.controlador.entidades.sm.HistorialClinico;
 import mvc.controlador.entidades.sm.MedicoEspecialidad;
 import mvc.controlador.entidades.sm.Metodos;
 import mvc.controlador.entidades.sm.SignosVitales;
+import mvc.controlador.entidades.sm.TipoConsulta;
 import mvc.modelo.ipDaoImp.PacienteDaoImp;
 import mvc.modelo.smDaoImp.CasoDaoImp;
 import mvc.modelo.smDaoImp.CausaDaoImp;
 import mvc.modelo.smDaoImp.ConsultaDaoImp;
 import mvc.modelo.smDaoImp.ConsultaEstudiosImagenDaoImp;
 import mvc.modelo.smDaoImp.ConsultaEstudiosLabsDaoImp;
+import mvc.modelo.smDaoImp.EstudiosLaboratorioDaoImp;
 import mvc.modelo.smDaoImp.HistorialClinicoDaoImp;
+import mvc.modelo.smDaoImp.MetodosDaoImp;
 import mvc.modelo.smDaoImp.SignosVitalesDaoImp;
+import mvc.modelo.smDaoImp.TipoConsultaDaoImp;
 import test.test;
 
 public class sConsulta extends HttpServlet {
@@ -98,6 +102,18 @@ public class sConsulta extends HttpServlet {
         String op = request.getParameter("op");
         List<String> resultList = new ArrayList();
         switch (op) {
+            case "edit":
+                Consulta value = new ConsultaDaoImp().edit(Integer.parseInt(request.getParameter("id")));
+                Paciente p = new PacienteDaoImp().edit_HC(value.getIdCaso().getIdHistorialClinico().getId());
+                String tipoConsulta = new TipoConsultaDaoImp().edit(value.getIdTipoConsulta()).getDescripcion();
+                String metodo_causa = (tipoConsulta.equals("1")) ? new CausaDaoImp().edit(value.getIdMetodo()).getDescripcion() : new MetodosDaoImp().edit_detMetodos(value.getIdMetodo()).getDescripcion();
+
+                SignosVitales s_v = new SignosVitalesDaoImp().editar(value.getId());
+
+                out.print("{ \"esti\": " + gson.toJson(new ConsultaEstudiosImagenDaoImp().list(value.getId())) + " ,  \"estl\" : " + gson.toJson(new ConsultaEstudiosLabsDaoImp().list(value.getId())) + " , \"sv\": " + gson.toJson(s_v) + ",  \"consulta\": " + gson.toJson(value) + ", \"paciente\" : \"" + p.getNombres() + "\", \"sexoP\" : \"" + (p.getSexo() ? "H" : "M") + "\" ,\"tipoConsulta\" : \"" + tipoConsulta + "\",\"metodo_causa\" : \"" + metodo_causa + "\"  }");
+                out.flush();
+                out.close();
+                break;
             case "detCaso":
                 List<Consulta> list_detCaso = new CasoDaoImp().listDetConsulta(Integer.parseInt(request.getParameter("caso")));
 
@@ -108,7 +124,8 @@ public class sConsulta extends HttpServlet {
                             + "\"fecha\" : \"" + consulta.getFecha() + "\","
                             + "\"tipo\" : \"" + consulta.getSintoma() + "\","
                             + "\"motivo\" : \"" + consulta.getMotivo() + "\","
-                            + "\"especialidad\" : \"" + consulta.getPrescripcion() + "\""
+                            + "\"especialidad\" : \"" + consulta.getPrescripcion() + "\","
+                            //+ "\"view\" : \"<button class='btn'> > </button>\""
                             + "}");
 
                 }

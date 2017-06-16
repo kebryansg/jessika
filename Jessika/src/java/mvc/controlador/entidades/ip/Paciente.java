@@ -329,6 +329,11 @@ public class Paciente implements Serializable {
     public void setParentezco(String parentezco) {
         this.parentezco = parentezco;
     }
+    
+    
+    public String getNombres(){
+        return (this.apellido1 +" "+ this.apellido2 +" "+ this.nombre1 +" "+ this.nombre2).toUpperCase();
+    }
 
     @Override
     public int hashCode() {

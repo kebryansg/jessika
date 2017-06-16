@@ -20,7 +20,7 @@ public class CausaDaoImp implements CausaDao {
         this.conn = con_db.open(con_db.MSSQL_SM);
         try {
             if (value.getId() == 0) {
-                CallableStatement call = this.conn.getConexion().prepareCall("{call dbo.saveCausa(?, ?)}") ;
+                CallableStatement call = this.conn.getConexion().prepareCall("{call dbo.saveCausa(?, ?)}");
                 call.setString(1, value.getDescripcion());
                 call.registerOutParameter("id", Types.INTEGER);
                 call.execute();
@@ -58,6 +58,25 @@ public class CausaDaoImp implements CausaDao {
             this.conn.close();
         }
         return list;
+    }
+
+    @Override
+    public Causa edit(int id) {
+        this.conn = con_db.open(con_db.MSSQL_SM);
+        String sql = ("SELECT * FROM CAUSA WHERE id = '" + id + "'");
+        Causa causa = new Causa();
+        ResultSet rs = this.conn.query(sql);
+        try {
+            while (rs.next()) {
+                causa.setId(rs.getInt("id"));
+                causa.setDescripcion(rs.getString("descripcion").toUpperCase());
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        } finally {
+            this.conn.close();
+        }
+        return causa;
     }
 
 }

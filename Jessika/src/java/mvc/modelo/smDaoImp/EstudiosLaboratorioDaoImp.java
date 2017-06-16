@@ -83,25 +83,25 @@ public class EstudiosLaboratorioDaoImp implements EstudiosLaboratorioDao {
             System.out.println(ex.getMessage());
         }
         return l;
-        /*String paginacion = (top != -1) ? "OFFSET " + pag + " ROWS FETCH NEXT " + top + " ROWS ONLY;" : "";
-        String categoriaSQL = (categoria != 0) ? ("and el.id = " + categoria) : "";
-        System.out.println("select del.id del_id, del.descripcion del_descripcion, el.id el_id, el.descripcion el_descripcion from dbo.estudiosLaboratorio el inner join dbo.detalleEstudiosLabs del on el.id = del.idEstudiosLab where (del.descripcion like '%" + filter + "%')  " + categoriaSQL + " order by del.id " + paginacion);
-        ResultSet rs = this.conn.query("select del.id del_id, del.descripcion del_descripcion, el.id el_id, el.descripcion el_descripcion from dbo.estudiosLaboratorio el inner join dbo.detalleEstudiosLabs del on el.id = del.idEstudiosLab where (del.descripcion like '%" + filter + "%')  " + categoriaSQL + " order by del.id " + paginacion);
+    }
+
+    @Override
+    public List<EstudiosLaboratorio> list(int idConsulta) {
+        this.conn = con_db.open(con_db.MSSQL_SM);
+        List<EstudiosLaboratorio> list = new ArrayList<>();
+        ResultSet rs = this.conn.query("select * from dbo.estudiosLaboratorio");
         try {
             while (rs.next()) {
-                l.setTotal(rs.getInt("registros"));
-                DetalleEstudiosLabs detEst = new DetalleEstudiosLabs(rs.getInt("del_id"));
-                detEst.setIdEstudiosLab(new EstudiosLaboratorio(rs.getInt("el_id"), rs.getNString("el_descripcion")));
-                detEst.setDescripcion(rs.getNString("del_descripcion").toUpperCase());
-                list.add(detEst);
+                EstudiosLaboratorio value = new EstudiosLaboratorio(rs.getInt("id"));
+                value.setDescripcion(rs.getNString("descripcion"));
+                list.add(value);
             }
-            l.setList(list);
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         } finally {
             this.conn.close();
-        }*/
-        
+        }
+        return list;
     }
 
 }

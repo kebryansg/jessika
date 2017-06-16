@@ -40,6 +40,10 @@ public class EstudioImagen implements Serializable {
     public EstudioImagen(Integer id) {
         this.id = id;
     }
+    public EstudioImagen(Integer id,String descripcion) {
+        this.id = id;
+        this.descripcion = descripcion;
+    }
 
     public Integer getId() {
         return id;

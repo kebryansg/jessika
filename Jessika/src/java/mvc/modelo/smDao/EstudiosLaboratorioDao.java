@@ -8,6 +8,7 @@ import test.list_count;
 
 public interface EstudiosLaboratorioDao {
     public List<EstudiosLaboratorio> list();
+    public List<EstudiosLaboratorio> list(int idConsulta);
     public list_count list_Det(int value,String filter, int pag, int top);
     public EstudiosLaboratorio edit(int value);
 }

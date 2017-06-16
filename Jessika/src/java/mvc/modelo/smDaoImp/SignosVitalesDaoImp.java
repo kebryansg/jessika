@@ -64,7 +64,7 @@ public class SignosVitalesDaoImp implements SignosVitalesDao{
             conn.execute(sql);
             System.out.println(sql);
             return true;
-        } catch (Exception ex) {
+        } catch (SQLException ex) {
             System.out.println(ex.getMessage());
             return false;
         } finally {
@@ -75,19 +75,19 @@ public class SignosVitalesDaoImp implements SignosVitalesDao{
     @Override
     public SignosVitales editar(int idConsulta) {
         this.conn = con_db.open(con_db.MSSQL_SM);
-        ResultSet rs = this.conn.query("select * from signosVitales inner join dbo.consulta on consulta.idSignosvitales = signosVitales.id where consulta.id = '" + idConsulta + "'");
+        ResultSet rs = this.conn.query("select signosVitales.* from signosVitales inner join dbo.consulta on consulta.idSignosvitales = signosVitales.id where consulta.id = '" + idConsulta + "'");
         SignosVitales value = new SignosVitales();
         try {
             while (rs.next()) {
                 value.setId(rs.getInt("id"));
-                value.setPeso(rs.getNString("peso"));
-                value.setTalla(rs.getNString("talla"));
-                value.setPresion(rs.getNString("presion"));
+                value.setPeso(rs.getString("peso"));
+                value.setTalla(rs.getString("talla"));
+                value.setPresion(rs.getString("presion"));
                 value.setPeriodo(rs.getString("periodo"));
-                value.setTemperatura(rs.getNString("temperatura"));
+                value.setTemperatura(rs.getString("temperatura"));
                 value.setFum(rs.getDate("fum"));
                 value.setFuc(rs.getDate("fuc"));
-                value.setTemperatura(rs.getNString("frecuenciaC"));
+                value.setTemperatura(rs.getString("frecuenciaC"));
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());

@@ -8,6 +8,7 @@ import mvc.controlador.C_BD;
 import mvc.controlador.con_db;
 import mvc.controlador.entidades.sm.Caso;
 import mvc.controlador.entidades.sm.Consulta;
+import mvc.controlador.entidades.sm.Especialidad;
 import mvc.controlador.entidades.sm.MedicoEspecialidad;
 import mvc.controlador.entidades.sm.Metodos;
 import mvc.controlador.entidades.sm.SignosVitales;
@@ -61,18 +62,26 @@ public class ConsultaDaoImp implements ConsultaDao {
     @Override
     public Consulta edit(int id) {
         this.conn = con_db.open(con_db.MSSQL_SM);
-        ResultSet rs = this.conn.query("select * from consulta where id = '" + id + "'");
+        ResultSet rs = null;
         Consulta value = new Consulta();
         try {
+            CallableStatement call = this.conn.getConexion().prepareCall("{call dbo.getConsulta(?)}");
+            call.setInt("id", id);
+            call.execute();
+            rs = call.getResultSet();
             while (rs.next()) {
                 value.setId(rs.getInt("id"));
                 value.setFecha(rs.getDate("fecha"));
-                value.setMotivo(rs.getNString("motivo"));
-                value.setDiagnostico(rs.getNString("diagnostico"));
-                value.setPrescripcion(rs.getNString("prescripcion"));
-                value.setSintoma(rs.getNString("sintomas"));
-                value.setIdCaso(new Caso(rs.getInt("idCaso")));
-                value.setIdMedicoEspecialidad(new MedicoEspecialidad(rs.getInt("idMedico_Especialidad")));
+                value.setMotivo(rs.getString("motivo"));
+                value.setDiagnostico(rs.getString("diagnostico"));
+                value.setPrescripcion(rs.getString("prescripcion"));
+                value.setSintoma(rs.getString("sintomas"));
+                value.setIdCaso(new Caso(rs.getInt("idCaso"),rs.getInt("hc")));
+                
+                MedicoEspecialidad m_e = new MedicoEspecialidad(rs.getInt("idMedico_Especialidad"));
+                m_e.setIdEspecialidad(new Especialidad(0, rs.getString("especialidad")));
+                value.setIdMedicoEspecialidad(m_e);
+                
                 value.setIdSignosvitales(new SignosVitales(rs.getInt("idSignosvitales")));
                 value.setIdMetodo(rs.getInt("idMetodo"));
             }

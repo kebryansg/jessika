@@ -20,7 +20,7 @@
                         </div>
                         <div class="form-group">
                             <label for="casoId" class="control-label">Paciente:</label>
-                            <input type="text" class="form-control" style="width: 300px;" data-hc="1015" readonly id="PacienteId">
+                            <input type="text" class="form-control" style="width: 300px;" data-hc="" readonly id="PacienteId">
                         </div>
                     </div>
                 </div>

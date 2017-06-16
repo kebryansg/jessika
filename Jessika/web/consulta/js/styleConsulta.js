@@ -181,7 +181,7 @@ function validarConsulta() {
     });
 
 
-    return $("#consulta_div .help-block").length === 0;
+    return $("#consulta_div .help-block").not("[data-exonerado]").length === 0;
 }
 function obtenerSignosVitales() {
     sv = {

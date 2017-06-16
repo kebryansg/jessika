@@ -213,7 +213,7 @@
             <!-- /#wrapper -->
 
             <script type="text/javascript">
-                $("#contenido").load("consulta/estudiosImg.jsp");
+                $("#contenido").load("consulta/viewConsulta.jsp");
             </script>
             <script type="text/javascript" src="usuario/login.js"></script>
             <div class="modal fade" id="modalConfiguracion" role="dialog">

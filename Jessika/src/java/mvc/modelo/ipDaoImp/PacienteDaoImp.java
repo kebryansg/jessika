@@ -260,4 +260,46 @@ public class PacienteDaoImp implements PacienteDao {
         return l;
     }
 
+    @Override
+    public Paciente edit_HC(int hc) {
+        this.conn = con_db.open(con_db.MSSQL_IP);
+        ResultSet rs = this.conn.query("select p.* from BD_IP.dbo.paciente p\n" +
+                "inner join BD_SM.dbo.historialClinico hc on hc.idPaciente = p.id\n" +
+                "where hc.id = '"+ hc +"'");
+        Paciente value = new Paciente();
+        try {
+            while (rs.next()) {
+                value.setCedula(rs.getNString("cedula"));
+                value.setNombre1(rs.getNString("nombre1"));
+                value.setNombre2(rs.getNString("nombre2"));
+                value.setApellido1(rs.getNString("apellido1"));
+                value.setApellido2(rs.getNString("apellido2"));
+                value.setCiudad(rs.getNString("ciudad"));
+                value.setDiscapacidad(rs.getInt("discapacidad"));
+                value.setDomicilio(rs.getNString("domicilio"));
+                value.setEmail(rs.getNString("email"));
+                value.setEstadoCivil(rs.getString("estadoCivil"));
+                value.setEtnia(rs.getInt("etnia"));
+                value.setFechaNacimiento(rs.getDate("fechaNacimiento"));
+                value.setId(rs.getInt("id"));
+                value.setIdParroquia(new Parroquia(rs.getInt("idParroquia")));
+                value.setImagen(rs.getNString("imagen"));
+                value.setLugarNacimiento(rs.getNString("lugarNacimiento"));
+                value.setNacionalidad(rs.getString("nacionalidad"));
+                value.setPaisNacimiento(rs.getNString("paisNacimiento"));
+                value.setSexo(rs.getBoolean("sexo"));
+                value.setTelefonoDomicilio(rs.getNString("telefonoDomicilio"));
+                value.setTelefonoOficina(rs.getNString("telefonoOficina"));
+                value.setNombreContacto(rs.getNString("nombreContacto"));
+                value.setMovilContacto(rs.getString("movilContacto"));
+                value.setParentezco(rs.getString("parentezco"));
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        } finally {
+            this.conn.close();
+        }
+        return value;
+    }
+
 }
