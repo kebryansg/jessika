@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import mvc.controlador.C_BD;
 import mvc.controlador.con_db;
@@ -116,5 +117,4 @@ public class CasoDaoImp implements CasoDao {
         }
         return list;
     }
-
 }

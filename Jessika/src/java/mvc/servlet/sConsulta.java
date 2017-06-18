@@ -36,6 +36,7 @@ import mvc.modelo.smDaoImp.HistorialClinicoDaoImp;
 import mvc.modelo.smDaoImp.MetodosDaoImp;
 import mvc.modelo.smDaoImp.SignosVitalesDaoImp;
 import mvc.modelo.smDaoImp.TipoConsultaDaoImp;
+import test.list_count;
 import test.test;
 
 public class sConsulta extends HttpServlet {
@@ -100,8 +101,31 @@ public class sConsulta extends HttpServlet {
         Gson gson = new GsonBuilder().setDateFormat(FORMATO_FECHA).create();
         String result = "";
         String op = request.getParameter("op");
+        list_count l = new list_count();
         List<String> resultList = new ArrayList();
         switch (op) {
+            case "adminConsultas":
+                int tops = Integer.parseInt(request.getParameter("top")),
+                 pag = Integer.parseInt(request.getParameter("pag")),
+                 idHC = Integer.parseInt(request.getParameter("idHC"));
+
+                l = new ConsultaDaoImp().listConsultas(Integer.parseInt(request.getParameter("tiempo")), Integer.parseInt(request.getParameter("opTiempo")), idHC, tops, pag, request.getParameter("filter"));
+                System.out.println(l.getList().size());
+                for (Object object : l.getList()) {
+                    Consulta consulta = (Consulta) object;
+                    resultList.add("{"
+                            + "\"id\" : \"" + consulta.getId() + "\","
+                            + "\"fecha\" : \"" + consulta.getFecha() + "\","
+                            + "\"paciente\" : \"" + consulta.getIdCaso().getId() + "\","
+                            + "\"tipoConsulta\" : \"" + consulta.getSintoma() + "\","
+                            + "\"causa_motivo\" : \"" + consulta.getMotivo() + "\","
+                            + "\"especialidad\" : \"" + consulta.getPrescripcion() + "\""
+                            + "}");
+                }
+                out.print("{\"count\": \"" + Math.ceil(l.getTotal() / tops) + "\" , \"list\": [" + String.join(",", resultList) + "] }");
+                out.flush();
+                out.close();
+                break;
             case "edit":
                 Consulta value = new ConsultaDaoImp().edit(Integer.parseInt(request.getParameter("id")));
                 Paciente p = new PacienteDaoImp().edit_HC(value.getIdCaso().getIdHistorialClinico().getId());
