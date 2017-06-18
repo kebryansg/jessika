@@ -116,7 +116,6 @@ public class sConsulta extends HttpServlet {
                 break;
             case "detCaso":
                 List<Consulta> list_detCaso = new CasoDaoImp().listDetConsulta(Integer.parseInt(request.getParameter("caso")));
-
                 for (Consulta consulta : list_detCaso) {
                     resultList.add("{"
                             + "\"id\" : \"" + consulta.getId() + "\","
@@ -124,8 +123,7 @@ public class sConsulta extends HttpServlet {
                             + "\"fecha\" : \"" + consulta.getFecha() + "\","
                             + "\"tipo\" : \"" + consulta.getSintoma() + "\","
                             + "\"motivo\" : \"" + consulta.getMotivo() + "\","
-                            + "\"especialidad\" : \"" + consulta.getPrescripcion() + "\","
-                            //+ "\"view\" : \"<button class='btn'> > </button>\""
+                            + "\"especialidad\" : \"" + consulta.getPrescripcion() + "\""
                             + "}");
 
                 }
@@ -147,9 +145,10 @@ public class sConsulta extends HttpServlet {
                 List<Consulta> list = new CasoDaoImp().listConsulta(Integer.parseInt(request.getParameter("idHc")), "", "", request.getParameter("filter"), 0, 5);
                 for (Consulta con : list) {
                     resultList.add("{"
+                            + "\"caso\": \"" + con.getIdCaso().getId() + "\","
                             + "\"fecha\": \"" + test.SQLSave(con.getFecha()) + "\","
-                            + "\"motivo\": \"" + con.getMotivo() + "\","
-                            + "\"accion\": \"<button name='addHistorialCaso' data-id='" + con.getIdCaso().getId() + "' class='btn btn-info' data-toggle='tooltip' data-placement='top' title='Agregar al caso..!'> <i class='glyphicon glyphicon-plus'></i> </button> <button name='viewHistorialCaso' data-id='" + con.getIdCaso().getId() + "' data-toggle='modal' data-target='#viewHistorialCaso' class='btn btn-info' data-toggle='tooltip' data-placement='top' title='Historial caso..!' > <i class='glyphicon glyphicon-align-justify'></i> </button>\""
+                            + "\"motivo\": \"" + con.getMotivo() + "\""
+                            //+ "\"accion\": \"<button name='addHistorialCaso' data-id='" + con.getIdCaso().getId() + "' class='btn btn-info' data-toggle='tooltip' data-placement='top' title='Agregar al caso..!'> <i class='glyphicon glyphicon-plus'></i> </button> <button name='viewHistorialCaso' data-id='" + con.getIdCaso().getId() + "' data-toggle='modal' data-target='#viewHistorialCaso' class='btn btn-info' data-toggle='tooltip' data-placement='top' title='Historial caso..!' > <i class='glyphicon glyphicon-align-justify'></i> </button>\""
                             + "}");
                 }
                 out.print("[" + String.join(",", resultList) + "]");

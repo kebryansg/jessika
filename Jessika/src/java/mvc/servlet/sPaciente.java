@@ -132,15 +132,16 @@ public class sPaciente extends HttpServlet {
                     Paciente paciente1 = (Paciente) object;
 
                     resultList.add("{"
-                            + "\"hc\":  \"" + paciente1.getHistoriaClinica() + "\""
+                            + "\"id\":  \"" + paciente1.getId() + "\""
+                            + ",\"hc\":  \"" + paciente1.getHistoriaClinica() + "\""
                             + ",\"cedula\": \"" + paciente1.getCedula() + "\""
                             + ",\"nombres\": \"" + (paciente1.getApellido1() + " " + paciente1.getApellido2() + " " + paciente1.getNombre1() + " " + paciente1.getNombre2()).toUpperCase() + "\""
                             + ",\"ciudad\": \"" + paciente1.getCiudad() + "\""
                             + ",\"domicilio\": \"" + paciente1.getDomicilio() + "\""
                             + ",\"sexo\": \"" + ((paciente1.getSexo()) ? "1" : "0") + "\""
-                            + ",\"accion\": \"<button name='editPaciente' data-id='" + paciente1.getId() + "'  style='margin-right: 2px;' class='btn btn-primary'><span class='glyphicon glyphicon-pencil'></span> </button>"
+                            /*+ ",\"accion\": \"<button name='editPaciente' data-id='" + paciente1.getId() + "'  style='margin-right: 2px;' class='btn btn-primary'><span class='glyphicon glyphicon-pencil'></span> </button>"
                             + "<button name='deletPaciente' data-id='" + paciente1.getId() + "' class='btn btn-danger'><span class='glyphicon glyphicon-trash'></span> </button>\""
-                            + ",\"seleccionar\": \"<button name='SeleccionarPaciente' data-dismiss='modal' class='btn btn-info'>Seleccionar</button>\""
+                            + ",\"seleccionar\": \"<button name='SeleccionarPaciente' data-dismiss='modal' class='btn btn-info'>Seleccionar</button>\""*/
                             + "}");
                 }
 

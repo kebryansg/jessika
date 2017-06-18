@@ -37,6 +37,9 @@
         <script src="resources/js/jquery.min.js" type="text/javascript" ></script>
         <script src="resources/bootstrap/js/bootstrap.min.js" type="text/javascript"  ></script>
         <script src="resources/bootstrap/table/bootstrap-table.min.js" type="text/javascript"></script>
+        <script src="resources/bootstrap/table/bootstrap-table-contextmenu.js" type="text/javascript"></script>
+        <script src="resources/bootstrap/table/locale/bootstrap-table-es-ES.min.js" type="text/javascript"></script>
+        
         <!--    desde aqui mis links -->
 
 
@@ -280,7 +283,7 @@
             <!-- /#wrapper -->
 
             <script type="text/javascript">
-                $("#contenido").load("consulta/viewConsulta.jsp");
+                $("#contenido").load("consulta/listConsultas.jsp");
             </script>
             <script type="text/javascript" src="usuario/login.js"></script>
             <div class="modal fade" id="modalConfiguracion" role="dialog">

@@ -60,25 +60,26 @@
         </div>
     </div>
     <br>
+    <!-- context menu -->
+    <ul id="tbHc-context-menu" class="dropdown-menu" >
+        <li data-item="new"><a><i class="fa fa-plus fa-fw" aria-hidden="true"></i>&nbsp; Nuevo Caso</a></li>
+        <li data-item="view"><a><i class="fa fa-table fa-fw" aria-hidden="true"></i>&nbsp; Detalle del caso</a></li>
+    </ul>
     <div class="row">
         <div class="col-md-12">
             <div class="table-responsive">
                 <table data-toggle="table" data-height="300" id="tbHC" >
                     <thead>
                         <tr>
+                            <th data-field="caso">ID</th>
                             <th data-field="fecha">Fecha</th>
                             <th data-field="motivo">Motivo</th>
-                            <th data-field="accion" data-align="center">Accion</th>
                         </tr>
-
                     </thead>
 
                 </table>
             </div>
         </div>
-    </div>
-    <div class="row">
-
     </div>
 </div>
 
@@ -121,6 +122,17 @@
 </div>
 <!--<script src="resources/js/configuracionInicial.js" type="text/javascript"></script>-->
 <script src="consulta/js/style_ListHistorialC.js" type="text/javascript"></script>
+
 <script type="text/javascript">
-    $("tbHC").bootstrapTable();
+
+    /*$('#grid').bootstrapTable({
+     contextMenu: '#context-menu',
+     onContextMenuItem: function(row, $el){
+     if($el.data("item") == "edit"){
+     alert(row.itemid);
+     }
+     }
+     });*/
+
+    
 </script>

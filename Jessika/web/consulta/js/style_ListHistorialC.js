@@ -1,9 +1,25 @@
+$("#viewHistorialCaso table").bootstrapTable();
+$("#tbHC").bootstrapTable({
+    contextMenu: '#tbHc-context-menu',
+    onContextMenuItem: function (row, $el) {
+        switch ($el.data("item")) {
+            case "new":
+                //alert("new " + row.caso);
+                addHistorialCaso(row.caso);
+                break;
+            case "view":
+                viewHistorialCaso(row.caso);
+                break;
+        }
+    }
+});
+
 $.ajaxSetup({
     cache: true
 });
 
 function obtList() {
-    
+
     $.ajax({
         url: "sConsulta",
         data: {
@@ -16,30 +32,44 @@ function obtList() {
         type: 'POST',
         async: false,
         success: function (data) {
-            $("#tbHC").bootstrapTable("load",data);
+            $("#tbHC").bootstrapTable("load", data);
             $('#tbHC').bootstrapTable('resetView');
         }
     });
 }
+function viewHistorialCaso(idCaso) {
+    $.ajax({
+        url: "sConsulta",
+        type: 'POST',
+        dataType: 'json',
+        async: false,
+        data: {
+            caso: idCaso,
+            op: "detCaso"
+        },
+        success: function (data) {
+            $("#viewHistorialCaso table").bootstrapTable('load', data);
+        }
+    });
+    $('#viewHistorialCaso').modal("toggle");
+}
+function addHistorialCaso(idCaso) {
+    nomPaciente = $("#con_nombrePaciente").val();
+    hc = $("#con_historiaPaciente").val();
+    sexo = $("#con_sexoPaciente").val();
+
+    $("#contenido").load("consulta/newConsulta.jsp", function () {
+        $("#PacienteId").val(nomPaciente);
+        $("#casoId").val(idCaso);
+        $("#PacienteId").attr("data-hc", hc);
+        if (sexo === "1") {
+            $("#div_femenino").hide();
+        }
+
+    });
+}
 
 $(function () {
-    $("#tbHC").on("click", "button[name='addHistorialCaso']", function () {
-        nomPaciente = $("#con_nombrePaciente").val();
-        idCaso = $(this).attr("data-id");
-        hc = $("#con_historiaPaciente").val();
-        sexo = $("#con_sexoPaciente").val();
-
-        $("#contenido").load("consulta/newConsulta.jsp", function () {
-            $("#PacienteId").val(nomPaciente);
-            $("#casoId").val(idCaso);
-            $("#PacienteId").attr("data-hc", hc);
-            if (sexo === "1") {
-                $("#div_femenino").hide();
-            }
-
-        });
-    });
-
     $("#btnNewConsulta").click(function () {
         nomPaciente = $("#con_nombrePaciente").val();
         hc = $("#con_historiaPaciente").val();
@@ -60,7 +90,6 @@ $(function () {
         }
     });
 
-
     modalListPaciente();
     $('#ListPaciente').on('shown.bs.modal', function () {
         $("#ListPaciente table").bootstrapTable('resetView');
@@ -68,36 +97,6 @@ $(function () {
 
     $('#viewHistorialCaso').on('shown.bs.modal', function () {
         $("#viewHistorialCaso table").bootstrapTable('resetView');
-    });
-    $("#tbHC").on("click", "button[name='viewHistorialCaso']", function () {
-        $.ajax({
-            url: "sConsulta",
-            type: 'POST',
-            dataType: 'json',
-            data: {
-                caso: $(this).attr("data-id"),
-                op: "detCaso"
-            },
-            success: function (data) {
-                $("#viewHistorialCaso table").bootstrapTable('load', data);
-                
-            }
-        });
-    });
-
-
-
-
-    $("#contenido").on("click", "#tablPaciente button[name='SeleccionarPaciente']", function () {
-        var tr = $(this).closest("tr");
-        var tds = $(tr).find("td");
-        $("#con_historiaPaciente").val($(tds).eq(0).html());
-        $("#con_cedulaPaciente").val($(tds).eq(1).html());
-        $("#con_nombrePaciente").val($(tds).eq(2).html());
-        $("#con_sexoPaciente").val($("#tablPaciente").bootstrapTable('getRowByUniqueId', $(tds).eq(0).html()).sexo);
-
-        //alert($("#tablPaciente").bootstrapTable('getRowByUniqueId', $(tds).eq(0).html()).sexo);
-        obtList();
     });
 
     $("#pac_Cargar").click(function () {
@@ -120,6 +119,7 @@ $(function () {
                         $("#con_nombrePaciente").val((ob.paciente.apellido1 + " " + ob.paciente.apellido2 + " " + ob.paciente.nombre1 + " " + ob.paciente.nombre2).toUpperCase());
                         $("#con_ciudadPaciente").val(ob.paciente.ciudad.toUpperCase());
                         $("#con_sexoPaciente").val((ob.paciente.sexo) ? "1" : "0");
+                        obtList();
                     } else {
                         alertify.success("Paciente no encontrado");
                     }
@@ -133,8 +133,20 @@ function modalListPaciente() {
     $("#ListPaciente .modal-body").load("paciente/listPacientes.jsp", function () {
         $("#tablPaciente").bootstrapTable('hideColumn', 'accion');
         $("#tablPaciente").bootstrapTable('showColumn', 'seleccionar');
+        
+        $("#tablPaciente").on('dbl-click-row.bs.table', function (e, row, $element) {
+            $("#con_historiaPaciente").val(row.hc);
+            $("#con_cedulaPaciente").val(row.cedula);
+            $("#con_nombrePaciente").val(row.nombres);
+            $("#con_sexoPaciente").val(row.sexo);
+            obtList();
+            $("#ListPaciente").modal("toggle");
+        });
+
+
     });
 }
+
 function limpiarDivPaciente() {
     $("#con_historiaPaciente").val("");
     $("#con_cedulaPaciente").val("");

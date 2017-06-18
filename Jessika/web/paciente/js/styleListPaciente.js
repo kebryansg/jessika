@@ -1,6 +1,50 @@
-$("table").bootstrapTable();
+var $table = $('#table');
+
+/*$(function () {
+ $table.bootstrapTable({
+ contextMenuButton: '.folders, .files',
+ beforeContextMenuRow: function (e, row, buttonElement) {
+ if (row.id == 3 && !buttonElement) {
+ $table.bootstrapTable('showContextMenu', {event: e, contextMenu: '#folders-menu'});
+ } else if (row.id == 4 && !buttonElement) {
+ $table.bootstrapTable('showContextMenu', {event: e, contextMenu: '#files-menu'});
+ } else if (buttonElement && $(buttonElement).hasClass('folders')) {
+ $table.bootstrapTable('showContextMenu', {
+ event: e,
+ contextMenu: '#folders-menu',
+ buttonElement: buttonElement
+ });
+ } else if (buttonElement && $(buttonElement).hasClass('files')) {
+ $table.bootstrapTable('showContextMenu', {
+ event: e,
+ contextMenu: '#files-menu',
+ buttonElement: buttonElement
+ });
+ }
+ return false;
+ },
+ data: data
+ });
+ });*/
 
 
+$("#tablPaciente").bootstrapTable({
+    contextMenu: '#tablPaciente-context-menu',
+    beforeContextMenuRow: function (e) {
+        return $("#tablPaciente").closest(".modal").length === 0;
+    },
+    onContextMenuItem: function (row, $el) {
+        alert($("#tablPaciente").closest(".modal").html());
+        switch ($el.data("item")) {
+            case "edit":
+                editPaciente(row.id);
+                break;
+            case "delete":
+                deletePaciente(row.id);
+                break;
+        }
+    }
+});
 function loadPaginacion(total) {
     $.each($("#pagPacientes li"), function (i, li) {
         if ($(li).find("a[aria-label]").length === 0) {
@@ -27,7 +71,7 @@ function loadList(bandera, pag) {
             op: 'list_filter'
         },
         success: function (response) {
-            
+
             var obj = $.parseJSON(response);
             var tablePaciente = $("#tablePaciente tbody");
             $totalPages = obj.count / cantList;
@@ -35,19 +79,28 @@ function loadList(bandera, pag) {
             if (bandera) {
                 loadPaginacion($totalPages);
             }
-            $("#tablPaciente").bootstrapTable('load',obj.list);
+            $("#tablPaciente").bootstrapTable('load', obj.list);
             $('#tablPaciente').bootstrapTable('resetView');
         }
     });
 }
 
+function editPaciente(idPaciente) {
+    $("#contenido").load("paciente/paciente.jsp", function () {
+        edit(idPaciente);
+    });
+}
+
+function deletePaciente(idPaciente) {
+    deletPaciente(idPaciente);
+    loadList(true, 1);
+}
+
 $(function () {
 
     loadList(true, 1);
-    $("#tablPaciente").bootstrapTable('hideColumn','sexo');
-    $("#tablPaciente").bootstrapTable('hideColumn','seleccionar');
-    
-
+    $("#tablPaciente").bootstrapTable('hideColumn', 'sexo');
+    $("#tablPaciente").bootstrapTable('hideColumn', 'id');
     $("#contenido").on("click", "#pagPacientes li a[aria-label]", function (e) {
         li_old = $("#pagPacientes li[class='active']");
         li = undefined;
@@ -71,31 +124,16 @@ $(function () {
         $(li).toggleClass("active");
         loadList(false, $(this).html());
     });
-
     $("#contenido").on("change", "#cantList", function () {
         loadList(true, 1);
     });
     $("#contenido").on("keyup", "#txt_filterPaciente", function (e) {
-        if(e.keyCode === 8 && $(this).val() === "" ){
+        if (e.keyCode === 8 && $(this).val() === "") {
             loadList(true, 1);
-        }else if(e.keyCode === 13){
+        } else if (e.keyCode === 13) {
             loadList(true, 1);
         }
     });
-    $("#contenido").on("click", "#tablPaciente button[name='deletPaciente']", function () {
-        var id = $(this).attr("data-id");
-        $.getScript("paciente/js/paciente.js", function () {
-            deletPaciente(id);
-            loadList(true, 1);
-        });
-    });
-
 });
 
 
-$("#contenido").on("click", "#tablPaciente button[name='editPaciente']", function () {
-    var id = $(this).attr("data-id");
-    $("#contenido").load("paciente/paciente.jsp",function(){
-        edit(id);
-    });
-});

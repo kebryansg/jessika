@@ -1,3 +1,7 @@
+
+.dropdown-menu{
+    cursor: pointer;
+}
 .flex-parent{
   display: -ms-flex;
   display: -webkit-flex;
