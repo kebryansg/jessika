@@ -465,7 +465,7 @@ C_BD conn;
                 nombreEstablecimiento=value.getNombre();
             }
             
-              FileOutputStream fileOut = new FileOutputStream(path+meses[mes-1]+" del "+anio+" "+nombreEstablecimiento+".xlsx");
+              FileOutputStream fileOut = new FileOutputStream("FormularioCamas.xlsx");
             wb.write(fileOut);
             fileOut.flush();
             fileOut.close();
