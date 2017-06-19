@@ -162,7 +162,7 @@
                                 <a  data-url="" data-title="Ingresos" href="#"><i class="fa fa-user fa-fw" aria-hidden="true"></i>&nbsp; Hospitalizaciones</a>
                             </li>
                             <li>
-                                <a data-url="" data-title="Mantenimiento Ingresos" href="#"><i class="fa fa-address-book fa-fw" aria-hidden="true"></i>&nbsp; Consultas</a>
+                                <a data-url="consulta/listConsultas.jsp" data-title="Consultas" href="#"><i class="fa fa-address-book fa-fw" aria-hidden="true"></i>&nbsp; Consultas</a>
                             </li>                            
                         </ul>
                         <a href="javascript:;" data-toggle="collapse" data-target="#inec">Inec<i class="fa fa-fw fa-caret-down"></i></a>

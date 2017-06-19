@@ -25,11 +25,9 @@ import mvc.modelo.smDaoImp.ConsultaDaoImp;
 public class test {
 
     public static void main(String[] args) throws ParseException, IOException {
-        //System.out.println(ruta());
-        Date fechaI = fechaSQL("2017-06-04");
-        Date fechaF = fechaSQL("2017-06-14");
-        //System.out.println(new ConsultaDaoImp().listConsultas(fechaI, fechaF, 2021, "").size());
-        //System.out.println(new ConsultaDaoImp().listConsultas(6, 2, 2021, "").size());
+        float x = (float) 3/2;
+        System.out.println("Esto -" + Math.ceil(x));
+
     }
 
     public static int getID(String tabla) {
@@ -68,6 +66,30 @@ public class test {
             Date convertido = fechaHora.parse(stringFecha);
             return convertido;
         } catch (ParseException e) {
+            return null;
+        }
+
+    }
+
+    public static Date MesSQL(String stringFecha) {
+        try {
+            DateFormat fechaHora = new SimpleDateFormat("yyyy-MM");
+            Date convertido = fechaHora.parse(stringFecha);
+            return convertido;
+        } catch (ParseException e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+
+    }
+
+    public static Date YearSQL(String stringFecha) {
+        try {
+            DateFormat fechaHora = new SimpleDateFormat("yyyy");
+            Date convertido = fechaHora.parse(stringFecha);
+            return convertido;
+        } catch (ParseException e) {
+            System.out.println(e.getMessage());
             return null;
         }
 

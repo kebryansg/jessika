@@ -318,21 +318,35 @@ AS BEGIN
 	where c_ei.idConsulta = @id
 END 
 	
--- 18 Junio
+-- 19 Junio
 CREATE PROCEDURE getConsultas
 @fechaI date,
 @fechaF date,
-@tiempo int,
+@fecha date,
 @idHC int,
-@opFecha int
+@opFecha int,
+@tops int,
+@pag int,
+@total int OUTPUT
 AS BEGIN
 	-- 1 Fecha - 2 Mes - 3 Año
+	set @total = (SELECT COUNT(*) from dbo.consulta con
+	inner join dbo.caso cs on cs.id = con.idCaso
+	inner join dbo.historialClinico hc on hc.id = cs.idHistorialClinico and (@idHC = 0 or hc.id = @idHC)
+	inner join BD_IP.dbo.paciente pc on pc.id= hc.idPaciente
+	where 
+		(@opFecha = 1 and (con.fecha BETWEEN @fechaI and @fechaF))
+		or (@opFecha = 2 and (MONTH(con.fecha) = MONTH(@fecha) and YEAR(con.fecha) = YEAR(@fecha)))
+		or (@opFecha = 4 and YEAR(con.fecha) = YEAR(@fecha)))
+	
 	SELECT con.* from dbo.consulta con
 	inner join dbo.caso cs on cs.id = con.idCaso
 	inner join dbo.historialClinico hc on hc.id = cs.idHistorialClinico and (@idHC = 0 or hc.id = @idHC)
 	inner join BD_IP.dbo.paciente pc on pc.id= hc.idPaciente
 	where 
-		(@opFecha = 1 and (con.fecha >= @fechaI and con.fecha <= @fechaF))
-		or (@opFecha = 2 and MONTH(con.fecha) = @tiempo)
-		or (@opFecha = 3 and YEAR(con.fecha) = @tiempo)
-END 
+		(@opFecha = 1 and (con.fecha BETWEEN @fechaI and @fechaF))
+		or (@opFecha = 2 and (MONTH(con.fecha) = MONTH(@fecha) and YEAR(con.fecha) = YEAR(@fecha)))
+		or (@opFecha = 4 and YEAR(con.fecha) = YEAR(@fecha))
+		order by con.fecha 
+		OFFSET @pag ROWS FETCH NEXT @tops ROWS ONLY;
+END

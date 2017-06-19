@@ -97,15 +97,15 @@ public class ConsultaDaoImp implements ConsultaDao {
     }
 
     @Override
-    public list_count listConsultas(Date fechaI, Date fechaF, int idHC,int tops,int pag, String filter) {
+    public list_count listConsultas(Date fechaI, Date fechaF,int opFecha, int idHC,int tops,int pag, String filter) {
         this.conn = con_db.open(con_db.MSSQL_SM);
         list_count l = new list_count();
         List<Consulta> list = new ArrayList<>();
         try {
             CallableStatement call = this.conn.getConexion().prepareCall("{call dbo.getConsultas(?,?,?,?,?,?,?,?)}");
             call.setInt("idHC", idHC);
-            call.setInt("opFecha", 1);
-            call.setInt("tiempo", 0);
+            call.setInt("opFecha", opFecha);
+            call.setNull("fecha", Types.DATE);
             call.setDate("fechaI", new java.sql.Date(fechaI.getTime()));
             call.setDate("fechaF", new java.sql.Date(fechaF.getTime()));
             
@@ -134,7 +134,7 @@ public class ConsultaDaoImp implements ConsultaDao {
     }
 
     @Override
-    public list_count listConsultas(int tiempo, int opFecha, int idHC,int tops,int pag, String filter) {
+    public list_count listConsultas(Date fecha, int opFecha, int idHC,int tops,int pag, String filter) {
         this.conn = con_db.open(con_db.MSSQL_SM);
         list_count l = new list_count();
         List<Consulta> list = new ArrayList<>();
@@ -142,7 +142,7 @@ public class ConsultaDaoImp implements ConsultaDao {
             CallableStatement call = this.conn.getConexion().prepareCall("{call dbo.getConsultas(?,?,?,?,?,?,?,?)}");
             call.setInt("idHC", idHC);
             call.setInt("opFecha", opFecha);
-            call.setInt("tiempo", tiempo);
+            call.setDate("fecha", new java.sql.Date(fecha.getTime()));
             call.setNull("fechaI", Types.DATE);
             call.setNull("fechaF", Types.DATE);
             

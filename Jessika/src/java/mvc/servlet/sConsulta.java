@@ -7,6 +7,7 @@ import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -107,10 +108,21 @@ public class sConsulta extends HttpServlet {
             case "adminConsultas":
                 int tops = Integer.parseInt(request.getParameter("top")),
                  pag = Integer.parseInt(request.getParameter("pag")),
-                 idHC = Integer.parseInt(request.getParameter("idHC"));
+                 idHC = Integer.parseInt(request.getParameter("idHC")),
+                 opTiempo = Integer.parseInt(request.getParameter("opTiempo"));
+                switch (opTiempo) {
+                    case 1:
+                    case 3:
+                        Date fechaI = opTiempo == 1 ? test.fechaSQL(request.getParameter("fechaI")) : test.MesSQL(request.getParameter("fechaI"));
+                        Date fechaF = opTiempo == 1 ? test.fechaSQL(request.getParameter("fechaF")) : test.MesSQL(request.getParameter("fechaF"));;
+                        l = new ConsultaDaoImp().listConsultas(fechaI, fechaF, opTiempo, idHC, tops, pag, request.getParameter("filter"));
+                        break;
+                    case 2:
+                    case 4:
+                        l = new ConsultaDaoImp().listConsultas(opTiempo == 2 ? test.MesSQL(request.getParameter("fecha")) : test.YearSQL(request.getParameter("fecha")), opTiempo, idHC, tops, pag, request.getParameter("filter"));
+                        break;
+                }
 
-                l = new ConsultaDaoImp().listConsultas(Integer.parseInt(request.getParameter("tiempo")), Integer.parseInt(request.getParameter("opTiempo")), idHC, tops, pag, request.getParameter("filter"));
-                System.out.println(l.getList().size());
                 for (Object object : l.getList()) {
                     Consulta consulta = (Consulta) object;
                     resultList.add("{"
@@ -122,7 +134,7 @@ public class sConsulta extends HttpServlet {
                             + "\"especialidad\" : \"" + consulta.getPrescripcion() + "\""
                             + "}");
                 }
-                out.print("{\"count\": \"" + Math.ceil(l.getTotal() / tops) + "\" , \"list\": [" + String.join(",", resultList) + "] }");
+                out.print("{\"count\": \"" + Math.ceil((float) l.getTotal() / tops) + "\" , \"list\": [" + String.join(",", resultList) + "] }");
                 out.flush();
                 out.close();
                 break;
