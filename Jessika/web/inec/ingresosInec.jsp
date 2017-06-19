@@ -51,15 +51,35 @@
                  
             </div>
 	</div>
-    <center>
-    <div id="mostrar_loading" style="display:none;"></div>
-    <br>
-    
-    <div id="mostrar_tabla"></div>
-    </center>
+    <br/>    
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <h3 class="panel-title">Egresos Hospitalarios</h3>
+        </div>
+        <div class="panel-body">
+            Identificación del establecimiento; datos del paciente: sexo, edad, lugar de residencia habitual, fecha de ingreso y egreso, días de estadía, condición al egresar (alta, fallecido), diagnóstico definitivo del egreso y servicio del que egresó.
+        </div>
+    </div>
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <h3 class="panel-title">Camas Hospitalarias</h3>
+        </div>
+        <div class="panel-body">
+            Número de camas de dotación normal, según servicios o especialidades. Número de camas disponibles, según servicio o especialidades; días-paciente; días-cama disponible.
+        </div>
+    </div>        
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <h3 class="panel-title">Camas y Egresos Hospitalarias</h3>
+        </div>
+        <div class="panel-body">
+            Las Estadísticas Hospitalarias presentan información estadística, sobre la morbilidad hospitalaria, que permite conocer el estado de salud de la población; determina la incidencia de las enfermedades tratadas en los hospitales; proporciona indicadores necesarios, para la elaboración y evaluación de los programas de salud, y, suministra datos sobre la utilización de camas hospitalarias de dotación normal y camas disponibles
+        </div>
+    </div>    
 </div>
       
     </body>
     
  <script src="inec/js/ingresosInec.js" type="text/javascript" ></script>
+  <script src="resources/bootstrap/js/waitingfor.js" type="text/javascript" ></script>
 </html>
