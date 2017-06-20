@@ -12,6 +12,7 @@ import mvc.controlador.con_db;
 import mvc.controlador.entidades.sm.Caso;
 import mvc.controlador.entidades.sm.Consulta;
 import mvc.controlador.entidades.sm.Especialidad;
+import mvc.controlador.entidades.sm.HistorialClinico;
 import mvc.controlador.entidades.sm.MedicoEspecialidad;
 import mvc.controlador.entidades.sm.SignosVitales;
 import mvc.modelo.smDao.ConsultaDao;
@@ -118,10 +119,16 @@ public class ConsultaDaoImp implements ConsultaDao {
             while (rs.next()) {
                 Consulta value = new Consulta(rs.getInt("id"));
                 value.setIdCaso(new Caso(rs.getInt("idCaso")));
+                value.getIdCaso().setIdHistorialClinico(new HistorialClinico(rs.getInt("idHC")));
+                
+                value.setIdMedicoEspecialidad(new MedicoEspecialidad(rs.getInt("idMedico_Especialidad")));
+                value.getIdMedicoEspecialidad().setIdEspecialidad(new  Especialidad(rs.getInt("id_especialidad"), rs.getString("des_especialidad")));
+                value.setIdTipoConsulta(rs.getInt("idTipoConsulta"));
+                value.setIdMetodo(rs.getInt("idMetodo"));
+                
                 value.setFecha(rs.getDate("fecha"));
-                value.setMotivo(rs.getString("motivo"));
-                value.setSintoma(rs.getString("sintomas"));
-                value.setPrescripcion(rs.getString("prescripcion"));
+                value.setMotivo(rs.getString("causa_motivo"));
+                value.setSintoma(rs.getString("tipo"));
                 list.add(value);
             }
             l.setList(list);
@@ -155,10 +162,17 @@ public class ConsultaDaoImp implements ConsultaDao {
             while (rs.next()) {
                 Consulta value = new Consulta(rs.getInt("id"));
                 value.setIdCaso(new Caso(rs.getInt("idCaso")));
+                value.getIdCaso().setIdHistorialClinico(new HistorialClinico(rs.getInt("idHC")));
+                
+                value.setIdMedicoEspecialidad(new MedicoEspecialidad(rs.getInt("idMedico_Especialidad")));
+                value.getIdMedicoEspecialidad().setIdEspecialidad(new  Especialidad(rs.getInt("id_especialidad"), rs.getString("des_especialidad")));
+                value.setIdTipoConsulta(rs.getInt("idTipoConsulta"));
+                value.setIdMetodo(rs.getInt("idMetodo"));
+                
                 value.setFecha(rs.getDate("fecha"));
-                value.setMotivo(rs.getString("motivo"));
-                value.setSintoma(rs.getString("sintomas"));
-                value.setPrescripcion(rs.getString("prescripcion"));
+                value.setMotivo(rs.getString("causa_motivo"));
+                value.setSintoma(rs.getString("tipo"));
+                //value.setPrescripcion(rs.getString("prescripcion"));
                 list.add(value);
             }
             l.setList(list);

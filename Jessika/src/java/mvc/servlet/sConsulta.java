@@ -128,10 +128,10 @@ public class sConsulta extends HttpServlet {
                     resultList.add("{"
                             + "\"id\" : \"" + consulta.getId() + "\","
                             + "\"fecha\" : \"" + consulta.getFecha() + "\","
-                            + "\"paciente\" : \"" + consulta.getIdCaso().getId() + "\","
+                            + "\"paciente\" : \"" + new PacienteDaoImp().edit_HC(consulta.getIdCaso().getIdHistorialClinico().getId()).getNombres() + "\","
                             + "\"tipoConsulta\" : \"" + consulta.getSintoma() + "\","
                             + "\"causa_motivo\" : \"" + consulta.getMotivo() + "\","
-                            + "\"especialidad\" : \"" + consulta.getPrescripcion() + "\""
+                            + "\"especialidad\" : \"" + consulta.getIdMedicoEspecialidad().getIdEspecialidad().getDescripcion() + "\""
                             + "}");
                 }
                 out.print("{\"count\": \"" + Math.ceil((float) l.getTotal() / tops) + "\" , \"list\": [" + String.join(",", resultList) + "] }");
