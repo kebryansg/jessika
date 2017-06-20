@@ -41,6 +41,7 @@ public class ConsultaDaoImp implements ConsultaDao {
                 call.setDate("fecha", new java.sql.Date(value.getFecha().getTime()));
                 call.execute();
                 value.setId(call.getInt("id"));
+                System.out.println("Consulta -" +value.getId());
             } else {
                 sql = "UPDATE [dbo].[consulta]\n"
                         + "   SET [idMedico_Especialidad] = '" + value.getIdMedicoEspecialidad().getId() + "'\n"
