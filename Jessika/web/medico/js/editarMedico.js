@@ -12,7 +12,7 @@ var totalPaginas=0;
 var paginasVisibles=5;
 var paginaActual=0;
 var buscar=0;
-var pagina=1;
+var pagina=0;
 var datos = [];
 var idTablaSeleccionada=-1;     
 var indice=-1;
@@ -281,25 +281,26 @@ $('#tabMedicoEditar .table-responsive').on("click", "#btnEliminar", function(eve
         datos[cont]=$(this).html();   
         cont++;
     });
-    
-        
-    
     $.post('sMedico', {
         idMedico : datos[0],
         opcion: 5
-    }, function(responseText) { 
-        
-        filas--;
-        
-        if(filas===0)
+    }, function(data) {         
+        var resultado = JSON && JSON.parse(data) || $.parseJSON(data);   
+        console.log(resultado);
+        if(resultado.estado===true)
         {
-            if(pagina>0)
-                pagina--;
-            filas=$("#tabMedicoEditar #cboMostrar").val();
-        }
-        
-        cargarMedicos(pagina);
-        alertify.success("Registros Eliminado");
+            filas--;
+            if(filas===0)
+            {
+                if(pagina>0)
+                    pagina--;
+                filas=$("#tabMedicoEditar #cboMostrar").val();
+            }
+            cargarMedicos(pagina);
+            alertify.success("Registros Eliminado");
+        }        
+        else
+            alertify.success("Error al intentar eliminar \n"+resultado.excepcion);
     });
     event.preventDefault();
     $(this).closest('tr').remove();

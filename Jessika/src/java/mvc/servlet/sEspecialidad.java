@@ -5,6 +5,7 @@
  */
 package mvc.servlet;
 
+import com.google.gson.JsonObject;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -44,6 +45,7 @@ public class sEspecialidad extends HttpServlet {
         response.setContentType( "text/html; charset=iso-8859-1" );
         PrintWriter out = response.getWriter();
                String opcion = request.getParameter("opcion");
+               JsonObject object = new JsonObject();
                /*if("0".equals(idEspecialidad))
                {
                    Integer ultimoId=esp.id();
@@ -83,12 +85,12 @@ public class sEspecialidad extends HttpServlet {
                    // Obtengo los datos de la peticion
 		String descripcionEspecialidad = request.getParameter("descripcionEspecialidad");
 		String idEspecialidad = request.getParameter("idEspecialidad");
-                String visible = request.getParameter("visible");
-                
+                String visible = request.getParameter("visible");                
                 EspecialidadDao esp = new EspecialidadDaoImp();
                 Especialidad especialidad= new Especialidad(Integer.parseInt(idEspecialidad),descripcionEspecialidad,visible);
-                esp.save(especialidad);
-                 out.println(descripcionEspecialidad);
+                object.addProperty("estado", esp.save(especialidad));
+                object.addProperty("excepcion", esp.getExcepcion());                
+                out.println(object);
                }
                
                

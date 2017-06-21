@@ -20,5 +20,5 @@ public interface MedicoDao {
     public int id();
     public int totalRegistros(int flag, String buscar );
     public int validarCedula(String cedula);
-    
+    public String getExcepcion();
 }

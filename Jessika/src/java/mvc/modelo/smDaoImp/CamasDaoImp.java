@@ -20,6 +20,7 @@ import mvc.modelo.smDao.CamasDao;
  */
 public class CamasDaoImp implements CamasDao {
 C_BD conn;
+String excepcion="";
     @Override
     public boolean save(Camas value) {
         this.conn = con_db.open(con_db.MSSQL_SM);
@@ -42,6 +43,7 @@ C_BD conn;
         catch (Exception ex) 
         {
             System.out.println(ex.getMessage());
+            excepcion=ex.getMessage();
             return false;
         } 
         finally 
@@ -91,10 +93,16 @@ C_BD conn;
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
+            excepcion=ex.getMessage();
         } finally {
             this.conn.close();
         }
         return list;
+    }
+
+    @Override
+    public String getExcepcion() {
+        return excepcion;
     }
     
 }

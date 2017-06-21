@@ -81,6 +81,7 @@ public class sExcel extends HttpServlet {
             throws ServletException, IOException {
         //processRequest(request, response);
         JsonObject object = new JsonObject();
+         JsonObject object1 = new JsonObject();
         response.setContentType("text/plain");
         PrintWriter out = response.getWriter();
         String result = "", op = request.getParameter("op");
@@ -90,9 +91,15 @@ public class sExcel extends HttpServlet {
              SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");                                
              Date fechaReporte = sdf.parse(request.getParameter("fechaReporte"));                    
              ExcelDao objExcel= new ExcelDaoImp();
-             String absoluteFilesystemPath = getServletContext().getRealPath("/xlsx/");             
-             object.addProperty("egresos", objExcel.generarExcelIngresos(fechaReporte,absoluteFilesystemPath,""));
-             
+             String absoluteFilesystemPath = getServletContext().getRealPath("/xlsx/");   
+             String resultado=objExcel.generarExcelIngresos(fechaReporte,absoluteFilesystemPath,"");
+             object.addProperty("egresos",resultado);
+             if("".equals(resultado))
+             {
+                 object1.addProperty("estado",false);
+                 object1.addProperty("formulario","Egresos");
+                 object1.addProperty("excepcion",objExcel.getExcepcion());
+             }
          }
          catch(Exception ex)
          {
@@ -102,17 +109,33 @@ public class sExcel extends HttpServlet {
              SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");                                
              Date fechaReporte = sdf.parse(request.getParameter("fechaReporte"));                    
              ExcelDao objExcel= new ExcelDaoImp();
-             String absoluteFilesystemPath = getServletContext().getRealPath("/xlsx/");                          
-             object.addProperty("camas", objExcel.generarExcelCamas(fechaReporte,absoluteFilesystemPath));
-             object.addProperty("camasIndividual", objExcel.generarExcelCamasIndividual(fechaReporte,absoluteFilesystemPath));
+             String absoluteFilesystemPath = getServletContext().getRealPath("/xlsx/"); 
+             String resultado=objExcel.generarExcelCamas(fechaReporte,absoluteFilesystemPath);
+             object.addProperty("camas", resultado);
+             if("".equals(resultado))
+             {
+                 object1.addProperty("estado",false);
+                 object1.addProperty("formulario","Camas");
+                 object1.addProperty("excepcion",objExcel.getExcepcion());
+             }
+             resultado=objExcel.generarExcelCamasIndividual(fechaReporte,absoluteFilesystemPath);
+             object.addProperty("camasIndividual", resultado);
+             if("".equals(resultado))
+             {
+                 object1.addProperty("estado",false);
+                 object1.addProperty("formulario","Camas Individual");
+                 object1.addProperty("excepcion",objExcel.getExcepcion());
+             }             
          }
          catch(Exception ex)
          {
          }
          
          
-         
-         out.println(object);
+         List<JsonObject> list = new ArrayList<JsonObject>();
+         list.add(object);
+         list.add(object1);
+         out.println(list);
          //String json = OBJECT_MAPPER.writeValueAsString(object);
          //response.getWriter().write(json);
     }

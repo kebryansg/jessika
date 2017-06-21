@@ -17,9 +17,11 @@ function validar() {
         });    
         return $(".help-block").length === 0;
     }                
-$('#btnGuardar').click(function(event) { 
+$('#btnGuardar').click(function(event) {
+    
     if(validar())
     {
+        
         $.ajax({
             type: 'Post',
             url: 'sCamas',
@@ -54,10 +56,19 @@ $('#btnGuardar').click(function(event) {
                 cuidadosIntensivos:$('#txtCuidadosIntensivos').val(),                
             },        
         success:function(data){ 
-            if(s==0)
-                alertify.success("Datos registrados correctamente");
+            
+             var resultado = JSON && JSON.parse(data) || $.parseJSON(data);
+             console.log(resultado);
+             if(resultado.estado===true)
+             {
+                 
+                 if(s==0)
+                     alertify.success("Datos registrados correctamente");
+                 else
+                     alertify.success("Datos actualizados correctamente");
+             }        
             else
-                alertify.success("Datos actualizados correctamente");
+                 alertify.success("Problemas al intentar guardar\n"+resultado.excepcion);
             s=1;
             
         }

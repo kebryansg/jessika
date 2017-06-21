@@ -23,6 +23,7 @@ import mvc.modelo.smDao.MedicoEspecialidadDao;
  */
 public class MedicoEspecialidadDaoImp implements MedicoEspecialidadDao {
     C_BD conn;
+    String excepcion="";
     @Override
     public boolean save(MedicoEspecialidad value) {
         String sql="";
@@ -35,6 +36,7 @@ public class MedicoEspecialidadDaoImp implements MedicoEspecialidadDao {
         }
         catch(Exception ex)
         {
+            excepcion=ex.getMessage();
             return false;
         }
     }
@@ -54,6 +56,7 @@ public class MedicoEspecialidadDaoImp implements MedicoEspecialidadDao {
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
+             excepcion=ex.getMessage();
         } finally {
             this.conn.close();
         }
@@ -76,9 +79,15 @@ public class MedicoEspecialidadDaoImp implements MedicoEspecialidadDao {
         }
         catch(Exception ex)
         { 
+             excepcion=ex.getMessage();
             return false;
         }
         
+    }
+
+    @Override
+    public String getExcepcion() {
+        return excepcion;
     }
     
 }

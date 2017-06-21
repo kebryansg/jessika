@@ -29,7 +29,7 @@ public interface IngresosDao {
     public boolean guardarMedicamento(Medicamento value);
     public List<Medicamento> list(int idRegistro);
     public List<Ingresos> listIngresos();
-    
+     public String getExcepcion();
     
     
     

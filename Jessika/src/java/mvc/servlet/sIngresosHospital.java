@@ -28,7 +28,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import java.util.List;
 import mvc.controlador.entidades.sm.Caso;
 import mvc.controlador.entidades.sm.Medicamento;
-
+import com.google.gson.JsonObject;
 
 /**
  *
@@ -74,6 +74,7 @@ public class sIngresosHospital extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType( "text/html; charset=iso-8859-1" );
+        JsonObject object = new JsonObject();
         PrintWriter out = response.getWriter();
         String opcion = request.getParameter("opcion");
        // private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
@@ -116,9 +117,10 @@ public class sIngresosHospital extends HttpServlet {
                 idTipoIngre.setId(idTipoIngreso);   
                IngresosDao ingr= new IngresosDaoImp();
                Ingresos unIngreso = new Ingresos(fechaIngreso,fechaEgreso,horaIngreso,sos,condicionEgreso,definitivoEgreso,secundarioEgreso,secundarioEgreso2,causaExterna,codigoDiagnosticoDefinitivo,idEspecialidadEgres,idTipoIngre);
-               unIngreso.setId(0);
-               ingr.Save(unIngreso, idHistoria);
-                
+               unIngreso.setId(0);               
+               object.addProperty("estado", ingr.Save(unIngreso, idHistoria));
+               object.addProperty("excepcion", ingr.getExcepcion());
+               out.println(object);
                 //EspecialidadDao esp = new EspecialidadDaoImp();
                 
                 

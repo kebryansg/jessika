@@ -23,6 +23,7 @@ import mvc.modelo.smDao.EspecialidadDao;
  */
 public class EspecialidadDaoImp implements EspecialidadDao{
     C_BD conn;
+    String excepcion="";
     @Override
     public List<Especialidad> list() {
         this.conn = con_db.open(con_db.MSSQL_SM);
@@ -36,6 +37,7 @@ public class EspecialidadDaoImp implements EspecialidadDao{
                 list.add(value);
             }
         } catch (SQLException ex) {
+            excepcion=ex.getMessage();
             System.out.println(ex.getMessage());
         } finally {
             this.conn.close();
@@ -56,6 +58,7 @@ public class EspecialidadDaoImp implements EspecialidadDao{
                 list.add(value);
             }
         } catch (SQLException ex) {
+            excepcion=ex.getMessage();
             System.out.println(ex.getMessage());
         } finally {
             this.conn.close();
@@ -74,6 +77,7 @@ public class EspecialidadDaoImp implements EspecialidadDao{
                 value.setDescripcion(rs.getNString("descripcion"));
             }
         } catch (SQLException ex) {
+            excepcion=ex.getMessage();
             System.out.println(ex.getMessage());
         } finally {
             this.conn.close();
@@ -102,6 +106,7 @@ public class EspecialidadDaoImp implements EspecialidadDao{
         }
         catch(Exception ex)
         {
+            excepcion=ex.getMessage();
             return false;
         }
        
@@ -117,6 +122,7 @@ public class EspecialidadDaoImp implements EspecialidadDao{
         }
         catch(Exception ex)
         {
+            excepcion=ex.getMessage();
             return false;            
         }
     }
@@ -136,6 +142,7 @@ public class EspecialidadDaoImp implements EspecialidadDao{
         }
         catch(SQLException ex)
         {
+            excepcion=ex.getMessage();
             return idEspecialidad;
         }
     }
@@ -164,6 +171,7 @@ public class EspecialidadDaoImp implements EspecialidadDao{
         }
         catch(SQLException ex)
         {
+            excepcion=ex.getMessage();
             return totalRegistros;
         }
     }
@@ -203,11 +211,17 @@ public class EspecialidadDaoImp implements EspecialidadDao{
                 }
             } catch (SQLException ex) {
                 System.out.println(ex.getMessage());
+                excepcion=ex.getMessage();
             } finally {
                 //this.conn.close();
             }
 
             return list;
+    }
+
+    @Override
+    public String getExcepcion() {
+        return excepcion;
     }
     
     

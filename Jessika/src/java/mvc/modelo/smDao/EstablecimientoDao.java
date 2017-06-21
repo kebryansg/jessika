@@ -16,4 +16,5 @@ public interface EstablecimientoDao {
     public boolean save(Establecimiento value);
     public List<Establecimiento> list();
     public boolean updateLogo(String name);
+     public String getExcepcion();
 }

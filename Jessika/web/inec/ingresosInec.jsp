@@ -23,8 +23,8 @@
         startView: "year",         
         pickerPosition: "bottom-left",
         minView: 3,
-        forceParse: 0,
-        initialDate: new Date()
+        forceParse: 0
+        
     });     
     
     </script>       

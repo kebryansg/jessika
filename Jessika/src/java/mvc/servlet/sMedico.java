@@ -5,6 +5,7 @@
  */
 package mvc.servlet;
 
+import com.google.gson.JsonObject;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -59,6 +60,7 @@ public class sMedico extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/plain");
         PrintWriter out = response.getWriter();
+        JsonObject object = new JsonObject();
         try
         {
 
@@ -141,7 +143,9 @@ public class sMedico extends HttpServlet {
         {
             MedicoDao med= new MedicoDaoImp();
             Integer idMedico =Integer.valueOf(request.getParameter("idMedico"));
-            med.delete(idMedico);
+            object.addProperty("estado", med.delete(idMedico));
+            object.addProperty("excepcion", med.getExcepcion());
+            out.println(object);
         }
         else if("6".equals(opcion))
         {
@@ -194,20 +198,26 @@ public class sMedico extends HttpServlet {
                 
             }
             
-            
+            boolean estado=false;
+            String excepcion="";
             for (String idEspecialidad : idEspecialidades) {                
                 Especialidad espe;         
                 espe = new Especialidad(Integer.parseInt(idEspecialidad));
                 MedicoEspecialidad medicoEspe= new MedicoEspecialidad(medi,espe);                
                 medicoEspe.setId(idMd);
-                mediEspe.save(medicoEspe);
+                estado=mediEspe.save(medicoEspe);
             } 
+            object.addProperty("estado", estado);
+            object.addProperty("excepcion", excepcion);
+            out.println(object);
         }
         
         }
         catch(Exception ex)
         {
-             out.println(ex.getMessage());
+            object.addProperty("estado", false);
+            object.addProperty("excepcion", ex.getMessage());             
+             out.println(object);
         }
         
          

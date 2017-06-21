@@ -21,6 +21,7 @@ public interface EspecialidadDao {
     public int id();
     public int totalRegistros(int bandera, String buscar);
     public List<Especialidad> list(int numeroPaginas, int totalRegistro,int bandera, String buscar);
+     public String getExcepcion();
     
     
     
