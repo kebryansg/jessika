@@ -27,7 +27,7 @@ var optionDate = {
             //initialDate: new Date()
 };
 $(function () {
-    
+
     $("#tbConsultas").bootstrapTable();
     $(".selectpicker").selectpicker('refresh');
 
@@ -63,6 +63,9 @@ $(function () {
     $("#run_consulta").on("click", function (e) {
         adminGet(true, 1);
     });
+
+    cbo_loadTipoConsulta();
+    cbo_loadEspecialidad();
 
     $("#opListConsultas").on("changed.bs.select", function () {
         opTiempo = $(this).val();
@@ -133,7 +136,7 @@ function limpiarInfoPaciente() {
 }
 
 function adminGet(bandera, pag) {
-    idHC = $("#pac_HC").val() !== "" ? $("#pac_HC").val() : 0;
+
     tiempo = $("#opListConsultas").val();
     switch (tiempo) {
         case "0":
@@ -145,18 +148,22 @@ function adminGet(bandera, pag) {
             //Asignando valores dependiendo el case
             fechaI = (tiempo === "1") ? $("#con_FechaI").val() : $("#con_MesI").val();
             fechaF = (tiempo === "1") ? $("#con_FechaF").val() : $("#con_MesF").val();
-            getConsultas_Fechas(bandera, pag, fechaI, fechaF, tiempo, idHC, "");
+            getConsultas_Fechas(bandera, pag, fechaI, fechaF, tiempo);
             break;
         case "2":
         case "4":
             // Mes - Año
-            getConsultasTiempo(bandera, pag, (tiempo === "2") ? $("#con_Mes").val() : $("#con_Año").val(), tiempo, idHC, "");
+            getConsultasTiempo(bandera, pag, (tiempo === "2") ? $("#con_Mes").val() : $("#con_Año").val(), tiempo);
             break;
     }
 }
 
-function getConsultasTiempo(bandera, pag, fecha, opTiempo, idHC, filter) {
+function getConsultasTiempo(bandera, pag, fecha, opTiempo, idHC, idTipoConsulta, filter) {
+    idHC = $("#pac_HC").val() !== "" ? $("#pac_HC").val() : 0;
+    idTipoConsulta = $("#cboTipoConsulta").val();
     cantList = $("#cantListConsultas").val();
+    idsEspecialidad = ($("#cboEspecialidad").val() !== null) ? $("#cboEspecialidad").val().join() : "0";
+
     $.ajax({
         url: "sConsulta",
         type: 'POST',
@@ -165,9 +172,11 @@ function getConsultasTiempo(bandera, pag, fecha, opTiempo, idHC, filter) {
         data: {
             op: 'adminConsultas',
             fecha: fecha,
+            idTipoConsulta: idTipoConsulta,
+            idsEspecialidad: idsEspecialidad,
             opTiempo: opTiempo,
             idHC: idHC,
-            filter: filter,
+            filter: "",
             pag: ((pag - 1) * cantList),
             top: cantList
         },
@@ -179,8 +188,11 @@ function getConsultasTiempo(bandera, pag, fecha, opTiempo, idHC, filter) {
     });
 }
 
-function getConsultas_Fechas(bandera, pag, fechaI, fechaF, opTiempo, idHC, filter) {
+function getConsultas_Fechas(bandera, pag, fechaI, fechaF, opTiempo, idHC, idTipoConsulta, filter) {
+    idHC = $("#pac_HC").val() !== "" ? $("#pac_HC").val() : 0;
+    idTipoConsulta = $("#cboTipoConsulta").val();
     cantList = $("#cantListConsultas").val();
+    idsEspecialidad = ($("#cboEspecialidad").val() !== null) ? $("#cboEspecialidad").val().join() : "0";
     $.ajax({
         url: "sConsulta",
         type: 'POST',
@@ -188,11 +200,13 @@ function getConsultas_Fechas(bandera, pag, fechaI, fechaF, opTiempo, idHC, filte
         async: false,
         data: {
             op: 'adminConsultas',
+            idTipoConsulta: idTipoConsulta,
+            idsEspecialidad: idsEspecialidad,
             fechaI: fechaI,
             fechaF: fechaF,
             opTiempo: opTiempo,
             idHC: idHC,
-            filter: filter,
+            filter: "",
             pag: ((pag - 1) * cantList),
             top: cantList
         },
@@ -218,5 +232,32 @@ function modalListPaciente() {
         });
 
 
+    });
+}
+function cbo_loadTipoConsulta() {
+    $.ajax({
+        url: 'sTipoConsulta',
+        data: {
+            op: 'list'
+        },
+        type: 'POST',
+        success: function (data) {
+            $("#cboTipoConsulta").html('<option value="0">Seleccione</option>' + data);
+            $("#cboTipoConsulta").selectpicker("refresh");
+        }
+    });
+}
+
+function cbo_loadEspecialidad() {
+    $.ajax({
+        url: 'sEspecialidad',
+        data: {
+            opcion: 'list'
+        },
+        type: 'POST',
+        success: function (data) {
+            $("#cboEspecialidad").html(data);
+            $("#cboEspecialidad").selectpicker("refresh");
+        }
     });
 }

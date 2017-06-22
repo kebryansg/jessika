@@ -24,11 +24,10 @@ import java.util.List;
  */
 public class sEspecialidad extends HttpServlet {
 
-    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
     }
 
     /**
@@ -42,11 +41,11 @@ public class sEspecialidad extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType( "text/html; charset=iso-8859-1" );
+        response.setContentType("text/html; charset=iso-8859-1");
         PrintWriter out = response.getWriter();
-               String opcion = request.getParameter("opcion");
-               JsonObject object = new JsonObject();
-               /*if("0".equals(idEspecialidad))
+        String opcion = request.getParameter("opcion");
+        JsonObject object = new JsonObject();
+        /*if("0".equals(idEspecialidad))
                {
                    Integer ultimoId=esp.id();
                    out.println("<tr class='active'>");
@@ -58,43 +57,45 @@ public class sEspecialidad extends HttpServlet {
                     out.println("</td>");
                    out.println("</tr>");
                }*/
-               //cargo total de registros
-               if("1".equals(opcion))
-               {
-                   Integer bandera =Integer.valueOf(request.getParameter("bandera"));
-                    String buscar =request.getParameter("buscar");
-                    EspecialidadDao espe= new EspecialidadDaoImp();                                        
-                    out.println(espe.totalRegistros(bandera, buscar));
-                   
-               }
-               //cargo las especialidades ya se paginado o buscado
-               else if("2".equals(opcion))
-               {
-                   Integer bandera =Integer.valueOf(request.getParameter("bandera"));
-                   String buscar =request.getParameter("buscar");
-                   EspecialidadDao espe= new EspecialidadDaoImp();                                                           
-                   Integer totalMostrar =Integer.valueOf(request.getParameter("totalMostrar"));
-                   Integer  pagina =Integer.valueOf( request.getParameter("pagina"));
-                   List <Especialidad> list= espe.list(pagina,totalMostrar,bandera,buscar); 
-                   ObjectMapper OBJECT_MAPPER = new ObjectMapper();
-                   String json = OBJECT_MAPPER.writeValueAsString(list);
-                   response.getWriter().write(json);
-               }
-               else if("3".equals(opcion))
-               {
-                   // Obtengo los datos de la peticion
-		String descripcionEspecialidad = request.getParameter("descripcionEspecialidad");
-		String idEspecialidad = request.getParameter("idEspecialidad");
-                String visible = request.getParameter("visible");                
-                EspecialidadDao esp = new EspecialidadDaoImp();
-                Especialidad especialidad= new Especialidad(Integer.parseInt(idEspecialidad),descripcionEspecialidad,visible);
-                object.addProperty("estado", esp.save(especialidad));
-                object.addProperty("excepcion", esp.getExcepcion());                
-                out.println(object);
-               }
-               
-               
-                       
+        //cargo total de registros
+        if ("1".equals(opcion)) {
+            Integer bandera = Integer.valueOf(request.getParameter("bandera"));
+            String buscar = request.getParameter("buscar");
+            EspecialidadDao espe = new EspecialidadDaoImp();
+            out.println(espe.totalRegistros(bandera, buscar));
+
+        } //cargo las especialidades ya se paginado o buscado
+        else if ("2".equals(opcion)) {
+            Integer bandera = Integer.valueOf(request.getParameter("bandera"));
+            String buscar = request.getParameter("buscar");
+            EspecialidadDao espe = new EspecialidadDaoImp();
+            Integer totalMostrar = Integer.valueOf(request.getParameter("totalMostrar"));
+            Integer pagina = Integer.valueOf(request.getParameter("pagina"));
+            List<Especialidad> list = espe.list(pagina, totalMostrar, bandera, buscar);
+            ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+            String json = OBJECT_MAPPER.writeValueAsString(list);
+            response.getWriter().write(json);
+        } else if ("3".equals(opcion)) {
+            // Obtengo los datos de la peticion
+            String descripcionEspecialidad = request.getParameter("descripcionEspecialidad");
+            String idEspecialidad = request.getParameter("idEspecialidad");
+            String visible = request.getParameter("visible");
+            EspecialidadDao esp = new EspecialidadDaoImp();
+            Especialidad especialidad = new Especialidad(Integer.parseInt(idEspecialidad), descripcionEspecialidad, visible);
+            object.addProperty("estado", esp.save(especialidad));
+            object.addProperty("excepcion", esp.getExcepcion());
+            out.println(object);
+        } else if ("list".equals(opcion)) {
+            //Obtener especialidades para combo
+            EspecialidadDao esp = new EspecialidadDaoImp();
+            List<Especialidad> list = esp.list();
+            String result = "";
+            for (Especialidad especialidad : list) {
+                result += "<option value='" + especialidad.getId() + "'>" + especialidad.getDescripcion() + "</option>";
+            }
+            out.print(result);
+        }
+
     }
 
     /**

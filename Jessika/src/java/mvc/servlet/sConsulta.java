@@ -109,17 +109,19 @@ public class sConsulta extends HttpServlet {
                 int tops = Integer.parseInt(request.getParameter("top")),
                  pag = Integer.parseInt(request.getParameter("pag")),
                  idHC = Integer.parseInt(request.getParameter("idHC")),
+                 idTipoConsulta = Integer.parseInt(request.getParameter("idTipoConsulta")),
                  opTiempo = Integer.parseInt(request.getParameter("opTiempo"));
+                
                 switch (opTiempo) {
                     case 1:
                     case 3:
                         Date fechaI = opTiempo == 1 ? test.fechaSQL(request.getParameter("fechaI")) : test.MesSQL(request.getParameter("fechaI"));
-                        Date fechaF = opTiempo == 1 ? test.fechaSQL(request.getParameter("fechaF")) : test.MesSQL(request.getParameter("fechaF"));;
-                        l = new ConsultaDaoImp().listConsultas(fechaI, fechaF, opTiempo, idHC, tops, pag, request.getParameter("filter"));
+                        Date fechaF = opTiempo == 1 ? test.fechaSQL(request.getParameter("fechaF")) : test.MesSQL(request.getParameter("fechaF"));
+                        l = new ConsultaDaoImp().listConsultas(fechaI, fechaF, opTiempo, idHC, request.getParameter("idsEspecialidad"), idTipoConsulta, tops, pag, request.getParameter("filter"));
                         break;
                     case 2:
                     case 4:
-                        l = new ConsultaDaoImp().listConsultas(opTiempo == 2 ? test.MesSQL(request.getParameter("fecha")) : test.YearSQL(request.getParameter("fecha")), opTiempo, idHC, tops, pag, request.getParameter("filter"));
+                        l = new ConsultaDaoImp().listConsultas(opTiempo == 2 ? test.MesSQL(request.getParameter("fecha")) : test.YearSQL(request.getParameter("fecha")), opTiempo, idHC, request.getParameter("idsEspecialidad"), idTipoConsulta, tops, pag, request.getParameter("filter"));
                         break;
                 }
 

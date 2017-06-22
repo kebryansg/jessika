@@ -21,6 +21,22 @@
     <div class="row">
         <div class="col-md-2">
             <div class="form-group ">
+                <label class="control-label" for="con_Fecha">Tipo Consulta:</label>
+                <select class="selectpicker form-control" id="cboTipoConsulta">
+                    
+                </select>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group ">
+                <label class="control-label" for="con_Fecha">Especialidad:</label>
+                <select multiple data-selected-text-format="count" class="selectpicker form-control" multiple data-live-search="true" data-size="8" id="cboEspecialidad">
+                    
+                </select>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group ">
                 <label class="control-label" for="con_Fecha">Buscar por:</label>
                 <select class="selectpicker form-control" id="opListConsultas">
                     <option value="0">Seleccione</option>
@@ -35,16 +51,16 @@
                 </select>
             </div>
         </div>
-        <div class="col-md-6">
+        <div>
             <div id="fechas" class="hidden-event">
-                <div class="form-group col-md-6">
+                <div class="form-group col-md-2">
                     <label class="control-label" for="con_Fecha">Fecha Inicio</label>
                     <div class="input-group date form_date fecha" data-date="" data-date-format="yyyy-mm-dd">
                         <input class="form-control" validate="date" id="con_FechaI" size="16" type="text" value="" readonly>
                         <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                     </div>    
                 </div>
-                <div class="form-group col-md-6">
+                <div class="form-group col-md-2">
                     <label class="control-label" for="con_Fecha">Fecha Final</label>
                     <div class="input-group date form_date fecha" data-date="" data-date-format="yyyy-mm-dd">
                         <input class="form-control" validate="date" id="con_FechaF" size="16" type="text" value="" readonly>
@@ -52,7 +68,7 @@
                     </div>    
                 </div>
             </div>
-            <div class="form-group col-md-6 hidden-event">
+            <div class="form-group col-md-2 hidden-event">
                 <label class="control-label" for="con_Fecha">Mes</label>
                 <div class="input-group date form_date mes" data-date="" data-date-format="yyyy-mm-dd">
                     <input class="form-control" validate="date" id="con_Mes" size="16" type="text" value="" readonly>
@@ -60,14 +76,14 @@
                 </div>    
             </div>
             <div id="meses" class="hidden-event">
-                <div class="form-group col-md-6">
+                <div class="form-group col-md-2">
                     <label class="control-label" for="con_Fecha">Mes Inicio</label>
                     <div class="input-group date form_date mes" data-date="" data-date-format="yyyy-mm-dd">
                         <input class="form-control" validate="date" id="con_MesI" size="16" type="text" value="" readonly>
                         <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                     </div>    
                 </div>
-                <div class="form-group col-md-6">
+                <div class="form-group col-md-2">
                     <label class="control-label" for="con_Fecha">Mes Final</label>
                     <div class="input-group date form_date mes" data-date="" data-date-format="yyyy-mm-dd">
                         <input class="form-control" validate="date" id="con_MesF" size="16" type="text" value="" readonly>
@@ -75,7 +91,7 @@
                     </div>    
                 </div>
             </div>
-            <div class="form-group col-md-6 hidden-event">
+            <div class="form-group col-md-2 hidden-event">
                 <label class="control-label" for="con_Fecha">Año</label>
                 <div class="input-group date form_date año" data-date="" data-date-format="yyyy-mm-dd">
                     <input class="form-control" validate="date" id="con_Año" size="16" type="text" value="" readonly>
@@ -83,6 +99,7 @@
                 </div>    
             </div>
         </div>
+
     </div>
 
     <div class="clearfix"></div>
@@ -100,7 +117,7 @@
             </select>
         </div>
         <div class="pull-right">
-                <input class="form-control" style="width: 150px;" placeholder="Buscar" id="txt_filterHistorialC">
+            <input class="form-control" style="width: 150px;" placeholder="Buscar" id="txt_filterHistorialC">
         </div>
     </div>
 </div>

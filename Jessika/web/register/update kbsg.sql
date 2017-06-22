@@ -1,8 +1,10 @@
-CREATE PROCEDURE getConsultas
+ALTER PROCEDURE getConsultas
 @fechaI date,
 @fechaF date,
 @fecha date,
 @idHC int,
+@idTipoConsulta int,
+@idsEspecialidad VARCHAR(MAX),
 @opFecha int,
 @tops int,
 @pag int,
@@ -12,10 +14,17 @@ AS BEGIN
 	set @total = (SELECT COUNT(*) from dbo.consulta con
 	inner join dbo.caso cs on cs.id = con.idCaso
 	inner join dbo.historialClinico hc on hc.id = cs.idHistorialClinico and (@idHC = 0 or hc.id = @idHC)
+	inner join dbo.medico_especialidad m_e on m_e.id= con.idMedico_Especialidad
+	inner join dbo.especialidad esp on esp.id = m_e.idEspecialidad
+	inner join dbo.tipoConsulta  tc on tc.id = con.idTipoConsulta
 	where 
-		(@opFecha = 1 and (con.fecha BETWEEN @fechaI and @fechaF))
+		((@opFecha = 1 and (con.fecha BETWEEN @fechaI and @fechaF))
 		or (@opFecha = 2 and (MONTH(con.fecha) = MONTH(@fecha) and YEAR(con.fecha) = YEAR(@fecha)))
 		or (@opFecha = 4 and YEAR(con.fecha) = YEAR(@fecha)))
+		and (@idsEspecialidad = '0' or esp.id in (SELECT value FROM STRING_SPLIT(@idsEspecialidad, ',')))
+		and (@idTipoConsulta = 0 or tc.id = @idTipoConsulta)
+		)
+		
 	
 	SELECT esp.id id_especialidad , esp.descripcion des_especialidad,tc.descripcion tipo, case tc.id
 	WHEN 1 THEN (select ca.descripcion from dbo.causa ca where con.idMetodo = ca.id) 
@@ -28,9 +37,11 @@ AS BEGIN
 	inner join dbo.especialidad esp on esp.id = m_e.idEspecialidad
 	inner join dbo.tipoConsulta  tc on tc.id = con.idTipoConsulta
 	where 
-		(@opFecha = 1 and (con.fecha BETWEEN @fechaI and @fechaF))
+		((@opFecha = 1 and (con.fecha BETWEEN @fechaI and @fechaF))
 		or (@opFecha = 2 and (MONTH(con.fecha) = MONTH(@fecha) and YEAR(con.fecha) = YEAR(@fecha)))
-		or (@opFecha = 4 and YEAR(con.fecha) = YEAR(@fecha))
+		or (@opFecha = 4 and YEAR(con.fecha) = YEAR(@fecha)))
+		and (@idsEspecialidad = '0' or esp.id in (SELECT value FROM STRING_SPLIT(@idsEspecialidad, ',')))
+		and (@idTipoConsulta = 0 or tc.id = @idTipoConsulta)
 		order by con.fecha 
 		OFFSET @pag ROWS FETCH NEXT @tops ROWS ONLY;
 END
