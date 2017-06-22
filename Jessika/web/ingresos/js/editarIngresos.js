@@ -22,6 +22,9 @@ var filas=5;
 var indiceMedicamentos=0;
  var bandera=0;
  var m;
+ $(function () {
+    $('.form_date').datetimepicker('update', new Date());
+ });
 /*-------------------------------Ingresos-------------------------------------------------------------------------*/
 //Buscar Ingresos
 $('#tabMantenimientoIngresos #btnBuscar').click(function(event) {    

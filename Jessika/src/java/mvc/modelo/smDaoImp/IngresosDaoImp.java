@@ -31,7 +31,7 @@ import mvc.modelo.smDao.IngresosDao;
  */
 public class IngresosDaoImp implements IngresosDao {
 C_BD conn;
-
+String excepcion="";
 
     @Override
     public List<Ingresos> listIngresos(int numeroPaginas, int totalRegistro, Date fechaIngreso, Date fechaSalida) {
@@ -82,6 +82,7 @@ C_BD conn;
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
+            excepcion=ex.getMessage();
         } finally {
             //this.conn.close();
         }
@@ -110,6 +111,7 @@ C_BD conn;
         }
         catch(SQLException ex)
         {
+            excepcion=ex.getMessage();
             return totalRegistros;
         }
     }
@@ -141,6 +143,7 @@ C_BD conn;
         }
         catch(SQLException ex)
         {
+            excepcion=ex.getMessage();
             return totalRegistros;
         }
     }
@@ -184,6 +187,7 @@ C_BD conn;
 
                 }
             } catch (SQLException ex) {
+                excepcion=ex.getMessage();
                 System.out.println(ex.getMessage());
             } finally {
                 //this.conn.close();
@@ -230,6 +234,7 @@ C_BD conn;
         //ResultSet rs = this.conn.query("SELECT * FROM MEDICO");
         return true;
         } catch (SQLException ex) {
+            excepcion=ex.getMessage();
             System.out.println(ex.getMessage());
             return false; 
         } 
@@ -249,6 +254,7 @@ C_BD conn;
                                
             }
         } catch (SQLException ex) {
+            excepcion=ex.getMessage();
             System.out.println(ex.getMessage());
         } finally {
             this.conn.close();
@@ -268,6 +274,7 @@ C_BD conn;
         }
         catch(Exception ex)
         {
+            excepcion=ex.getMessage();
             return false;
         }
 
@@ -285,6 +292,7 @@ C_BD conn;
         }
         catch(Exception ex)
         {
+            excepcion=ex.getMessage();
             return false;
         }
         
@@ -311,6 +319,7 @@ C_BD conn;
         }
         catch(Exception ex)
         {
+            excepcion=ex.getMessage();
             return false;
         }
     }
@@ -328,6 +337,7 @@ C_BD conn;
                     list.add(value);
                 }
             } catch (SQLException ex) {
+                excepcion=ex.getMessage();
                 System.out.println(ex.getMessage());
             } finally {
                 //this.conn.close();
@@ -381,12 +391,18 @@ C_BD conn;
                 list.add(value);
                 }
             } catch (SQLException ex) {
+                excepcion=ex.getMessage();
                 System.out.println(ex.getMessage());
             } finally {
                 //this.conn.close();
             }
 
             return list;
+    }
+
+    @Override
+    public String getExcepcion() {
+        return excepcion;
     }
     
     

@@ -41,6 +41,8 @@ import java.io.BufferedWriter;
  */
 public class ExcelDaoImp implements ExcelDao {
 C_BD conn;
+String excepcion="";
+int c=1;
     @Override
     public String generarExcelIngresos(Date fecha,String path,String nombreEstablecimiento) {
         try
@@ -200,6 +202,7 @@ C_BD conn;
         }
         catch(Exception ex)
         {
+            excepcion=ex.getMessage();
             return "";
             
             
@@ -332,6 +335,7 @@ C_BD conn;
         }
         catch(Exception ex)
         {
+            excepcion=ex.getMessage();
             return "";
         }
     }
@@ -347,9 +351,8 @@ C_BD conn;
             cStmt.execute();    
             final ResultSet rs = cStmt.getResultSet(); 
             int r=5;
-            File f= new File(path+"Formulario_digital_Camas_ind_2017.xlsx");
-            FileInputStream fileInputStream = new FileInputStream(f);
-            XSSFWorkbook wb = new XSSFWorkbook(fileInputStream);
+             XSSFWorkbook wb = new XSSFWorkbook(path+"Formulario_digital_Camas_ind_2017.xlsx");
+            
             XSSFSheet sheet = wb.getSheetAt(0);
             
             XSSFRow row;
@@ -475,8 +478,14 @@ C_BD conn;
         }
         catch(Exception ex)
         {
+            excepcion=ex.getMessage();
             return "";
         }
+    }
+
+    @Override
+    public String getExcepcion() {
+        return excepcion;
     }
     
     

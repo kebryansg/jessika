@@ -19,6 +19,7 @@ import mvc.modelo.smDao.CamasDao;
 import mvc.modelo.smDaoImp.CamasDaoImp;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 import java.util.ArrayList;
 import org.codehaus.jackson.map.ObjectMapper;
 
@@ -125,7 +126,10 @@ public class sCamas extends HttpServlet {
              int emergencia =  Integer.parseInt(request.getParameter("emergencia"));
              int cuidadosIntensivos =  Integer.parseInt(request.getParameter("cuidadosIntensivos"));
              Camas cama=new Camas(id, medicinaInternaIndividual, medicinaInternaDoble, cirugiaIndividual, cirugiaDoble, ginecologiaIndividual, ginecologiaDoble, pediatriaIndividual, pediatriaDoble, cardiologiaIndividual, cardiologiaDoble, neumologiaIndividual, neumologiaDoble, psiquiatriaIndividual, psiquiatriaDoble, traumatologiaIndividual, traumatologiaDoble, infectologiaIndividual, infectologiaDoble, oftalmologiaIndividual, oftalmologiaDoble, urologiaIndividual, urologiaDoble, gastroenterologiaIndividual, gastroenterologiaDoble, emergencia, cuidadosIntensivos);
-             camas.save(cama);
+              JsonObject object = new JsonObject();
+              object.addProperty("estado",camas.save(cama));
+              object.addProperty("excepcion",camas.getExcepcion());
+              out.println(object);
          }
     }
 

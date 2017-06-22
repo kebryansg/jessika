@@ -98,7 +98,7 @@ $(function () {
             }
             else
             {
-                console.log(resultado);
+                
                 if(resultado[0].logo==="sinLogo")
                 {
                     $("#input-es").fileinput({
@@ -204,7 +204,9 @@ $('#btnGuardar').click(function(event) {
             data: formData,
             processData: false,
             contentType: false,
-            success:function(resultado){ 
+            success:function(data){ 
+                 //var resultado = JSON && JSON.parse(data) || $.parseJSON(data); 
+                 //console.log(resultado);
                 $("#msgAlert").fadeOut();            
                 if(id==1)
                 {

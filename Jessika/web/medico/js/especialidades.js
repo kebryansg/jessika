@@ -93,19 +93,24 @@
                 idEspecialidad: idEspecialidadVar,
                 visible: '1',
                 opcion: "3"
-            }, function(responseText) { 
-                if(idEspecialidadVar===0)
+            }, function(data) { 
+                var resultado = JSON && JSON.parse(data) || $.parseJSON(data);
+                if(resultado.estado===true)
                 {
-                    cargarEspecialidades(pagina,buscar);
-                    alertify.success("Especialidad agregada correctamente");
-                }
+                    if(idEspecialidadVar===0)
+                    {
+                        cargarEspecialidades(pagina,buscar);
+                        alertify.success("Especialidad agregada correctamente");
+                    }
+                    else
+                    {
+                        alertify.success("Especialidad Modificada");
+                        $($('.table-responsive').find('tbody > tr')[indice]).children('td')[1].innerHTML = $('#recipient-name').val();
+                    }
+                    $("#modalEspecialidad").modal('toggle');                    
+                }        
                 else
-                {
-                    alertify.success("Especialidad Modificada");
-                    $($('.table-responsive').find('tbody > tr')[indice]).children('td')[1].innerHTML = $('#recipient-name').val();
-                }
-                $("#modalEspecialidad").modal('toggle');
-                
+                    alertify.success("Problemas al intentar guardar\n"+resultado.excepcion); 
             });
     }
     });

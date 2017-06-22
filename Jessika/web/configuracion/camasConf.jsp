@@ -21,7 +21,7 @@
             </div>
         </div>
         <hr id="separador" />
-        <div class="alert alert-info" style="text-align: center">Por especialidad registre el total de camas en una habitación doble o más y el total de camas en una habitación individual respectivamente (campo 1 y 2)</div>
+        <div class="alert alert-info" style="text-align: center">Por especialidad registre el total de camas en una habitación individual (campo 1) y el total de camas en una habitación doble o más (campo 2)</div>
         <div class="row">
            <div class="form-group col-md-6">
                 <label for="txtMedicinaInterna" class="control-label col-lg-6">Medicina interna</label>

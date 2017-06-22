@@ -8,6 +8,7 @@ var buscar = 0;
 var pagina=0;
 var ultimo=-1;
 $("#tabIngresos #cboMostrar").val(5);
+
 limpiar();
 $("#tabIngresos #txtBuscar").keyup(function (event) {
     if ($("#txtBuscar").val().length < 1)
@@ -98,8 +99,6 @@ $('#tabIngresos #btnCargar').click(function (event) {
             idHistoria = resultado.id;
             $('#tabIngresos #txtCedula').closest("div").removeClass("has-error");
             }
-            
-
         }
     });
     });
@@ -205,10 +204,16 @@ $('#tabIngresos #btnCargar').click(function (event) {
             causaExterna: $("#tabIngresos #txtCausaExterna").val(),
             codigoDiagnosticoDefinitivo:$("#tabIngresos #txtCodigoCie").val(),
             opcion:'2'                                
-        }, function(responseText) {   
-            console.log(responseText);        
+        }, function(data) {
             limpiar();
-            alertify.success("Datos Registrados correctamente");
+            var resultado = JSON && JSON.parse(data) || $.parseJSON(data);   
+            if(resultado.estado===true)
+            {
+                alertify.success("Datos Registrados correctamente");
+            }        
+            else
+                 alertify.success("Problemas al intentar guardar\n"+resultado.excepcion); 
+            
         });
     }
     });

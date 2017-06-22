@@ -109,8 +109,15 @@ function validarCedula()
                 opcion:'0'
             },
             async: false,
-            success:function(response){ 
-                alertify.success("Medico registrado correctamente");
+            success:function(data){ 
+                var resultado = JSON && JSON.parse(data) || $.parseJSON(data);
+                console.log(data);
+                if(resultado.estado===true)
+                {
+                    alertify.success("Médico registrado");
+                }  
+                else
+                    alertify.success("Problemas al guardar\n"+resultado.excepcion);
                 limpiar();
             }
         }); 

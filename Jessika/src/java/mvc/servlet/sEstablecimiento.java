@@ -5,6 +5,7 @@
  */
 package mvc.servlet;
 
+import com.google.gson.JsonObject;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -43,6 +44,7 @@ public class sEstablecimiento extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
@@ -70,8 +72,9 @@ public class sEstablecimiento extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //processRequest(request, response);
+        PrintWriter out = response.getWriter();
          String op = request.getParameter("op");
-        upload(request,response,"");
+        upload(request,response,"",out);
     }
 
     /**
@@ -97,11 +100,11 @@ public class sEstablecimiento extends HttpServlet {
              response.getWriter().write(json);
           }
          else if("subirLogo".equals(opcion))
-             upload(request,response,opcion);
+             out.println(upload(request,response,opcion,out));
          else if("eliminar".equals(opcion))
-             upload(request,response,opcion);
-         else
-             upload(request,response,"subir");
+             out.println(upload(request,response,opcion,out));             
+         else             
+             out.println(upload(request,response,"subir",out));
         
        
     }
@@ -115,18 +118,22 @@ public class sEstablecimiento extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-    public boolean upload(HttpServletRequest request,HttpServletResponse response, String op)
+    public JsonObject upload(HttpServletRequest request,HttpServletResponse response, String op,PrintWriter out)
     {
+        JsonObject object = new JsonObject();
         try
         {
             EstablecimientoDao establecimiento= new EstablecimientoDaoImp();
+            
             if("eliminar".equals(op))
             {
-                establecimiento.updateLogo("sinLogo");
+                
+                object.addProperty("estado", establecimiento.updateLogo("sinLogo"));
+                object.addProperty("excepcion",establecimiento.getExcepcion());
                 ObjectMapper OBJECT_MAPPER = new ObjectMapper();
                 String json = OBJECT_MAPPER.writeValueAsString("1");
                 response.getWriter().write(json);
-                return true;
+                return object;
             }
             FileItemFactory factory = new DiskFileItemFactory();
             ServletFileUpload upload = new ServletFileUpload(factory);
@@ -176,19 +183,19 @@ public class sEstablecimiento extends HttpServlet {
             if("subir".equals(op))
             {                         
                 Establecimiento value= new Establecimiento(Integer.parseInt(datos[6]),datos[0],datos[1],Integer.parseInt(datos[2]),datos[3],datos[4],datos[5],datos[7]);            
-                establecimiento.save(value); 
-                
+                object.addProperty("estado", establecimiento.save(value));
+                object.addProperty("excepcion",establecimiento.getExcepcion());
             }   
-            
             else            
             {
-                establecimiento.updateLogo(datos[7]);
+                object.addProperty("estado",establecimiento.updateLogo(datos[7]));                
+                object.addProperty("excepcion",establecimiento.getExcepcion());
             }
-            return true;
+            return object;
         }
         catch(Exception ex)
         {
-            return false;
+            return object;
         }
         
     }

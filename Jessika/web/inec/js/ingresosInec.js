@@ -8,6 +8,8 @@ $('#descargarCamas').hide();
 $('#descargarCamasIndividual').hide();
 //descargarCamasIndividual
 $(function () {
+    $('.form_date').datetimepicker('update', new Date());
+    $('.form_date').datetimepicker('setEndDate', new Date());
     $.ajax({
         url: 'sEstablecimiento',
         data: {            
@@ -65,17 +67,32 @@ $("#btnGenerar").click(function(event) {
                // document.getElementById("mostrar_loading").innerHTML="<img src='resources/img/tenor.gif' width='300' heigth='300'>";
             },
             success: function(data){   
-               console.log(data);
+              
                var resultado = JSON && JSON.parse(data) || $.parseJSON(data);               
-                $("#descargarEgresos").attr("href","xlsx/"+resultado.egresos);
-                $("#descargarCamas").attr("href","xlsx/"+resultado.camas);
-                $('#descargarCamasIndividual').attr("href","xlsx/"+resultado.camasIndividual);                
-                $('#descargarCamasIndividual').show("slow");
-                $('#descargarEgresos').show("slow");
-                $('#descargarCamas').show("slow");
-                //document.getElementById("mostrar_loading").style.display="none";
-                waitingDialog.hide();
-                //document.getElementById("mostrar_tabla").innerHTML=data;
+                console.log(data);
+                if(resultado[0].egresos!=="")
+                {
+                    $("#descargarEgresos").attr("href","xlsx/"+resultado[0].egresos);
+                    $('#descargarEgresos').show("slow");
+                }                
+                if(resultado[0].camas!=="")
+                {
+                    $("#descargarCamas").attr("href","xlsx/"+resultado[0].camas);
+                    $('#descargarCamas').show("slow");
+                }                
+                if(resultado[0].camasIndividual!=="")
+                {
+                    $('#descargarCamasIndividual').attr("href","xlsx/"+resultado[0].camasIndividual);                
+                    $('#descargarCamasIndividual').show("slow");
+                }                
+                waitingDialog.hide();   
+                var excepcion="";
+                for(i=1;i <resultado.length; i++)
+                {
+                    excepcion=excepcion+" Error al intentar generar excel "+excepcion+resultado[i].formulario+":"+excepcion+resultado[i].excepcion;;                    
+                }
+                if(excepcion!=="")
+                    alertify.success(excepcion);
                 $('#btnGenerar').prop('disabled', false);
             }
 

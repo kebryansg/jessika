@@ -13,4 +13,5 @@ import java.util.List;
 public interface CamasDao {
     public boolean save(Camas value);
     public List<Camas> list();
+     public String getExcepcion();
 }

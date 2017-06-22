@@ -17,6 +17,6 @@ public interface MedicoEspecialidadDao {
     public MedicoEspecialidad edit(int id);
     public boolean save(MedicoEspecialidad value);
     public boolean delete (int id);    
-    
+     public String getExcepcion();
     
 }

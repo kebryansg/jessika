@@ -26,6 +26,7 @@ import mvc.modelo.smDao.MedicoDao;
  */
 public class MedicoDaoImp implements MedicoDao{
 C_BD conn;
+String excepcion="";
     @Override
     //numero de paginas hace referencia a la paginacion
     // total de registros los que se muestran en esta consulta
@@ -77,11 +78,10 @@ C_BD conn;
                 
             }
         } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
+            excepcion=ex.getMessage();
         } finally {
             //this.conn.close();
-        }
-       
+        }       
         return list; 
         
     }
@@ -108,7 +108,7 @@ C_BD conn;
                 
             }
         } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
+            excepcion=ex.getMessage();
         } finally {
             this.conn.close();
         }
@@ -131,8 +131,7 @@ C_BD conn;
             //Update
             else
             {
-                sql="UPDATE medico SET nombre1='"+value.getNombre1()+"', nombre2='"+value.getNombre2()+"', apellidos1='"+value.getApellidos1()+"', apellidos2='"+value.getApellidos2()+"', domicilio='"+value.getDomicilio()+"', ciudad='"+value.getCiudad()+"', telefonoDomicilio='"+value.getTelefonoDomicilio()+"', telefonoOficina='"+value.getTelefonoOficina()+"', telefonoMovil='"+value.getTelefonoMovil()+"',email='"+value.getEmail()+"',cedula='"+value.getCedula()+"', visible='"+value.getVisible()+"' where id='"+value.getId()+"'";
-                
+                sql="UPDATE medico SET nombre1='"+value.getNombre1()+"', nombre2='"+value.getNombre2()+"', apellidos1='"+value.getApellidos1()+"', apellidos2='"+value.getApellidos2()+"', domicilio='"+value.getDomicilio()+"', ciudad='"+value.getCiudad()+"', telefonoDomicilio='"+value.getTelefonoDomicilio()+"', telefonoOficina='"+value.getTelefonoOficina()+"', telefonoMovil='"+value.getTelefonoMovil()+"',email='"+value.getEmail()+"',cedula='"+value.getCedula()+"', visible='"+value.getVisible()+"' where id='"+value.getId()+"'";                
                 
             }
            
@@ -144,6 +143,7 @@ C_BD conn;
         }
         catch(Exception ex)
         {
+            excepcion=ex.getMessage();
             return false;
         }
     }
@@ -158,6 +158,7 @@ C_BD conn;
         }
         catch(Exception ex)
         {
+            excepcion=ex.getMessage();
             return false;            
         }
     }
@@ -168,7 +169,7 @@ C_BD conn;
         this.conn= con_db.open(con_db.MSSQL_SM);        
         try
         {            
-             ResultSet rs = this.conn.query("SELECT  TOP 1 id from medico order by id desc");
+             ResultSet rs = this.conn.query("SELECT  TOP 1 id from medico order by id  desc");
              while(rs.next())
              {
                  idMedico=rs.getInt("id");
@@ -177,6 +178,7 @@ C_BD conn;
         }
         catch(SQLException ex)
         {
+            excepcion=ex.getMessage();
             return idMedico;
         }
     }
@@ -206,6 +208,7 @@ C_BD conn;
         }
         catch(SQLException ex)
         {
+            excepcion=ex.getMessage();
             return totalRegistros;
         }
     }
@@ -225,9 +228,19 @@ C_BD conn;
         }
         catch(SQLException ex)
         {
+            excepcion=ex.getMessage();
             return total;
         }
     }
+
+    @Override
+    public String getExcepcion() {
+        return excepcion;
+    }
+    
+
+    
+    
     
     
 }

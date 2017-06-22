@@ -21,6 +21,7 @@ import mvc.modelo.smDao.EstablecimientoDao;
  */
 public class EstablecimientoDaoImp implements EstablecimientoDao {
 C_BD conn;
+String excepcion="";
     @Override
     public boolean save(Establecimiento value) {
         this.conn = con_db.open(con_db.MSSQL_SM);
@@ -44,6 +45,7 @@ C_BD conn;
         catch (Exception ex) 
         {
             System.out.println(ex.getMessage());
+            excepcion=ex.getMessage();
             return false;
         } 
         finally 
@@ -66,6 +68,7 @@ C_BD conn;
         catch (Exception ex) 
         {
             System.out.println(ex.getMessage());
+            excepcion=ex.getMessage();
             return false;
         } 
         finally 
@@ -92,11 +95,17 @@ C_BD conn;
                 list.add(value);
             }
         } catch (SQLException ex) {
+            excepcion=ex.getMessage();
             System.out.println(ex.getMessage());
         } finally {
             this.conn.close();
         }
         return list;
+    }
+
+    @Override
+    public String getExcepcion() {
+        return excepcion;
     }
     
 }
