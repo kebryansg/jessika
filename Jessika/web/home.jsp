@@ -284,6 +284,8 @@
 
             <script type="text/javascript">
                 $("#contenido").load("consulta/listConsultas.jsp");
+                
+                
             </script>
             <script type="text/javascript" src="usuario/login.js"></script>
            

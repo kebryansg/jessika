@@ -6,7 +6,7 @@
             <div class="pull-left">
                 <div class="form-inline">
                     <input class="form-control" style="width: 80px;" readonly id="pac_HC" placeholder="Cod. HC" >
-                    <input class="form-control " style="width: 235px;" readonly id="pac_Nombres" placeholder="Apellidos y Nombres del Paciente" >  
+                    <input class="form-control " style="width: 260px;" readonly id="pac_Nombres" placeholder="Apellidos y Nombres del Paciente" >  
                     <button class="btn btn-info " id="pac_Buscar" data-toggle="modal" data-target="#ListPaciente" ><i class="glyphicon glyphicon-search"></i> Buscar Paciente</button>    
                     <button class="btn btn-danger " id="pac_Delete" ><i class="glyphicon glyphicon-trash"></i></button>    
                 </div>

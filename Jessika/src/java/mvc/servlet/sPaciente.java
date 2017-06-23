@@ -190,18 +190,18 @@ public class sPaciente extends HttpServlet {
                 paciente.setParentezco(request.getParameter("paciente[parentezco]"));
 
                 paciente.setTelefonoOficina(request.getParameter("paciente[telOficina]"));
-                Boolean sexo = request.getParameter("paciente[genero]").equals("1") ? true : false;
+                Boolean sexo = request.getParameter("paciente[genero]").equals("1");
                 paciente.setSexo(sexo);
                 paciente.setPaisNacimiento(request.getParameter("paciente[paisNac]"));
                 paciente.setLugarNacimiento(request.getParameter("paciente[lugarNac]"));
                 paciente.setIdParroquia(new Parroquia(Integer.parseInt(request.getParameter("paciente[parroquia]"))));
 
-                if (request.getParameter("paciente[editImg]").equals("1")) {
+                /*if (request.getParameter("paciente[editImg]").equals("1")) {
                     saveFoto(request.getParameter("paciente[imagen]"), idPaciente);
                     paciente.setImagen("imagen/paciente/p_" + idPaciente + ".jpg");
                 } else {
                     paciente.setImagen(request.getParameter("paciente[imagen]"));
-                }
+                }*/
                 if (paciente.getId() == 0) {
                     new HistorialClinicoDaoImp().save(new HistorialClinico("", idPaciente));
                 }
@@ -242,7 +242,6 @@ public class sPaciente extends HttpServlet {
                             new ParienteEnfermedadPacienteDaoImp().delete(Integer.parseInt(value));
                         }
                     }
-
                 }
                 break;
         }

@@ -1,40 +1,11 @@
 var $table = $('#table');
 
-/*$(function () {
- $table.bootstrapTable({
- contextMenuButton: '.folders, .files',
- beforeContextMenuRow: function (e, row, buttonElement) {
- if (row.id == 3 && !buttonElement) {
- $table.bootstrapTable('showContextMenu', {event: e, contextMenu: '#folders-menu'});
- } else if (row.id == 4 && !buttonElement) {
- $table.bootstrapTable('showContextMenu', {event: e, contextMenu: '#files-menu'});
- } else if (buttonElement && $(buttonElement).hasClass('folders')) {
- $table.bootstrapTable('showContextMenu', {
- event: e,
- contextMenu: '#folders-menu',
- buttonElement: buttonElement
- });
- } else if (buttonElement && $(buttonElement).hasClass('files')) {
- $table.bootstrapTable('showContextMenu', {
- event: e,
- contextMenu: '#files-menu',
- buttonElement: buttonElement
- });
- }
- return false;
- },
- data: data
- });
- });*/
-
-
 $("#tablPaciente").bootstrapTable({
     contextMenu: '#tablPaciente-context-menu',
     beforeContextMenuRow: function (e) {
         return $("#tablPaciente").closest(".modal").length === 0;
     },
     onContextMenuItem: function (row, $el) {
-        alert($("#tablPaciente").closest(".modal").html());
         switch ($el.data("item")) {
             case "edit":
                 editPaciente(row.id);

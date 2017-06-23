@@ -2,6 +2,7 @@ package mvc.servlet;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DateFormat;
@@ -37,6 +38,11 @@ import mvc.modelo.smDaoImp.HistorialClinicoDaoImp;
 import mvc.modelo.smDaoImp.MetodosDaoImp;
 import mvc.modelo.smDaoImp.SignosVitalesDaoImp;
 import mvc.modelo.smDaoImp.TipoConsultaDaoImp;
+import org.apache.commons.io.FileUtils;
+import org.json.CDL;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import test.list_count;
 import test.test;
 
@@ -102,16 +108,23 @@ public class sConsulta extends HttpServlet {
         Gson gson = new GsonBuilder().setDateFormat(FORMATO_FECHA).create();
         String result = "";
         String op = request.getParameter("op");
+
         list_count l = new list_count();
         List<String> resultList = new ArrayList();
         switch (op) {
+            case "excel":
+
+                String jsonString = "{\"infile\": [{\"field1\": 11,\"field2\": 12,\"field3\": 13},{\"field1\": 21,\"field2\": 22,\"field3\": 23},{\"field1\": 31,\"field2\": 32,\"field3\": 33}]}";
+                System.out.println(jsonString);
+
+                break;
             case "adminConsultas":
                 int tops = Integer.parseInt(request.getParameter("top")),
                  pag = Integer.parseInt(request.getParameter("pag")),
                  idHC = Integer.parseInt(request.getParameter("idHC")),
                  idTipoConsulta = Integer.parseInt(request.getParameter("idTipoConsulta")),
                  opTiempo = Integer.parseInt(request.getParameter("opTiempo"));
-                
+
                 switch (opTiempo) {
                     case 1:
                     case 3:
@@ -136,6 +149,7 @@ public class sConsulta extends HttpServlet {
                             + "\"especialidad\" : \"" + consulta.getIdMedicoEspecialidad().getIdEspecialidad().getDescripcion() + "\""
                             + "}");
                 }
+                saveExcel("{\"out\": [" + String.join(",", resultList) + "]}", "resultad.xls");
                 out.print("{\"count\": \"" + Math.ceil((float) l.getTotal() / tops) + "\" , \"list\": [" + String.join(",", resultList) + "] }");
                 out.flush();
                 out.close();
@@ -297,6 +311,22 @@ public class sConsulta extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    public void saveExcel(String json_text, String fileOut) {
+        JSONObject output;
+        try {
+            output = new JSONObject(json_text);
+
+            JSONArray docs = output.getJSONArray("out");
+            File file = new File(getServletContext().getRealPath("/xlsx/") + fileOut);
+            String csv = CDL.toString(docs);
+            FileUtils.writeStringToFile(file, csv);
+        } catch (JSONException e) {
+            System.out.println("json " + e.getMessage());
+        } catch (IOException e) {
+            System.out.println("IO " + e.getMessage());
+        }
+    }
 
 }
 

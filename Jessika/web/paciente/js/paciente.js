@@ -236,8 +236,8 @@ function obtenerDatos(id) {
         primerApellido: $("#optionPaciente[data-id='" + id + "'] #pac_primerApellido").val(),
         segundoApellido: $("#optionPaciente[data-id='" + id + "'] #pac_segundoApellido").val(),
         fechaNac: $("#optionPaciente[data-id='" + id + "'] #pac_FechaNac").val(),
-        imagen: $("#optionPaciente[data-id='" + id + "'] #pac_imagen").attr("src"),
-        editImg: ($("#optionPaciente[data-id='" + id + "'] #pac_imagen").attr("src") === $("#optionPaciente[data-id='" + id + "'] #pac_imagen").attr("edit")) ? "0" : "1",
+        //imagen: $("#optionPaciente[data-id='" + id + "'] #pac_imagen").attr("src"),
+        //editImg: ($("#optionPaciente[data-id='" + id + "'] #pac_imagen").attr("src") === $("#optionPaciente[data-id='" + id + "'] #pac_imagen").attr("edit")) ? "0" : "1",
         nacionalidad: $("#optionPaciente[data-id='" + id + "'] #pac_nacionalidad").val(),
         telCasa: $("#optionPaciente[data-id='" + id + "'] #pac_TelCasa").val(),
         email: $("#optionPaciente[data-id='" + id + "'] #pac_Email").val(),
@@ -270,7 +270,7 @@ function obtenerDatos(id) {
 
     };
     return paciente;
-    alert($("#optionPaciente[data-id='" + id + "'] #cboParentezco").val());
+    
 }
 
 function newAntecedentes(id) {
@@ -336,11 +336,11 @@ function asignarPaciente(paciente) {
     var discapacidad = paciente.discapacidad === 1 ? true : false;
     $("#pac_Discapacidad").attr("checked", discapacidad);
     //Select
-    $('#pac_nacionalidad > option[value="' + paciente.nacionalidad + '"]').attr('selected', true);
-    $('#pac_Etnia > option[value="' + paciente.etnia + '"]').attr('selected', true);
-    $('#pac_EstadoCivil > option[value="' + paciente.estadoCivil + '"]').attr('selected', true);
+    $('#pac_nacionalidad').selectpicker("val",paciente.nacionalidad);
+    $('#pac_Etnia').selectpicker("val",paciente.etnia);
+    $('#pac_EstadoCivil').selectpicker("val",paciente.estadoCivil);
     var sexo = paciente.sexo === true ? "1" : "2";
-    $('#pac_Genero > option[value="' + sexo + '"]').attr('selected', true);
+    $('#pac_Genero').selectpicker("val",sexo);
     change_Genero($('#pac_Genero'));
     /* Carga y asigna provincia,canton y parroquia */
     $.ajax({

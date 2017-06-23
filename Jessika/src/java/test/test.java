@@ -17,6 +17,7 @@ import java.util.Date;
 import mvc.controlador.C_BD;
 import mvc.controlador.con_db;
 import mvc.modelo.smDaoImp.ConsultaDaoImp;
+import org.apache.commons.io.FileUtils;
 
 /**
  *
@@ -25,8 +26,10 @@ import mvc.modelo.smDaoImp.ConsultaDaoImp;
 public class test {
 
     public static void main(String[] args) throws ParseException, IOException {
-        float x = (float) 3/2;
-        System.out.println("Esto -" + Math.ceil(x));
+        String string = "This is\na test";
+        File file = new File(ruta()+"/test.txt");
+        FileUtils.writeStringToFile(file, string);
+        System.out.println(ruta());
 
     }
 
