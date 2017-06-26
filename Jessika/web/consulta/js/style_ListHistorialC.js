@@ -1,10 +1,22 @@
-$("#viewHistorialCaso table").bootstrapTable();
+$("#tb_ViewHC").bootstrapTable({
+    contextMenu: '#tb_ViewHC-context-menu',
+    onContextMenuItem: function (row, $el) {
+        switch ($el.data("item")) {
+            case "view":
+                
+                $("#contenido").load("consulta/viewConsulta.jsp",function(){
+                    editConsulta(row.id);
+                });
+                $('#viewHistorialCaso').modal('toggle');
+                break;
+        }
+    }
+});
 $("#tbHC").bootstrapTable({
     contextMenu: '#tbHc-context-menu',
     onContextMenuItem: function (row, $el) {
         switch ($el.data("item")) {
             case "new":
-                //alert("new " + row.caso);
                 addHistorialCaso(row.caso);
                 break;
             case "view":
@@ -51,7 +63,7 @@ function viewHistorialCaso(idCaso) {
             $("#viewHistorialCaso table").bootstrapTable('load', data);
         }
     });
-    $('#viewHistorialCaso').modal("toggle");
+    $('#viewHistorialCaso').modal("show");
 }
 function addHistorialCaso(idCaso) {
     nomPaciente = $("#con_nombrePaciente").val();
@@ -70,6 +82,13 @@ function addHistorialCaso(idCaso) {
 }
 
 $(function () {
+
+    $("#pac_Delete").on("click", function (e) {
+        limpiarDivPaciente();
+        
+    });
+
+
     $("#btnNewConsulta").click(function () {
         nomPaciente = $("#con_nombrePaciente").val();
         hc = $("#con_historiaPaciente").val();
@@ -104,36 +123,40 @@ $(function () {
         var cod = $("#txt_cargarPaciente").val();
         var bandera = validarText($("#txt_cargarPaciente"));
         if (bandera) {
-            $.ajax({
-                url: 'sConsulta',
-                type: 'POST',
-                data: {
-                    op: 'paciente',
-                    cod: cod
-                },
-                success: function (response) {
-                    if (response !== "null") {
-                        var ob = $.parseJSON(response);
-                        $("#con_historiaPaciente").val(ob.hc_id);
-                        $("#con_cedulaPaciente").val(ob.paciente.cedula);
-                        $("#con_nombrePaciente").val((ob.paciente.apellido1 + " " + ob.paciente.apellido2 + " " + ob.paciente.nombre1 + " " + ob.paciente.nombre2).toUpperCase());
-                        $("#con_ciudadPaciente").val(ob.paciente.ciudad.toUpperCase());
-                        $("#con_sexoPaciente").val((ob.paciente.sexo) ? "1" : "0");
-                        obtList();
-                    } else {
-                        alertify.success("Paciente no encontrado");
-                    }
-                }
-            });
+            load_Paciente(cod);
         }
     });
 });
+
+function load_Paciente(cod) {
+    $.ajax({
+        url: 'sConsulta',
+        type: 'POST',
+        data: {
+            op: 'paciente',
+            cod: cod
+        },
+        success: function (response) {
+            if (response !== "null") {
+                var ob = $.parseJSON(response);
+                $("#con_historiaPaciente").val(ob.hc_id);
+                $("#con_cedulaPaciente").val(ob.paciente.cedula);
+                $("#con_nombrePaciente").val((ob.paciente.apellido1 + " " + ob.paciente.apellido2 + " " + ob.paciente.nombre1 + " " + ob.paciente.nombre2).toUpperCase());
+                $("#con_ciudadPaciente").val(ob.paciente.ciudad.toUpperCase());
+                $("#con_sexoPaciente").val((ob.paciente.sexo) ? "1" : "0");
+                obtList();
+            } else {
+                alertify.success("Paciente no encontrado");
+            }
+        }
+    });
+}
 
 function modalListPaciente() {
     $("#ListPaciente .modal-body").load("paciente/listPacientes.jsp", function () {
         $("#tablPaciente").bootstrapTable('hideColumn', 'accion');
         $("#tablPaciente").bootstrapTable('showColumn', 'seleccionar');
-        
+
         $("#tablPaciente").on('dbl-click-row.bs.table', function (e, row, $element) {
             $("#con_historiaPaciente").val(row.hc);
             $("#con_cedulaPaciente").val(row.cedula);
@@ -152,4 +175,5 @@ function limpiarDivPaciente() {
     $("#con_cedulaPaciente").val("");
     $("#con_nombrePaciente").val("");
     $("#con_ciudadPaciente").val("");
+    $("#tbHC").bootstrapTable("removeAll");
 }

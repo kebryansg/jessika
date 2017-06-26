@@ -9,6 +9,7 @@
         <div class="form-group col-md-4">
             <button class="btn btn-info" id="pac_Cargar" >Cargar</button>    
             <button class="btn btn-info" id="pac_Buscar" data-toggle="modal" data-target="#ListPaciente" ><i class="glyphicon glyphicon-search"></i> Buscar Paciente</button>    
+            <button class="btn btn-danger " id="pac_Delete" ><i class="glyphicon glyphicon-trash"></i></button>    
         </div>
     </div>
     <div class="row">
@@ -104,7 +105,11 @@
                 <h4 class="modal-title">Historial del Caso</h4>
             </div>
             <div class="modal-body">
-                <table data-toggle="table" data-height="300">
+                <ul id="tb_ViewHC-context-menu" class="dropdown-menu" >
+                    <li data-item="view"><a><i class="fa fa-plus fa-fw" aria-hidden="true"></i>&nbsp; Detalle Consulta</a></li>
+                </ul>
+
+                <table data-toggle="table" data-height="300" id="tb_ViewHC">
                     <thead>
                         <tr>
                             <th data-field="id" data-align="center">ID</th>
@@ -134,5 +139,5 @@
      }
      });*/
 
-    
+
 </script>

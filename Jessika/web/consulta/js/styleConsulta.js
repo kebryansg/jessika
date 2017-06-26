@@ -1,5 +1,7 @@
 $(document).ready(function () {
 
+    $('.form_date').datetimepicker('update', new Date());
+
     $("#cboTipoConsulta").on("changed.bs.select", function (e) {
         idTipoConsulta = $("#cboTipoConsulta").val();
         if (idTipoConsulta === "1") {
@@ -75,15 +77,20 @@ $(document).ready(function () {
 
 
     $("#btnCancelarConsulta").click(function () {
-        $("#contenido").load("consulta/ListHistorialC.jsp");
+        hc = $("#PacienteId").attr("data-hc");
+        $("#contenido").load("consulta/ListHistorialC.jsp", function () {
+            load_Paciente(hc);
+        });
     });
 
     $("#btnGuardarConsulta").click(function () {
-        //saveConsulta();
-        if(validarConsulta()){
+        if (validarConsulta()) {
             saveConsulta();
-        }
-        else{
+            hc = $("#PacienteId").attr("data-hc");
+            $("#contenido").load("consulta/ListHistorialC.jsp", function () {
+                load_Paciente(hc);
+            });
+        } else {
             alertify.success("Incovenientes en la informaciòn");
         }
     });
@@ -144,7 +151,7 @@ function saveConsulta() {
 }
 function validarConsulta() {
     $("#consulta_div .help-block").not("[data-exonerado]").remove();
-    
+
     $("#consulta_div select[validate='select']").closest(".form-group").removeClass("has-error");
     $("#consulta_div select[validate='select']").closest(".form-group").removeClass("error_input");
     cbos = [];
@@ -164,7 +171,7 @@ function validarConsulta() {
             });
         }
     });
-    
+
     $.each($("#consulta_div input[validate='date']"), function (index, value) {
         if (!validarDate(value)) {
             $(value).change(function () {

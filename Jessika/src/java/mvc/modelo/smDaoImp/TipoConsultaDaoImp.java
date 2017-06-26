@@ -1,9 +1,12 @@
 package mvc.modelo.smDaoImp;
 
+import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import mvc.controlador.C_BD;
 import mvc.controlador.con_db;
 import mvc.controlador.entidades.sm.DetallesMetodos;
@@ -38,7 +41,7 @@ public class TipoConsultaDaoImp implements TipoConsultaDao {
     public List<Metodos> list_Metodos(int idTipoConsulta) {
         this.conn = con_db.open(con_db.MSSQL_SM);
         List<Metodos> list = new ArrayList<>();
-        
+
         String sql = "select * from metodos where idTipoConsulta = " + idTipoConsulta;
         ResultSet rs = this.conn.query(sql);
         try {
@@ -63,7 +66,7 @@ public class TipoConsultaDaoImp implements TipoConsultaDao {
                     System.out.println(e.getMessage());
                 }
                 value.setList(list_detalles);
-                
+
                 list.add(value);
             }
         } catch (SQLException ex) {
@@ -90,6 +93,21 @@ public class TipoConsultaDaoImp implements TipoConsultaDao {
             this.conn.close();
         }
         return value;
+    }
+
+    @Override
+    public boolean save() {
+        this.conn = con_db.open(con_db.MSSQL_SM);
+        try {
+            CallableStatement call = this.conn.getConexion().prepareCall("{call dbo.insertTipoConsulta()}");
+            call.execute();
+        } catch (SQLException ex) {
+            System.err.println(ex.getMessage());
+        }finally{
+            this.conn.close();
+        }
+        
+        return false;
     }
 
 }

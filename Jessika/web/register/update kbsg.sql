@@ -45,3 +45,12 @@ AS BEGIN
 		order by con.fecha 
 		OFFSET @pag ROWS FETCH NEXT @tops ROWS ONLY;
 END
+
+-- 22 Junio
+CREATE PROCEDURE insertTipoConsulta
+AS BEGIN
+	SET IDENTITY_INSERT [dbo].[tipoConsulta] ON;
+	INSERT [dbo].[tipoConsulta](id,descripcion) values
+	(1,'AMBULATORIA'),(2,'PREVENCION');
+	SET IDENTITY_INSERT [dbo].[tipoConsulta] OFF 
+END

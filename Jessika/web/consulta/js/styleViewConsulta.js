@@ -1,5 +1,5 @@
 $(function () {
-    editConsulta(1018);
+    //editConsulta(1018);
 });
 
 function editConsulta(id) {
@@ -12,7 +12,6 @@ function editConsulta(id) {
         url: 'sConsulta',
         dataType: 'json',
         success: function (data) {
-            console.log(data);
             asignarConsuta(data.consulta);
             asginarSV(data.sv, (data.sexoP === "H"));
             
