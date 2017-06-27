@@ -1,5 +1,11 @@
 $(function () {
-    //editConsulta(1018);
+    //editConsulta(1025);
+    $("#btnCancelarViewConsulta").click(function () {
+        hc = $("#PacienteId").attr("data-hc");
+        $("#contenido").load("consulta/ListHistorialC.jsp", function () {
+            load_Paciente(hc);
+        });
+    });
 });
 
 function editConsulta(id) {
@@ -9,16 +15,18 @@ function editConsulta(id) {
             op: 'edit',
             id: id
         },
+        async: false,
         url: 'sConsulta',
         dataType: 'json',
         success: function (data) {
             asignarConsuta(data.consulta);
             asginarSV(data.sv, (data.sexoP === "H"));
-            
+
             listEstudiosLabs(data.estl);
             listEstudiosImgs(data.esti);
-            
+
             $("#PacienteId").val(data.paciente);
+            $("#PacienteId").attr("data-hc", data.consulta.idCaso.idHistorialClinico.id);
             $("#con_tipoConsulta").val(data.tipoConsulta);
             $("#con_CausaMetodo").val(data.metodo_causa);
         }
@@ -27,25 +35,25 @@ function editConsulta(id) {
 function listEstudiosLabs(estLab) {
     result = "";
     $.each(estLab, function (i, el) {
-        result+="<li class='list-group-item'>"+ el.idDetalleEstudiosLabs.idEstudiosLab.descripcion +" - <strong> " + el.idDetalleEstudiosLabs.descripcion +"</strong></li>";
+        result += "<li class='list-group-item'>" + el.idDetalleEstudiosLabs.idEstudiosLab.descripcion + " - <strong> " + el.idDetalleEstudiosLabs.descripcion + "</strong></li>";
     });
-    if(result !== ""){
+    if (result !== "") {
         $("#listEstudiosLab").append(result);
-    }else{
+    } else {
         $("#listEstudiosLab").hide();
     }
 }
 function listEstudiosImgs(estImgs) {
     result = "";
     $.each(estImgs, function (i, ei) {
-        result+="<li class='list-group-item'>"+ ei.idDetalleEstudiosImagen.idEstudiosImg.idTipoEstudioImg.descripcion +" - "+ ei.idDetalleEstudiosImagen.idEstudiosImg.descripcion +" - <strong>"+ ei.idDetalleEstudiosImagen.descripcion +"</strong></li>";
+        result += "<li class='list-group-item'>" + ei.idDetalleEstudiosImagen.idEstudiosImg.idTipoEstudioImg.descripcion + " - " + ei.idDetalleEstudiosImagen.idEstudiosImg.descripcion + " - <strong>" + ei.idDetalleEstudiosImagen.descripcion + "</strong></li>";
     });
-    if(result !== ""){
+    if (result !== "") {
         $("#listEstudiosImg").append(result);
-    }else{
+    } else {
         $("#listEstudiosImg").hide();
     }
-    
+
 }
 function asignarConsuta(consulta) {
     $("#con_Especialidad").val(consulta.idMedicoEspecialidad.idEspecialidad.descripcion);

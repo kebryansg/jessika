@@ -1,7 +1,15 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <div class="contenedor-tabs">
-    <div class="container-fluid" id="consulta_div">
+    <div class="" id="consulta_div">
+        <div class="row panel panel-group">
+            <div class="col-md-12 ">
+                <div class="pull-right ">
+                    <button class="btn btn-danger" id="btnCancelarViewConsulta">Cancelar</button>
+                </div>
+            </div>
+            
+        </div>       
         <div class="row flex-parent">
             <div class="col-md-3">
                 <div class="form-group">

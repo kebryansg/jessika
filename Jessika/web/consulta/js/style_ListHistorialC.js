@@ -3,11 +3,14 @@ $("#tb_ViewHC").bootstrapTable({
     onContextMenuItem: function (row, $el) {
         switch ($el.data("item")) {
             case "view":
-                
-                $("#contenido").load("consulta/viewConsulta.jsp",function(){
-                    editConsulta(row.id);
-                });
                 $('#viewHistorialCaso').modal('toggle');
+                $('#viewHistorialCaso').on({
+                    'hidden.bs.modal': function () {
+                        $("#contenido").load("consulta/viewConsulta.jsp", function () {
+                            editConsulta(row.id);
+                        });
+                    }
+                });
                 break;
         }
     }
@@ -83,9 +86,10 @@ function addHistorialCaso(idCaso) {
 
 $(function () {
 
+
     $("#pac_Delete").on("click", function (e) {
         limpiarDivPaciente();
-        
+
     });
 
 

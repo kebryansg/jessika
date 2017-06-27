@@ -283,7 +283,7 @@
             <!-- /#wrapper -->
 
             <script type="text/javascript">
-                $("#contenido").load("consulta/ListHistorialC.jsp");
+                $("#contenido").load("consulta/viewConsulta.jsp");
                 
                 
             </script>
