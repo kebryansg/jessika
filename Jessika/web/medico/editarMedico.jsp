@@ -50,19 +50,19 @@
                             <div class="row" >
                                 <div class="col-xs-12">
                                     <div class="table-responsive" style="margin: 0 auto; text-align:left">
-                                        <table id="tablaMedico" class="table table-bordered table-hover table-striped">
+                                        <table data-toggle="table"  id="tablaMedico" class="table table-bordered table-hover table-striped">
                                                     <thead>
                                                         <tr>
-                                                            <th >No.</th>
-                                                            <th>Cédula</th>
-                                                            <th >Apellidos y Nombres</th>
-                                                            <th >Domicilio</th>
-                                                            <th style='display:none;'>Ciudad</th>
-                                                            <th style='display:none;'>Teléf. Domicilio</th>
-                                                            <th style='display:none;'>Teléf. Oficina</th>
-                                                            <th>Teléf. Movil</th>
-                                                            <th style='display:none;' >Email</th>
-                                                            <th style='display:none;'>Estado</th>
+                                                            <th data-field="id" >No.</th>
+                                                            <th data-field="cedula">Cédula</th>
+                                                            <th data-field="apellidos1" >Apellidos y Nombres</th>
+                                                            <th data-field="domicilio" >Domicilio</th>
+                                                            <th data-field="ciudad" style='display:none;'>Ciudad</th>
+                                                            <th data-field="telefonoDomicilio" style='display:none;'>Teléf. Domicilio</th>
+                                                            <th data-field="telefonoOficina" style='display:none;'>Teléf. Oficina</th>
+                                                            <th data-field="telefonoMovil" >Teléf. Movil</th>
+                                                            <th data-field="email" style='display:none;' >Email</th>
+                                                            <th data-field="visible" style='display:none;'>Estado</th>
                                                             <th >Acci&oacute;n</th>
                                                         </tr>
                                                     </thead>

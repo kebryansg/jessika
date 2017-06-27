@@ -307,12 +307,12 @@ String excepcion="";
             //Insert
            if(value.getId()==0)
             {
-                sql="INSERT INTO medicamentos(medicamentoTratamiento, fecha, Hor, Lni, Fin, idIngresos, estado) values('"+value.getMedicamentoTratamiento()+"','"+value.getFecha()+"','"+value.getHor()+"','"+value.getLni()+"','"+value.getFin()+"','"+value.getIngreso().getId()+"','1')";
+                sql="INSERT INTO medicamentos(fecha, hora, notasEvolucion, prescripcionMedica, idIngresos, estado) values('"+value.getFecha()+"','"+value.getHora()+"','"+value.getNotasEvolucion()+"','"+value.getPrescripcionMedica()+"','"+value.getIngreso().getId()+"','1')";
             }
             //Update
             else
             {
-                sql="update medicamentos set medicamentoTratamiento='"+value.getMedicamentoTratamiento()+"', fecha='"+value.getFecha()+"', Hor='"+value.getHor()+"', lni='"+value.getLni()+"' where id='"+value.getId()+"'";
+                sql="update medicamentos set notasEvolucion='"+value.getNotasEvolucion()+"', fecha='"+value.getFecha()+"', hora='"+value.getHora()+"', prescripcionMedica='"+value.getPrescripcionMedica()+"' where id='"+value.getId()+"'";
             }
             this.conn.execute(sql);
             return true;
@@ -333,8 +333,8 @@ String excepcion="";
                 this.conn= con_db.open(con_db.MSSQL_SM); 
                 ResultSet rs = this.conn.query("SELECT * FROM MEDICAMENTOS where idIngresos='"+idIngreso+"' and estado=1");
                 while (rs.next()) {
-                    Medicamento value = new Medicamento(rs.getInt("id"),rs.getString("medicamentoTratamiento"),rs.getDate("fecha"),rs.getString("Hor"),rs.getString("Lni"),rs.getString("Fin"), new Ingresos(rs.getInt("idIngresos")));                    
-                    list.add(value);
+                    //Medicamento value = new Medicamento(rs.getInt("id"),rs.getString("medicamentoTratamiento"),rs.getDate("fecha"),rs.getString("Hor"),rs.getString("Lni"),rs.getString("Fin"), new Ingresos(rs.getInt("idIngresos")));                    
+                    //list.add(value);
                 }
             } catch (SQLException ex) {
                 excepcion=ex.getMessage();

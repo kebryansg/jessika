@@ -350,9 +350,15 @@
                                 </div>
                                 <div class="form-group col-xs-6">
                                     <div class="col-md-12">
-                                        <label class="col-md-12" for="dtpFechaEgreso">Hor</label>
+                                        <label class="col-md-12" for="dtpFechaEgreso">Hora</label>
                                         <div class="col-md-12">
-                                                    <input id='txtHor' type='text' class="form-control" />                                            
+                                            <div class="input-group date form_time" data-date="" data-date-format="hh:ii" data-link-format="hh:ii">
+                                              <input validate="date" class="form-control" id="dtpHora" size="16" type="text" value="" readonly>
+                                            <!--<span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>-->
+                                                <span class="input-group-addon">
+                                                    <span class="glyphicon glyphicon-time"></span>
+                                                </span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -360,34 +366,22 @@
                                
                             </div>
                              <div class="row">
-                                  <div class="form-group col-xs-6">
+                                  <div class="form-group col-xs-12">
                                     <div class="col-md-12">
-                                        <label class="col-md-12" for="dtpHoraIngreso">Lni</label>
+                                        <label class="col-md-12" for="dtpHoraIngreso">Notas de evolucion</label>
                                         <div class="col-md-12">
-                                            
-                                                    <input id='txtLni' type='text' class="form-control" /> 
-                                            
+                                           <textarea id="txtNotasEvolucion" validate="text" rows="3" class="form-control" placeholder=""></textarea> 
                                         </div>
                                     </div>
                                 </div>
-
-                                <div class="form-group col-xs-6">
-                                    <div class="col-md-12">
-                                        <label class="col-md-12" for="dtpHoraIngreso">Fin</label>
-                                        <div class="col-md-12">
-                                            
-                                                <input id='txtFin' type='text' class="form-control" />                                                                
-                                            
-                                        </div>
-                                    </div>
-                                </div>
+                                
                              </div>
                             <div class="row">
                                 <div class="form-group col-xs-12">
                                     <div class="col-md-12">
-                                        <label class="col-md-12" for="txtDefinitivoEgreso">Administración de medicamentos y tratamientos</label>
+                                        <label class="col-md-12" for="txtDefinitivoEgreso">Prescripción Médica</label>
                                         <div class="col-md-12">
-                                            <textarea id="txtMedicamentos" validate="text" rows="3" class="form-control" placeholder=""></textarea>
+                                            <textarea id="txtPrescripcion" validate="text" rows="3" class="form-control" placeholder=""></textarea>
                                         </div>
                                     </div>
                                 </div>

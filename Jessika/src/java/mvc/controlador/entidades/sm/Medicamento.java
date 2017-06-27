@@ -12,12 +12,11 @@ import java.sql.Date;
  * @author Deivi
  */
 public class Medicamento {
-    private Integer id;
-    private String medicamentoTratamiento;
+    private Integer id;    
     private Date fecha;
-    private String Hor;
-    private String Lni;
-    private String Fin;
+    private Date hora;
+    private String notasEvolucion;
+    private String prescripcionMedica;
     private Ingresos ingreso;
     public Integer getId() {
         return id;
@@ -27,13 +26,7 @@ public class Medicamento {
         this.id = id;
     }
 
-    public String getMedicamentoTratamiento() {
-        return medicamentoTratamiento;
-    }
-
-    public void setMedicamentoTratamiento(String medicamentoTratamiento) {
-        this.medicamentoTratamiento = medicamentoTratamiento;
-    }
+    
 
     public Date getFecha() {
         return fecha;
@@ -43,30 +36,7 @@ public class Medicamento {
         this.fecha = fecha;
     }
 
-    public String getHor() {
-        return Hor;
-    }
-
-    public void setHor(String Hor) {
-        this.Hor = Hor;
-    }
-
-    public String getLni() {
-        return Lni;
-    }
-
-    public void setLni(String Lni) {
-        this.Lni = Lni;
-    }
-
-    public String getFin() {
-        return Fin;
-    }
-
-    public void setFin(String Fin) {
-        this.Fin = Fin;
-    }
-
+    
     public Ingresos getIngreso() {
         return ingreso;
     }
@@ -75,15 +45,41 @@ public class Medicamento {
         this.ingreso = ingreso;
     }
 
-    public Medicamento(Integer id, String medicamentoTratamiento, Date fecha, String Hor, String Lni, String Fin, Ingresos ingreso) {
-        this.id = id;
-        this.medicamentoTratamiento = medicamentoTratamiento;
+    public Date getHora() {
+        return hora;
+    }
+
+    public void setHora(Date hora) {
+        this.hora = hora;
+    }
+
+    public String getNotasEvolucion() {
+        return notasEvolucion;
+    }
+
+    public void setNotasEvolucion(String notasEvolucion) {
+        this.notasEvolucion = notasEvolucion;
+    }
+
+    public String getPrescripcionMedica() {
+        return prescripcionMedica;
+    }
+
+    public void setPrescripcionMedica(String prescripcionMedica) {
+        this.prescripcionMedica = prescripcionMedica;
+    }
+
+    public Medicamento(Integer id, Date fecha, Date hora, String notasEvolucion, String prescripcionMedica, Ingresos ingreso) {
+        this.id = id;        
         this.fecha = fecha;
-        this.Hor = Hor;
-        this.Lni = Lni;
-        this.Fin = Fin;
+        this.hora = hora;
+        this.notasEvolucion = notasEvolucion;
+        this.prescripcionMedica = prescripcionMedica;
         this.ingreso = ingreso;
     }
+    
+
+    
 
     
     
