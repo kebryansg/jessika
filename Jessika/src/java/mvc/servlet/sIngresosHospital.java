@@ -239,16 +239,17 @@ public class sIngresosHospital extends HttpServlet {
         {
             try
             {
-             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");    
-            String medicamento =request.getParameter("medicamentoTratamiento");
+             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");   
+           
             Date fechaMedicamento = sdf.parse(request.getParameter("fechaMedicamento"));
-            String hor= request.getParameter("hor");
-            String lni= request.getParameter("lni");
-            String fin= request.getParameter("fin");
+            SimpleDateFormat format = new SimpleDateFormat("HH:MM");
+                Date hora = format.parse(request.getParameter("hora"));
+            String notasEvolucion= request.getParameter("notasEvolucion");
+            String prescripcionMedica= request.getParameter("prescripcionMedica");
             Integer idIngresos =Integer.valueOf(request.getParameter("idIngreso"));
             Integer idMedicamento =Integer.valueOf(request.getParameter("idMedicamento"));
             IngresosDao ingr= new IngresosDaoImp();
-            Medicamento medicamentos = new Medicamento(idMedicamento,medicamento,new java.sql.Date(fechaMedicamento.getTime()),hor,lni,fin, new Ingresos(idIngresos));
+            Medicamento medicamentos = new Medicamento(idMedicamento,new java.sql.Date(fechaMedicamento.getTime()),new java.sql.Date(hora.getTime()),notasEvolucion,prescripcionMedica, new Ingresos(idIngresos));
             ingr.guardarMedicamento(medicamentos);
             
             

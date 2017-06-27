@@ -418,10 +418,9 @@ $("#tabMantenimientoIngresos .table-responsive").on("click", "#btnEditarMedicame
               
             idIngreso : idIngreso,
             fechaMedicamento: $('#dtpFechaMedicamentoIngresosModal').val(),
-            hor: $('#txtHor').val(),
-            lni: $('#txtLni').val(),
-            fin: $('#txtFin').val(),  
-            medicamentoTratamiento:$('#txtMedicamentos').val(),
+            hora: $('#dtpHora').val(),
+            notasEvolucion: $('#txtNotasEvolucion').val(),
+            prescripcionMedica: $('#txtPrescripcion').val(),              
             opcion:'9',
             idMedicamento:idMedicamento
         }, function(responseText) {    
