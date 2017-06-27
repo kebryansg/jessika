@@ -8,8 +8,11 @@ $(function () {
 
     $("a[data-url]").click(function (e) {
         e.preventDefault();
-        $("#contenido").load($(this).attr("data-url"));
-        $("#tituloPagina").text($(this).attr("data-title"));
+        if ($(this).attr("data-url") !== "") {
+            $("#contenido").load($(this).attr("data-url"));
+            $("#tituloPagina").text($(this).attr("data-title"));
+        }
+
     });
 
     $("#contenido").on("keypress", ".solo-numero", function (e) {

@@ -283,7 +283,7 @@
             <!-- /#wrapper -->
 
             <script type="text/javascript">
-                $("#contenido").load("consulta/viewConsulta.jsp");
+                $("#contenido").load("medico/especialidad.jsp");
                 
                 
             </script>

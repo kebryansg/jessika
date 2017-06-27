@@ -25,6 +25,7 @@ function registerComposeButtonEvent() {
     /* just for this demo */
     $("a[data-url]").click(function (e) {
         e.preventDefault(); 
+        alert();
         $("#contenido").remove();
         $("#contenido").load($(this).attr("data-url"), function()
         {

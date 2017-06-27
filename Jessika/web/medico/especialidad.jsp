@@ -7,12 +7,12 @@
 <%@page import="mvc.modelo.smDao.EspecialidadDao"%>
 <%@page import="java.util.List"%>
 <%@page import="mvc.modelo.smDao.EspecialidadDao"%>
-<div class="contenedor-tabs" id="tbEspecialidad">
+<div class="contenedor-tabs" >
     <div class="container-fluid">
         <div class="row ">
             <div class="col-md-12">
                 <div class="pull-right">
-                    <button class="btn btn-info" id="btnAgregar"  data-id="0">Agregar</button>
+                    <button class="btn btn-info" id="btnAgregar"  data-id="0" data-toggle="modal" data-target="#modalEspecialidad">Agregar</button>
                 </div>       
             </div>
         </div>
@@ -26,8 +26,7 @@
             <div class="pull-left">
                 <div class="col-md-12">
                     <div class="form-inline">
-                        <label for="txt_filterPaciente" class="control-label">Mostrar</label>
-                        <select class="selectpicker" data-width="80px" id="cboMostrar">
+                        <select class="selectpicker" data-width="80px" id="cboMostrar_tbEspecialidad">
                             <option value="5">5</option>
                             <option value="10">10</option>
                             <option value="20">20</option>
@@ -38,74 +37,47 @@
             </div>
         </div>    
         <br>
-        <div>
-            <div class="row">
-                <div class="table-responsive col-lg-12">
-                    <table id="especialidades" class="table table-bordered table-hover table-striped">
-                        <thead>
-                            <tr>
-                                <th >No.</th>
-                                <th class='col-lg-10'>Descripción</th>
-                                <th>Acci&oacute;n</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <%
-                                EspecialidadDao espe= new EspecialidadDaoImp();                                                           
-                                List <Especialidad> list= espe.list(0,5,0,"");
-                                double totalPaginas= Float.parseFloat(String.valueOf(list.get(0).getRegistros()))/Float.parseFloat(String.valueOf("5"));
-                                totalPaginas=Math.ceil(totalPaginas);   
-                                for (Especialidad elem : list)
-                                {
-                                    %>
-                                    <tr>
-                                       <td><%=elem.getId()%></td>
-                                       <td><%=elem.getDescripcion()%></td>
-                                       <td >
-                                           <button id='botonEditar' class='btn btn-primary' onclick='openModal("myModal")'><span class='glyphicon glyphicon-pencil'></span> </button>
-                                           <button id='btnEliminar' class='btn btn-danger'><span class='glyphicon glyphicon-trash'></span></a></button>
-                                       </td>
-                                    </tr>
-                                    <%
-                                }
-                            %>
-                        </tbody>
-                    </table>
-                </div>
-            </div>   
-        </div>  
-        <div style="text-align: right; width: 100%;" id="paginacionEspecialidad">
-            <nav aria-label="Page navigation">
-                <ul class="pagination" id="pagEspecialidad">
-                    <li id="atras"><a  href="#">&laquo;</a></li>
-                        <%
-                            for(int i=0;i <totalPaginas; i++)
-                            {
-                                int indice=i+1;
-                                if(i==0)
-                                {
-                                %>
-                                    <li id='<%=i%>' class="active"><a href="#"><%=indice%></a></li>
-                                <%
-                                }
-                                else 
-                                {
-                                %>
-                                <li id='<%=i%>' ><a href="#"><%=indice%></a></li>
-                                <%
-                                }
-                            }%> 
-                    <li id="adelante"><a href="#">&raquo;</a></li>
-                </ul>
-            </nav>
-        </div>        
+        <div class="row">
+            <ul id="tbEspecialidad-context-menu" class="dropdown-menu" >
+                <li data-item="edit"><a><i class="fa fa-plus fa-fw" aria-hidden="true"></i>&nbsp; Editar</a></li>
+                <li data-item="delete"><a><i class="fa fa-table fa-fw" aria-hidden="true"></i>&nbsp; Eliminar</a></li>
+            </ul>
+            <div class="table-responsive col-lg-12">
+                <table id="tbEspecialidad" data-toogle="table">
+                    <thead>
+                        <tr>
+                            <th data-field="id" >No.</th>
+                            <th data-field="descripcion" >Descripción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>   
+        <div class="pull-right">
+            <ul id="pag_tbEspecialidad" class="pagination">
+                <li>
+                    <a href="#" aria-label="Anterior">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" aria-label="Siguiente">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
     </div>
     <div class="modal fade" id="modalEspecialidad" role="dialog">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title"></h4>
+                    <h4 class="modal-title">Agregar Especialidad</h4>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">

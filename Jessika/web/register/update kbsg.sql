@@ -54,3 +54,17 @@ AS BEGIN
 	(1,'AMBULATORIA'),(2,'PREVENCION');
 	SET IDENTITY_INSERT [dbo].[tipoConsulta] OFF 
 END
+
+
+
+ALTER PROCEDURE [dbo].[obtenerEspecialidades]
+	@NUM_PAGINA   INT,
+	@totalRegistros   INT,
+	@total   INT OUTPUT,
+	@buscar as nvarchar(50)
+AS
+BEGIN
+	SET NOCOUNT ON;
+	SET @total=(SELECT COUNT(id) as totalRegistros from especialidad where descripcion COLLATE Latin1_General_CI_AI like '%'+@buscar+'%' COLLATE Latin1_General_CI_AI and visible=1);
+	SELECT * from especialidad  where descripcion COLLATE Latin1_General_CI_AI like '%'+@buscar+'%' COLLATE Latin1_General_CI_AI and visible=1 order by id OFFSET (@NUM_PAGINA) ROWS FETCH FIRST @totalRegistros ROWS ONLY;	
+END

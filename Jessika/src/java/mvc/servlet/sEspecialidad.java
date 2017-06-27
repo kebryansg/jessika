@@ -1,13 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package mvc.servlet;
 
 import com.google.gson.JsonObject;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -17,6 +13,7 @@ import mvc.modelo.smDao.EspecialidadDao;
 import mvc.modelo.smDaoImp.EspecialidadDaoImp;
 import org.codehaus.jackson.map.ObjectMapper;
 import java.util.List;
+import test.list_count;
 
 /**
  *
@@ -44,6 +41,10 @@ public class sEspecialidad extends HttpServlet {
         response.setContentType("text/html; charset=iso-8859-1");
         PrintWriter out = response.getWriter();
         String opcion = request.getParameter("opcion");
+        // KS: Variable q uso
+        list_count l;
+        List<String> resultList = new ArrayList<>();
+        // KS: Variable q uso
         JsonObject object = new JsonObject();
         /*if("0".equals(idEspecialidad))
                {
@@ -66,25 +67,33 @@ public class sEspecialidad extends HttpServlet {
 
         } //cargo las especialidades ya se paginado o buscado
         else if ("2".equals(opcion)) {
-            Integer bandera = Integer.valueOf(request.getParameter("bandera"));
             String buscar = request.getParameter("buscar");
             EspecialidadDao espe = new EspecialidadDaoImp();
             Integer totalMostrar = Integer.valueOf(request.getParameter("totalMostrar"));
             Integer pagina = Integer.valueOf(request.getParameter("pagina"));
-            List<Especialidad> list = espe.list(pagina, totalMostrar, bandera, buscar);
-            ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+            l = espe.list(pagina, totalMostrar,buscar);
+            for (Object object1 : l.getList()) {
+                Especialidad especialidad = (Especialidad) object1;
+                resultList.add("{"
+                        + "\"id\": \"" + especialidad.getId() + "\","
+                        + "\"descripcion\": \"" + especialidad.getDescripcion() + "\""
+                        + "}");
+            }
+            
+            out.print("{\"count\":\"" + Math.ceil((float) l.getTotal() / totalMostrar) + "\", \"list\":[" + String.join(",", resultList) + "] }");
+            out.flush();
+            out.close();
+
+            /*ObjectMapper OBJECT_MAPPER = new ObjectMapper();
             String json = OBJECT_MAPPER.writeValueAsString(list);
-            response.getWriter().write(json);
-        } else if ("3".equals(opcion)) {
+            response.getWriter().write(json);*/
+        } else if ("delete".equals(opcion)) {
             // Obtengo los datos de la peticion
-            String descripcionEspecialidad = request.getParameter("descripcionEspecialidad");
-            String idEspecialidad = request.getParameter("idEspecialidad");
-            String visible = request.getParameter("visible");
-            EspecialidadDao esp = new EspecialidadDaoImp();
-            Especialidad especialidad = new Especialidad(Integer.parseInt(idEspecialidad), descripcionEspecialidad, visible);
-            object.addProperty("estado", esp.save(especialidad));
-            object.addProperty("excepcion", esp.getExcepcion());
-            out.println(object);
+            int idEspecialidad = Integer.parseInt(request.getParameter("id"));
+            new EspecialidadDaoImp().delete(idEspecialidad);
+            out.println("ok");
+            out.flush();
+            out.close();
         } else if ("list".equals(opcion)) {
             //Obtener especialidades para combo
             EspecialidadDao esp = new EspecialidadDaoImp();
