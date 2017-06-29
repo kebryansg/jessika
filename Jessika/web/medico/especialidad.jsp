@@ -48,6 +48,7 @@
                         <tr>
                             <th data-field="id" >No.</th>
                             <th data-field="descripcion" >Descripción</th>
+                            <th data-field="accion" >Descripción</th>
                         </tr>
                     </thead>
                     <tbody>

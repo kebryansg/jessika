@@ -71,15 +71,16 @@ public class sEspecialidad extends HttpServlet {
             EspecialidadDao espe = new EspecialidadDaoImp();
             Integer totalMostrar = Integer.valueOf(request.getParameter("totalMostrar"));
             Integer pagina = Integer.valueOf(request.getParameter("pagina"));
-            l = espe.list(pagina, totalMostrar,buscar);
+            l = espe.list(pagina, totalMostrar, buscar);
             for (Object object1 : l.getList()) {
                 Especialidad especialidad = (Especialidad) object1;
                 resultList.add("{"
                         + "\"id\": \"" + especialidad.getId() + "\","
-                        + "\"descripcion\": \"" + especialidad.getDescripcion() + "\""
+                        + "\"descripcion\": \"" + especialidad.getDescripcion() + "\","
+                        + "\"accion\": \"<button class='btn btn-info'>Editar</button><button class='btn btn-danger'>Eliminar</button>\""
                         + "}");
             }
-            
+
             out.print("{\"count\":\"" + Math.ceil((float) l.getTotal() / totalMostrar) + "\", \"list\":[" + String.join(",", resultList) + "] }");
             out.flush();
             out.close();
