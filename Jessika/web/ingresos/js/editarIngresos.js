@@ -22,9 +22,8 @@ var filas=5;
 var indiceMedicamentos=0;
  var bandera=0;
  var m;
- $(function () {
     $('.form_date').datetimepicker('update', new Date());
- });
+ 
 /*-------------------------------Ingresos-------------------------------------------------------------------------*/
 //Buscar Ingresos
 $('#tabMantenimientoIngresos #btnBuscar').click(function(event) {    
@@ -318,6 +317,7 @@ function limpiarMedicamentos()
                opcion: 10
            }, function(data) { 
                var resultado = JSON && JSON.parse(data) || $.parseJSON(data); 
+               console.log(resultado);
                $('#tablaMedicamentos tr').remove();
                $("#sinRegistro #sinRegistros").remove();
                if(resultado.length>0)
@@ -325,11 +325,10 @@ function limpiarMedicamentos()
                
                $('#tablaMedicamentos thead').append("<tr>\n\
                                                 <th style='display:none;' class='col-lg-1'>id</th>\n\
-                                                <th class='col-lg-2'>Fecha</th>\n\
-                                                <th>Hor</th>\n\
-                                                <th class='col-lg-1'>Lni</th>\n\
-                                                  <th class='col-lg-1'>Fin</th>\n\
-                                                <th >Administración de medicamentos y tratamientos</th>\n\
+                                                <th class='col-lg-1'>Fecha</th>\n\
+                                                <th class='col-lg-1'>Hora</th>\n\
+                                                <th>Notas de Evolución</th>\n\
+                                                <th >Prescripción</th>\n\
                                                 <th style='display:none;'></th>\n\
                                                 <th class='col-lg-1'>Acción</th>\n\
                                               </tr>");
@@ -338,11 +337,10 @@ function limpiarMedicamentos()
                     $('#tablaMedicamentos').append("<tr>\n\                                                            \n\
                                                     <td style='display:none;'>"+resultado[i].id+"</td>\n\
                                                     \n\<td>"+resultado[i].fecha+"</td>\n\
-                                                    \n\<td>"+resultado[i].hor+"</td>\n\
-                                                    \n\ \n\<td>"+resultado[i].lni+"</td>\n\
-                                                    \n\ \n\<td>"+resultado[i].fin+"</td>\n\
-                                                    \n\ \n\<td>"+resultado[i].medicamentoTratamiento+"</td>\n\
-                                                    \n\<td style='display:none;'>"+resultado[i].ingreso.id+"</td>\
+                                                    \n\<td>"+resultado[i].hora+"</td>\n\
+                                                    \n\ \n\<td>"+resultado[i].notasEvolucion+"</td>\n\
+                                                    \n\ \n\<td>"+resultado[i].prescripcionMedica+"</td>\n\n\
+                                                    <td style='display:none;'>"+resultado[i].idIngresos.id+"</td>\
                                                     <td style='width: 12%' ><button id='btnEditarMedicamento' class='btn btn-primary' '><span class='glyphicon glyphicon-pencil'></span> </button>\n\
                                                         <button id='btnEliminarMedicamento' class='btn btn-danger'><span class='glyphicon glyphicon-trash'></span></a></button>\n\
                                                     </td>\n\

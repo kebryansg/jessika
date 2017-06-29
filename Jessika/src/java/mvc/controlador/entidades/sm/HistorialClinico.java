@@ -29,6 +29,9 @@ import javax.persistence.TemporalType;
     @NamedQuery(name = "HistorialClinico.findAll", query = "SELECT h FROM HistorialClinico h")})
 public class HistorialClinico implements Serializable {
 
+    @Column(name = "estado")
+    private Character estado;
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -46,8 +49,6 @@ public class HistorialClinico implements Serializable {
     private String cedula;
     @Column(name = "cedula")
     private String apellido2;
-    @Column(name = "estado")
-    private String estado;
 
     
     @Column(name = "idPaciente")
@@ -70,13 +71,6 @@ public class HistorialClinico implements Serializable {
         this.registros = registros;
     }
     
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
     public String getCedula() {
         return cedula;
     }
@@ -199,6 +193,14 @@ public class HistorialClinico implements Serializable {
     @Override
     public String toString() {
         return "mvc.controlador.entidades.sm.HistorialClinico[ id=" + id + " ]";
+    }
+
+    public Character getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Character estado) {
+        this.estado = estado;
     }
     
 }
