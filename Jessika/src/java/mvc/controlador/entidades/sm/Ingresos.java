@@ -7,6 +7,7 @@ package mvc.controlador.entidades.sm;
 
 import java.io.Serializable;
 import java.sql.Time;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
@@ -22,7 +23,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.xml.bind.annotation.XmlTransient;
 import mvc.controlador.entidades.ip.Paciente;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
  *
@@ -33,6 +36,11 @@ import mvc.controlador.entidades.ip.Paciente;
 @NamedQueries({
     @NamedQuery(name = "Ingresos.findAll", query = "SELECT i FROM Ingresos i")})
 public class Ingresos implements Serializable {
+
+    @Column(name = "estado")
+    private Integer estado;
+    @OneToMany(mappedBy = "idIngresos")
+    private Collection<Medicamentos> medicamentosCollection;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -293,6 +301,24 @@ public class Ingresos implements Serializable {
     @Override
     public String toString() {
         return "mvc.controlador.entidades.sm.Ingresos[ id=" + id + " ]";
+    }
+
+    public Integer getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Integer estado) {
+        this.estado = estado;
+    }
+
+    @XmlTransient
+    @JsonIgnore
+    public Collection<Medicamentos> getMedicamentosCollection() {
+        return medicamentosCollection;
+    }
+
+    public void setMedicamentosCollection(Collection<Medicamentos> medicamentosCollection) {
+        this.medicamentosCollection = medicamentosCollection;
     }
     
 }

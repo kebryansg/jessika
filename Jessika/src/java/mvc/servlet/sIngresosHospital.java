@@ -29,6 +29,7 @@ import java.util.List;
 import mvc.controlador.entidades.sm.Caso;
 import mvc.controlador.entidades.sm.Medicamento;
 import com.google.gson.JsonObject;
+import mvc.controlador.entidades.sm.Medicamentos;
 
 /**
  *
@@ -266,7 +267,7 @@ public class sIngresosHospital extends HttpServlet {
                 Integer idIngresos =Integer.valueOf(request.getParameter("idIngreso"));
                 IngresosDao ingr= new IngresosDaoImp();
                 
-                List<Medicamento> list= ingr.list(idIngresos); 
+                List<Medicamentos> list= ingr.list(idIngresos); 
              ObjectMapper OBJECT_MAPPER = new ObjectMapper();
              String json = OBJECT_MAPPER.writeValueAsString(list);
              response.getWriter().write(json);

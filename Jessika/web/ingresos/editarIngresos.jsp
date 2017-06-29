@@ -493,5 +493,5 @@
                                             
                
 </div>
-<script src="ingresos/js/editarIngresos.js" type="text/javascript" async="async"></script>
 <script src="resources/js/configuracionInicial.js" type="text/javascript" ></script>
+<script src="ingresos/js/editarIngresos.js" type="text/javascript" async="async"></script>

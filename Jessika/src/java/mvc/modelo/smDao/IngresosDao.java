@@ -11,6 +11,7 @@ import mvc.controlador.entidades.ip.Paciente;
 import mvc.controlador.entidades.sm.HistorialClinico;
 import mvc.controlador.entidades.sm.Ingresos;
 import mvc.controlador.entidades.sm.Medicamento;
+import mvc.controlador.entidades.sm.Medicamentos;
 
 
 /**
@@ -27,7 +28,7 @@ public interface IngresosDao {
     public boolean Delete(int id);
     public boolean DeleteMedicamento(int id);
     public boolean guardarMedicamento(Medicamento value);
-    public List<Medicamento> list(int idRegistro);
+    public List<Medicamentos> list(int idRegistro);
     public List<Ingresos> listIngresos();
      public String getExcepcion();
     

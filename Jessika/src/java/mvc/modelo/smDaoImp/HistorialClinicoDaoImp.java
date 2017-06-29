@@ -35,7 +35,7 @@ public class HistorialClinicoDaoImp implements HistorialClinicoDao {
             while (rs.next()) {
                 value.setId(rs.getInt("id"));
                 value.setIdPaciente(rs.getInt("idPaciente"));
-                value.setEstado(rs.getString("estado"));
+               value.setEstado(rs.getString("estado"));
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());

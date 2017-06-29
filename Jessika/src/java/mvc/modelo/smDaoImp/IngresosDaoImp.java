@@ -21,6 +21,7 @@ import mvc.controlador.entidades.sm.EspecialidadEgreso;
 import mvc.controlador.entidades.sm.HistorialClinico;
 import mvc.controlador.entidades.sm.Ingresos;
 import mvc.controlador.entidades.sm.Medicamento;
+import mvc.controlador.entidades.sm.Medicamentos;
 import mvc.controlador.entidades.sm.Medico;
 import mvc.controlador.entidades.sm.TipoIngreso;
 import mvc.modelo.smDao.IngresosDao;
@@ -325,16 +326,16 @@ String excepcion="";
     }
 
     @Override
-    public List<Medicamento> list(int idIngreso) {
-        List<Medicamento> list = new ArrayList<>();
+    public List<Medicamentos> list(int idIngreso) {
+        List<Medicamentos> list = new ArrayList<>();
 
               try {  
                   
                 this.conn= con_db.open(con_db.MSSQL_SM); 
                 ResultSet rs = this.conn.query("SELECT * FROM MEDICAMENTOS where idIngresos='"+idIngreso+"' and estado=1");
                 while (rs.next()) {
-                    //Medicamento value = new Medicamento(rs.getInt("id"),rs.getString("medicamentoTratamiento"),rs.getDate("fecha"),rs.getString("Hor"),rs.getString("Lni"),rs.getString("Fin"), new Ingresos(rs.getInt("idIngresos")));                    
-                    //list.add(value);
+                    Medicamentos value = new Medicamentos(rs.getInt("id"),rs.getDate("fecha"),rs.getTime("hora"),rs.getString("notasEvolucion"),rs.getString("notasEvolucion"), new Ingresos(rs.getInt("idIngresos")));                    
+                    list.add(value);
                 }
             } catch (SQLException ex) {
                 excepcion=ex.getMessage();
