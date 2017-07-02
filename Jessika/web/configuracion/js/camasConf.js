@@ -75,8 +75,7 @@ $('#btnGuardar').click(function(event) {
     });
     }
 });
-$(function () {
-    $('#titulo').text("Camas");
+$(function () {    
     $.ajax({
         type: 'Post',
         url: 'sCamas',

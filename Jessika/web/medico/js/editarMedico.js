@@ -18,8 +18,7 @@ var idTablaSeleccionada=-1;
 var indice=-1;
 var ultimo=-1;
 var filas=5;
-table = $("#tabMedicoEditar");
-$(table).bootstrapTable();
+
 $("#tabMedicoEditar #txtBuscar").text("");
 $("#tabMedicoEditar #cboMostrar").val(5);     
 //cargarMedicos(0);
@@ -130,9 +129,8 @@ function cargarMedicos(pagina)
                 $("#tabMedicoEditar #paginacionMedico ul ").append('<li id='+i+'><a  href="#">'+indice+'</a></li>');
         }
         ultimo=parseInt(totalPaginas)-1;
-        $(table).bootstrapTable('load', resultado);
-        $(table).bootstrapTable('resetView');
-        /*$("#tabMedicoEditar #paginacionMedico ul").append('<li id="adelante"><a href="#">&raquo;</a></li>');
+        
+        $("#tabMedicoEditar #paginacionMedico ul").append('<li id="adelante"><a href="#">&raquo;</a></li>');
         $('#tabMedicoEditar #tablaMedico thead').append("<tr>\n\<th >No.</th>\n\                                                \n\
                                             <th>Cédula</th>\n\
                                                <th >Apellidos y Nombres</th>\n\
@@ -162,7 +160,7 @@ function cargarMedicos(pagina)
                                                     <button id='btnEliminar' class='btn btn-danger'><span class='glyphicon glyphicon-trash'></span></a></button>\n\
                                                     </td>\n\
                                      </tr>");
-        }*/
+        }
     });    
     xhrRequest.push(xhr);
 }

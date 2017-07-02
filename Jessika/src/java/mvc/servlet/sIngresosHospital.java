@@ -27,7 +27,7 @@ import mvc.modelo.smDaoImp.MedicoDaoImp;
 import org.codehaus.jackson.map.ObjectMapper;
 import java.util.List;
 import mvc.controlador.entidades.sm.Caso;
-import mvc.controlador.entidades.sm.Medicamento;
+
 import com.google.gson.JsonObject;
 import mvc.controlador.entidades.sm.Medicamentos;
 
@@ -103,7 +103,7 @@ public class sIngresosHospital extends HttpServlet {
                 Integer idTipoIngreso =Integer.valueOf(request.getParameter("idTipoIngreso"));
                 Integer idEspecialidadEgreso =Integer.valueOf(request.getParameter("idEspecialidadEgreso"));
                 Date fechaEgreso = sdf.parse(request.getParameter("fechaEgreso"));
-                SimpleDateFormat format = new SimpleDateFormat("HH:MM");
+                 SimpleDateFormat format = new SimpleDateFormat("hh:mm");
                 Date horaIngreso = format.parse(request.getParameter("horaIngreso"));
                 Boolean sos = Boolean.valueOf(request.getParameter("sos"));
                 Integer condicionEgreso = Integer.valueOf(request.getParameter("condicionEgreso"));
@@ -203,7 +203,7 @@ public class sIngresosHospital extends HttpServlet {
                 Integer idTipoIngreso =Integer.valueOf(request.getParameter("idTipoIngreso"));
                 Integer idEspecialidadEgreso =Integer.valueOf(request.getParameter("idEspecialidadEgreso"));
                 Date fechaEgreso = sdf.parse(request.getParameter("fechaEgreso"));
-                SimpleDateFormat format = new SimpleDateFormat("HH:MM");
+                 SimpleDateFormat format = new SimpleDateFormat("hh:mm");
                 Date horaIngreso = format.parse(request.getParameter("horaIngreso"));
                 Boolean sos = Boolean.valueOf(request.getParameter("sos"));
                 Integer condicionEgreso = Integer.valueOf(request.getParameter("condicionEgreso"));
@@ -221,8 +221,9 @@ public class sIngresosHospital extends HttpServlet {
                Ingresos unIngreso = new Ingresos(fechaIngreso,fechaEgreso,horaIngreso,sos,condicionEgreso,definitivoEgreso,secundarioEgreso,secundarioEgreso2,causaExterna,codigoDiagnosticoDefinitivo,idEspecialidadEgres,idTipoIngre);
                unIngreso.setId(idIngresos);
                unIngreso.setIdCaso(new Caso(idCaso));
-               
-               ingr.Save(unIngreso, 0);
+               object.addProperty("estado", ingr.Save(unIngreso, 0));
+               object.addProperty("excepcion", ingr.getExcepcion());
+               out.println(object);
             }
             catch(Exception ex)
             {
@@ -232,27 +233,32 @@ public class sIngresosHospital extends HttpServlet {
         else if("8".equals(opcion))
         {
             Integer idIngresos =Integer.valueOf(request.getParameter("idIngreso"));
-            IngresosDao ingr= new IngresosDaoImp();
-            ingr.Delete(idIngresos);
+            IngresosDao ingr= new IngresosDaoImp();            
+            object.addProperty("estado", ingr.Delete(idIngresos));
+            object.addProperty("excepcion", ingr.getExcepcion());
+            out.println(object);
         }
         //registrar medicamento
         else if("9".equals(opcion))
         {
             try
             {
-             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");   
-           
+             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");              
             Date fechaMedicamento = sdf.parse(request.getParameter("fechaMedicamento"));
-            SimpleDateFormat format = new SimpleDateFormat("HH:MM");
-                Date hora = format.parse(request.getParameter("hora"));
+            SimpleDateFormat format = new SimpleDateFormat("hh:mm");
+            String horaString = request.getParameter("hora");
+            
+            Date hora = format.parse(request.getParameter("hora"));
             String notasEvolucion= request.getParameter("notasEvolucion");
             String prescripcionMedica= request.getParameter("prescripcionMedica");
             Integer idIngresos =Integer.valueOf(request.getParameter("idIngreso"));
             Integer idMedicamento =Integer.valueOf(request.getParameter("idMedicamento"));
             IngresosDao ingr= new IngresosDaoImp();
-            Medicamento medicamentos = new Medicamento(idMedicamento,new java.sql.Date(fechaMedicamento.getTime()),new java.sql.Date(hora.getTime()),notasEvolucion,prescripcionMedica, new Ingresos(idIngresos));
-            ingr.guardarMedicamento(medicamentos);
-            
+            Medicamentos medicamentos = new Medicamentos(idMedicamento,new java.sql.Date(fechaMedicamento.getTime()),new java.sql.Time(hora.getTime()),notasEvolucion,prescripcionMedica, new Ingresos(idIngresos));
+           
+            object.addProperty("estado", ingr.guardarMedicamento(medicamentos));
+            object.addProperty("excepcion", ingr.getExcepcion());
+            out.println(object);
             
             
             }
@@ -281,7 +287,9 @@ public class sIngresosHospital extends HttpServlet {
         {
             Integer idMedicamento =Integer.valueOf(request.getParameter("idMedicamento"));
             IngresosDao ingr= new IngresosDaoImp();
-            ingr.DeleteMedicamento(idMedicamento);
+            object.addProperty("estado", ingr.DeleteMedicamento(idMedicamento));
+            object.addProperty("excepcion", ingr.getExcepcion());
+            out.println(object);            
         }
 
     }

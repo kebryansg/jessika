@@ -5,9 +5,9 @@
  */
 ocultarModal();
 
- $('.tooltips').tooltip({
-     trigger: 'focus'
- })
+ $(function () {
+  //$('[data-toggle="tooltip"]').tooltip()
+})
 /*-------------------------------Variables-------------------------------------------------------------------------*/
 var res;
 var pagina=0;
@@ -22,6 +22,7 @@ var filas=5;
 var indiceMedicamentos=0;
  var bandera=0;
  var m;
+ var search=false;
     $('.form_date').datetimepicker('update', new Date());
  
 /*-------------------------------Ingresos-------------------------------------------------------------------------*/
@@ -29,6 +30,7 @@ var indiceMedicamentos=0;
 $('#tabMantenimientoIngresos #btnBuscar').click(function(event) {    
      $('#tablaIngresos tr').remove();
      $('#paginacionIngresosEditar').find('li').remove();
+     search=true;
     //if(!fechaMayorQue($("#dtpFechaIngresoIngresos"),$("#dtpFechaEgresoIngresos")))
     //{
         cargarIngresos();
@@ -38,6 +40,7 @@ $('#tabMantenimientoIngresos #btnBuscar').click(function(event) {
 //Ingresos cargar
 function cargarIngresos()
     {
+        if(search)
         $.ajax({
             type: 'Post',
             url: 'sIngresosHospital',
@@ -54,6 +57,7 @@ function cargarIngresos()
                 var resultado = JSON && JSON.parse(data) || $.parseJSON(data);   
                 if(resultado.length==0)
                 {
+                   
                     alertify.success("No existen registros disponibles");
                 }
                 else
@@ -61,8 +65,7 @@ function cargarIngresos()
                 console.log(resultado[0].registros);
                 $('#paginacionIngresosEditar').find('li').remove();
                 var totalPaginas=resultado[0].registros/5;
-                totalPaginas=Math.ceil(totalPaginas);
-                
+                totalPaginas=Math.ceil(totalPaginas);                
                 $("#paginacionIngresosEditar ul").append('<li id="atras"><a href="#">&laquo;</a></li>');
                 filas=resultado.length;
                 var indice=0;
@@ -118,7 +121,7 @@ function cargarIngresos()
                                                         <td>"+resultado[i].fechaSalida+"</td>\n\
                                                         <td style='display:none;'>"+resultado[i].hora+"</td>\n\
                                                         <td style='display:none;'>"+resultado[i].condicionEgreso+"</td>\n\
-                                                        <td class='tooltips' id='tooltipDefinitivoEgreso' data-toggle='tooltip' data-placement='left' title='"+resultado[i].definitivoEgreso+"'>"+res+"</td>\n\
+                                                        <td class='tooltips' id='tooltipDefinitivoEgreso' data-toggle='tooltip' data-container='body' data-placement='bottom' title='"+resultado[i].definitivoEgreso+"'>"+res+"</td>\n\
                                                         <td style='display:none;'>"+resultado[i].secundarioEgreso+"</td>\n\
                                                         <td style='display:none;'>"+resultado[i].secundarioEgreso2+"</td>\n\
                                                         <td style='display:none;'>"+resultado[i].causaExterna+"</td>\n\
@@ -198,27 +201,35 @@ function cargarIngresos()
                idCaso:datos[4],
                codigoDiagnosticoDefinitivo:$("#txtCodigoCie").val(),
                opcion:'7'                                
-           }, function(responseText) {   
-               console.log(responseText); 
+           }, function(data) {   
+               console.log(data);
+               var resultado = JSON && JSON.parse(data) || $.parseJSON(data);   
+               if(resultado.estado===true)
+               {
+                    alertify.success("Datos Actualizados correctamente");
+                                      
                //$('#tooltipDefinitivoEgreso').attr('title', $("#txtDefinitivoEgreso").val()).tooltip('fixTitle').text();
-               if($("#txtDefinitivoEgreso").val().length>=15)
-                   res = $("#txtDefinitivoEgreso").val().substring(0, 15)+'...';
-               else
-                   res = $("#txtDefinitivoEgreso").val();
-               //$($('.table-responsive').find('tbody > tr')[indice]).children('td')[5].innerHTML = datos[5];
-               $($('.table-responsive').find('tbody > tr')[indice]).children('td')[5].innerHTML = $('#cboEspecialidadEgreso').val();            
-               $($('.table-responsive').find('tbody > tr')[indice]).children('td')[7].innerHTML = $('#dtpFechaIngresoIngresosModal').val();
-               $($('.table-responsive').find('tbody > tr')[indice]).children('td')[8].innerHTML = $('#dtpFechaEgresoIngresosModal').val();
-               $($('.table-responsive').find('tbody > tr')[indice]).children('td')[9].innerHTML = $("#dtpHoraIngreso").val();
-               $($('.table-responsive').find('tbody > tr')[indice]).children('td')[10].innerHTML = $("#cboCondicionEgreso").val();
-               $($('.table-responsive').find('tbody > tr')[indice]).children('td')[11].innerHTML = res;
-               $($('.table-responsive').find('tbody > tr')[indice]).children('td')[12].innerHTML = $("#txtSecundarioEgreso").val();
-               $($('.table-responsive').find('tbody > tr')[indice]).children('td')[13].innerHTML = $("#txtSecundarioEgreso2").val();
-               $($('.table-responsive').find('tbody > tr')[indice]).children('td')[14].innerHTML = $("#txtCausaExterna").val();
-               $($('.table-responsive').find('tbody > tr')[indice]).children('td')[15].innerHTML = $("#txtCodigoCie").val();
-               $($('.table-responsive').find('tbody > tr')[indice]).children('td')[16].innerHTML = $("#txtDefinitivoEgreso").val();
-               closeModal('modalEditarIngresos');
-               alertify.success("Datos Actualizados correctamente");
+                if($("#txtDefinitivoEgreso").val().length>=15)
+                    res = $("#txtDefinitivoEgreso").val().substring(0, 15)+'...';
+                else
+                    res = $("#txtDefinitivoEgreso").val();
+                //$($('.table-responsive').find('tbody > tr')[indice]).children('td')[5].innerHTML = datos[5];
+                $($('.table-responsive').find('tbody > tr')[indice]).children('td')[5].innerHTML = $('#cboEspecialidadEgreso').val();            
+                $($('.table-responsive').find('tbody > tr')[indice]).children('td')[7].innerHTML = $('#dtpFechaIngresoIngresosModal').val();
+                $($('.table-responsive').find('tbody > tr')[indice]).children('td')[8].innerHTML = $('#dtpFechaEgresoIngresosModal').val();
+                $($('.table-responsive').find('tbody > tr')[indice]).children('td')[9].innerHTML = $("#dtpHoraIngreso").val();
+                $($('.table-responsive').find('tbody > tr')[indice]).children('td')[10].innerHTML = $("#cboCondicionEgreso").val();
+                $($('.table-responsive').find('tbody > tr')[indice]).children('td')[11].innerHTML = res;
+                $($('.table-responsive').find('tbody > tr')[indice]).children('td')[12].innerHTML = $("#txtSecundarioEgreso").val();
+                $($('.table-responsive').find('tbody > tr')[indice]).children('td')[13].innerHTML = $("#txtSecundarioEgreso2").val();
+                $($('.table-responsive').find('tbody > tr')[indice]).children('td')[14].innerHTML = $("#txtCausaExterna").val();
+                $($('.table-responsive').find('tbody > tr')[indice]).children('td')[15].innerHTML = $("#txtCodigoCie").val();
+                $($('.table-responsive').find('tbody > tr')[indice]).children('td')[16].innerHTML = $("#txtDefinitivoEgreso").val();
+                
+            }
+            else
+                alertify.success("Problemas al intentar guardar\n"+resultado.excepcion); 
+            closeModal('modalEditarIngresos');
                
            });
        }
@@ -233,17 +244,23 @@ $('#tabMantenimientoIngresos .table-responsive').on("click", "#btnEliminar", fun
         $.post('sIngresosHospital', {
             opcion : 8,
             idIngreso: datos[0]                                
-        }, function(responseText) {  
-            filas--;
+        }, function(data) {
+            var resultado = JSON && JSON.parse(data) || $.parseJSON(data);   
+               if(resultado.estado===true)
+               {
+                   filas--;
+                   if(filas===0)
+                    {
+                        if(pagina>0)
+                            pagina--;
+                        filas=5;
+                    }
+                     cargarIngresos();
+                    alertify.success("Registro eliminado");
+               }
+               else
+                alertify.success("Problemas al intentar guardar\n"+resultado.excepcion); 
             
-            if(filas===0)
-            {
-                if(pagina>0)
-                    pagina--;
-                filas=5;
-            }
-             cargarIngresos();
-            alertify.success("Registro eliminado");
         });
         event.preventDefault();
         $(this).closest('tr').remove();
@@ -327,8 +344,8 @@ function limpiarMedicamentos()
                                                 <th style='display:none;' class='col-lg-1'>id</th>\n\
                                                 <th class='col-lg-1'>Fecha</th>\n\
                                                 <th class='col-lg-1'>Hora</th>\n\
-                                                <th>Notas de Evolución</th>\n\
-                                                <th >Prescripción</th>\n\
+                                                <th class='col-lg-3'>Notas de Evolución</th>\n\
+                                                <th class='col-lg-3'>Prescripción</th>\n\
                                                 <th style='display:none;'></th>\n\
                                                 <th class='col-lg-1'>Acción</th>\n\
                                               </tr>");
@@ -375,13 +392,12 @@ $("#tabMantenimientoIngresos .table-responsive").on("click", "#btnEditarMedicame
               
           });
           idMedicamento=medicinas[0];
-          idIngreso=medicinas[6];
+          idIngreso=medicinas[5];
           var id='medicinas';
            $('#dtpFechaMedicamentoIngresosModal').val(medicinas[1]);
-           $('#txtHor').val(medicinas[2]);
-           $('#txtLni').val(medicinas[3]);
-           $('#txtFin').val(medicinas[4]);
-           $('#txtMedicamentos').val(medicinas[5]);
+           $('#dtpHora').val(medicinas[2]);
+           $('#txtNotasEvolucion').val(medicinas[3]);
+           $('#txtPrescripcion').val(medicinas[4]);           
            limpiarMedicamentos();
            $('#btnGuardarMedicamento').prop('disabled', false);
            $("#"+id).modal('show');
@@ -404,7 +420,8 @@ $("#tabMantenimientoIngresos .table-responsive").on("click", "#btnEditarMedicame
         }); 
          $('#btnGuardarMedicamento').prop('disabled', false);
         $("#tabMantenimientoIngresos #dtpFechaMedicamentoIngresosModal").val('');
-        $('#txtMedicamentos').val('');
+        $('#txtNotasEvolucion').val('');
+        $('#txtPrescripcion').val('');
           $("#"+id).modal('show');
       });            
 //Actualizar - Guardar medicamentos      
@@ -421,20 +438,28 @@ $("#tabMantenimientoIngresos .table-responsive").on("click", "#btnEditarMedicame
             prescripcionMedica: $('#txtPrescripcion').val(),              
             opcion:'9',
             idMedicamento:idMedicamento
-        }, function(responseText) {    
-            if(idMedicamento===0)
-                alertify.success("Datos registrados correctamente");
-            else
+        }, function(data) { 
+            var resultado = JSON && JSON.parse(data) || $.parseJSON(data);   
+            console.log(resultado);
+            if(resultado.estado===true)
             {
-                //indiceMedicamentos
-                $($('#tablaMedicamentos').find('tbody > tr')[indiceMedicamentos]).children('td')[1].innerHTML = $('#dtpFechaMedicamentoIngresosModal').val();
-                $($('#tablaMedicamentos').find('tbody > tr')[indiceMedicamentos]).children('td')[2].innerHTML = $('#txtHor').val();
-                $($('#tablaMedicamentos').find('tbody > tr')[indiceMedicamentos]).children('td')[3].innerHTML = $('#txtLni').val();
-                $($('#tablaMedicamentos').find('tbody > tr')[indiceMedicamentos]).children('td')[4].innerHTML = $('#txtFin').val();
-                $($('#tablaMedicamentos').find('tbody > tr')[indiceMedicamentos]).children('td')[5].innerHTML = $('#txtMedicamentos').val();
-                alertify.success("Datos actualizados correctamente");
-            }
-            $("#medicinas").modal('toggle');
+                if(idMedicamento===0)
+                alertify.success("Datos registrados correctamente");
+                else
+                {
+                    //indiceMedicamentos
+                    $($('#tablaMedicamentos').find('tbody > tr')[indiceMedicamentos]).children('td')[1].innerHTML = $('#dtpFechaMedicamentoIngresosModal').val();
+                    $($('#tablaMedicamentos').find('tbody > tr')[indiceMedicamentos]).children('td')[2].innerHTML = $('#dtpHora').val();
+                    $($('#tablaMedicamentos').find('tbody > tr')[indiceMedicamentos]).children('td')[3].innerHTML = $('#txtNotasEvolucion').val();
+                    $($('#tablaMedicamentos').find('tbody > tr')[indiceMedicamentos]).children('td')[4].innerHTML = $('#txtPrescripcion').val();                
+                    alertify.success("Datos actualizados correctamente");
+                }
+                $("#medicinas").modal('toggle');
+            }        
+            else
+                 alertify.success("Problemas al intentar guardar\n"+resultado.excepcion); 
+            
+            
         });
         }
       });
@@ -463,16 +488,19 @@ $('#tabMantenimientoIngresos .table-responsive').on("click", "#btnEliminarMedica
 //Validaciones Medicamentos
 function validarMedicamentos()
 {
-    $("#txtMedicamentoshelp").remove();  
-    if ($('#txtMedicamentos').val() === null || $('#txtMedicamentos').val()==="" )
-    {
-        $('#txtMedicamentos').closest("div").addClass("has-error");
-        $('#txtMedicamentos').after('<span id="' + $('#txtMedicamentos').attr("id") + 'help" class="help-block">Campo Vacio</span');
-    }
-    else
-    {
-        $('#txtMedicamentos').closest("div").removeClass("has-error");
-    }
+    $.each($("#medicinas textarea[validate='text']"), function (index, value) {  
+       $(value).blur(function(){
+           validarText(value);
+	});
+        validarText(value);
+    });
+    $.each($("#medicinas input[validate='date']"), function (index, value) {
+        $(value).change(function(){    		               
+                validarDate(value);
+	});
+        validarDate(value);
+        
+    }); 
 }
 function validarDateIngresos()
 {
@@ -496,7 +524,7 @@ $('#dtpFechaMedicamentoIngresosModal').blur(function(){
 function validaciones()
 {
     $("#tabMantenimientoIngresos .help-block").remove();    
-    validarDateIngresos();
+    //validarDateIngresos();
     validarMedicamentos();
     return $("#tabMantenimientoIngresos .help-block").length === 0;    
 }
@@ -527,8 +555,6 @@ function ocultarModal()
          
      }
 
-$('.dropdown-toggle').dropdown();
- $('[data-toggle="tooltip"]').tooltip();  
     
      
      

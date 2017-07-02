@@ -65,7 +65,7 @@ var id=0;
         return $("#tbEstablecimiento .help-block").length === 0;
     }
 $(function () {
-     $('#titulo').text("Configuración Establecimiento");
+     
     $("#establecimiento").on("changed.bs.select", "#cboProvincia", function (e) {
         change_cboProvincia(this);
     });
