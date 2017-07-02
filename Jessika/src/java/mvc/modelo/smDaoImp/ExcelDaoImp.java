@@ -468,7 +468,7 @@ int c=1;
                 nombreEstablecimiento=value.getNombre();
             }
             
-              FileOutputStream fileOut = new FileOutputStream("FormularioCamas.xlsx");
+              FileOutputStream fileOut = new FileOutputStream(path+"FormularioCamas.xlsx");
             wb.write(fileOut);
             fileOut.flush();
             fileOut.close();

@@ -20,7 +20,6 @@ import mvc.controlador.entidades.sm.Caso;
 import mvc.controlador.entidades.sm.EspecialidadEgreso;
 import mvc.controlador.entidades.sm.HistorialClinico;
 import mvc.controlador.entidades.sm.Ingresos;
-import mvc.controlador.entidades.sm.Medicamento;
 import mvc.controlador.entidades.sm.Medicamentos;
 import mvc.controlador.entidades.sm.Medico;
 import mvc.controlador.entidades.sm.TipoIngreso;
@@ -300,7 +299,7 @@ String excepcion="";
     }
 
     @Override
-    public boolean guardarMedicamento(Medicamento value) {
+    public boolean guardarMedicamento(Medicamentos value) {
         String sql="";
         this.conn= con_db.open(con_db.MSSQL_SM);
         try 
@@ -308,7 +307,7 @@ String excepcion="";
             //Insert
            if(value.getId()==0)
             {
-                sql="INSERT INTO medicamentos(fecha, hora, notasEvolucion, prescripcionMedica, idIngresos, estado) values('"+value.getFecha()+"','"+value.getHora()+"','"+value.getNotasEvolucion()+"','"+value.getPrescripcionMedica()+"','"+value.getIngreso().getId()+"','1')";
+                sql="INSERT INTO medicamentos(fecha, hora, notasEvolucion, prescripcionMedica, idIngresos, estado) values('"+value.getFecha()+"','"+value.getHora()+"','"+value.getNotasEvolucion()+"','"+value.getPrescripcionMedica()+"','"+value.getIdIngresos().getId()+"','1')";
             }
             //Update
             else
@@ -334,7 +333,7 @@ String excepcion="";
                 this.conn= con_db.open(con_db.MSSQL_SM); 
                 ResultSet rs = this.conn.query("SELECT * FROM MEDICAMENTOS where idIngresos='"+idIngreso+"' and estado=1");
                 while (rs.next()) {
-                    Medicamentos value = new Medicamentos(rs.getInt("id"),rs.getDate("fecha"),rs.getTime("hora"),rs.getString("notasEvolucion"),rs.getString("notasEvolucion"), new Ingresos(rs.getInt("idIngresos")));                    
+                    Medicamentos value = new Medicamentos(rs.getInt("id"),rs.getDate("fecha"),rs.getTime("hora"),rs.getString("notasEvolucion"),rs.getString("prescripcionMedica"), new Ingresos(rs.getInt("idIngresos")));                    
                     list.add(value);
                 }
             } catch (SQLException ex) {
