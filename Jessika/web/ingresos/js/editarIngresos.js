@@ -6,7 +6,7 @@
 ocultarModal();
 
  $(function () {
-  $('[data-toggle="tooltip"]').tooltip()
+  //$('[data-toggle="tooltip"]').tooltip()
 })
 /*-------------------------------Variables-------------------------------------------------------------------------*/
 var res;
