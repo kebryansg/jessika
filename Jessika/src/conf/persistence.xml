@@ -4,6 +4,7 @@
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>mvc.controlador.Medicamentos</class>
     <class>mvc.controlador.entidades.sm.Medicamentos</class>
+    <class>mvc.controlador.entidades.sm.Usuario_1</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:sqlserver://DEIVI-PC\SQL2012:1433;databaseName=BD_SM"/>

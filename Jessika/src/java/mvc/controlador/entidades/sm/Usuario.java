@@ -20,6 +20,9 @@ public class Usuario {
         this.rol = rol;
     }
 
+    public Usuario() {
+    }
+
     public String getNick() {
         return nick;
     }

@@ -41,7 +41,8 @@
                     <select class="form-control selectpicker" validate="select" id="cboEspecialidadMedico">
                         <option value="0">Seleccione</option>
                         <%
-                            List<MedicoEspecialidad> list = new MedicoEspecialidadDaoImp().list(2071);
+                            int id = Integer.parseInt(session.getAttribute("id").toString());
+                            List<MedicoEspecialidad> list = new MedicoEspecialidadDaoImp().list(id);
                             for (MedicoEspecialidad m_e : list) {
                         %>
                         <option value="<%= m_e.getId()%>"><%= m_e.getIdEspecialidad().getDescripcion()%></option>

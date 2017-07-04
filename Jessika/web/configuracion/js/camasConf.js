@@ -60,8 +60,7 @@ $('#btnGuardar').click(function(event) {
              var resultado = JSON && JSON.parse(data) || $.parseJSON(data);
              console.log(resultado);
              if(resultado.estado===true)
-             {
-                 
+             {                 
                  if(s==0)
                      alertify.success("Datos registrados correctamente");
                  else

@@ -68,3 +68,39 @@ BEGIN
 	SET @total=(SELECT COUNT(id) as totalRegistros from especialidad where descripcion COLLATE Latin1_General_CI_AI like '%'+@buscar+'%' COLLATE Latin1_General_CI_AI and visible=1);
 	SELECT * from especialidad  where descripcion COLLATE Latin1_General_CI_AI like '%'+@buscar+'%' COLLATE Latin1_General_CI_AI and visible=1 order by id OFFSET (@NUM_PAGINA) ROWS FETCH FIRST @totalRegistros ROWS ONLY;	
 END
+
+-- Insert
+SET IDENTITY_INSERT [dbo].[tipoConsulta] ON;
+INSERT INTO BD_SM.dbo.tipoConsulta (id,descripcion) VALUES (1,'AMBULATORIA');
+INSERT INTO BD_SM.dbo.tipoConsulta (id,descripcion) VALUES (2,'PREVENCION');
+SET IDENTITY_INSERT [dbo].[tipoConsulta] OFF;
+
+SET IDENTITY_INSERT [dbo].[metodos] ON;
+INSERT INTO BD_SM.dbo.metodos (id,descripcion,idTipoConsulta) VALUES (2,'Planificacion Familiar',2);
+INSERT INTO BD_SM.dbo.metodos (id,descripcion,idTipoConsulta) VALUES (3,'Deteccion de cancer',2);
+SET IDENTITY_INSERT [dbo].[metodos] OFF;
+
+SET IDENTITY_INSERT [dbo].[detallesMetodos] ON;
+INSERT INTO BD_SM.dbo.detallesMetodos (id,descripcion,sexo,idMetodo) VALUES (1,'Dispositivo Intrauterino','2',2);
+INSERT INTO BD_SM.dbo.detallesMetodos (id,descripcion,sexo,idMetodo) VALUES (2,'Gestàgenos Orales','0',2);
+INSERT INTO BD_SM.dbo.detallesMetodos (id,descripcion,sexo,idMetodo) VALUES (3,'Inyectable','0',2);
+INSERT INTO BD_SM.dbo.detallesMetodos (id,descripcion,sexo,idMetodo) VALUES (4,'Preservativos','0',2);
+INSERT INTO BD_SM.dbo.detallesMetodos (id,descripcion,sexo,idMetodo) VALUES (5,'Implantes','2',2);
+INSERT INTO BD_SM.dbo.detallesMetodos (id,descripcion,sexo,idMetodo) VALUES (6,'Vasectomia','1',2);
+INSERT INTO BD_SM.dbo.detallesMetodos (id,descripcion,sexo,idMetodo) VALUES (7,'Salpingectomìa','2',2);
+INSERT INTO BD_SM.dbo.detallesMetodos (id,descripcion,sexo,idMetodo) VALUES (8,'Cervicouterino','2',3);
+INSERT INTO BD_SM.dbo.detallesMetodos (id,descripcion,sexo,idMetodo) VALUES (9,'Prospata','1',3);
+INSERT INTO BD_SM.dbo.detallesMetodos (id,descripcion,sexo,idMetodo) VALUES (10,'Mamario','0',3);
+INSERT INTO BD_SM.dbo.detallesMetodos (id,descripcion,sexo,idMetodo) VALUES (11,'Pulmonar','0',3);
+INSERT INTO BD_SM.dbo.detallesMetodos (id,descripcion,sexo,idMetodo) VALUES (12,'Gastrico','0',3);
+INSERT INTO BD_SM.dbo.detallesMetodos (id,descripcion,sexo,idMetodo) VALUES (13,'Hepatico','0',3);
+INSERT INTO BD_SM.dbo.detallesMetodos (id,descripcion,sexo,idMetodo) VALUES (14,'Colorrectal','0',3);
+INSERT INTO BD_SM.dbo.detallesMetodos (id,descripcion,sexo,idMetodo) VALUES (15,'Piel','0',3);
+SET IDENTITY_INSERT [dbo].[detallesMetodos] OFF;
+
+
+
+
+
+
+
