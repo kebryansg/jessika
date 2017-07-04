@@ -68,8 +68,8 @@
     <body>
         <%
             HttpSession sesion = request.getSession();
-            //if(sesion.getAttribute("usuario") == null){
-            if (false) {
+            if(sesion.getAttribute("usuario") == null){
+            //if (false) {
                 response.sendRedirect("login.jsp");
 
             }
