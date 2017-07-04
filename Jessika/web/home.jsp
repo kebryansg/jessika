@@ -1,3 +1,4 @@
+<%@page import="mvc.controlador.entidades.sm.Medico"%>
 <%@page import="java.util.List"%>
 <%@page import="mvc.modelo.smDaoImp.IngresosDaoImp"%>
 <%@page import="mvc.controlador.entidades.sm.HistorialClinico"%>
@@ -67,12 +68,9 @@
 
     <body>
         <%
-            HttpSession sesion = request.getSession();
-            //if(sesion.getAttribute("usuario") == null){
-            if (false) {
+            HttpSession sesion = request.getSession(); 
+            if(sesion.getAttribute("usuario") == null) 
                 response.sendRedirect("login.jsp");
-
-            }
         %>
         <div id="wrapper">
 
@@ -93,7 +91,7 @@
 
 
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <%=session.getAttribute("nombresUsuario")%> <b class="caret"></b></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <%=sesion.getAttribute("usuario").toString()%> <b class="caret"></b></a>
                         <ul class="dropdown-menu">                            
                             <li>
                                 <a id="aSalida" href="#"><i class="fa fa-fw fa-power-off"></i> Salir</a>

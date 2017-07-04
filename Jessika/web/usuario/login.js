@@ -16,11 +16,11 @@ $('#btnLogin').click(function (e) {
                     clave: $("#txtClave").val()
                     
                 },
-                success: function (response) {
-
-                    if(response==="1")
+                success: function (data) {
+                     var resultado = JSON && JSON.parse(data) || $.parseJSON(data);
+                     console.log(resultado);
+                    if(resultado.login===true)
                         location.href="home.jsp";
-
                     else
                     {
                          alertify.success("Usuario o Clave Incorecta");

@@ -5,6 +5,7 @@
  */
 package mvc.servlet;
 
+import com.google.gson.JsonObject;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -88,28 +89,31 @@ public class sUsuario extends HttpServlet {
        PrintWriter out = response.getWriter();
        String result = "", op = request.getParameter("op");
        HttpSession sesion = request.getSession();
+       JsonObject object = new JsonObject();
        if("login".equals(op))
        {
             String user = request.getParameter("usuario");
             String clave = request.getParameter("clave");
             UsuarioDao usuario= new UsuarioDaoImp();
-            String usuarioLogueado=usuario.Login(user, clave);
-            ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+            //int idRol=usuario.Login(user, clave);
+            String usuarioLogueado=usuario.Login(user, clave);            
             if(sesion.getAttribute("usuario") == null)
             {
-                if(!"".equals(usuarioLogueado))
+                if(usuarioLogueado!="")
                 {
-                    sesion.setAttribute("usuario", user);
-                    sesion.setAttribute("nombresUsuario", usuarioLogueado);
-                    sesion.setAttribute("nombreEstablecimiento", "Hospital del dia Revelo");
-                    //response.sendRedirect("home.jsp");
-                    String json = OBJECT_MAPPER.writeValueAsString(1);
-                    response.getWriter().write(json);
+                    sesion.setAttribute("usuario", usuarioLogueado);                    
+                    sesion.setAttribute("rol", usuario.getIdRol());                    
+                    sesion.setAttribute("id", usuario.getId());
+                    //sesion.setAttribute("nombreEstablecimiento", "Hospital del dia Revelo");
+                   //response.sendRedirect("home.jsp");
+                    object.addProperty("login", true);
+                    out.println(object);
+                    
                 }
                 else
                 {
-                    String json = OBJECT_MAPPER.writeValueAsString(0);
-                    response.getWriter().write(json);
+                    object.addProperty("login", false);
+                    out.println(object);
                     
                 }
             }            
