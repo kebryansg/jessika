@@ -7,6 +7,15 @@ $("#tableEstudiosImgSelec").bootstrapTable();
 $("#cantListEstudiosImg").selectpicker('refresh');
 
 $(tableEstudiosImg).bootstrapTable("hideColumn", "extremidad");
+//
+$(tableEstudiosImg).bootstrapTable("hideColumn", "ID");
+$("#tableEstudiosImgSelec").bootstrapTable("hideColumn", "id");
+$("#tableEstudiosImgSelec").bootstrapTable("hideColumn", "tipoEstudio");
+
+
+
+//
+
 TipoEstudiosImg_load($("#cboTipoEstudiosImg"));
 EstudiosImg_load($("#cboEstudiosImg"));
 loadListEstudiosImg(true, 1);
