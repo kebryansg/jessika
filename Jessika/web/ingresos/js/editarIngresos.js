@@ -24,6 +24,8 @@ var indiceMedicamentos=0;
  var m;
  var search=false;
     $('.form_date').datetimepicker('update', new Date());
+    //dtpFechaMedicamento
+    
  
 /*-------------------------------Ingresos-------------------------------------------------------------------------*/
 //Buscar Ingresos

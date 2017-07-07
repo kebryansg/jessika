@@ -340,7 +340,7 @@
                                     <div class="col-md-12">
                                         <label class="col-md-12" for="dtpFechaIngresoModal">Fecha</label>
                                         <div class="col-md-12">
-                                                <div class="input-group date form_date" data-date="" data-date-format="yyyy-mm-dd">
+                                                <div class="input-group date form_date" data-date="" id="dtpFechaMedicamento" data-date-format="yyyy-mm-dd">
                                             <input validate="date" class="form-control" id="dtpFechaMedicamentoIngresosModal" size="16" type="text" value="" readonly>
                                             <!--<span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>-->
                                             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
