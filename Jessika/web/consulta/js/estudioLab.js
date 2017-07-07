@@ -5,6 +5,10 @@ var idLabs = [];
 
 $("#tableEstudiosLabSelec").bootstrapTable();
 $(table).bootstrapTable();
+
+$(table).bootstrapTable("hideColumn","ID");
+$("#tableEstudiosLabSelec").bootstrapTable("hideColumn","id");
+
 $("#cantListEstudiosLab").selectpicker('refresh');
 
 cboCategoria_load($("#cboCategoria"));

@@ -94,7 +94,7 @@
 
 
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <%=sesion.getAttribute("usuario").toString()%> <b class="caret"></b></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <%= sesion.getAttribute("usuario").toString()%> <b class="caret"></b></a>
                         <ul class="dropdown-menu">                            
                             <li>
                                 <a id="aSalida" href="#"><i class="fa fa-fw fa-power-off"></i> Salir</a>
@@ -273,5 +273,8 @@
         
 
     </body>
+    <script type="text/javascript">
+        $("#contenido").load("consulta/estudiosImg.jsp");
+    </script>
     <script type="text/javascript" src="usuario/login.js"></script>
 </html>

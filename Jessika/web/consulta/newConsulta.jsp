@@ -148,8 +148,8 @@
     <div class="modal-dialog modal-lg" >
         <div class="modal-content">
             <div class="modal-header">
-                <!--<button type="button" class="close" data-dismiss="modal">&times;</button>-->
-                <button type="button" data-dismiss="modal"  class="btn btn-primary" style="float: right;">Guardar</button>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <!--<button type="button" data-dismiss="modal"  class="btn btn-primary" style="float: right;">Guardar</button>-->
                 <h4 class="modal-title">Estudios de Laboratorio</h4>
             </div>
             <div class="modal-body">
@@ -166,8 +166,8 @@
     <div class="modal-dialog modal-lg" >
         <div class="modal-content">
             <div class="modal-header">
-                <!--<button type="button" class="close" data-dismiss="modal">&times;</button>-->
-                <button type="button" data-dismiss="modal"  class="btn btn-primary" style="float: right;">Guardar</button>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <!--<button type="button" data-dismiss="modal"  class="btn btn-primary" style="float: right;">Guardar</button>-->
                 <h4 class="modal-title">Estudios de Imagenes</h4>
             </div>
             <div class="modal-body">
