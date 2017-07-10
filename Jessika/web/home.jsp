@@ -68,6 +68,7 @@
 
     
         <%
+                       
             HttpSession sesion = request.getSession();
             if (sesion.getAttribute("usuario") == null) {
                 //if (false) {
@@ -94,7 +95,7 @@
 
 
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <%= sesion.getAttribute("usuario").toString()%> <b class="caret"></b></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <%= sesion.getAttribute("usuario")==null?"":sesion.getAttribute("usuario").toString()%> <b class="caret"></b></a>
                         <ul class="dropdown-menu">                            
                             <li>
                                 <a id="aSalida" href="#"><i class="fa fa-fw fa-power-off"></i> Salir</a>
