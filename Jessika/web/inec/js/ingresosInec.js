@@ -69,7 +69,7 @@ $("#btnGenerar").click(function(event) {
             success: function(data){   
               
                var resultado = JSON && JSON.parse(data) || $.parseJSON(data);               
-                console.log(data);
+                console.log(resultado);
                 if(resultado[0].egresos!=="")
                 {
                     $("#descargarEgresos").attr("href","xlsx/"+resultado[0].egresos);

@@ -94,12 +94,16 @@ public class sExcel extends HttpServlet {
              String absoluteFilesystemPath = getServletContext().getRealPath("/xlsx/");   
              String resultado=objExcel.generarExcelIngresos(fechaReporte,absoluteFilesystemPath,"");
              object.addProperty("egresos",resultado);
+             
+             object1.addProperty("formulario","Egresos");
              if("".equals(resultado))
              {
                  object1.addProperty("estado",false);
-                 object1.addProperty("formulario","Egresos");
+                 //object1.addProperty("formulario","Egresos");
                  object1.addProperty("excepcion",objExcel.getExcepcion());
              }
+             else
+                 object1.addProperty("estado",true);
          }
          catch(Exception ex)
          {
@@ -111,21 +115,26 @@ public class sExcel extends HttpServlet {
              ExcelDao objExcel= new ExcelDaoImp();
              String absoluteFilesystemPath = getServletContext().getRealPath("/xlsx/"); 
              String resultado=objExcel.generarExcelCamas(fechaReporte,absoluteFilesystemPath);
-             object.addProperty("camas", resultado);
+             object.addProperty("camas", resultado);             
+             object1.addProperty("formulario","Camas");
              if("".equals(resultado))
              {
                  object1.addProperty("estado",false);
-                 object1.addProperty("formulario","Camas");
+                 //object1.addProperty("formulario","Camas");
                  object1.addProperty("excepcion",objExcel.getExcepcion());
              }
+             else 
+                 object1.addProperty("estado",true);
              resultado=objExcel.generarExcelCamasIndividual(fechaReporte,absoluteFilesystemPath);
              object.addProperty("camasIndividual", resultado);
+             object1.addProperty("formulario","Camas Individual");
              if("".equals(resultado))
              {
-                 object1.addProperty("estado",false);
-                 object1.addProperty("formulario","Camas Individual");
+                 object1.addProperty("estado",false);                 
                  object1.addProperty("excepcion",objExcel.getExcepcion());
              }             
+             else
+                 object1.addProperty("estado",true);
          }
          catch(Exception ex)
          {

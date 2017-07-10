@@ -202,7 +202,7 @@ int c=1;
         }
         catch(Exception ex)
         {
-            excepcion=ex.getMessage();
+            excepcion="Egresos: "+ex.getMessage();
             return "";
             
             
@@ -335,7 +335,7 @@ int c=1;
         }
         catch(Exception ex)
         {
-            excepcion=ex.getMessage();
+            excepcion="Camas:"+ex.getMessage();
             return "";
         }
     }
@@ -478,7 +478,7 @@ int c=1;
         }
         catch(Exception ex)
         {
-            excepcion=ex.getMessage();
+            excepcion="Camas Individual:"+ex.getMessage();
             return "";
         }
     }
