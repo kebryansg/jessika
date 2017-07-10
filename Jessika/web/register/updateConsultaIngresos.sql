@@ -7,7 +7,6 @@
  * Author:  Deivi
  * Created: 09-jul-2017
  */
-
 USE [BD_SM]
 GO
 /****** Object:  StoredProcedure [dbo].[obtenerIngresosMensuales]    Script Date: 07/07/2017 19:48:31 ******/
@@ -30,7 +29,7 @@ BEGIN
 
 SELECT      Month(@fecha) as MesRecoleccion,  historialClinico.id as NHistoriaClinica, caso.id AS NoArchivo, BD_IP.dbo.paciente.cedula, BD_IP.dbo.paciente.nombre1,
 			BD_IP.dbo.paciente.nombre2,BD_IP.dbo.paciente.apellido1,BD_IP.dbo.paciente.apellido2, Nacionalidad= CASE BD_IP.dbo.paciente.nacionalidad WHEN 'Ecuatoriano' THEN '1' ELSE '2' end, 
-			Pais= CASE BD_IP.dbo.paciente.nacionalidad WHEN 'Ecuatoriano' THEN '' ELSE BD_IP.dbo.paciente.nacionalidad end ,BD_IP.dbo.paciente.sexo,  
+			Pais= CASE BD_IP.dbo.paciente.nacionalidad WHEN 1 THEN '' ELSE BD_IP.dbo.paciente.nacionalidad end ,BD_IP.dbo.paciente.sexo,  
 			 YEAR(BD_IP.dbo.paciente.fechaNacimiento) as AñoNacimiento, MONTH(BD_IP.dbo.paciente.fechaNacimiento) as MesNacimiento, DAY(BD_IP.dbo.paciente.fechaNacimiento) as DiaNacimiento, 
 			 case when 
 			datediff(year, paciente.fechaNacimiento , getdate())>0 then 4
