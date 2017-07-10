@@ -49,8 +49,8 @@
         
         <div class="row">
             <div class="col-xs-12">
-            <div class="table-responsive" style="margin: 0 auto; text-align:left">
-            <table id="tablaIngresos" class="table table-bordered table-hover table-striped">
+            <div class="table-responsive" style="margin: 0 auto; text-align:left; height:315px; ">
+            <table id="tablaIngresos"  class="table table-bordered table-hover table-striped">
                 <thead>
                     <tr>                                                       
                         <th style='display:none;'>No.</th>
@@ -70,7 +70,7 @@
                         <th style='display:none;' class='col-lg-1'>C. Externa</th>
                         <th >Cód.</th>
                         <th style='display:none;' class='col-lg-1'></th>
-                        <th >Acción.</th>
+                        <th class='col-lg-3'>Acción.</th>
                     </tr>
                 </thead>
                 <tbody>

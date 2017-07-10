@@ -99,7 +99,7 @@ function cargarIngresos()
                                                         <th style='display:none;' class='col-lg-1'>C. Externa</th>\n\
                                                         <th >Cód.</th>\n\
                                                         \n\<th style='display:none;' class='col-lg-1'></th>\n\
-                                                        <th >Acción.</th></tr>");
+                                                        <th class='col-lg-3'>Acción.</th></tr>");
                 var valor="btn-group";
                 
                     for(i=0;i <resultado.length; i++)
