@@ -5,8 +5,10 @@
  */
 package mvc.modelo.ipDaoImp;
 
+import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 import mvc.controlador.C_BD;
@@ -50,7 +52,7 @@ public class PacienteDaoImp implements PacienteDao {
                 value.setLugarNacimiento(rs.getNString("lugarNacimiento"));
                 value.setNacionalidad(rs.getString("nacionalidad"));
                 value.setPaisNacimiento(rs.getNString("paisNacimiento"));
-                value.setSexo(rs.getBoolean("sexo"));
+                value.setSexo(rs.getString("sexo"));
                 value.setTelefonoDomicilio(rs.getNString("telefonoDomicilio"));
                 value.setTelefonoOficina(rs.getNString("telefonoOficina"));
                 value.setNombreContacto(rs.getNString("nombreContacto"));
@@ -91,7 +93,7 @@ public class PacienteDaoImp implements PacienteDao {
                 value.setLugarNacimiento(rs.getNString("lugarNacimiento"));
                 value.setNacionalidad(rs.getString("nacionalidad"));
                 value.setPaisNacimiento(rs.getNString("paisNacimiento"));
-                value.setSexo(rs.getBoolean("sexo"));
+                value.setSexo(rs.getString("sexo"));
                 value.setTelefonoDomicilio(rs.getNString("telefonoDomicilio"));
                 value.setTelefonoOficina(rs.getNString("telefonoOficina"));
                 value.setNombreContacto(rs.getNString("nombreContacto"));
@@ -109,65 +111,37 @@ public class PacienteDaoImp implements PacienteDao {
     @Override
     public boolean save(Paciente value) {
         this.conn = con_db.open(con_db.MSSQL_IP);
-        String sql = "";
         try {
-            if (value.getId() == 0) {
-                sql = "INSERT INTO [dbo].[paciente]([cedula],[nombre1],[nombre2],[apellido1],[apellido2],[domicilio],[nacionalidad],[ciudad],[estadoCivil],[telefonoDomicilio],[telefonoOficina],[email],[sexo],[paisNacimiento],[lugarNacimiento],[fechaNacimiento],[etnia],[discapacidad],[idParroquia],[imagen],[nombreContacto],[movilContacto],[parentezco])\n"
-                        + "     VALUES\n"
-                        + "           ('" + value.getCedula() + "'\n"
-                        + "           ,'" + value.getNombre1() + "'\n"
-                        + "           ,'" + value.getNombre2() + "'\n"
-                        + "           ,'" + value.getApellido1() + "'\n"
-                        + "           ,'" + value.getApellido2() + "'\n"
-                        + "           ,'" + value.getDomicilio() + "'\n"
-                        + "           ,'" + value.getNacionalidad() + "'\n"
-                        + "           ,'" + value.getCiudad() + "'\n"
-                        + "           ,'" + value.getEstadoCivil() + "'\n"
-                        + "           ,'" + value.getTelefonoDomicilio() + "'\n"
-                        + "           ,'" + value.getTelefonoOficina() + "'\n"
-                        + "           ,'" + value.getEmail() + "'\n"
-                        + "           ,'" + test.test.getSexo(value.getSexo()) + "'\n"
-                        + "           ,'" + value.getPaisNacimiento() + "'\n"
-                        + "           ,'" + value.getLugarNacimiento() + "'\n"
-                        + "           ,'" + test.test.SQLSave(value.getFechaNacimiento()) + "'\n"
-                        + "           ,'" + value.getEtnia() + "'\n"
-                        + "           ,'" + value.getDiscapacidad() + "'\n"
-                        + "           ,'" + value.getIdParroquia().getId() + "'\n"
-                        + "           ,'" + value.getImagen() + "'\n"
-                        + "           ,'" + value.getNombreContacto() + "'\n"
-                        + "           ,'" + value.getMovilContacto() + "'\n"
-                        + "           ,'" + value.getParentezco() + "')";
-            } else {
-                sql = "UPDATE [dbo].[paciente]\n"
-                        + "   SET [cedula] = '" + value.getCedula() + "'\n"
-                        + "      ,[nombre1] = '" + value.getNombre1() + "'\n"
-                        + "      ,[nombre2] = '" + value.getNombre2() + "'\n"
-                        + "      ,[apellido1] = '" + value.getApellido1() + "'\n"
-                        + "      ,[apellido2] = '" + value.getApellido2() + "'\n"
-                        + "      ,[domicilio] = '" + value.getDomicilio() + "'\n"
-                        + "      ,[nacionalidad] = '" + value.getNacionalidad() + "'\n"
-                        + "      ,[ciudad] = '" + value.getCiudad() + "'\n"
-                        + "      ,[estadoCivil] = '" + value.getEstadoCivil() + "'\n"
-                        + "      ,[telefonoDomicilio] = '" + value.getTelefonoDomicilio() + "'\n"
-                        + "      ,[telefonoOficina] = '" + value.getTelefonoOficina() + "'\n"
-                        + "      ,[email] = '" + value.getEmail() + "'\n"
-                        + "      ,[sexo] = '" + test.test.getSexo(value.getSexo()) + "'\n"
-                        + "      ,[paisNacimiento] = '" + value.getPaisNacimiento() + "'\n"
-                        + "      ,[lugarNacimiento] = '" + value.getLugarNacimiento() + "'\n"
-                        + "      ,[fechaNacimiento] = '" + test.test.SQLSave(value.getFechaNacimiento()) + "'\n"
-                        + "      ,[etnia] = '" + value.getEtnia() + "'\n"
-                        + "      ,[discapacidad] = '" + value.getDiscapacidad() + "'\n"
-                        + "      ,[idParroquia] = '" + value.getIdParroquia().getId() + "'\n"
-                        + "      ,[imagen] = '" + value.getImagen() + "'\n"
-                        + "      ,[nombreContacto] = '" + value.getNombreContacto() + "'\n"
-                        + "      ,[movilContacto] = '" + value.getMovilContacto() + "'\n"
-                        + "      ,[parentezco] = '" + value.getParentezco() + "'\n"
-                        + " WHERE id = '" + value.getId() + "'";
-            }
-            conn.execute(sql);
-            System.out.println(sql);
+
+            CallableStatement call = this.conn.getConexion().prepareCall("{call dbo.savePaciente(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
+            call.setInt("id", value.getId());
+            call.setString("cedula", value.getCedula());
+            call.setString("nombre1", value.getNombre1());
+            call.setString("nombre2", value.getNombre2());
+            call.setString("apellido1", value.getApellido1());
+            call.setString("apellido2", value.getApellido2());
+            call.setString("domicilio", value.getDomicilio());
+            call.setString("nacionalidad", value.getNacionalidad());
+            call.setString("ciudad", value.getCiudad());
+            call.setString("estadocivil", value.getEstadoCivil());
+            call.setString("telDomicilio", value.getTelefonoDomicilio());
+            call.setString("telOficina", value.getTelefonoOficina());
+            call.setString("email", value.getEmail());
+            call.setString("sexo", value.getSexo());
+            call.setString("paisNac", value.getPaisNacimiento());
+            call.setString("lugarNac", value.getLugarNacimiento());
+            call.setDate("fechaNac", new java.sql.Date(value.getFechaNacimiento().getTime()));
+            call.setInt("etnia", value.getEtnia());
+            call.setInt("discapacidad", value.getDiscapacidad());
+            call.setInt("idParroquia", value.getIdParroquia().getId());
+            call.setString("nombreContacto", value.getNombreContacto());
+            call.setString("parentezco", value.getParentezco());
+            call.setString("movilContacto", value.getMovilContacto());
+            call.registerOutParameter("idOut", Types.INTEGER);
+            call.execute();
+            value.setId(call.getInt("idOut"));
             return true;
-        } catch (Exception ex) {
+        } catch (SQLException ex) {
             System.out.println(ex.getMessage());
             return false;
         } finally {
@@ -201,7 +175,7 @@ public class PacienteDaoImp implements PacienteDao {
                 value.setApellido2(rs.getNString("apellido2"));
                 value.setCiudad(rs.getNString("ciudad"));
                 value.setDomicilio(rs.getNString("domicilio"));
-                value.setSexo(rs.getBoolean("sexo"));
+                value.setSexo(rs.getString("sexo"));
                 /*value.setDiscapacidad(rs.getInt("discapacidad"));
                 value.setEmail(rs.getNString("email"));
                 value.setEstadoCivil(rs.getString("estadoCivil"));
@@ -232,7 +206,7 @@ public class PacienteDaoImp implements PacienteDao {
         this.conn = con_db.open(con_db.MSSQL_IP);
         list_count l = new list_count();
         List<Paciente> list = new ArrayList<>();
-        String sql = "EXEC [dbo].[getPacientes] "+ top +", "+ pag +", '"+value+"'";
+        String sql = "EXEC [dbo].[getPacientes] " + top + ", " + pag + ", '" + value + "'";
         System.out.println(sql);
         ResultSet rs = this.conn.query(sql); //this.conn.query(sql);
         try {
@@ -248,7 +222,7 @@ public class PacienteDaoImp implements PacienteDao {
                 paciente1.setApellido2(rs.getNString("apellido2"));
                 paciente1.setCiudad(rs.getNString("ciudad"));
                 paciente1.setDomicilio(rs.getNString("domicilio"));
-                paciente1.setSexo(rs.getBoolean("sexo"));
+                paciente1.setSexo(rs.getString("sexo"));
                 list.add(paciente1);
             }
             l.setList(list);
@@ -263,9 +237,9 @@ public class PacienteDaoImp implements PacienteDao {
     @Override
     public Paciente edit_HC(int hc) {
         this.conn = con_db.open(con_db.MSSQL_IP);
-        ResultSet rs = this.conn.query("select p.* from BD_IP.dbo.paciente p\n" +
-                "inner join BD_SM.dbo.historialClinico hc on hc.idPaciente = p.id\n" +
-                "where hc.id = '"+ hc +"'");
+        ResultSet rs = this.conn.query("select p.* from BD_IP.dbo.paciente p\n"
+                + "inner join BD_SM.dbo.historialClinico hc on hc.idPaciente = p.id\n"
+                + "where hc.id = '" + hc + "'");
         Paciente value = new Paciente();
         try {
             while (rs.next()) {
@@ -287,7 +261,7 @@ public class PacienteDaoImp implements PacienteDao {
                 value.setLugarNacimiento(rs.getNString("lugarNacimiento"));
                 value.setNacionalidad(rs.getString("nacionalidad"));
                 value.setPaisNacimiento(rs.getNString("paisNacimiento"));
-                value.setSexo(rs.getBoolean("sexo"));
+                value.setSexo(rs.getString("sexo"));
                 value.setTelefonoDomicilio(rs.getNString("telefonoDomicilio"));
                 value.setTelefonoOficina(rs.getNString("telefonoOficina"));
                 value.setNombreContacto(rs.getNString("nombreContacto"));

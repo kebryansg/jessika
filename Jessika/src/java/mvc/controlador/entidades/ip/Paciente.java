@@ -72,7 +72,7 @@ public class Paciente implements Serializable {
     @Column(name = "email")
     private String email;
     @Column(name = "sexo")
-    private Boolean sexo;
+    private String sexo;
     @Column(name = "paisNacimiento")
     private String paisNacimiento;
     @Column(name = "lugarNacimiento")
@@ -226,11 +226,11 @@ public class Paciente implements Serializable {
         this.email = email;
     }
 
-    public Boolean getSexo() {
+    public String getSexo() {
         return sexo;
     }
 
-    public void setSexo(Boolean sexo) {
+    public void setSexo(String sexo) {
         this.sexo = sexo;
     }
 

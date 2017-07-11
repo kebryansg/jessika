@@ -54,7 +54,7 @@ public class ParienteEnfermedadPacienteDaoImp implements ParienteEnfermedadPacie
                         + " WHERE id = " + value.getId();
             }
             conn.execute(sql);
-            System.out.println(sql);
+            //System.out.println(sql);
             return true;
         } catch (Exception ex) {
             System.out.println(ex.getMessage());

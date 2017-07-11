@@ -1,3 +1,6 @@
+function isNull(val){
+    return jQuery.type(val) === "undefined";
+}
 function validarText(value) {
     var bandera = true;
     var valor = "#" + $(value).attr("id") + 'help';

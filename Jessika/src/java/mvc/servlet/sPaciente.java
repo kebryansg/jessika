@@ -138,7 +138,7 @@ public class sPaciente extends HttpServlet {
                             + ",\"nombres\": \"" + (paciente1.getApellido1() + " " + paciente1.getApellido2() + " " + paciente1.getNombre1() + " " + paciente1.getNombre2()).toUpperCase() + "\""
                             + ",\"ciudad\": \"" + paciente1.getCiudad() + "\""
                             + ",\"domicilio\": \"" + paciente1.getDomicilio() + "\""
-                            + ",\"sexo\": \"" + ((paciente1.getSexo()) ? "1" : "0") + "\""
+                            + ",\"sexo\": \"" + (paciente1.getSexo()) + "\""
                             /*+ ",\"accion\": \"<button name='editPaciente' data-id='" + paciente1.getId() + "'  style='margin-right: 2px;' class='btn btn-primary'><span class='glyphicon glyphicon-pencil'></span> </button>"
                             + "<button name='deletPaciente' data-id='" + paciente1.getId() + "' class='btn btn-danger'><span class='glyphicon glyphicon-trash'></span> </button>\""
                             + ",\"seleccionar\": \"<button name='SeleccionarPaciente' data-dismiss='modal' class='btn btn-info'>Seleccionar</button>\""*/
@@ -168,8 +168,6 @@ public class sPaciente extends HttpServlet {
             case "save":
                 //Paciente paciente = new Paciente(0); //Llama arriba
                 paciente.setId(Integer.parseInt(request.getParameter("id")));
-                int idPaciente = (paciente.getId() == 0) ? (test.getID("paciente") + 1) : paciente.getId();
-
                 paciente.setCedula(request.getParameter("paciente[cedula]"));
                 paciente.setNombre1(request.getParameter("paciente[primerNombre]"));
                 paciente.setNombre2(request.getParameter("paciente[segundoNombre]"));
@@ -181,7 +179,7 @@ public class sPaciente extends HttpServlet {
                 paciente.setEmail(request.getParameter("paciente[email]"));
                 paciente.setEtnia(Integer.parseInt(request.getParameter("paciente[etnia]")));
                 paciente.setDomicilio(request.getParameter("paciente[domicilio]"));
-                paciente.setDiscapacidad(request.getParameter("paciente[discapacidad]").equals("true") ? 1 : 0);
+                paciente.setDiscapacidad(Integer.parseInt(request.getParameter("paciente[discapacidad]")));
                 paciente.setCiudad(request.getParameter("paciente[ciudad]"));
                 paciente.setEstadoCivil(request.getParameter("paciente[estadoCivil]"));
 
@@ -190,8 +188,7 @@ public class sPaciente extends HttpServlet {
                 paciente.setParentezco(request.getParameter("paciente[parentezco]"));
 
                 paciente.setTelefonoOficina(request.getParameter("paciente[telOficina]"));
-                Boolean sexo = request.getParameter("paciente[genero]").equals("1");
-                paciente.setSexo(sexo);
+                paciente.setSexo(request.getParameter("paciente[genero]"));
                 paciente.setPaisNacimiento(request.getParameter("paciente[paisNac]"));
                 paciente.setLugarNacimiento(request.getParameter("paciente[lugarNac]"));
                 paciente.setIdParroquia(new Parroquia(Integer.parseInt(request.getParameter("paciente[parroquia]"))));
@@ -202,13 +199,10 @@ public class sPaciente extends HttpServlet {
                 } else {
                     paciente.setImagen(request.getParameter("paciente[imagen]"));
                 }*/
-                if (paciente.getId() == 0) {
-                    new HistorialClinicoDaoImp().save(new HistorialClinico("", idPaciente));
-                }
+                
                 new PacienteDaoImp().save(paciente);
-                paciente.setId(idPaciente);
 
-                if (!sexo) {
+                if (paciente.getSexo().equals("0")) {
                     Obstetricos obstetricos = new Obstetricos(Integer.parseInt(request.getParameter("paciente[idObs]")));
                     obstetricos.setGestas(Integer.parseInt(request.getParameter("paciente[gestacion]")));
                     obstetricos.setAbortos(Integer.parseInt(request.getParameter("paciente[abortos]")));
@@ -235,7 +229,7 @@ public class sPaciente extends HttpServlet {
                     }
                 }
 
-                if (Integer.parseInt(request.getParameter("id")) != 0) {
+                if (paciente.getId() != 0) {
                     String[] parientes_enfermedad_edit = request.getParameterValues("editAntecedentes[]");
                     if (parientes_enfermedad_edit != null) {
                         for (String value : parientes_enfermedad_edit) {

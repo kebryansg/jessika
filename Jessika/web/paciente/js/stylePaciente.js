@@ -1,8 +1,9 @@
 
-$(function () { 
+$(function () {
+    
     $('.form_date').datetimepicker('update', new Date());
     $('.form_date').datetimepicker('setEndDate', new Date());
-    
+
     $("#contenido").on("changed.bs.select", "#cboProvincia", function (e) {
         change_cboProvincia(this);
     });
@@ -17,35 +18,18 @@ $(function () {
         change_Genero(this);
     });
 
-
-
-    $("#contenido").on("click", "#btnAddPhoto", function () {
-        $("#file_imagen").click();
+    $("#savePaciente").click(function (e) {
+        var id = $("#savePaciente").data("id");
+        if (isNull(id)) {
+            save();
+        } else {
+            editSave(id);
+        }
     });
-    $("#contenido").on("click", "#btnRemovePhoto", function () {
-        $("#pac_imagen").attr("src", "resources/img/user.png");
-    });
-
-    $("#contenido").on("click", "#savePaciente", function () {
-        var id = $(this).attr("data-id");
-        if (id === "0") {
-                save();
-            } else {
-                editSave(id);
-            }
+    $("#cancelPaciente").click(function (e) {
+        limpiarPaciente();
     });
     
-    $("#contenido").on("click", "#cancelPaciente", function () {
-        var id = $("#savePaciente").attr("data-id");
-
-        if (id === "0") {
-            limpiarPaciente();
-        } else {
-            
-            $("#contenido").load("paciente/listPacientes.jsp");
-        }
-
-    });
 });
 
 function change_cboProvincia(cbo) {
@@ -85,7 +69,7 @@ function change_cboCanton(cbo) {
 
 function change_Genero(cbo) {
     var tabObstetricia = $("#tabObstetricia");
-    if ($(cbo).val() === "1" || $(cbo).val() === "0") {
+    if ($(cbo).val() === "1" || $(cbo).val() === "0" || $(cbo).val() === "3") {
         $(tabObstetricia).addClass("disabledTab");
     } else if ($(cbo).val() === "2") {
         $(tabObstetricia).removeClass("disabledTab");

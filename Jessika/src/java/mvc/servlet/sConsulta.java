@@ -162,7 +162,7 @@ public class sConsulta extends HttpServlet {
 
                 SignosVitales s_v = new SignosVitalesDaoImp().editar(value.getId());
 
-                out.print("{ \"esti\": " + gson.toJson(new ConsultaEstudiosImagenDaoImp().list(value.getId())) + " ,  \"estl\" : " + gson.toJson(new ConsultaEstudiosLabsDaoImp().list(value.getId())) + " , \"sv\": " + gson.toJson(s_v) + ",  \"consulta\": " + gson.toJson(value) + ", \"paciente\" : \"" + p.getNombres() + "\", \"sexoP\" : \"" + (p.getSexo() ? "H" : "M") + "\" ,\"tipoConsulta\" : \"" + tipoConsulta + "\",\"metodo_causa\" : \"" + metodo_causa + "\"  }");
+                out.print("{ \"esti\": " + gson.toJson(new ConsultaEstudiosImagenDaoImp().list(value.getId())) + " ,  \"estl\" : " + gson.toJson(new ConsultaEstudiosLabsDaoImp().list(value.getId())) + " , \"sv\": " + gson.toJson(s_v) + ",  \"consulta\": " + gson.toJson(value) + ", \"paciente\" : \"" + p.getNombres() + "\", \"sexoP\" : \"" + (p.getSexo().equals("1") ? "H" : "M") + "\" ,\"tipoConsulta\" : \"" + tipoConsulta + "\",\"metodo_causa\" : \"" + metodo_causa + "\"  }");
                 out.flush();
                 out.close();
                 break;
