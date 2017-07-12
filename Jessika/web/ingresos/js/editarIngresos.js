@@ -6,7 +6,7 @@
 ocultarModal();
 
  $(function () {
-  //$('[data-toggle="tooltip"]').tooltip()
+  $('[data-toggle="tooltip"]').tooltip();
 })
 /*-------------------------------Variables-------------------------------------------------------------------------*/
 var res;
@@ -148,6 +148,7 @@ function cargarIngresos()
             }
         }
         });
+    $('[data-toggle="tooltip"]').tooltip();
     
      } 
 //Editar Ingreso     
@@ -211,6 +212,8 @@ function cargarIngresos()
                     alertify.success("Datos Actualizados correctamente");
                                       
                //$('#tooltipDefinitivoEgreso').attr('title', $("#txtDefinitivoEgreso").val()).tooltip('fixTitle').text();
+               $('#tooltipDefinitivoEgreso').attr('title','the new text you want');
+             
                 if($("#txtDefinitivoEgreso").val().length>=15)
                     res = $("#txtDefinitivoEgreso").val().substring(0, 15)+'...';
                 else
@@ -221,13 +224,16 @@ function cargarIngresos()
                 $($('.table-responsive').find('tbody > tr')[indice]).children('td')[8].innerHTML = $('#dtpFechaEgresoIngresosModal').val();
                 $($('.table-responsive').find('tbody > tr')[indice]).children('td')[9].innerHTML = $("#dtpHoraIngreso").val();
                 $($('.table-responsive').find('tbody > tr')[indice]).children('td')[10].innerHTML = $("#cboCondicionEgreso").val();
-                $($('.table-responsive').find('tbody > tr')[indice]).children('td')[11].innerHTML = res;
+               
+               $($('.table-responsive').find('tbody > tr')[indice]).children('td')[11].innerHTML = res;
                 $($('.table-responsive').find('tbody > tr')[indice]).children('td')[12].innerHTML = $("#txtSecundarioEgreso").val();
                 $($('.table-responsive').find('tbody > tr')[indice]).children('td')[13].innerHTML = $("#txtSecundarioEgreso2").val();
                 $($('.table-responsive').find('tbody > tr')[indice]).children('td')[14].innerHTML = $("#txtCausaExterna").val();
                 $($('.table-responsive').find('tbody > tr')[indice]).children('td')[15].innerHTML = $("#txtCodigoCie").val();
                 $($('.table-responsive').find('tbody > tr')[indice]).children('td')[16].innerHTML = $("#txtDefinitivoEgreso").val();
-                
+                //cambio el valor del tooltip
+                //$($('.table-responsive').find('tbody > tr')[indice]).children('td')[11].attr('data-original-title','the new text you want');
+                $($('.table-responsive').find('tbody > tr')[indice]).children('td').eq(11).attr('title',  $("#txtDefinitivoEgreso").val()).tooltip('fixTitle').text();
             }
             else
                 alertify.success("Problemas al intentar guardar\n"+resultado.excepcion); 

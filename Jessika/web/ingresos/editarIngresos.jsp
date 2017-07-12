@@ -103,11 +103,11 @@
                                  <td><%=elem.getFechaSalida()%></td>
                                  <td style='display:none;'><%=elem.getHora() %></td>
                                  <td style='display:none;'><%=elem.getCondicionEgreso()%></td>
-                                 <td class='tooltips' id='tooltipDefinitivoEgreso' data-toggle='tooltip' data-placement='left' title="<%=elem.getDefinitivoEgreso() %>"><%=res%></td>
+                                 <td class='tooltips' id='tooltipDefinitivoEgreso' data-toggle='tooltip' data-container='body' data-placement='bottom' title="<%=elem.getDefinitivoEgreso() %>"><%=res%></td>
                                  <td style='display:none;'><%=elem.getSecundarioEgreso() %></td>
                                  <td style='display:none;'><%=elem.getSecundarioEgreso2() %></td>
                                  <td style='display:none;'><%=elem.getCausaExterna()%></td>
-                                 <td><%=elem.getCodigoDiagnosticoDefinitivo() %></td>
+                                 <td ><%=elem.getCodigoDiagnosticoDefinitivo() %></td>
                                  <td style='display:none;'><%=elem.getDefinitivoEgreso() %></td>
                                  <td >
                                      <button id='botonEditar' class='btn btn-primary'><span class='glyphicon glyphicon-pencil'></span> </button> 
