@@ -382,7 +382,6 @@ function moment() {
     // Antecedentes
     $("input[antecedentes]").prop("checked", false);
     // Obstetricia
-    //$("#tabObstetricia").attr("data-id", obs.id);
     $("#tabObstetricia").data("id", 0);
     $("#pac_Gestacion").val(0);
     $("#pac_Abortos").val(0);
