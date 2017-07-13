@@ -218,7 +218,7 @@
                                 <div class="form-group">
                                     <label class="control-label col-md-4">Canton </label>
                                     <div class="col-md-7">
-                                        <select class="selectpicker form-control" validate="select" data-live-search="true" data-size="8" id="cboCanton">
+                                        <select class="selectpicker form-control remove-example" validate="select" data-live-search="true" data-size="8" id="cboCanton">
                                             <option value="0">Seleccione</option>
                                         </select>
                                     </div>
@@ -229,7 +229,7 @@
                                 <div class="form-group">
                                     <label class="control-label col-md-4">Parroquia </label>
                                     <div class="col-md-7">
-                                        <select class="selectpicker form-control" validate="select" data-live-search="true" data-size="8" id="cboParroquia">
+                                        <select class="selectpicker form-control remove-example" validate="select" data-live-search="true" data-size="8" id="cboParroquia">
                                             <option value="0">Seleccione</option>
                                         </select>
                                     </div>

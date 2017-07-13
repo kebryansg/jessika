@@ -249,7 +249,7 @@ function obtenerDatos() {
         movilContacto: $("#pac_movilContacto").val(),
         parentezco: $("#cboParentezco").val(),
         //Obstetricia
-        idObs: $("#tabObstetricia").attr("data-id"),
+        idObs: $("#tabObstetricia").data("id"),
         fpp: $("#pac_FPP").val(),
         gestacion: $("#pac_Gestacion").val(),
         abortos: $("#pac_Abortos").val(),
@@ -356,20 +356,43 @@ function asignarPaciente(paciente) {
 
 function limpiarPaciente() {
     var id = $("#savePaciente").data("id");
-    if (isNull(id)) {
-        moment();
-    } else {
-        $("#contenido").load("paciente/listPacientes.jsp");
-    }
+    moment();
+    /*if (isNull(id)) {
+     moment();
+     } else {
+     $("#contenido").load("paciente/listPacientes.jsp");
+     }*/
 }
 
 function moment() {
+    // Informacion basica
     $("#tabPacientes input[validate='text']").val("");
     $("#pac_Cedula").val("");
     $("#tabPacientes input[validate='cedula']").val("");
     $("#tabPacientes select[validate='select']").selectpicker("val", 0);
+    
+    $('.remove-example').find('option').remove();
+    $('.remove-example').selectpicker('refresh');
+
     $("#tabPacientes #pac_Discapacidad").selectpicker("val", 1);
     $("#pac_nombreContacto").val("");
     $("#cboParentezco").selectpicker("val", 0);
     $("#pac_movilContacto").val("");
+    change_Genero($('#pac_Genero'));
+    // Antecedentes
+    $("input[antecedentes]").prop("checked", false);
+    // Obstetricia
+    //$("#tabObstetricia").attr("data-id", obs.id);
+    $("#tabObstetricia").data("id", 0);
+    $("#pac_Gestacion").val(0);
+    $("#pac_Abortos").val(0);
+    $("#pac_Partos").val(0);
+    $("#pac_Cesareas").val(0);
+    $("#pac_NacidoVivo").val(0);
+    $("#pac_NacidoMuerto").val(0);
+    $("#pac_HijosVivos").val(0);
+    $("#pac_HijosMuertos").val(0);
+
+    $('.form_date').datetimepicker('update', new Date());
+    $('.form_date').datetimepicker('setEndDate', new Date());
 }
