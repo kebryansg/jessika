@@ -2,11 +2,13 @@
 .dropdown-menu{
     cursor: pointer;
 }
+
 .flex-parent{
   display: -ms-flex;
   display: -webkit-flex;
   display: flex;
 }
+
 
 .flex-child{
   display: -ms-flex;
@@ -15,12 +17,15 @@
   justify-content: center;
   flex-direction: column;
 }
+
 .disabledTab {
     pointer-events: none;
 }
+
 .error_input{
     margin-bottom: 30px;
 }
+
 .bx{
     outline: 1px blue solid;
 }
