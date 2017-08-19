@@ -87,12 +87,12 @@ $("#btnGenerar").click(function(event) {
                 }                
                 waitingDialog.hide();   
                 var excepcion="";
-                for(i=1;i <resultado.length; i++)
+                /*for(i=1;i <resultado.length; i++)
                 {
                     excepcion=excepcion+" Error al intentar generar excel "+excepcion+resultado[i].formulario+":"+excepcion+resultado[i].excepcion;;                    
-                }
-                if(excepcion!=="")
-                    alertify.success(excepcion);
+                }*/
+                //if(excepcion!=="")
+                    alertify.success("Archivos generados");
                 $('#btnGenerar').prop('disabled', false);
             }
 

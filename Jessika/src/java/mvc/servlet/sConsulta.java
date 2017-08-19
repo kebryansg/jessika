@@ -158,11 +158,14 @@ public class sConsulta extends HttpServlet {
                 Consulta value = new ConsultaDaoImp().edit(Integer.parseInt(request.getParameter("id")));
                 Paciente p = new PacienteDaoImp().edit_HC(value.getIdCaso().getIdHistorialClinico().getId());
                 String tipoConsulta = new TipoConsultaDaoImp().edit(value.getIdTipoConsulta()).getDescripcion();
-                String metodo_causa = (tipoConsulta.equals("1")) ? new CausaDaoImp().edit(value.getIdMetodo()).getDescripcion() : new MetodosDaoImp().edit_detMetodos(value.getIdMetodo()).getDescripcion();
+                String metodo_causa = (String.valueOf(value.getIdTipoConsulta()).equals("1")) ? new CausaDaoImp().edit(value.getIdMetodo()).getDescripcion() : new MetodosDaoImp().edit_detMetodos(value.getIdMetodo()).getDescripcion();
 
                 SignosVitales s_v = new SignosVitalesDaoImp().editar(value.getId());
+                String x = gson.toJson(new ConsultaEstudiosImagenDaoImp().list(value.getId()));
+                String y = gson.toJson(new ConsultaEstudiosLabsDaoImp().list(value.getId()));
+                String respuesta = ("{ \"esti\": " + x + " ,  \"estl\" : " + y + " , \"sv\": " + gson.toJson(s_v) + ",  \"consulta\": " + gson.toJson(value) + ", \"paciente\" : \"" + p.getNombres() + "\", \"sexoP\" : \"" + (p.getSexo().equals("1") ? "H" : "M") + "\" ,\"tipoConsulta\" : \"" + tipoConsulta + "\",\"metodo_causa\" : \"" + metodo_causa + "\"  }");
 
-                out.print("{ \"esti\": " + gson.toJson(new ConsultaEstudiosImagenDaoImp().list(value.getId())) + " ,  \"estl\" : " + gson.toJson(new ConsultaEstudiosLabsDaoImp().list(value.getId())) + " , \"sv\": " + gson.toJson(s_v) + ",  \"consulta\": " + gson.toJson(value) + ", \"paciente\" : \"" + p.getNombres() + "\", \"sexoP\" : \"" + (p.getSexo().equals("1") ? "H" : "M") + "\" ,\"tipoConsulta\" : \"" + tipoConsulta + "\",\"metodo_causa\" : \"" + metodo_causa + "\"  }");
+                out.print(respuesta);
                 out.flush();
                 out.close();
                 break;

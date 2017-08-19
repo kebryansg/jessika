@@ -6,6 +6,7 @@ $("#tb_ViewHC").bootstrapTable({
                 $('#viewHistorialCaso').modal('toggle');
                 $('#viewHistorialCaso').on({
                     'hidden.bs.modal': function () {
+                        
                         $("#contenido").load("consulta/viewConsulta.jsp", function () {
                             editConsulta(row.id);
                         });

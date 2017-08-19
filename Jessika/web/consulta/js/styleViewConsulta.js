@@ -19,6 +19,7 @@ function editConsulta(id) {
         url: 'sConsulta',
         dataType: 'json',
         success: function (data) {
+            console.log(data);
             asignarConsuta(data.consulta);
             asginarSV(data.sv, (data.sexoP === "H"));
 

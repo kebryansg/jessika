@@ -82,6 +82,7 @@ public class ConsultaDaoImp implements ConsultaDao {
                 value.setPrescripcion(rs.getString("prescripcion"));
                 value.setSintoma(rs.getString("sintomas"));
                 value.setIdCaso(new Caso(rs.getInt("idCaso"),rs.getInt("hc")));
+                value.setIdTipoConsulta(rs.getInt("idTipoConsulta"));
                 
                 MedicoEspecialidad m_e = new MedicoEspecialidad(rs.getInt("idMedico_Especialidad"));
                 m_e.setIdEspecialidad(new Especialidad(0, rs.getString("especialidad")));
