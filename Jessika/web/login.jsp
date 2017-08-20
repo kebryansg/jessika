@@ -91,7 +91,7 @@
                                 </div>
                             </div>
                             <div class="logo-emp">
-                                <img src="resources/img/Logo Ui Life-10.png" class="img-responsive img-logo">
+                                <img src="resources/img/Logo-Ui-Life-10-compressor.png" class="img-responsive img-logo">
                             </div>
                         </div>
 
