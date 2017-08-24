@@ -198,9 +198,9 @@
                     <div class="row">
                         <div class="col-sm-12">                        
                             <div class="panel panel-default" id="panel">
-                                <div class="panel-heading">
+                                <!--<div class="panel-heading">
                                     <h3 class="panel-title" id="titulo"> </h3>
-                                </div>
+                                </div>-->
                                 <div id="contenido" class="panel-body">
                                     <!-- /. ROW  -->
 

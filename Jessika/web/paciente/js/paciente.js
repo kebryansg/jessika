@@ -162,9 +162,7 @@ function edit(id) {
         },
         success: function (response) {
             var ob = $.parseJSON(response);
-            //$("#optionPaciente").attr("data-id", ob.paciente.id);
             asignarPaciente(ob.paciente);
-            addAntecedentes(ob.list, ob.paciente.id);
             if (!ob.paciente.sexo) {
                 asignarObstetrico(ob.obs, ob.paciente.id);
             }
@@ -174,8 +172,6 @@ function edit(id) {
 
 function editSave(id) {
     if (validarPaciente(id)) {
-        var newA = newAntecedentes(id);
-        var editA = editAntecedentes(id);
         var paciente = obtenerDatos(id);
         $.ajax({
             url: 'sPaciente',
@@ -184,8 +180,6 @@ function editSave(id) {
             data: {
                 id: id,
                 paciente: paciente,
-                newAntecedentes: newA,
-                editAntecedentes: editA,
                 op: 'save'
             },
             success: function (response) {
@@ -200,7 +194,7 @@ function editSave(id) {
 
 function save() {
     if (validarPaciente(0)) {
-        var newA = newAntecedentes(0);
+        //var newA = newAntecedentes(0);
         $.ajax({
             url: 'sPaciente',
             type: 'POST',
@@ -209,7 +203,7 @@ function save() {
             data: {
                 id: 0,
                 paciente: obtenerDatos(),
-                newAntecedentes: newA,
+                //newAntecedentes: newA,
                 op: 'save'
             },
             success: function (response) {
@@ -248,6 +242,8 @@ function obtenerDatos() {
         nombreContacto: $("#pac_nombreContacto").val(),
         movilContacto: $("#pac_movilContacto").val(),
         parentezco: $("#cboParentezco").val(),
+        app: $("#pac_APP").val(),
+        apf: $("#pac_APF").val(),
         //Obstetricia
         idObs: $("#tabObstetricia").data("id"),
         fpp: $("#pac_FPP").val(),
@@ -323,6 +319,11 @@ function asignarPaciente(paciente) {
     $("#pac_Ciudad").val(paciente.ciudad);
     $("#pac_nombreContacto").val(paciente.nombreContacto);
     $("#pac_movilContacto").val(paciente.movilContacto);
+    $("#pac_APP").val(paciente.app);
+    $("#pac_APF").val(paciente.apf);
+    
+    
+    
     $("#cboParentezco").selectpicker("val", paciente.parentezco);
     $('#pac_Discapacidad').selectpicker("val", paciente.discapacidad);
     //Select
@@ -357,20 +358,16 @@ function asignarPaciente(paciente) {
 function limpiarPaciente() {
     var id = $("#savePaciente").data("id");
     moment();
-    /*if (isNull(id)) {
-     moment();
-     } else {
-     $("#contenido").load("paciente/listPacientes.jsp");
-     }*/
 }
 
 function moment() {
     // Informacion basica
     $("#tabPacientes input[validate='text']").val("");
+    $("#tabPacientes textarea[validate='text']").val("");
     $("#pac_Cedula").val("");
     $("#tabPacientes input[validate='cedula']").val("");
     $("#tabPacientes select[validate='select']").selectpicker("val", 0);
-    
+
     $('.remove-example').find('option').remove();
     $('.remove-example').selectpicker('refresh');
 

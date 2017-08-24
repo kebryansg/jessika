@@ -94,6 +94,8 @@ public class PacienteDaoImp implements PacienteDao {
                 value.setNacionalidad(rs.getString("nacionalidad"));
                 value.setPaisNacimiento(rs.getNString("paisNacimiento"));
                 value.setSexo(rs.getString("sexo"));
+                value.setApp(rs.getString("app"));
+                value.setApf(rs.getString("apf"));
                 value.setTelefonoDomicilio(rs.getNString("telefonoDomicilio"));
                 value.setTelefonoOficina(rs.getNString("telefonoOficina"));
                 value.setNombreContacto(rs.getNString("nombreContacto"));
@@ -113,7 +115,7 @@ public class PacienteDaoImp implements PacienteDao {
         this.conn = con_db.open(con_db.MSSQL_IP);
         try {
 
-            CallableStatement call = this.conn.getConexion().prepareCall("{call dbo.savePaciente(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
+            CallableStatement call = this.conn.getConexion().prepareCall("{call dbo.savePaciente(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
             call.setInt("id", value.getId());
             call.setString("cedula", value.getCedula());
             call.setString("nombre1", value.getNombre1());
@@ -137,6 +139,8 @@ public class PacienteDaoImp implements PacienteDao {
             call.setString("nombreContacto", value.getNombreContacto());
             call.setString("parentezco", value.getParentezco());
             call.setString("movilContacto", value.getMovilContacto());
+            call.setString("app", value.getApp());
+            call.setString("apf", value.getApf());
             call.registerOutParameter("idOut", Types.INTEGER);
             call.execute();
             value.setId(call.getInt("idOut"));

@@ -93,6 +93,9 @@ public class Paciente implements Serializable {
     private String movilContacto;
     @Column(name = "parentezco")
     private String parentezco;
+    
+    private String app;
+    private String apf;
 
     
     
@@ -129,6 +132,24 @@ public class Paciente implements Serializable {
     public void setId(Integer id) {
         this.id = id;
     }
+
+    public String getApp() {
+        return app;
+    }
+
+    public void setApp(String app) {
+        this.app = app;
+    }
+
+    public String getApf() {
+        return apf;
+    }
+
+    public void setApf(String apf) {
+        this.apf = apf;
+    }
+    
+    
 
     public String getCedula() {
         return cedula;

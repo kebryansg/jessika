@@ -37,7 +37,7 @@
                                 <div class="form-group">
                                     <label for="inputUserName" class="control-label col-md-3">Cedula </label>
                                     <div class="col-md-8">
-                                        <input validate="cedula" type="text" class="form-control solo-numero" id="pac_Cedula" maxlength="10" id="inputUserName" placeholder="Cedula">
+                                        <input validate="cedula" type="text" class="form-control solo-numero" id="pac_Cedula" maxlength="10" placeholder="Cedula">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -273,33 +273,17 @@
                     </div>
                 </div>
                 <div class="tab-pane fade " id="antecedentes" style="padding-top: 10px;">
-                    <div class="table-responsive">
-                        <table class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <td> Enfermedad</td>
-                                    <%
-                                        List<Parientes> parientes = new ParientesDaoImp().list();
-                                        for (Parientes pariente : parientes) {%>
-                                    <td><%= pariente.getParentesco()%></td>        
-                                    <% } %>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <%
-                                    List<Enfermedad> enfermedades = new EnfermedadDaoImp().list();
-                                    for (Enfermedad enfermedad : enfermedades) {%>
-                                <tr>
-                                    <td><%= enfermedad.getNombres()%></td>
-                                    <% for (Parientes pariente : parientes) {%>
-                                    <td><input type="checkbox" antecedentes data-id="0" dEnfermedad="<%= enfermedad.getId()%>" dParient="<%= pariente.getId()%>"> </td>
-                                        <% } %>
-                                </tr>
-
-                                <% }%>
-                            </tbody>
-                        </table>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="control-label">APP (Antecedentes Patologicos Personales): </label>
+                            <textarea id="pac_APP" validate="text" class="form-control" rows="4"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">APF (Antecedentes Patologicos Familiares): </label>
+                            <textarea id="pac_APF" validate="text" class="form-control" rows="4"></textarea>
+                        </div>
                     </div>
+
                 </div>
                 <div class="tab-pane fade" id="obstetricia" style="padding-top: 10px;">
                     <div class="row">
