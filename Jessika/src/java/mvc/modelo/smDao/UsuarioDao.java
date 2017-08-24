@@ -5,7 +5,9 @@
  */
 package mvc.modelo.smDao;
 
+import java.util.List;
 import mvc.controlador.entidades.sm.Medico;
+import mvc.controlador.entidades.sm.Rol;
 import mvc.controlador.entidades.sm.Usuario;
 
 
@@ -16,7 +18,8 @@ import mvc.controlador.entidades.sm.Usuario;
  */
 public interface UsuarioDao {
     //public int Login(String usuario, String clave);
-    public String Login(String usuario, String clave);
+    public Usuario Login(String usuario, String clave);
+    public List<Rol> list_rol();
     public Medico getMedico();
     public int getIdRol();
     public int getId();

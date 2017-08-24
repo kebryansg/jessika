@@ -66,16 +66,15 @@
 
     </head>
 
-    
-        <%
-            HttpSession sesion = request.getSession();
-            if (sesion.getAttribute("usuario") == null) {
-            sesion.getAttribute("usuario").toString();
-                //if (false) {
-                response.sendRedirect("login.jsp");
-            }
-        %>
-        <body>
+
+    <%
+        HttpSession sesion = request.getSession();
+        String usuario = (String) sesion.getAttribute("usuario");
+        if (usuario.equals("")) {
+            response.sendRedirect("login.jsp");
+        }
+    %>
+    <body>
         <div id="wrapper">
 
             <!-- Navigation -->
@@ -95,7 +94,7 @@
 
 
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <%=sesion.getAttribute("usuario").toString()%><b class="caret"></b></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <%=sesion.getAttribute("usuario")%><b class="caret"></b></a>
                         <ul class="dropdown-menu">                            
                             <li>
                                 <a id="aSalida" href="#"><i class="fa fa-fw fa-power-off"></i> Salir</a>
@@ -107,7 +106,23 @@
                 </ul>
                 <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
                 <div class="collapse navbar-collapse navbar-ex1-collapse" id="TabAdm">
-                    <ul class="nav navbar-nav side-nav">
+                    <%
+                        int rol = (int)sesion.getAttribute("rol");
+                        switch (rol) {
+                            case 1:
+                    %>
+                    <%@include file="WEB-INF/jspf/menu_admin.jspf" %>
+                    <%
+                            break;
+                        case 2:
+                    %>
+                    <%@include file="WEB-INF/jspf/menu_medico.jspf" %>
+                    <%
+                                break;
+                        }
+                    %>
+
+                    <!--<ul class="nav navbar-nav side-nav">
                         <li class="active">
                             <a href="home.jsp"><i class="fa fa-fw fa-dashboard"></i> Inicio</a>
                         </li>
@@ -184,7 +199,7 @@
                                 </li>                                                        
                             </ul>
                         </li>
-                    </ul>
+                    </ul>-->
                 </div>
                 <!-- /.navbar-collapse -->
             </nav>
@@ -271,7 +286,7 @@
         </div>
         <!-- /.col-sm-4 -->
 
-        
+
 
     </body>
     <script type="text/javascript">

@@ -1,11 +1,6 @@
-$(function(){
-    $("#cboTipo").selectpicker("refresh");
-    /*$("#about_uilife").click(function(e){
-        e.preventDefault(); 
-        alert();
-    });*/
-});
-$('#btnLogin').click(function (e) {
+$(function () {
+    load_rol();
+    $('#btnLogin').click(function (e) {
     if (validar())
     {
         $.ajax({
@@ -32,6 +27,21 @@ $('#btnLogin').click(function (e) {
         });
     }
 });
+});
+function load_rol() {
+    $.ajax({
+        url: "sUsuario",
+        type: 'POST',
+        data:{
+            op: "rol_list"
+        },
+        success: function(response){
+            $("#cboTipo").html(response);
+            $("#cboTipo").selectpicker("refresh");
+        }
+    });
+}
+
 $('#aSalida').click(function (e) {
     location.href = "sUsuario?op=close";
 });

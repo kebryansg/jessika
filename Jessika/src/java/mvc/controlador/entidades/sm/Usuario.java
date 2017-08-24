@@ -12,6 +12,7 @@ package mvc.controlador.entidades.sm;
 public class Usuario {
     private String nick;
     private String clave;
+    private String user_name;
     private Rol rol;
 
     public Usuario(String nick, String clave, Rol rol) {
@@ -22,6 +23,15 @@ public class Usuario {
 
     public Usuario() {
     }
+
+    public String getUser_name() {
+        return user_name;
+    }
+
+    public void setUser_name(String user_name) {
+        this.user_name = user_name;
+    }
+    
 
     public String getNick() {
         return nick;

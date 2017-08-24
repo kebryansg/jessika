@@ -8,11 +8,15 @@ package mvc.servlet;
 import com.google.gson.JsonObject;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import mvc.controlador.entidades.sm.Rol;
+import mvc.controlador.entidades.sm.Usuario;
 import mvc.modelo.smDao.UsuarioDao;
 import mvc.modelo.smDaoImp.UsuarioDaoImp;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -40,7 +44,7 @@ public class sUsuario extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet sUsuario</title>");            
+            out.println("<title>Servlet sUsuario</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet sUsuario at " + request.getContextPath() + "</h1>");
@@ -62,15 +66,14 @@ public class sUsuario extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //processRequest(request, response);
-       String result = "", op = request.getParameter("op");
-       HttpSession sesion = request.getSession();
-       if("close".equals(op))
-       {
-           sesion.invalidate();
-           response.sendRedirect("login.jsp");
-       
-       }
-        
+        String result = "", op = request.getParameter("op");
+        HttpSession sesion = request.getSession();
+        if ("close".equals(op)) {
+            sesion.invalidate();
+            response.sendRedirect("login.jsp");
+
+        }
+
     }
 
     /**
@@ -84,42 +87,42 @@ public class sUsuario extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       // processRequest(request, response);
-       response.setContentType("text/plain");
-       PrintWriter out = response.getWriter();
-       String result = "", op = request.getParameter("op");
-       HttpSession sesion = request.getSession();
-       JsonObject object = new JsonObject();
-       if("login".equals(op))
-       {
-            String user = request.getParameter("usuario");
-            String clave = request.getParameter("clave");
-            UsuarioDao usuario= new UsuarioDaoImp();
-            //int idRol=usuario.Login(user, clave);
-            String usuarioLogueado=usuario.Login(user, clave);            
-            if(sesion.getAttribute("usuario") == null)
-            {
-                if(usuarioLogueado!="")
-                {
-                    sesion.setAttribute("usuario", usuarioLogueado);                    
-                    sesion.setAttribute("rol", usuario.getIdRol());                    
-                    sesion.setAttribute("id", usuario.getId());
-                    //sesion.setAttribute("nombreEstablecimiento", "Hospital del dia Revelo");
-                   //response.sendRedirect("home.jsp");
-                    object.addProperty("login", true);
-                    out.println(object);
-                    
+        // processRequest(request, response);
+        response.setContentType("text/plain");
+        PrintWriter out = response.getWriter();
+        String result = "", op = request.getParameter("op");
+        HttpSession sesion = request.getSession();
+        JsonObject object = new JsonObject();
+        switch (op) {
+            case "login":
+                String user = request.getParameter("usuario");
+                String clave = request.getParameter("clave");
+                Usuario usuario = new UsuarioDaoImp().Login(user, clave);
+                if (sesion.getAttribute("usuario") == null) {
+                    if (usuario != null) {
+                        sesion.setAttribute("usuario", usuario.getUser_name());
+                        sesion.setAttribute("rol", usuario.getRol().getVal());
+                        //sesion.setAttribute("id", usuario);
+                        //sesion.setAttribute("nombreEstablecimiento", "Hospital del dia Revelo");
+                        //response.sendRedirect("home.jsp");
+                        object.addProperty("login", true);
+                        out.println(object);
+
+                    } else {
+                        object.addProperty("login", false);
+                        out.println(object);
+                    }
                 }
-                else
-                {
-                    object.addProperty("login", false);
-                    out.println(object);
-                    
+                break;
+            case "rol_list":
+                List<Rol> list = new UsuarioDaoImp().list_rol();
+                List<String> list_resultado = new ArrayList<>();
+                for (Rol rol : list) {
+                    result+="<option value=\""+ rol.getVal() +"\" >"+ rol.getDescripcion() +"</option>";
                 }
-            }            
-       }
-       
-       
+                out.print(result);
+                break;
+        }
     }
 
     /**

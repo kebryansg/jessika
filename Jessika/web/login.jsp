@@ -62,8 +62,8 @@
                                     </div>
                                     <div class="form-group">
                                         <select class="selectpicker form-control" id="cboTipo">
-                                            <option value="1" >Administrador</option>
-                                            <option value="2" >Médico</option>
+                                            <!--<option value="1" >Administrador</option>
+                                            <option value="2" >Médico</option>-->
                                         </select>
                                     </div>
 
