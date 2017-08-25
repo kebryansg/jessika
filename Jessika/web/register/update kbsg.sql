@@ -13,3 +13,5 @@ BEGIN
 			select u.*,r.val from usuario u inner join rol r on r.id = u.idRol where u.nick = @nick and cast(DECRYPTBYPASSPHRASE('encriptarClave',u.clave) As VARCHAR(8000)) = @pass;
 		END 
 END
+
+ALTER TABLE BD_SM.dbo.usuario DROP CONSTRAINT FK_usuario_rol go

@@ -7,30 +7,39 @@
                 <div class="row">
                     <img src="resources/img/Logo-Ui-Life-10-compressor.png" class="img-responsive img-logo">
                 </div>
-                <hr class="style1">
-                <div class="row info-contact flex-parent">
-                    <div class="col-md-5  text-center">
-                        <h4 class="color">Ing. Kevin Suárez</h4>
-                        <span><i class="fa fa-whatsapp" aria-hidden="true"></i> 0986735012</span>
+                <!--<hr class="style1">-->
+                <div class="info-contact">
+                    <div class="box-info text-center">
+                        <div>
+                            <h4 >Ing. Kevin Suárez</h4>
+                            <span class="white"><i class="fa fa-whatsapp" aria-hidden="true"></i> 0986735012</span>
+                        </div>
                     </div>
                     <!--<div class="vertical-hr center-block"></div>-->
-                    <div class="col-md-2 flex-child">
+                    <div class="">
                         <div class="vertical-hr center-block"></div>
                     </div>
-                    <div class="col-md-5 text-center">
-                        <h4 class="color">Ing. David Zuñiga</h4>
-                        <span> <i class="fa fa-whatsapp" aria-hidden="true"></i> 0989642617</span>
+                    <div class="box-info text-center">
+                        <div>
+                            <h4 >Ing. David Zuñiga</h4>
+                            <span class="white"> <i class="fa fa-whatsapp" aria-hidden="true"></i> 0989642617</span>
+                        </div>
+
                     </div>
                 </div>
-                <hr class="style1">
+                <!--<hr class="style1">-->
                 <div class="row">
                     <div class="col-md-12 text-right">
-                        <span>uilife@hotmail.com</span>
+                        <span>uilife@hotmail.com <i class="fa fa-2x fa-envelope fa-color" aria-hidden="true"></i></span>
                         <br>
-                        <span>Séptima #203 y Bolivar, Piso alto oficina #101</span>
+                        <span>Séptima #203 y Bolivar, Piso alto oficina #101 <i class="fa fa-2x fa-home fa-color" aria-hidden="true"></i> </span>
                         <br>
-                        <i class="fa fa-2x fa-facebook-square" aria-hidden="true"></i>
-                        <i class="fa fa-2x fa-instagram" aria-hidden="true"></i>
+                        <div>
+                            <hr class="style1">
+                            <div class="clearfix"></div>
+                            <i class="fa fa-2x fa-facebook-square fa-color" aria-hidden="true"></i>
+                            <i class="fa fa-2x fa-instagram fa-color" aria-hidden="true"></i>
+                        </div>
 
                     </div>
 

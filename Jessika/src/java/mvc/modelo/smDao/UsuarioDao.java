@@ -18,7 +18,7 @@ import mvc.controlador.entidades.sm.Usuario;
  */
 public interface UsuarioDao {
     //public int Login(String usuario, String clave);
-    public Usuario Login(String usuario, String clave);
+    public Usuario Login(String usuario, String clave,int rol);
     public List<Rol> list_rol();
     public Medico getMedico();
     public int getIdRol();

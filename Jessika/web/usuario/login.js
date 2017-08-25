@@ -10,8 +10,8 @@ $(function () {
             data: {
                 op: 'login',
                 usuario: $("#txtUsuario").val(),
-                clave: $("#txtClave").val()
-
+                clave: $("#txtClave").val(),
+                rol: $("#cboTipo").selectpicker("val")
             },
             success: function (data) {
                 var resultado = JSON && JSON.parse(data) || $.parseJSON(data);

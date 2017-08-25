@@ -97,7 +97,8 @@ public class sUsuario extends HttpServlet {
             case "login":
                 String user = request.getParameter("usuario");
                 String clave = request.getParameter("clave");
-                Usuario usuario = new UsuarioDaoImp().Login(user, clave);
+                int idRol = Integer.parseInt(request.getParameter("rol"));
+                Usuario usuario = new UsuarioDaoImp().Login(user, clave, idRol);
                 if (sesion.getAttribute("usuario") == null) {
                     if (usuario != null) {
                         sesion.setAttribute("usuario", usuario.getUser_name());
@@ -118,7 +119,7 @@ public class sUsuario extends HttpServlet {
                 List<Rol> list = new UsuarioDaoImp().list_rol();
                 List<String> list_resultado = new ArrayList<>();
                 for (Rol rol : list) {
-                    result+="<option value=\""+ rol.getVal() +"\" >"+ rol.getDescripcion() +"</option>";
+                    result += "<option value=\"" + rol.getVal() + "\" >" + rol.getDescripcion() + "</option>";
                 }
                 out.print(result);
                 break;

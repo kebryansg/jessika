@@ -31,13 +31,14 @@ public class UsuarioDaoImp implements UsuarioDao {
     int idRol = -1, id = 0;
 
     @Override
-    public Usuario Login(String usuario, String clave) {
+    public Usuario Login(String usuario, String clave, int rol) {
         this.conn = con_db.open(con_db.MSSQL_SM);
         Usuario value = new Usuario();
         try {
-            CallableStatement call = this.conn.getConexion().prepareCall("{ call dbo.login(?,?,?)}");
+            CallableStatement call = this.conn.getConexion().prepareCall("{ call dbo.login(?,?,?,?)}");
             call.setString("nick", usuario);
             call.setString("pass", clave);
+            call.setInt("rol", rol);
             call.registerOutParameter("user_name", Types.NVARCHAR);
             ResultSet rs = call.executeQuery();
             while (rs.next()) {
@@ -50,7 +51,7 @@ public class UsuarioDaoImp implements UsuarioDao {
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
             return null;
-        }finally{
+        } finally {
             this.conn.close();
         }
     }
