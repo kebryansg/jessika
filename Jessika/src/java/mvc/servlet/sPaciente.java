@@ -197,42 +197,29 @@ public class sPaciente extends HttpServlet {
 
                 new PacienteDaoImp().save(paciente);
 
-                if (paciente.getSexo().equals("0")) {
-                    Obstetricos obstetricos = new Obstetricos(Integer.parseInt(request.getParameter("paciente[idObs]")));
-                    obstetricos.setGestas(Integer.parseInt(request.getParameter("paciente[gestacion]")));
-                    obstetricos.setAbortos(Integer.parseInt(request.getParameter("paciente[abortos]")));
-                    obstetricos.setCesareas(Integer.parseInt(request.getParameter("paciente[cesareas]")));
-                    obstetricos.setFpp(test.fechaSQL(request.getParameter("paciente[fpp]")));
-                    obstetricos.setHijosVivos(Integer.parseInt(request.getParameter("paciente[hijosVivos]")));
-                    obstetricos.setIdPaciente(paciente);//Agregar Id
-                    obstetricos.setMuertos(Integer.parseInt(request.getParameter("paciente[hijosMuertos]")));
-                    obstetricos.setNacidosMuertos(Integer.parseInt(request.getParameter("paciente[nacidoMuerto]")));
-                    obstetricos.setNacidosVivos(Integer.parseInt(request.getParameter("paciente[nacidoVivo]")));
-                    obstetricos.setObservaciones("");
-                    obstetricos.setPartos(Integer.parseInt(request.getParameter("paciente[partos]")));
-                    new ObstetricosDaoImp().save(obstetricos);
-                }
-                //String arrayLis = request.getParameter("newAntecedentes");
-                String[] parientes_enfermedad = request.getParameterValues("newAntecedentes[]");
-                if (parientes_enfermedad != null) {
-                    for (String pariente_enfermedad : parientes_enfermedad) {
-                        ParienteEnfermedadPaciente par_enfer = new ParienteEnfermedadPaciente(0);
-                        par_enfer.setIdPaciente(paciente);
-                        par_enfer.setIdEnfermedad(new Enfermedad(Integer.parseInt(pariente_enfermedad.split(":")[0])));
-                        par_enfer.setIdPariente(new Parientes(Integer.parseInt(pariente_enfermedad.split(":")[1])));
-                        new ParienteEnfermedadPacienteDaoImp().save(par_enfer);
+                if (paciente.getId() > 0) {
+                    if (paciente.getSexo().equals("0")) {
+                        Obstetricos obstetricos = new Obstetricos(Integer.parseInt(request.getParameter("paciente[idObs]")));
+                        obstetricos.setGestas(Integer.parseInt(request.getParameter("paciente[gestacion]")));
+                        obstetricos.setAbortos(Integer.parseInt(request.getParameter("paciente[abortos]")));
+                        obstetricos.setCesareas(Integer.parseInt(request.getParameter("paciente[cesareas]")));
+                        obstetricos.setFpp(test.fechaSQL(request.getParameter("paciente[fpp]")));
+                        obstetricos.setHijosVivos(Integer.parseInt(request.getParameter("paciente[hijosVivos]")));
+                        obstetricos.setIdPaciente(paciente);//Agregar Id
+                        obstetricos.setMuertos(Integer.parseInt(request.getParameter("paciente[hijosMuertos]")));
+                        obstetricos.setNacidosMuertos(Integer.parseInt(request.getParameter("paciente[nacidoMuerto]")));
+                        obstetricos.setNacidosVivos(Integer.parseInt(request.getParameter("paciente[nacidoVivo]")));
+                        obstetricos.setObservaciones("");
+                        obstetricos.setPartos(Integer.parseInt(request.getParameter("paciente[partos]")));
+                        new ObstetricosDaoImp().save(obstetricos);
                     }
+                    result = "{\"status\" : \"ok\"}";
+                } else if (paciente.getId() == -1) {
+                    result = "{\"status\" : \"cedula\"}";
                 }
-
-                if (paciente.getId() != 0) {
-                    String[] parientes_enfermedad_edit = request.getParameterValues("editAntecedentes[]");
-                    if (parientes_enfermedad_edit != null) {
-                        for (String value : parientes_enfermedad_edit) {
-                            new ParienteEnfermedadPacienteDaoImp().delete(Integer.parseInt(value));
-                        }
-                    }
-                }
+                out.print(result);
                 break;
+
         }
     }
 

@@ -14,6 +14,7 @@ public class Usuario {
     private String clave;
     private String user_name;
     private Rol rol;
+    private int id;
 
     public Usuario(String nick, String clave, Rol rol) {
         this.nick = nick;
@@ -31,8 +32,15 @@ public class Usuario {
     public void setUser_name(String user_name) {
         this.user_name = user_name;
     }
-    
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+    
     public String getNick() {
         return nick;
     }

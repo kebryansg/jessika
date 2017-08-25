@@ -265,9 +265,9 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div id="contenido" class="panel-body">
+                                    <!--<div id="contenido" class="panel-body">
 
-                                    </div>
+                                    </div>-->
                                 </div>
                                 <!-- /.col-sm-4 -->
 
@@ -285,12 +285,9 @@
 
         </div>
         <!-- /.col-sm-4 -->
-
-
-
     </body>
     <script type="text/javascript">
-        //$("#contenido").load("consulta/estudiosImg.jsp");
+        $("#contenido").load("consulta/newConsulta.jsp");
     </script>
     <script type="text/javascript" src="usuario/login.js"></script>
 </html>

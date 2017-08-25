@@ -194,21 +194,27 @@ function editSave(id) {
 
 function save() {
     if (validarPaciente(0)) {
-        //var newA = newAntecedentes(0);
         $.ajax({
             url: 'sPaciente',
             type: 'POST',
             async: false,
             cache: false,
+            dataType: 'json',
             data: {
                 id: 0,
                 paciente: obtenerDatos(),
-                //newAntecedentes: newA,
                 op: 'save'
             },
             success: function (response) {
-                alertify.success("Paciente Registrado");
-                limpiarPaciente();
+                switch (response.status) {
+                    case "ok":
+                        alertify.success("Paciente Registrado");
+                        limpiarPaciente();
+                        break;
+                    case "cedula": 
+                        alertify.success("Cedula repetida...!");
+                        break;
+                }
             }
         });
     } else {
@@ -321,9 +327,9 @@ function asignarPaciente(paciente) {
     $("#pac_movilContacto").val(paciente.movilContacto);
     $("#pac_APP").val(paciente.app);
     $("#pac_APF").val(paciente.apf);
-    
-    
-    
+
+
+
     $("#cboParentezco").selectpicker("val", paciente.parentezco);
     $('#pac_Discapacidad').selectpicker("val", paciente.discapacidad);
     //Select

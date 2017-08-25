@@ -35,17 +35,19 @@ public class UsuarioDaoImp implements UsuarioDao {
         this.conn = con_db.open(con_db.MSSQL_SM);
         Usuario value = new Usuario();
         try {
-            CallableStatement call = this.conn.getConexion().prepareCall("{ call dbo.login(?,?,?,?)}");
+            CallableStatement call = this.conn.getConexion().prepareCall("{ call dbo.login(?,?,?,?,?)}");
             call.setString("nick", usuario);
             call.setString("pass", clave);
             call.setInt("rol", rol);
             call.registerOutParameter("user_name", Types.NVARCHAR);
+            call.registerOutParameter("idOut", Types.INTEGER);
             ResultSet rs = call.executeQuery();
             while (rs.next()) {
                 value.setNick(rs.getString("nick"));
                 value.setRol(new Rol(rs.getInt("idRol"), "", rs.getInt("val")));
             }
             value.setUser_name(call.getString("user_name"));
+            value.setId(call.getInt("idOut"));
             return value;
 
         } catch (SQLException ex) {

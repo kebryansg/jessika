@@ -103,7 +103,7 @@ public class sUsuario extends HttpServlet {
                     if (usuario != null) {
                         sesion.setAttribute("usuario", usuario.getUser_name());
                         sesion.setAttribute("rol", usuario.getRol().getVal());
-                        //sesion.setAttribute("id", usuario);
+                        sesion.setAttribute("id", usuario.getId());
                         //sesion.setAttribute("nombreEstablecimiento", "Hospital del dia Revelo");
                         //response.sendRedirect("home.jsp");
                         object.addProperty("login", true);
