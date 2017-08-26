@@ -1,3 +1,7 @@
+table{
+    cursor: pointer;
+}
+
 .full-page{
     position: absolute;
     width: 100%;

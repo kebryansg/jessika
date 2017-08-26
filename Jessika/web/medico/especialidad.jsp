@@ -1,7 +1,3 @@
-
-
-
-
 <%@page import="mvc.modelo.smDaoImp.EspecialidadDaoImp"%>
 <%@page import="mvc.controlador.entidades.sm.Especialidad"%>
 <%@page import="mvc.modelo.smDao.EspecialidadDao"%>
@@ -9,18 +5,14 @@
 <%@page import="mvc.modelo.smDao.EspecialidadDao"%>
 <div class="contenedor-tabs" >
     <div class="container-fluid">
-        <div class="row ">
-            <div class="col-md-12">
-                <div class="pull-right">
-                    <button class="btn btn-info" id="btnAgregar"  data-id="0" data-toggle="modal" data-target="#modalEspecialidad">Agregar</button>
-                </div>       
-            </div>
-        </div>
-        <hr/>
         <div class="row">
             <div class="pull-right">
                 <div class="col-md-12">
-                    <input class="form-control" id="txtBuscar" placeholder="Buscar">
+                    <div class="form-inline">
+                        <input class="form-control" id="txtBuscar" placeholder="Buscar">
+                        <button class="btn btn-info" id="btnAgregar">Agregar</button>
+                    </div>
+
                 </div>
             </div>
             <div class="pull-left">

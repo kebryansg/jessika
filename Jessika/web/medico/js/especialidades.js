@@ -7,27 +7,33 @@ function loadPaginacionEspecialidad(total) {
     }
     $(paginacion_Especialidad + " li").first().after(li);
 }
-$("#tbEspecialidad").bootstrapTable({
-    contextMenu: '#tbEspecialidad-context-menu',
-    onContextMenuItem: function (row, $el) {
-        switch ($el.data("item")) {
-            case "edit":
-                $("#modalEspecialidad .modal-title").html("Editar Especialidad")
-                $("#recipient-name").val(row.descripcion);
-                $("#modalEspecialidad").modal("toggle");
-                break;
-            case "delete":
-                $.post('sEspecialidad', {
-                    id: row.id,
-                    opcion: "delete"
-                }, function (responseText) {
-                    cargarEspecialidades(1, true);
-                    alertify.success("Especialidad eliminada");
-                });
-                break;
-        }
-    }
+$("#tbEspecialidad").bootstrapTable();
+$("#tbEspecialidad").on("click", "button[name='editEspecialidad']", function () {
+    clear_especialidad();
+    tr = $(this).closest("tr");
+    $("#modalEspecialidad .modal-title").html("Editar Especialidad");
+    $("#recipient-name").val($(tr).find("td").eq(1).html());
+    $("#modalEspecialidad").modal("toggle");
+    $("#btnActualizar").data("id", $(tr).find("td").eq(0).html());
 });
+$("#tbEspecialidad").on("click", "button[name='deleteEspecialidad']", function () {
+    tr = $(this).closest("tr");
+    id = $(tr).find("td").eq(0).html();
+    $.ajax({
+        url: 'sEspecialidad',
+        type: 'POST',
+        data: {
+            id: id,
+            opcion: "delete"
+        },
+        success: function (data) {
+            cargarEspecialidades(1, true);
+            alertify.success("Especialidad Eliminada");
+        }
+    });
+});
+
+
 function cargarEspecialidades(pagina, bandera) {
     var totalRegistro = $("#cboMostrar_tbEspecialidad").val();
     $.ajax({
@@ -51,10 +57,10 @@ function cargarEspecialidades(pagina, bandera) {
 cargarEspecialidades(1, true);
 $(function () {
     cargarEspecialidades(1, true);
-    
+
     $("#cboMostrar_tbEspecialidad").on("changed.bs.select", function () {
-    cargarEspecialidades(1, true);
-});
+        cargarEspecialidades(1, true);
+    });
 
     $("#contenido").on("click", paginacion_Especialidad + " li a[aria-label]", function (e) {
         li_old = $(paginacion_Especialidad + " li[class='active']");
@@ -99,34 +105,48 @@ $("#tbEspecialidad #txtBuscar").keyup(function (event) {
     cargarEspecialidades(pagina, buscar);
 });
 
-$('#tbEspecialidad #btnActualizar').click(function (event) {
-    validaciones();
+$('#btnAgregar').click(function (event) {
+    clear_especialidad();
+    $("#modalEspecialidad").modal('toggle');
+});
 
-    if (bandera === true) {
 
-        var descripcionEspecialidadVar = $('#recipient-name').val();
-        var idEspecialidadVar = datos[0];
-        $.post('sEspecialidad', {
-            descripcionEspecialidad: descripcionEspecialidadVar,
-            idEspecialidad: idEspecialidadVar,
-            visible: '1',
-            opcion: "3"
-        }, function (data) {
-            var resultado = JSON && JSON.parse(data) || $.parseJSON(data);
-            if (resultado.estado === true)
-            {
-                if (idEspecialidadVar === 0)
-                {
-                    cargarEspecialidades(pagina, buscar);
-                    alertify.success("Especialidad agregada correctamente");
-                } else
-                {
-                    alertify.success("Especialidad Modificada");
-                    $($('.table-responsive').find('tbody > tr')[indice]).children('td')[1].innerHTML = $('#recipient-name').val();
+
+function clear_especialidad() {
+    $("#modalEspecialidad .help-block").remove();
+    $("#recipient-name").closest(".form-group").removeClass("has-error");
+    $("#recipient-name").val("");
+    $("#btnActualizar").data("id", 0);
+}
+
+
+$('#btnActualizar').click(function (event) {
+    if (validaciones()) {
+        descripcionEspecialidadVar = $('#recipient-name').val();
+        idEspecialidadVar = $(this).data("id");
+        $.ajax({
+            url: 'sEspecialidad',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                descripcion: descripcionEspecialidadVar,
+                id: idEspecialidadVar,
+                opcion: "save"
+            },
+            success: function (data) {
+                if (data.status) {
+                    if (idEspecialidadVar === 0) {
+                        alertify.success("Especialidad Agregada");
+                    } else {
+                        alertify.success("Especialidad Modificada");
+                    }
+                    cargarEspecialidades(1, true);
+                    $("#modalEspecialidad").modal('toggle');
+                } else {
+                    alertify.success("Problemas");
                 }
-                $("#modalEspecialidad").modal('toggle');
-            } else
-                alertify.success("Problemas al intentar guardar\n" + resultado.excepcion);
+
+            }
         });
     }
 });

@@ -99,8 +99,9 @@ public class EspecialidadDaoImp implements EspecialidadDao {
                 sql = "INSERT INTO especialidad (descripcion,visible) VALUES ('" + value.getDescripcion() + "','1');";
             } //Update
             else {
-                sql = "UPDATE especialidad SET descripcion='" + value.getDescripcion() + "', visible='" + value.getVisible() + "' where id='" + value.getId() + "'";
+                sql = "UPDATE especialidad SET descripcion='" + value.getDescripcion() + "' where id='" + value.getId() + "'";
             }
+            System.out.println(sql);
             this.conn.execute(sql);
             return true;
         } catch (Exception ex) {
@@ -114,6 +115,7 @@ public class EspecialidadDaoImp implements EspecialidadDao {
     public boolean delete(int id) {
         this.conn = con_db.open(con_db.MSSQL_SM);
         try {
+            System.out.println("UPDATE ESPECIALIDAD SET visible='0' where id='" + id + "';");
             this.conn.execute("UPDATE ESPECIALIDAD SET visible='0' where id='" + id + "';");
             return true;
         } catch (Exception ex) {

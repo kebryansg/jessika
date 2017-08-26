@@ -41,71 +41,63 @@ public class sEspecialidad extends HttpServlet {
         response.setContentType("text/html; charset=iso-8859-1");
         PrintWriter out = response.getWriter();
         String opcion = request.getParameter("opcion");
+        String buscar;
         // KS: Variable q uso
         list_count l;
         List<String> resultList = new ArrayList<>();
         // KS: Variable q uso
         JsonObject object = new JsonObject();
-        /*if("0".equals(idEspecialidad))
-               {
-                   Integer ultimoId=esp.id();
-                   out.println("<tr class='active'>");
-                   out.println("<td>"+ultimoId+"</td>");	
-                   out.println("<td id='"+ultimoId+"'>"+descripcionEspecialidad+"</td>");
-                   out.println("<td style=''width: 20%'>");
-                   out.println("<button id='botonEditar' class='btn btn-primary' ><span class='glyphicon glyphicon-pencil'></span> </button>");
-                   out.println("<button id='btnEliminar' class='btn btn-danger'><span class='glyphicon glyphicon-trash'></span></a></button>");
-                    out.println("</td>");
-                   out.println("</tr>");
-               }*/
-        //cargo total de registros
-        if ("1".equals(opcion)) {
-            Integer bandera = Integer.valueOf(request.getParameter("bandera"));
-            String buscar = request.getParameter("buscar");
-            EspecialidadDao espe = new EspecialidadDaoImp();
-            out.println(espe.totalRegistros(bandera, buscar));
+        Especialidad especialidad = new Especialidad();
 
-        } //cargo las especialidades ya se paginado o buscado
-        else if ("2".equals(opcion)) {
-            String buscar = request.getParameter("buscar");
-            EspecialidadDao espe = new EspecialidadDaoImp();
-            Integer totalMostrar = Integer.valueOf(request.getParameter("totalMostrar"));
-            Integer pagina = Integer.valueOf(request.getParameter("pagina"));
-            l = espe.list(pagina, totalMostrar, buscar);
-            for (Object object1 : l.getList()) {
-                Especialidad especialidad = (Especialidad) object1;
-                resultList.add("{"
-                        + "\"id\": \"" + especialidad.getId() + "\","
-                        + "\"descripcion\": \"" + especialidad.getDescripcion() + "\","
-                        + "\"accion\": \"<button class='btn btn-info'>Editar</button><button class='btn btn-danger'>Eliminar</button>\""
-                        + "}");
-            }
+        switch (opcion) {
+            case "1":
+                Integer bandera = Integer.valueOf(request.getParameter("bandera"));
+                buscar = request.getParameter("buscar");
+                //EspecialidadDao espe = new EspecialidadDaoImp();
+                out.println(new EspecialidadDaoImp().totalRegistros(bandera, buscar));
+                break;
+            case "2":
+                buscar = request.getParameter("buscar");
+                //EspecialidadDao espe = new EspecialidadDaoImp();
+                Integer totalMostrar = Integer.valueOf(request.getParameter("totalMostrar"));
+                Integer pagina = Integer.valueOf(request.getParameter("pagina"));
+                l = new EspecialidadDaoImp().list(pagina, totalMostrar, buscar);
+                for (Object object1 : l.getList()) {
+                    especialidad = (Especialidad) object1;
+                    resultList.add("{"
+                            + "\"id\": \"" + especialidad.getId() + "\","
+                            + "\"descripcion\": \"" + especialidad.getDescripcion() + "\","
+                            + "\"accion\": \"<button name='editEspecialidad' class='btn btn-info'><span class='glyphicon glyphicon-pencil'></span></button> <button name='deleteEspecialidad' class='btn btn-danger'><span class='glyphicon glyphicon-trash'></span></button>\""
+                            + "}");
+                }
 
-            out.print("{\"count\":\"" + Math.ceil((float) l.getTotal() / totalMostrar) + "\", \"list\":[" + String.join(",", resultList) + "] }");
-            out.flush();
-            out.close();
-
-            /*ObjectMapper OBJECT_MAPPER = new ObjectMapper();
-            String json = OBJECT_MAPPER.writeValueAsString(list);
-            response.getWriter().write(json);*/
-        } else if ("delete".equals(opcion)) {
-            // Obtengo los datos de la peticion
-            int idEspecialidad = Integer.parseInt(request.getParameter("id"));
-            new EspecialidadDaoImp().delete(idEspecialidad);
-            out.println("ok");
-            out.flush();
-            out.close();
-        } else if ("list".equals(opcion)) {
-            //Obtener especialidades para combo
-            EspecialidadDao esp = new EspecialidadDaoImp();
-            List<Especialidad> list = esp.list();
-            String result = "";
-            for (Especialidad especialidad : list) {
-                result += "<option value='" + especialidad.getId() + "'>" + especialidad.getDescripcion() + "</option>";
-            }
-            out.print(result);
+                out.print("{\"count\":\"" + Math.ceil((float) l.getTotal() / totalMostrar) + "\", \"list\":[" + String.join(",", resultList) + "] }");
+                out.flush();
+                out.close();
+                break;
+            case "delete":
+                int idEspecialidad = Integer.parseInt(request.getParameter("id"));
+                new EspecialidadDaoImp().delete(idEspecialidad);
+                out.println("ok");
+                out.flush();
+                out.close();
+                break;
+            case "list":
+                List<Especialidad> list = new EspecialidadDaoImp().list();
+                String result = "";
+                for (Especialidad especialidad_1 : list) {
+                    result += "<option value='" + especialidad_1.getId() + "'>" + especialidad_1.getDescripcion() + "</option>";
+                }
+                out.print(result);
+                break;
+            case "save": 
+                especialidad.setDescripcion(request.getParameter("descripcion"));
+                especialidad.setId(Integer.parseInt(request.getParameter("id")));
+                new EspecialidadDaoImp().save(especialidad);
+                result = "{\"status\" : true}";
+                out.print(result);
+                break;
         }
-
     }
 
     /**

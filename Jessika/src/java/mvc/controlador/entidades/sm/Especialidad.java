@@ -56,6 +56,7 @@ public class Especialidad implements Serializable {
     private List<MedicoEspecialidad> medicoEspecialidadList;
 
     public Especialidad() {
+        this.id = 0;
     }
 
     public Especialidad(Integer id) {
