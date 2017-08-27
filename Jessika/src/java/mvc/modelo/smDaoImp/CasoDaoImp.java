@@ -69,11 +69,11 @@ public class CasoDaoImp implements CasoDao {
         List<Consulta> list = new ArrayList<>();
         String paginacion = (top != -1) ? "OFFSET " + pag + " ROWS FETCH NEXT " + top + " ROWS ONLY;" : "";
         String fecha = (!fechaFinal.equals("")) ? "(co.fecha < '" + fechaFinal + "' and co.fecha > '" + fechaInicial + "') and" : "";
-        String sql = ("select co.idCaso casoId, min(co.fecha) fecha,(select top 1 con.motivo from consulta con where con.idCaso = co.idCaso ORDER by fecha asc) motivo from consulta co inner join dbo.caso ca on co.idCaso = ca.id inner join dbo.historialClinico hc on hc.id = ca.idHistorialClinico where hc.id = '" + idHistoriaC + "' AND "
+        String sql = ("select co.idCaso casoId, min(co.fecha) fecha,(select top 1 con.diagnostico from consulta con where con.idCaso = co.idCaso ORDER by fecha asc) motivo from consulta co inner join dbo.caso ca on co.idCaso = ca.id inner join dbo.historialClinico hc on hc.id = ca.idHistorialClinico where hc.id = '" + idHistoriaC + "' AND "
                 + fecha
                 + " (co.motivo like '%" + filter + "%' or co.diagnostico like '%" + filter + "%' or co.prescripcion like '%" + filter + "%' or co.sintomas like '%" + filter + "%')"
                 + " GROUP by co.idCaso "
-                + " ORDER BY co.idCaso " + paginacion);
+                + " ORDER BY fecha desc " + paginacion);
         System.out.println(sql);
         ResultSet rs = this.conn.query(sql);
         try {

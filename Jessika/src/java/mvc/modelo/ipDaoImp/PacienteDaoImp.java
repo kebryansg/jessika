@@ -117,6 +117,7 @@ public class PacienteDaoImp implements PacienteDao {
         try {
 
             CallableStatement call = this.conn.getConexion().prepareCall("{call dbo.savePaciente(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
+            
             call.setInt("id", value.getId());
             call.setString("cedula", value.getCedula());
             call.setString("nombre1", value.getNombre1());
@@ -145,6 +146,7 @@ public class PacienteDaoImp implements PacienteDao {
             call.setString("observacion", value.getObservaciones());
             call.registerOutParameter("idOut", Types.INTEGER);
             call.execute();
+            System.out.println("idOut: " + call.getInt("idOut"));
             value.setId(call.getInt("idOut"));
             return true;
         } catch (SQLException ex) {

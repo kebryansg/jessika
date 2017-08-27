@@ -19,9 +19,8 @@ function editConsulta(id) {
         url: 'sConsulta',
         dataType: 'json',
         success: function (data) {
-            console.log(data);
             asignarConsuta(data.consulta);
-            asginarSV(data.sv, (data.sexoP === "H"));
+            asginarSV(data.sv, data.sexoP);
 
             listEstudiosLabs(data.estl);
             listEstudiosImgs(data.esti);
@@ -70,7 +69,7 @@ function asginarSV(sv, sexo) {
     $("#sv_Temperatura").val(sv.temperatura);
     $("#sv_Frecuencia").val(sv.frecuenciaC);
     $("#sv_Presion").val(sv.presion);
-    if (sexo) {
+    if (sexo === "H") {
         $("#div_femenino").hide();
     } else {
         $("#sv_FUM").val(sv.fum);
@@ -78,6 +77,5 @@ function asginarSV(sv, sexo) {
         $("#sv_Periodo").val(sv.periodo);
         $("#sv_Periodo").selectpicker("refresh");
     }
-
 }
 

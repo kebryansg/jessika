@@ -137,7 +137,7 @@
                                             <option value="0">Seleccione</option>
                                             <option value="1">Masculino</option>
                                             <option value="2">Femenino</option>
-                                            <option value="3">Intermedio</option>
+                                            <option value="3">Indeterminado</option>
                                         </select>
                                     </div>
                                 </div>

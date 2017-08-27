@@ -70,7 +70,7 @@
     <%
         HttpSession sesion = request.getSession();
         String usuario = (String) sesion.getAttribute("usuario");
-        if (usuario.equals("")) {
+        if (usuario==null) {
             response.sendRedirect("login.jsp");
         }
     %>
@@ -94,7 +94,7 @@
 
 
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <%=sesion.getAttribute("usuario")%><b class="caret"></b></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <%=sesion.getAttribute("usuario")==null?"":sesion.getAttribute("usuario")%><b class="caret"></b></a>
                         <ul class="dropdown-menu">                            
                             <li>
                                 <a id="aSalida" href="#"><i class="fa fa-fw fa-power-off"></i> Salir</a>
@@ -107,6 +107,10 @@
                 <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
                 <div class="collapse navbar-collapse navbar-ex1-collapse" id="TabAdm">
                     <%
+                        if (sesion.getAttribute("rol")!=null) 
+                        {
+                            
+                        
                         int rol = (int)sesion.getAttribute("rol");
                         switch (rol) {
                             case 1:
@@ -120,6 +124,7 @@
                     <%
                                 break;
                         }
+}
                     %>
 
                     <!--<ul class="nav navbar-nav side-nav">

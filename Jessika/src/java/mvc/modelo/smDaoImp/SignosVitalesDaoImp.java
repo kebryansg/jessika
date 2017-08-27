@@ -87,7 +87,7 @@ public class SignosVitalesDaoImp implements SignosVitalesDao{
                 value.setTemperatura(rs.getString("temperatura"));
                 value.setFum(rs.getDate("fum"));
                 value.setFuc(rs.getDate("fuc"));
-                value.setTemperatura(rs.getString("frecuenciaC"));
+                value.setFrecuenciaC(rs.getString("frecuenciaC"));
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());

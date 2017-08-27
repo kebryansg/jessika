@@ -176,10 +176,10 @@ public class sPaciente extends HttpServlet {
                 paciente.setEtnia(Integer.parseInt(request.getParameter("paciente[etnia]")));
                 paciente.setDomicilio(request.getParameter("paciente[domicilio]"));
                 paciente.setDiscapacidad(Integer.parseInt(request.getParameter("paciente[discapacidad]")));
-                //paciente.setCiudad(request.getParameter("paciente[ciudad]"));
                 paciente.setEstadoCivil(request.getParameter("paciente[estadoCivil]"));
                 paciente.setApp(request.getParameter("paciente[app]"));
                 paciente.setApf(request.getParameter("paciente[apf]"));
+                paciente.setObservaciones(request.getParameter("paciente[observacion]"));
 
                 paciente.setNombreContacto(request.getParameter("paciente[nombreContacto]"));
                 paciente.setMovilContacto(request.getParameter("paciente[movilContacto]"));
@@ -188,7 +188,6 @@ public class sPaciente extends HttpServlet {
                 paciente.setTelefonoOficina(request.getParameter("paciente[telOficina]"));
                 paciente.setSexo(request.getParameter("paciente[genero]"));
                 paciente.setPaisNacimiento(request.getParameter("paciente[paisNac]"));
-                //paciente.setLugarNacimiento(request.getParameter("paciente[lugarNac]"));
                 paciente.setIdParroquia(new Parroquia(Integer.parseInt(request.getParameter("paciente[parroquia]"))));
 
                 new PacienteDaoImp().save(paciente);

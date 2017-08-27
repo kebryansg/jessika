@@ -65,11 +65,12 @@ String excepcion="";
                 value.setNombre2(rs.getNString("nombre2"));
                 value.setApellidos1(rs.getNString("apellidos1"));
                 value.setApellidos2(rs.getNString("apellidos2"));
-                value.setDomicilio(rs.getNString("domicilio"));
+                //(paciente1.getCedula() != null ? paciente1.getCedula() : "-")
+                value.setDomicilio(rs.getNString("domicilio")!=null?rs.getNString("domicilio"):"-");
                 value.setCiudad(rs.getNString("ciudad"));
                 value.setTelefonoDomicilio(rs.getNString("telefonoDomicilio"));
                 value.setTelefonoOficina(rs.getNString("telefonoOficina"));
-                value.setTelefonoMovil(rs.getNString("telefonoMovil"));
+                value.setTelefonoMovil(rs.getNString("telefonoMovil")!=null?rs.getNString("telefonoMovil"):"-");
                 value.setEmail(rs.getNString("email"));
                 value.setCedula(rs.getNString("cedula"));                
                 value.setVisible(rs.getInt("visible"));

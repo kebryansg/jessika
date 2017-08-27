@@ -2,6 +2,7 @@ paginacion_Consultas = ("#pag_tbConsultas");
 function loadPaginacionConsultas(total) {
     $(paginacion_Consultas + " li a").not("[aria-label]").closest("li").remove();
     li = '';
+    total = (total > 10) ? 20 : total;
     for (var c = 0; c < total; c++) {
         li += ('<li ' + ((c === 0) ? 'class="active"' : '') + ' ><a href="#">' + (c + 1) + '</a></li>');
     }
@@ -85,6 +86,7 @@ $(function () {
 
 
     $("#contenido").on("click", paginacion_Consultas + " li a[aria-label]", function (e) {
+        e.preventDefault();
         li_old = $(paginacion_Consultas + " li[class='active']");
         li = undefined;
         switch ($(this).attr("aria-label")) {
@@ -102,6 +104,7 @@ $(function () {
         }
     });
     $("#contenido").on("click", paginacion_Consultas + " li:not([class='active']) a:not([aria-label])", function (e) {
+        e.preventDefault();
         li = $(this).closest("li");
         $(paginacion_Consultas + " li[class='active']").toggleClass("active");
         $(li).toggleClass("active");

@@ -80,12 +80,12 @@ public class TipoConsultaDaoImp implements TipoConsultaDao {
     @Override
     public TipoConsulta edit(int id) {
         this.conn = con_db.open(con_db.MSSQL_SM);
-        String sql = "select * from tipoConsulta";
+        String sql = "select * from tipoConsulta where id = "+ id;
         TipoConsulta value = null;
         ResultSet rs = this.conn.query(sql);
         try {
             while (rs.next()) {
-                value = new TipoConsulta(rs.getInt("id"), rs.getNString("descripcion"));
+                value = new TipoConsulta(rs.getInt("id"), rs.getString("descripcion"));
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());

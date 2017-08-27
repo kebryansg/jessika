@@ -16,6 +16,11 @@ $("#myModal .modal-body").load("paciente/listPacientes.jsp", function (e) {
         $("#txtPaciente").val(row.nombres);
         //$("#con_sexoPaciente").val(row.sexo);
         //obtList();
+        
+        idHistoria = row.hc;
+        $("#tabIngresos #txtCedula").val(row.cedula);       
+        $('#tabIngresos #txtCedula').closest("div").removeClass("has-error");
+        $("#tabIngresos #txtCedulahelp").remove();
         $("#myModal").modal("toggle");
     });
 });
@@ -131,23 +136,6 @@ function cargarPacientes(pagina, esBuscar)
     }, function (data) {
         $('#tabIngresos #paginacionBuscarIngresos').find('li').remove();
         $('#tabIngresos #tablaPacientes tr').remove();
-        /*var resultado = JSON && JSON.parse(data) || $.parseJSON(data); 
-         var totalPaginas=resultado[0].registros/$("#tabIngresos #cboMostrar").val();
-         totalPaginas=Math.ceil(totalPaginas);
-         $("#tabIngresos #paginacionBuscarIngresos ul").append('<li id="atras"><a href="#">&laquo;</a></li>');
-         var indice=0;
-         for(i=0;i <totalPaginas; i++)                
-         {
-         indice=parseInt(i)+1;
-         //<li><a href="#">1</a></li>                
-         if(i==pagina)
-         $("#tabIngresos #paginacionBuscarIngresos ul").append('<li id='+i+' class="active"><a href="#">'+indice+'</a></li>');
-         else 
-         $("#tabIngresos #paginacionBuscarIngresos ul ").append('<li id='+i+' ><a href="#">'+indice+'</a></li>');
-         }
-         ultimo=parseInt(totalPaginas)-1;
-         $("#tabIngresos #paginacionBuscarIngresos ul").append('<li id="adelante"><a href="#">&raquo;</a></li>');
-         */
         $('#tabIngresos #tablaPacientes thead').append("<tr>\n\
                                                 <th style='display: none'></th>\n\
                                                 <th class='col-lg-1'>No.</th>\n\

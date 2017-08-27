@@ -31,8 +31,15 @@ $("#tbHC").bootstrapTable({
 });
 
 $.ajaxSetup({
-    cache: true
+    cache: false
 });
+$("#txt_filterHistorialC").keyup(function(e){
+    tecla = e.keyCode;
+    if(tecla === 13){
+        obtList();
+    }
+});
+
 
 function obtList() {
 
@@ -41,8 +48,7 @@ function obtList() {
         data: {
             op: "list",
             idHc: $("#con_historiaPaciente").val(),
-            filter: ""
-                    //fecha: $("#con_Fecha").val()
+            filter: $("#txt_filterHistorialC").val()
         },
         dataType: 'json',
         type: 'POST',
@@ -148,6 +154,7 @@ function load_Paciente(cod) {
                 $("#con_cedulaPaciente").val(ob.paciente.cedula);
                 $("#con_nombrePaciente").val((ob.paciente.apellido1 + " " + ob.paciente.apellido2 + " " + ob.paciente.nombre1 + " " + ob.paciente.nombre2).toUpperCase());
                 $("#con_ciudadPaciente").val(ob.paciente.ciudad.toUpperCase());
+                //alert(ob.paciente.sexo);
                 $("#con_sexoPaciente").val((ob.paciente.sexo) ? "1" : "0");
                 obtList();
             } else {
@@ -167,6 +174,7 @@ function modalListPaciente() {
             $("#con_cedulaPaciente").val(row.cedula);
             $("#con_nombrePaciente").val(row.nombres);
             $("#con_sexoPaciente").val(row.sexo);
+            //alert(row.sexo);
             obtList();
             $("#ListPaciente").modal("toggle");
         });

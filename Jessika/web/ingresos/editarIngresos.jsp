@@ -49,8 +49,8 @@
         
         <div class="row">
             <div class="col-xs-12">
-            <div class="table-responsive" style="margin: 0 auto; text-align:left">
-            <table id="tablaIngresos" class="table table-bordered table-hover table-striped">
+            <div class="table-responsive" style="margin: 0 auto; text-align:left; height:315px; ">
+            <table id="tablaIngresos"  class="table table-bordered table-hover table-striped">
                 <thead>
                     <tr>                                                       
                         <th style='display:none;'>No.</th>
@@ -70,7 +70,7 @@
                         <th style='display:none;' class='col-lg-1'>C. Externa</th>
                         <th >Cód.</th>
                         <th style='display:none;' class='col-lg-1'></th>
-                        <th >Acción.</th>
+                        <th class='col-lg-3'>Acción.</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -103,11 +103,11 @@
                                  <td><%=elem.getFechaSalida()%></td>
                                  <td style='display:none;'><%=elem.getHora() %></td>
                                  <td style='display:none;'><%=elem.getCondicionEgreso()%></td>
-                                 <td class='tooltips' id='tooltipDefinitivoEgreso' data-toggle='tooltip' data-placement='left' title="<%=elem.getDefinitivoEgreso() %>"><%=res%></td>
+                                 <td class='tooltips' id='tooltipDefinitivoEgreso' data-toggle='tooltip' data-container='body' data-placement='bottom' title="<%=elem.getDefinitivoEgreso() %>"><%=res%></td>
                                  <td style='display:none;'><%=elem.getSecundarioEgreso() %></td>
                                  <td style='display:none;'><%=elem.getSecundarioEgreso2() %></td>
                                  <td style='display:none;'><%=elem.getCausaExterna()%></td>
-                                 <td><%=elem.getCodigoDiagnosticoDefinitivo() %></td>
+                                 <td ><%=elem.getCodigoDiagnosticoDefinitivo() %></td>
                                  <td style='display:none;'><%=elem.getDefinitivoEgreso() %></td>
                                  <td >
                                      <button id='botonEditar' class='btn btn-primary'><span class='glyphicon glyphicon-pencil'></span> </button> 
@@ -124,6 +124,7 @@
                              
                              
                              <%
+                                 i++;
                          }
                     %>
 
@@ -340,7 +341,7 @@
                                     <div class="col-md-12">
                                         <label class="col-md-12" for="dtpFechaIngresoModal">Fecha</label>
                                         <div class="col-md-12">
-                                                <div class="input-group date form_date" data-date="" data-date-format="yyyy-mm-dd">
+                                                <div class="input-group date form_date" data-date="" id="dtpFechaMedicamento" data-date-format="yyyy-mm-dd">
                                             <input validate="date" class="form-control" id="dtpFechaMedicamentoIngresosModal" size="16" type="text" value="" readonly>
                                             <!--<span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>-->
                                             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>

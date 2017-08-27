@@ -27,7 +27,13 @@ $(function () {
         }
     });
     $("#cancelPaciente").click(function (e) {
-        limpiarPaciente();
+        if($(this).data("id") === 0 || isNull($(this).data("id"))){
+            limpiarPaciente();
+        }
+        else{
+            $("#contenido").load("paciente/listPacientes.jsp");
+        }
+        
     });
     
 });

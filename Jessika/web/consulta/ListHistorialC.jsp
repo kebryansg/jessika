@@ -63,7 +63,7 @@
     <br>
     <!-- context menu -->
     <ul id="tbHc-context-menu" class="dropdown-menu" >
-        <li data-item="new"><a><i class="fa fa-plus fa-fw" aria-hidden="true"></i>&nbsp; Nuevo Caso</a></li>
+        <li data-item="new"><a><i class="fa fa-plus fa-fw" aria-hidden="true"></i>&nbsp; Nuevo Consulta</a></li>
         <li data-item="view"><a><i class="fa fa-table fa-fw" aria-hidden="true"></i>&nbsp; Detalle del caso</a></li>
     </ul>
     <div class="row">
@@ -106,7 +106,7 @@
             </div>
             <div class="modal-body">
                 <ul id="tb_ViewHC-context-menu" class="dropdown-menu" >
-                    <li data-item="view"><a><i class="fa fa-plus fa-fw" aria-hidden="true"></i>&nbsp; Detalle Consulta</a></li>
+                    <li data-item="view"><a><i class="fa fa-table fa-fw" aria-hidden="true"></i>&nbsp; Detalle Consulta</a></li>
                 </ul>
 
                 <table data-toggle="table" data-height="300" id="tb_ViewHC">

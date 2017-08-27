@@ -242,7 +242,7 @@ function obtenerDatos() {
         genero: $("#pac_Genero").val(),
         paisNac: $("#pac_PaisNac").val(),
         //lugarNac: $("#pac_LugarNac").val(),
-        observacion: $("#pac_Observacion"),
+        observacion: $("#pac_Observacion").val(),
         provincia: $("#cboProvincia").val(),
         parroquia: $("#cboParroquia").val(),
         canton: $("#cboCanton").val(),
@@ -282,6 +282,7 @@ function asignarObstetrico(obs, id) {
 
 function asignarPaciente(paciente) {
     $("#savePaciente").data("id", paciente.id);
+    $("#cancelPaciente").data("id", paciente.id);
     $("#pac_Cedula").val(paciente.cedula);
     $("#pac_primerNombre").val(paciente.nombre1);
     $("#pac_segundoNombre").val(paciente.nombre2);

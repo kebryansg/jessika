@@ -54,7 +54,7 @@ String excepcion="";
             while (rs.next()) {
                 Ingresos value = new Ingresos();
                 value.setId(rs.getInt("id"));
-                Paciente unPaciente= new Paciente(rs.getString("cedula"),rs.getString("nombre1"),rs.getString("nombre2"),rs.getString("apellido1"),rs.getString("apellido2"));
+                Paciente unPaciente= new Paciente(rs.getString("cedula")!=null?rs.getString("cedula"):"-",rs.getString("nombre1"),rs.getString("nombre2"),rs.getString("apellido1"),rs.getString("apellido2"));
                 value.setUnPaciente(unPaciente);
                 value.setIdTipoIngreso(new TipoIngreso(rs.getInt("idTipoIngreso")));
                 value.setIdCaso(new Caso(rs.getInt("idCaso")));
@@ -365,7 +365,8 @@ String excepcion="";
                 while (rs.next()) {
                     Ingresos value = new Ingresos();
                 value.setId(rs.getInt("id"));
-                Paciente unPaciente= new Paciente(rs.getString("cedula"),rs.getString("nombre1"),rs.getString("nombre2"),rs.getString("apellido1"),rs.getString("apellido2"));
+                
+                Paciente unPaciente= new Paciente(rs.getString("cedula")!=null?rs.getString("cedula"):"-",rs.getString("nombre1"),rs.getString("nombre2"),rs.getString("apellido1"),rs.getString("apellido2"));
                 value.setUnPaciente(unPaciente);
                 value.setIdTipoIngreso(new TipoIngreso(rs.getInt("idTipoIngreso")));
                 value.setIdCaso(new Caso(rs.getInt("idCaso")));

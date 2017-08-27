@@ -36,7 +36,7 @@
                             <tr>
                                 <th data-field="id" >Cod.</th>
                                 <th data-field="hc" >H. Clinica</th>
-                                <th data-field="cedula" >Cèdula</th>
+                                <th data-field="cedula" >Cédula</th>
                                 <th data-field="nombres" >Apellidos y Nombres</th>
                                 <!--<th data-field="ciudad" >Ciudad</th>-->
                                 <th data-field="domicilio" >Domicilio</th>

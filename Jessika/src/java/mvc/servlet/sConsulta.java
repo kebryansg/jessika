@@ -197,13 +197,12 @@ public class sConsulta extends HttpServlet {
                 out.close();
                 break;
             case "list":
-                List<Consulta> list = new CasoDaoImp().listConsulta(Integer.parseInt(request.getParameter("idHc")), "", "", request.getParameter("filter"), 0, 5);
+                List<Consulta> list = new CasoDaoImp().listConsulta(Integer.parseInt(request.getParameter("idHc")), "", "", request.getParameter("filter"), 0, 20);
                 for (Consulta con : list) {
                     resultList.add("{"
                             + "\"caso\": \"" + con.getIdCaso().getId() + "\","
                             + "\"fecha\": \"" + test.SQLSave(con.getFecha()) + "\","
-                            + "\"motivo\": \"" + con.getMotivo() + "\""
-                            //+ "\"accion\": \"<button name='addHistorialCaso' data-id='" + con.getIdCaso().getId() + "' class='btn btn-info' data-toggle='tooltip' data-placement='top' title='Agregar al caso..!'> <i class='glyphicon glyphicon-plus'></i> </button> <button name='viewHistorialCaso' data-id='" + con.getIdCaso().getId() + "' data-toggle='modal' data-target='#viewHistorialCaso' class='btn btn-info' data-toggle='tooltip' data-placement='top' title='Historial caso..!' > <i class='glyphicon glyphicon-align-justify'></i> </button>\""
+                            + "\"motivo\": \"" + con.getMotivo()+ "\""
                             + "}");
                 }
                 out.print("[" + String.join(",", resultList) + "]");

@@ -5,88 +5,38 @@
  */
 package mvc.controlador.entidades.sm;
 
-import java.io.Serializable;
+
 import java.sql.Time;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.xml.bind.annotation.XmlTransient;
+
 import mvc.controlador.entidades.ip.Paciente;
-import org.codehaus.jackson.annotate.JsonIgnore;
+
 
 /**
  *
  * @author kebryan
  */
-@Entity
-@Table(name = "ingresos")
-@NamedQueries({
-    @NamedQuery(name = "Ingresos.findAll", query = "SELECT i FROM Ingresos i")})
-public class Ingresos implements Serializable {
+public class Ingresos {
 
-    @Column(name = "estado")
+   
     private Integer estado;
-    @OneToMany(mappedBy = "idIngresos")
-    private Collection<Medicamentos> medicamentosCollection;
-
-    private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
-    @Column(name = "id")
     private Integer id;
-    @Column(name = "fechaEntrada")
-    @Temporal(TemporalType.DATE)
     private Date fechaEntrada;
-    @Column(name = "fechaSalida")
-    @Temporal(TemporalType.DATE)
     private Date fechaSalida;
-    @Column(name = "hora")
-    @Temporal(TemporalType.TIME)
     private Date hora;
-    @Column(name = "sos")
     private Boolean sos;
-    @Column(name = "condicionEgreso")
     private Integer condicionEgreso;
-    @Lob
-    @Column(name = "definitivoEgreso")
     private String definitivoEgreso;
-    @Lob
-    @Column(name = "secundarioEgreso")
     private String secundarioEgreso;
-    @Lob
-    @Column(name = "secundarioEgreso2")
     private String secundarioEgreso2;
-    @Lob
-    @Column(name = "causaExterna")
     private String causaExterna;
-    @Lob
-    @Column(name = "codigoDiagnosticoDefinitivo")
     private String codigoDiagnosticoDefinitivo;
-    @JoinColumn(name = "idCaso", referencedColumnName = "id")
-    @ManyToOne
     private Caso idCaso;
-    @JoinColumn(name = "idEspecialidadEgreso", referencedColumnName = "id")
-    @ManyToOne
     private EspecialidadEgreso idEspecialidadEgreso;
-    @JoinColumn(name = "idTipoIngreso", referencedColumnName = "id")
-    @ManyToOne
     private TipoIngreso idTipoIngreso;
-    @OneToMany(mappedBy = "idIngreso")
     private Integer totalIngresos;
-    private int registros;
+    private Integer registros;
 
     public int getRegistros() {
         return registros;
@@ -311,14 +261,6 @@ public class Ingresos implements Serializable {
         this.estado = estado;
     }
 
-    @XmlTransient
-    @JsonIgnore
-    public Collection<Medicamentos> getMedicamentosCollection() {
-        return medicamentosCollection;
-    }
-
-    public void setMedicamentosCollection(Collection<Medicamentos> medicamentosCollection) {
-        this.medicamentosCollection = medicamentosCollection;
-    }
+    
     
 }
