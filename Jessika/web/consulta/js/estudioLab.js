@@ -30,11 +30,7 @@ function cboCategoria_load(cbo) {
 }
 
 function loadPaginacionEstudiosLab(total) {
-    $.each($(paginacion + " li"), function (i, li) {
-        if ($(li).find("a[aria-label]").length === 0) {
-            $(li).remove();
-        }
-    });
+    $(paginacion +" li a").not("[aria-label]").closest("li").remove();
     li = '';
     for (var c = 0; c < total; c++) {
         li += ('<li ' + ((c === 0) ? 'class="active"' : '') + ' ><a href="#">' + (c + 1) + '</a></li>');
@@ -71,6 +67,7 @@ function loadListEstudiosLab(bandera, pag) {
 
 $(function () {
     $("#contenido").on("click", paginacion + " li a[aria-label]", function (e) {
+        e.preventDefault();
         li_old = $(paginacion + " li[class='active']");
         li = undefined;
         switch ($(this).attr("aria-label")) {
@@ -88,6 +85,7 @@ $(function () {
         }
     });
     $("#contenido").on("click", paginacion + " li:not([class='active']) a:not([aria-label])", function (e) {
+        e.preventDefault();
         li = $(this).closest("li");
         $(paginacion + " li[class='active']").toggleClass("active");
         $(li).toggleClass("active");

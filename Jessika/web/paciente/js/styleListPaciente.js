@@ -19,9 +19,11 @@ $("#tablPaciente").bootstrapTable({
 function loadPaginacion(total) {
     $("#pagPacientes li a").not("[aria-label]").closest("li").remove();
     li = '';
+    total = (total <= 10) ? total : 10;
     for (var c = 0; c < total; c++) {
         li += ('<li ' + ((c === 0) ? 'class="active"' : '') + ' ><a href="#">' + (c + 1) + '</a></li>');
     }
+
     $("#pagPacientes li").first().after(li);
 }
 
@@ -69,6 +71,7 @@ $(function () {
     $("#tablPaciente").bootstrapTable('hideColumn', 'sexo');
     $("#tablPaciente").bootstrapTable('hideColumn', 'id');
     $("#contenido").on("click", "#pagPacientes li a[aria-label]", function (e) {
+        e.preventDefault(); 
         li_old = $("#pagPacientes li[class='active']");
         li = undefined;
         switch ($(this).attr("aria-label")) {
@@ -86,6 +89,7 @@ $(function () {
         }
     });
     $("#contenido").on("click", "#pagPacientes li:not([class='active']) a:not([aria-label])", function (e) {
+        e.preventDefault(); 
         li = $(this).closest("li");
         $("#pagPacientes li[class='active']").toggleClass("active");
         $(li).toggleClass("active");

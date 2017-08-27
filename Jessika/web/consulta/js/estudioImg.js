@@ -21,11 +21,12 @@ EstudiosImg_load($("#cboEstudiosImg"));
 loadListEstudiosImg(true, 1);
 
 function loadPaginacionEstudiosImg(total) {
-    $.each($(paginacionEstudiosImg + " li"), function (i, li) {
+    /*$.each($(paginacionEstudiosImg + " li"), function (i, li) {
         if ($(li).find("a[aria-label]").length === 0) {
             $(li).remove();
         }
-    });
+    });*/
+    $(paginacionEstudiosImg +" li a").not("[aria-label]").closest("li").remove();
     li = '';
     for (var c = 0; c < total; c++) {
         li += ('<li ' + ((c === 0) ? 'class="active"' : '') + ' ><a href="#">' + (c + 1) + '</a></li>');
@@ -147,6 +148,7 @@ $('#btnRemoverEstImg').click(function () {
 
 $(function () {
     $("#contenido").on("click", paginacionEstudiosImg + " li a[aria-label]", function (e) {
+        e.preventDefault(); 
         li_old = $(paginacionEstudiosImg + " li[class='active']");
         li = undefined;
         switch ($(this).attr("aria-label")) {
@@ -164,6 +166,7 @@ $(function () {
         }
     });
     $("#contenido").on("click", paginacionEstudiosImg + " li:not([class='active']) a:not([aria-label])", function (e) {
+        e.preventDefault();
         li = $(this).closest("li");
         $(paginacionEstudiosImg + " li[class='active']").toggleClass("active");
         $(li).toggleClass("active");

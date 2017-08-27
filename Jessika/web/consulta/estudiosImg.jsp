@@ -6,7 +6,7 @@
             <div class="col-md-12">
 
                 <div class="form-inline">
-                    <input class="form-control" id="txt_filterEstudiosImg" placeholder="Buscar">
+                    <input class="form-control" style="width: 120px;" id="txt_filterEstudiosImg" placeholder="Buscar">
                     <select class="selectpicker" data-width="150px" id="cboTipoEstudiosImg"></select>
                     <select class="selectpicker" data-width="150px" id="cboEstudiosImg"></select>
                 </div>

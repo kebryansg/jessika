@@ -1,11 +1,6 @@
 paginacion_Consultas = ("#pag_tbConsultas");
 function loadPaginacionConsultas(total) {
     $(paginacion_Consultas + " li a").not("[aria-label]").closest("li").remove();
-    /*$.each($(paginacion_Consultas + " li"), function (i, li) {
-     if ($(li).find("a[aria-label]").length === 0) {
-     $(li).remove();
-     }
-     });*/
     li = '';
     for (var c = 0; c < total; c++) {
         li += ('<li ' + ((c === 0) ? 'class="active"' : '') + ' ><a href="#">' + (c + 1) + '</a></li>');
