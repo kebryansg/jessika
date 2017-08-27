@@ -39,7 +39,7 @@ public class PacienteDaoImp implements PacienteDao {
                 value.setNombre2(rs.getNString("nombre2"));
                 value.setApellido1(rs.getNString("apellido1"));
                 value.setApellido2(rs.getNString("apellido2"));
-                value.setCiudad(rs.getNString("ciudad"));
+                //value.setCiudad(rs.getNString("ciudad"));
                 value.setDiscapacidad(rs.getInt("discapacidad"));
                 value.setDomicilio(rs.getNString("domicilio"));
                 value.setEmail(rs.getNString("email"));
@@ -49,7 +49,7 @@ public class PacienteDaoImp implements PacienteDao {
                 value.setId(rs.getInt("id"));
                 value.setIdParroquia(new Parroquia(rs.getInt("idParroquia")));
                 value.setImagen(rs.getNString("imagen"));
-                value.setLugarNacimiento(rs.getNString("lugarNacimiento"));
+                //value.setLugarNacimiento(rs.getNString("lugarNacimiento"));
                 value.setNacionalidad(rs.getString("nacionalidad"));
                 value.setPaisNacimiento(rs.getNString("paisNacimiento"));
                 value.setSexo(rs.getString("sexo"));
@@ -80,7 +80,7 @@ public class PacienteDaoImp implements PacienteDao {
                 value.setNombre2(rs.getNString("nombre2"));
                 value.setApellido1(rs.getNString("apellido1"));
                 value.setApellido2(rs.getNString("apellido2"));
-                value.setCiudad(rs.getNString("ciudad"));
+                //value.setCiudad(rs.getNString("ciudad"));
                 value.setDiscapacidad(rs.getInt("discapacidad"));
                 value.setDomicilio(rs.getNString("domicilio"));
                 value.setEmail(rs.getNString("email"));
@@ -90,12 +90,13 @@ public class PacienteDaoImp implements PacienteDao {
                 value.setId(rs.getInt("id"));
                 value.setIdParroquia(new Parroquia(rs.getInt("idParroquia")));
                 value.setImagen(rs.getNString("imagen"));
-                value.setLugarNacimiento(rs.getNString("lugarNacimiento"));
+                //value.setLugarNacimiento(rs.getNString("lugarNacimiento"));
                 value.setNacionalidad(rs.getString("nacionalidad"));
                 value.setPaisNacimiento(rs.getNString("paisNacimiento"));
                 value.setSexo(rs.getString("sexo"));
                 value.setApp(rs.getString("app"));
                 value.setApf(rs.getString("apf"));
+                value.setObservaciones(rs.getString("observacion"));
                 value.setTelefonoDomicilio(rs.getNString("telefonoDomicilio"));
                 value.setTelefonoOficina(rs.getNString("telefonoOficina"));
                 value.setNombreContacto(rs.getNString("nombreContacto"));
@@ -115,7 +116,7 @@ public class PacienteDaoImp implements PacienteDao {
         this.conn = con_db.open(con_db.MSSQL_IP);
         try {
 
-            CallableStatement call = this.conn.getConexion().prepareCall("{call dbo.savePaciente(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
+            CallableStatement call = this.conn.getConexion().prepareCall("{call dbo.savePaciente(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
             call.setInt("id", value.getId());
             call.setString("cedula", value.getCedula());
             call.setString("nombre1", value.getNombre1());
@@ -124,14 +125,14 @@ public class PacienteDaoImp implements PacienteDao {
             call.setString("apellido2", value.getApellido2());
             call.setString("domicilio", value.getDomicilio());
             call.setString("nacionalidad", value.getNacionalidad());
-            call.setString("ciudad", value.getCiudad());
+            //call.setString("ciudad", value.getCiudad());
             call.setString("estadocivil", value.getEstadoCivil());
             call.setString("telDomicilio", value.getTelefonoDomicilio());
             call.setString("telOficina", value.getTelefonoOficina());
             call.setString("email", value.getEmail());
             call.setString("sexo", value.getSexo());
             call.setString("paisNac", value.getPaisNacimiento());
-            call.setString("lugarNac", value.getLugarNacimiento());
+            //call.setString("lugarNac", value.getLugarNacimiento());
             call.setDate("fechaNac", new java.sql.Date(value.getFechaNacimiento().getTime()));
             call.setInt("etnia", value.getEtnia());
             call.setInt("discapacidad", value.getDiscapacidad());
@@ -141,6 +142,7 @@ public class PacienteDaoImp implements PacienteDao {
             call.setString("movilContacto", value.getMovilContacto());
             call.setString("app", value.getApp());
             call.setString("apf", value.getApf());
+            call.setString("observacion", value.getObservaciones());
             call.registerOutParameter("idOut", Types.INTEGER);
             call.execute();
             value.setId(call.getInt("idOut"));
@@ -177,7 +179,7 @@ public class PacienteDaoImp implements PacienteDao {
                 value.setNombre2(rs.getNString("nombre2"));
                 value.setApellido1(rs.getNString("apellido1"));
                 value.setApellido2(rs.getNString("apellido2"));
-                value.setCiudad(rs.getNString("ciudad"));
+                //value.setCiudad(rs.getNString("ciudad"));
                 value.setDomicilio(rs.getNString("domicilio"));
                 value.setSexo(rs.getString("sexo"));
                 /*value.setDiscapacidad(rs.getInt("discapacidad"));
@@ -224,7 +226,7 @@ public class PacienteDaoImp implements PacienteDao {
                 paciente1.setNombre2(rs.getNString("nombre2"));
                 paciente1.setApellido1(rs.getNString("apellido1"));
                 paciente1.setApellido2(rs.getNString("apellido2"));
-                paciente1.setCiudad(rs.getNString("ciudad"));
+                //paciente1.setCiudad(rs.getNString("ciudad"));
                 paciente1.setDomicilio(rs.getNString("domicilio"));
                 paciente1.setSexo(rs.getString("sexo"));
                 list.add(paciente1);
@@ -252,7 +254,7 @@ public class PacienteDaoImp implements PacienteDao {
                 value.setNombre2(rs.getNString("nombre2"));
                 value.setApellido1(rs.getNString("apellido1"));
                 value.setApellido2(rs.getNString("apellido2"));
-                value.setCiudad(rs.getNString("ciudad"));
+                //value.setCiudad(rs.getNString("ciudad"));
                 value.setDiscapacidad(rs.getInt("discapacidad"));
                 value.setDomicilio(rs.getNString("domicilio"));
                 value.setEmail(rs.getNString("email"));
@@ -262,10 +264,13 @@ public class PacienteDaoImp implements PacienteDao {
                 value.setId(rs.getInt("id"));
                 value.setIdParroquia(new Parroquia(rs.getInt("idParroquia")));
                 value.setImagen(rs.getNString("imagen"));
-                value.setLugarNacimiento(rs.getNString("lugarNacimiento"));
+                //value.setLugarNacimiento(rs.getNString("lugarNacimiento"));
                 value.setNacionalidad(rs.getString("nacionalidad"));
                 value.setPaisNacimiento(rs.getNString("paisNacimiento"));
                 value.setSexo(rs.getString("sexo"));
+                value.setApp(rs.getString("app"));
+                value.setApf(rs.getString("apf"));
+                value.setObservaciones(rs.getString("observacion"));
                 value.setTelefonoDomicilio(rs.getNString("telefonoDomicilio"));
                 value.setTelefonoOficina(rs.getNString("telefonoOficina"));
                 value.setNombreContacto(rs.getNString("nombreContacto"));

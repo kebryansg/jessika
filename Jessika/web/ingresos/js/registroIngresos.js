@@ -122,7 +122,7 @@ $('#tabIngresos #btnCargar').click(function (event) {
         }, function(data) {  
             $('#tabIngresos #paginacionBuscarIngresos').find('li').remove();
            $('#tabIngresos #tablaPacientes tr').remove();
-            var resultado = JSON && JSON.parse(data) || $.parseJSON(data); 
+            /*var resultado = JSON && JSON.parse(data) || $.parseJSON(data); 
             var totalPaginas=resultado[0].registros/$("#tabIngresos #cboMostrar").val();
             totalPaginas=Math.ceil(totalPaginas);
             $("#tabIngresos #paginacionBuscarIngresos ul").append('<li id="atras"><a href="#">&laquo;</a></li>');
@@ -138,7 +138,7 @@ $('#tabIngresos #btnCargar').click(function (event) {
             }
             ultimo=parseInt(totalPaginas)-1;
             $("#tabIngresos #paginacionBuscarIngresos ul").append('<li id="adelante"><a href="#">&raquo;</a></li>');
-            
+            */
             $('#tabIngresos #tablaPacientes thead').append("<tr>\n\
                                                 <th style='display: none'></th>\n\
                                                 <th class='col-lg-1'>No.</th>\n\

@@ -53,8 +53,8 @@ public class Paciente implements Serializable {
     private String domicilio;
     @Column(name = "nacionalidad")
     private String nacionalidad;
-    @Column(name = "ciudad")
-    private String ciudad;
+    //@Column(name = "ciudad")
+    //private String ciudad;
     @Column(name = "estadoCivil")
     private String estadoCivil;
 
@@ -75,8 +75,8 @@ public class Paciente implements Serializable {
     private String sexo;
     @Column(name = "paisNacimiento")
     private String paisNacimiento;
-    @Column(name = "lugarNacimiento")
-    private String lugarNacimiento;
+    //@Column(name = "lugarNacimiento")
+    //private String lugarNacimiento;
     @Column(name = "fechaNacimiento")
     @Temporal(TemporalType.DATE)
     private Date fechaNacimiento;
@@ -96,6 +96,7 @@ public class Paciente implements Serializable {
     
     private String app;
     private String apf;
+    private String observacion;
 
     
     
@@ -116,6 +117,8 @@ public class Paciente implements Serializable {
 
     public Paciente(Integer id) {
         this.id = id;
+        this.observacion = "";
+        this.cedula = "";
     }
     public Paciente(String cedula, String nombre1, String nombre2, String apellido1, String apellido2) {
            this.cedula = cedula;
@@ -132,6 +135,16 @@ public class Paciente implements Serializable {
     public void setId(Integer id) {
         this.id = id;
     }
+
+    public String getObservaciones() {
+        return observacion;
+    }
+
+    public void setObservaciones(String observacion) {
+        this.observacion = observacion;
+    }
+    
+    
 
     public String getApp() {
         return app;
@@ -207,13 +220,13 @@ public class Paciente implements Serializable {
         this.nacionalidad = nacionalidad;
     }
 
-    public String getCiudad() {
-        return ciudad;
-    }
-
-    public void setCiudad(String ciudad) {
-        this.ciudad = ciudad;
-    }
+//    public String getCiudad() {
+//        return ciudad;
+//    }
+//
+//    public void setCiudad(String ciudad) {
+//        this.ciudad = ciudad;
+//    }
 
     public String getEstadoCivil() {
         return estadoCivil;
@@ -263,13 +276,13 @@ public class Paciente implements Serializable {
         this.paisNacimiento = paisNacimiento;
     }
 
-    public String getLugarNacimiento() {
-        return lugarNacimiento;
-    }
-
-    public void setLugarNacimiento(String lugarNacimiento) {
-        this.lugarNacimiento = lugarNacimiento;
-    }
+//    public String getLugarNacimiento() {
+//        return lugarNacimiento;
+//    }
+//
+//    public void setLugarNacimiento(String lugarNacimiento) {
+//        this.lugarNacimiento = lugarNacimiento;
+//    }
 
     public Date getFechaNacimiento() {
         return fechaNacimiento;

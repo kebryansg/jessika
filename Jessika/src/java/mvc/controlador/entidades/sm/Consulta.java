@@ -72,6 +72,9 @@ public class Consulta implements Serializable {
     @Column(name = "sintoma")
     private String sintoma;
     
+    private String observacion;
+    
+    
     public int getIdTipoConsulta() {
         return idTipoConsulta;
     }
@@ -130,6 +133,16 @@ public class Consulta implements Serializable {
     public void setId(Integer id) {
         this.id = id;
     }
+
+    public String getObservacion() {
+        return observacion;
+    }
+
+    public void setObservacion(String observacion) {
+        this.observacion = observacion;
+    }
+    
+    
     public Date getFecha() {
         return fecha;
     }

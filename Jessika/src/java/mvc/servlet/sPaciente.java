@@ -101,11 +101,8 @@ public class sPaciente extends HttpServlet {
         String result = "", op = request.getParameter("op");
         List<Paciente> listP = null;
         list_count l = new list_count();
-        //String cedula = request.getParameter("paciente[cedula]");
         Paciente paciente = new Paciente(0);
         PacienteDao pacienteDao = new PacienteDaoImp();
-        //Gson gson = new Gson();
-        //Gson gson = new GsonBuilder().registerTypeAdapter(java.util.Date.class, new BidirectionalDateSerializer()).create();
         final String FORMATO_FECHA = "yyyy-MM-dd";
         final DateFormat DF = new SimpleDateFormat(FORMATO_FECHA);
         Gson gson = new GsonBuilder().setDateFormat(FORMATO_FECHA).create();
@@ -134,9 +131,8 @@ public class sPaciente extends HttpServlet {
                     resultList.add("{"
                             + "\"id\":  \"" + paciente1.getId() + "\""
                             + ",\"hc\":  \"" + paciente1.getHistoriaClinica() + "\""
-                            + ",\"cedula\": \"" + paciente1.getCedula() + "\""
+                            + ",\"cedula\": \"" + (paciente1.getCedula() != null ? paciente1.getCedula() : "-") + "\""
                             + ",\"nombres\": \"" + (paciente1.getApellido1() + " " + paciente1.getApellido2() + " " + paciente1.getNombre1() + " " + paciente1.getNombre2()).toUpperCase() + "\""
-                            + ",\"ciudad\": \"" + paciente1.getCiudad() + "\""
                             + ",\"domicilio\": \"" + paciente1.getDomicilio() + "\""
                             + ",\"sexo\": \"" + (paciente1.getSexo()) + "\""
                             /*+ ",\"accion\": \"<button name='editPaciente' data-id='" + paciente1.getId() + "'  style='margin-right: 2px;' class='btn btn-primary'><span class='glyphicon glyphicon-pencil'></span> </button>"
@@ -180,7 +176,7 @@ public class sPaciente extends HttpServlet {
                 paciente.setEtnia(Integer.parseInt(request.getParameter("paciente[etnia]")));
                 paciente.setDomicilio(request.getParameter("paciente[domicilio]"));
                 paciente.setDiscapacidad(Integer.parseInt(request.getParameter("paciente[discapacidad]")));
-                paciente.setCiudad(request.getParameter("paciente[ciudad]"));
+                //paciente.setCiudad(request.getParameter("paciente[ciudad]"));
                 paciente.setEstadoCivil(request.getParameter("paciente[estadoCivil]"));
                 paciente.setApp(request.getParameter("paciente[app]"));
                 paciente.setApf(request.getParameter("paciente[apf]"));
@@ -192,7 +188,7 @@ public class sPaciente extends HttpServlet {
                 paciente.setTelefonoOficina(request.getParameter("paciente[telOficina]"));
                 paciente.setSexo(request.getParameter("paciente[genero]"));
                 paciente.setPaisNacimiento(request.getParameter("paciente[paisNac]"));
-                paciente.setLugarNacimiento(request.getParameter("paciente[lugarNac]"));
+                //paciente.setLugarNacimiento(request.getParameter("paciente[lugarNac]"));
                 paciente.setIdParroquia(new Parroquia(Integer.parseInt(request.getParameter("paciente[parroquia]"))));
 
                 new PacienteDaoImp().save(paciente);

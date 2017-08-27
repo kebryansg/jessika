@@ -48,7 +48,7 @@ $('#aSalida').click(function (e) {
 
 $("#txtClave").keyup(function (event) {
     var teclaPulsada = event.keyCode;
-    if (teclaPulsada == 13)
+    if (teclaPulsada === 13)
     {
         $('#btnLogin').click();
     }

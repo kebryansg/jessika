@@ -287,7 +287,7 @@
         <!-- /.col-sm-4 -->
     </body>
     <script type="text/javascript">
-        //$("#contenido").load("consulta/newConsulta.jsp");
+        $("#contenido").load("consulta/newConsulta.jsp");
     </script>
     <script type="text/javascript" src="usuario/login.js"></script>
 </html>

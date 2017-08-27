@@ -38,7 +38,7 @@
                                 <th data-field="hc" >H. Clinica</th>
                                 <th data-field="cedula" >Cèdula</th>
                                 <th data-field="nombres" >Apellidos y Nombres</th>
-                                <th data-field="ciudad" >Ciudad</th>
+                                <!--<th data-field="ciudad" >Ciudad</th>-->
                                 <th data-field="domicilio" >Domicilio</th>
                                 <th data-field="sexo">Sexo</th>
                             </tr>

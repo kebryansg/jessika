@@ -244,6 +244,8 @@ public class sConsulta extends HttpServlet {
                 consulta.setDiagnostico(request.getParameter("dc[diagnostico]").toUpperCase());
                 consulta.setPrescripcion(request.getParameter("dc[prescripcion]").toUpperCase());
                 consulta.setSintoma(request.getParameter("dc[sintomas]").toUpperCase());
+                consulta.setObservacion(request.getParameter("dc[observacion]").toUpperCase());
+                
                 consulta.setFecha(test.fechaSQL(request.getParameter("fecha")));
 
                 // Caso

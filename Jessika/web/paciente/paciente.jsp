@@ -76,13 +76,13 @@
                                 <div class="form-group">
                                     <label for="inputUserName" class="control-label col-md-3">Tef. Casa </label>
                                     <div class="col-md-8">
-                                        <input type="text" validate="text" class="form-control solo-numero" maxlength="10" id="pac_TelCasa" placeholder="Tef. Casa">
+                                        <input type="text" class="form-control solo-numero" maxlength="10" id="pac_TelCasa" placeholder="Tef. Casa">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="inputUserName" class="control-label col-md-3">Movil </label>
                                     <div class="col-md-8">
-                                        <input type="text" class="form-control solo-numero" validate="text" maxlength="10" id="pac_TelOficina" placeholder="Movil">
+                                        <input type="text" class="form-control solo-numero"  maxlength="10" id="pac_TelOficina" placeholder="Movil">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -152,15 +152,16 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="inputUserName" class="control-label col-md-3">Cuidad </label>
-                                    <div class="col-md-8">
-                                        <input type="text" class="form-control" validate="text"  id="pac_Ciudad" placeholder="Ciudad">
-                                    </div>
-                                </div>
-                                <div class="form-group">
                                     <label for="inputUserName" class="control-label col-md-3">Pais Nac. </label>
                                     <div class="col-md-8">
                                         <input type="text" class="form-control" validate="text"  id="pac_PaisNac" placeholder="Pais Nacimiento">
+                                    </div>
+                                </div>
+                                
+                                <!--<div class="form-group">
+                                    <label for="inputUserName" class="control-label col-md-3">Cuidad </label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control" validate="text"  id="pac_Ciudad" placeholder="Ciudad">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -168,7 +169,7 @@
                                     <div class="col-md-8">
                                         <input type="text" class="form-control" validate="text"  id="pac_LugarNac" placeholder="Lugar Nacimiento">
                                     </div>
-                                </div>
+                                </div>-->
                                 <div class="form-group">
                                     <label for="inputUserName" class="control-label col-md-3">Discapacidad </label>
                                     <div class="col-md-8">
@@ -182,6 +183,12 @@
                                             <option value="6">Discapacidad visual</option>
                                             <option value="7">Otra</option>
                                         </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputUserName" class="control-label col-md-3">Observaciones </label>
+                                    <div class="col-md-8">
+                                        <textarea class="form-control" validate="text" rows="5" id="pac_Observacion"></textarea>
                                     </div>
                                 </div>
                             </div>

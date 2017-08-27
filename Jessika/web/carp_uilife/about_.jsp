@@ -38,7 +38,7 @@
                             <hr class="style1">
                             <div class="clearfix"></div>
                             <i class="fa fa-2x fa-facebook-square fa-color" aria-hidden="true"></i>
-                            <i class="fa fa-2x fa-instagram fa-color" aria-hidden="true"></i>
+                            <a target="_blank" href="https://www.instagram.com/ui_life/"><i class="fa fa-2x fa-instagram fa-color" aria-hidden="true"></i></a>
                         </div>
 
                     </div>

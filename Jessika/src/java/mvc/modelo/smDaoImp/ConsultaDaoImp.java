@@ -28,7 +28,7 @@ public class ConsultaDaoImp implements ConsultaDao {
         String sql = "";
         try {
             if (value.getId() == 0) {
-                CallableStatement call = this.conn.getConexion().prepareCall("{call dbo.saveConsulta(?,?,?,?,?,?,?,?,?,?,?)}");
+                CallableStatement call = this.conn.getConexion().prepareCall("{call dbo.saveConsulta(?,?,?,?,?,?,?,?,?,?,?,?)}");
                 call.setInt("idMedico_Especialidad", value.getIdMedicoEspecialidad().getId());
                 call.setInt("idSignosvitales", value.getIdSignosvitales().getId());
                 call.setInt("idCaso", value.getIdCaso().getId());
@@ -38,6 +38,7 @@ public class ConsultaDaoImp implements ConsultaDao {
                 call.setString("diagnostico", value.getDiagnostico());
                 call.setString("prescripcion", value.getPrescripcion());
                 call.setString("sintomas", value.getSintoma());
+                call.setString("observacion", value.getObservacion());
                 call.registerOutParameter("id", Types.INTEGER);
                 call.setDate("fecha", new java.sql.Date(value.getFecha().getTime()));
                 call.execute();
@@ -49,6 +50,7 @@ public class ConsultaDaoImp implements ConsultaDao {
                         + "   SET [fecha] = '" + test.test.SQLSave(value.getFecha()) + "'\n"
                         + "   SET [motivo] = '" + value.getMotivo() + "'\n"
                         + "   SET [diagnostico] = '" + value.getDiagnostico() + "'\n"
+                        + "   SET [observacion] = '" + value.getObservacion() + "'\n"
                         + "   SET [prescripcion] = '" + value.getPrescripcion() + "'\n"
                         + "   SET [sintomas] = '" + value.getSintoma() + "'\n"
                         + " WHERE id = '" + value.getId() + "'";
@@ -81,6 +83,7 @@ public class ConsultaDaoImp implements ConsultaDao {
                 value.setDiagnostico(rs.getString("diagnostico"));
                 value.setPrescripcion(rs.getString("prescripcion"));
                 value.setSintoma(rs.getString("sintomas"));
+                value.setObservacion(rs.getString("observacion"));
                 value.setIdCaso(new Caso(rs.getInt("idCaso"),rs.getInt("hc")));
                 value.setIdTipoConsulta(rs.getInt("idTipoConsulta"));
                 

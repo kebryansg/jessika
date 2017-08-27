@@ -210,6 +210,7 @@ function obtenerDescripcion() {
         prescripcion: $("#con_Prescripcion").val(),
         diagnostico: $("#con_Diagnostico").val(),
         sintomas: $("#con_Sintomas").val(),
+        observacion: $("#con_Observacion").val(),
         idTipoConsulta: $("#cboTipoConsulta").val(),
         idMetodo: {
             id: ($("#groupCausa").is(":visible")) ? $("#cboCausa").val() : $("#cboMetodos").val(),

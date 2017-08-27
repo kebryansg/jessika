@@ -236,12 +236,13 @@ function obtenerDatos() {
         etnia: $("#pac_Etnia").val(),
         domicilio: $("#pac_Domicilio").val(),
         discapacidad: $("#pac_Discapacidad").val(),
-        ciudad: $("#pac_Ciudad").val(),
+        //ciudad: $("#pac_Ciudad").val(),
         estadoCivil: $("#pac_EstadoCivil").val(),
         telOficina: $("#pac_TelOficina").val(),
         genero: $("#pac_Genero").val(),
         paisNac: $("#pac_PaisNac").val(),
-        lugarNac: $("#pac_LugarNac").val(),
+        //lugarNac: $("#pac_LugarNac").val(),
+        observacion: $("#pac_Observacion"),
         provincia: $("#cboProvincia").val(),
         parroquia: $("#cboParroquia").val(),
         canton: $("#cboCanton").val(),
@@ -264,33 +265,6 @@ function obtenerDatos() {
 
     };
     return paciente;
-}
-
-function newAntecedentes(id) {
-// Retorna los nuevos antecedentes
-    var ids = [];
-    $.each($("#optionPaciente[data-id='" + id + "'] input[antecedentes]:not([data-id!='0']):checked"), function (index, cbk) {
-        ids.push($(cbk).attr("dEnfermedad") + ":" + $(cbk).attr("dParient"));
-    });
-    return ids;
-}
-
-function addAntecedentes(list, id) {
-    $.each(list, function (index, item) {
-        $("input[antecedentes][dEnfermedad='" + item.idEnfermedad.id + "'][dParient='" + item.idPariente.id + "']").attr("data-id", item.id);
-        $("input[antecedentes][dEnfermedad='" + item.idEnfermedad.id + "'][dParient='" + item.idPariente.id + "']").prop("checked", true);
-    });
-}
-
-function editAntecedentes(id) {
-// Retorna los antecedentes que han sido editados
-    var ids = [];
-    $.each($("input[antecedentes][data-id!='0']"), function (index, cbk) {
-        if (!$(cbk).prop("checked")) {
-            ids.push($(cbk).attr("data-id"));
-        }
-    });
-    return ids;
 }
 
 function asignarObstetrico(obs, id) {
@@ -320,9 +294,10 @@ function asignarPaciente(paciente) {
     $("#pac_Email").val(paciente.email);
     $("#pac_TelOficina").val(paciente.telefonoOficina);
     $("#pac_PaisNac").val(paciente.paisNacimiento);
-    $("#pac_LugarNac").val(paciente.lugarNacimiento);
+    //$("#pac_LugarNac").val(paciente.lugarNacimiento);
+    $("#pac_Observacion").val(paciente.observacion);
     $("#pac_Domicilio").val(paciente.domicilio);
-    $("#pac_Ciudad").val(paciente.ciudad);
+    //$("#pac_Ciudad").val(paciente.ciudad);
     $("#pac_nombreContacto").val(paciente.nombreContacto);
     $("#pac_movilContacto").val(paciente.movilContacto);
     $("#pac_APP").val(paciente.app);

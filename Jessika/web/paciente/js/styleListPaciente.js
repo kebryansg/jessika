@@ -17,11 +17,7 @@ $("#tablPaciente").bootstrapTable({
     }
 });
 function loadPaginacion(total) {
-    $.each($("#pagPacientes li"), function (i, li) {
-        if ($(li).find("a[aria-label]").length === 0) {
-            $(li).remove();
-        }
-    });
+    $("#pagPacientes li a").not("[aria-label]").closest("li").remove();
     li = '';
     for (var c = 0; c < total; c++) {
         li += ('<li ' + ((c === 0) ? 'class="active"' : '') + ' ><a href="#">' + (c + 1) + '</a></li>');
