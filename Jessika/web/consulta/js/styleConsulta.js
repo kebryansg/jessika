@@ -89,6 +89,7 @@ $(document).ready(function () {
             hc = $("#PacienteId").attr("data-hc");
             $("#contenido").load("consulta/ListHistorialC.jsp", function () {
                 load_Paciente(hc);
+                obtList();
             });
         } else {
             alertify.success("Incovenientes en la informaciòn");

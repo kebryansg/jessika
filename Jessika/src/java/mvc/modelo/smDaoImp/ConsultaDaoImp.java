@@ -43,7 +43,7 @@ public class ConsultaDaoImp implements ConsultaDao {
                 call.setDate("fecha", new java.sql.Date(value.getFecha().getTime()));
                 call.execute();
                 value.setId(call.getInt("id"));
-                System.out.println("Consulta -" +value.getId());
+                //System.out.println("Consulta -" +value.getId());
             } else {
                 sql = "UPDATE [dbo].[consulta]\n"
                         + "   SET [idMedico_Especialidad] = '" + value.getIdMedicoEspecialidad().getId() + "'\n"
@@ -56,7 +56,7 @@ public class ConsultaDaoImp implements ConsultaDao {
                         + " WHERE id = '" + value.getId() + "'";
             }
             //conn.execute(sql);
-            System.out.println(sql);
+            //System.out.println(sql);
             return true;
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
@@ -156,6 +156,51 @@ public class ConsultaDaoImp implements ConsultaDao {
             call.setInt("idHC", idHC);
             call.setInt("opFecha", opFecha);
             call.setDate("fecha", new java.sql.Date(fecha.getTime()));
+            call.setNull("fechaI", Types.DATE);
+            call.setNull("fechaF", Types.DATE);
+            call.setInt("idTipoConsulta", idTipoConsulta);
+            call.setString("idsEspecialidad", idsEspecialidad);
+            call.setInt("tops", tops);
+            call.setInt("pag", pag);
+            call.registerOutParameter("total", Types.INTEGER);
+            call.execute();
+            ResultSet rs = call.getResultSet();
+            while (rs.next()) {
+                Consulta value = new Consulta(rs.getInt("id"));
+                value.setIdCaso(new Caso(rs.getInt("idCaso")));
+                value.getIdCaso().setIdHistorialClinico(new HistorialClinico(rs.getInt("idHC")));
+                
+                value.setIdMedicoEspecialidad(new MedicoEspecialidad(rs.getInt("idMedico_Especialidad")));
+                value.getIdMedicoEspecialidad().setIdEspecialidad(new  Especialidad(rs.getInt("id_especialidad"), rs.getString("des_especialidad")));
+                value.setIdTipoConsulta(rs.getInt("idTipoConsulta"));
+                value.setIdMetodo(rs.getInt("idMetodo"));
+                
+                value.setFecha(rs.getDate("fecha"));
+                value.setMotivo(rs.getString("causa_motivo"));
+                value.setSintoma(rs.getString("tipo"));
+                //value.setPrescripcion(rs.getString("prescripcion"));
+                list.add(value);
+            }
+            l.setList(list);
+            l.setTotal(call.getInt("total"));
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        } finally {
+            this.conn.close();
+        }
+        return l;
+    }
+
+    @Override
+    public list_count listConsultas(int idHC, String idsEspecialidad, int idTipoConsulta, int tops, int pag, String filter) {
+        this.conn = con_db.open(con_db.MSSQL_SM);
+        list_count l = new list_count();
+        List<Consulta> list = new ArrayList<>();
+        try {
+            CallableStatement call = this.conn.getConexion().prepareCall("{call dbo.getConsultas(?,?,?,?,?,?,?,?,?,?)}");
+            call.setInt("idHC", idHC);
+            call.setInt("opFecha", 0);
+            call.setNull("fecha", Types.DATE);
             call.setNull("fechaI", Types.DATE);
             call.setNull("fechaF", Types.DATE);
             call.setInt("idTipoConsulta", idTipoConsulta);

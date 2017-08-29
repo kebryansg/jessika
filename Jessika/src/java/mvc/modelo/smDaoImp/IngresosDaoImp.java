@@ -334,6 +334,10 @@ String excepcion="";
                 ResultSet rs = this.conn.query("SELECT * FROM MEDICAMENTOS where idIngresos='"+idIngreso+"' and estado=1");
                 while (rs.next()) {
                     Medicamentos value = new Medicamentos(rs.getInt("id"),rs.getDate("fecha"),rs.getTime("hora"),rs.getString("notasEvolucion"),rs.getString("prescripcionMedica"), new Ingresos(rs.getInt("idIngresos")));                    
+                    value.setEstado(rs.getInt("estado"));
+                    Ingresos ing= new Ingresos();
+                    ing.setRegistros(0);
+                    value.setIdIngresos(ing);
                     list.add(value);
                 }
             } catch (SQLException ex) {

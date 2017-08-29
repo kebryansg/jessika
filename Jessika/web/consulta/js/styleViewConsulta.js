@@ -4,6 +4,7 @@ $(function () {
         hc = $("#PacienteId").attr("data-hc");
         $("#contenido").load("consulta/ListHistorialC.jsp", function () {
             load_Paciente(hc);
+            obtList();
         });
     });
 });
@@ -62,6 +63,7 @@ function asignarConsuta(consulta) {
     $("#con_Sintomas").val(consulta.sintoma);
     $("#con_Diagnostico").val(consulta.diagnostico);
     $("#con_Prescripcion").val(consulta.prescripcion);
+    $("#con_Observacion").val(consulta.observacion);
 }
 function asginarSV(sv, sexo) {
     $("#sv_Peso").val(sv.peso);

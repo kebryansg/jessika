@@ -10,6 +10,8 @@ public interface ConsultaDao {
     public list_count listConsultas(Date fechaI, Date fechaF,int opFecha, int idHC,String idsEspecialidad,int idTipoConsulta, int tops, int pag, String filter);
 
     public list_count listConsultas(Date fecha, int opFecha, int idHC,String idsEspecialidad,int idTipoConsulta, int tops, int pag, String filter);
+    
+    public list_count listConsultas(int idHC,String idsEspecialidad,int idTipoConsulta, int tops, int pag, String filter);
 
     public boolean save(Consulta value);
 

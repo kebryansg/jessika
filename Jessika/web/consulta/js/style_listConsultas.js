@@ -131,14 +131,17 @@ function limpiarListConsultas() {
 function limpiarInfoPaciente() {
     $("#pac_HC").val("");
     $("#pac_Nombres").val("");
+    $("#tbConsultas").bootstrapTable("removeAll");
+    $(paginacion_Consultas + " li a").not("[aria-label]").closest("li").remove();
 }
 
 function adminGet(bandera, pag) {
-
     tiempo = $("#opListConsultas").val();
     switch (tiempo) {
         case "0":
-            alertify.success("Incovenientes en terminos de busqueda");
+            //alert();
+            getConsultas_Pac(bandera, pag);
+            //alertify.success("Incovenientes en terminos de busqueda");
             break;
         case "1":
         case "3":
@@ -156,7 +159,37 @@ function adminGet(bandera, pag) {
     }
 }
 
-function getConsultasTiempo(bandera, pag, fecha, opTiempo, idHC, idTipoConsulta, filter) {
+function getConsultas_Pac(bandera, pag) {
+    idHC = $("#pac_HC").val() !== "" ? $("#pac_HC").val() : 0;
+    idTipoConsulta = $("#cboTipoConsulta").val();
+    cantList = $("#cantListConsultas").val();
+    idsEspecialidad = ($("#cboEspecialidad").val() !== null) ? $("#cboEspecialidad").val().join() : "0";
+
+    $.ajax({
+        url: "sConsulta",
+        type: 'POST',
+        dataType: 'json',
+        async: false,
+        data: {
+            op: 'adminConsultas',
+            //fecha: fecha,
+            idTipoConsulta: idTipoConsulta,
+            idsEspecialidad: idsEspecialidad,
+            opTiempo: 0,
+            idHC: idHC,
+            filter: "",
+            pag: ((pag - 1) * cantList),
+            top: cantList
+        },
+        success: function (data) {
+            if (bandera)
+                loadPaginacionConsultas(data.count);
+            $("#tbConsultas").bootstrapTable("load", data.list);
+        }
+    });
+}
+
+function getConsultasTiempo(bandera, pag, fecha, opTiempo, filter) {
     idHC = $("#pac_HC").val() !== "" ? $("#pac_HC").val() : 0;
     idTipoConsulta = $("#cboTipoConsulta").val();
     cantList = $("#cantListConsultas").val();
@@ -186,7 +219,7 @@ function getConsultasTiempo(bandera, pag, fecha, opTiempo, idHC, idTipoConsulta,
     });
 }
 
-function getConsultas_Fechas(bandera, pag, fechaI, fechaF, opTiempo, idHC, idTipoConsulta, filter) {
+function getConsultas_Fechas(bandera, pag, fechaI, fechaF, opTiempo, filter) {
     idHC = $("#pac_HC").val() !== "" ? $("#pac_HC").val() : 0;
     idTipoConsulta = $("#cboTipoConsulta").val();
     cantList = $("#cantListConsultas").val();
@@ -232,6 +265,7 @@ function modalListPaciente() {
 
     });
 }
+
 function cbo_loadTipoConsulta() {
     $.ajax({
         url: 'sTipoConsulta',

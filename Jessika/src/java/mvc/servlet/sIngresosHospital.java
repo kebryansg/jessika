@@ -272,7 +272,6 @@ public class sIngresosHospital extends HttpServlet {
             {
                 Integer idIngresos =Integer.valueOf(request.getParameter("idIngreso"));
                 IngresosDao ingr= new IngresosDaoImp();
-                
                 List<Medicamentos> list= ingr.list(idIngresos); 
              ObjectMapper OBJECT_MAPPER = new ObjectMapper();
              String json = OBJECT_MAPPER.writeValueAsString(list);
@@ -281,6 +280,7 @@ public class sIngresosHospital extends HttpServlet {
             }
             catch(Exception ex)
             {
+                System.out.print(ex.getMessage());
             }
         }
         else if("11".equals(opcion))

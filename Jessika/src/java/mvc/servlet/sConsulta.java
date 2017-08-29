@@ -126,6 +126,9 @@ public class sConsulta extends HttpServlet {
                  opTiempo = Integer.parseInt(request.getParameter("opTiempo"));
 
                 switch (opTiempo) {
+                    case 0: 
+                        l = new ConsultaDaoImp().listConsultas(idHC, request.getParameter("idsEspecialidad"), idTipoConsulta, tops, pag, request.getParameter("filter"));
+                        break;
                     case 1:
                     case 3:
                         Date fechaI = opTiempo == 1 ? test.fechaSQL(request.getParameter("fechaI")) : test.MesSQL(request.getParameter("fechaI"));

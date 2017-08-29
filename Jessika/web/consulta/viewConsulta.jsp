@@ -74,6 +74,14 @@
             </div>
         </div>
         <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label class="control-label">Observacion</label>
+                    <textarea class="form-control" readonly rows="3" id="con_Observacion"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-md-6">
                 <ul class="list-group" id="listEstudiosLab">
                     <a href="javascript:;" class="list-group-item active">Estudios Laboratorio</a>

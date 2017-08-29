@@ -42,7 +42,6 @@ $("#txt_filterHistorialC").keyup(function(e){
 
 
 function obtList() {
-
     $.ajax({
         url: "sConsulta",
         data: {
@@ -153,8 +152,6 @@ function load_Paciente(cod) {
                 $("#con_historiaPaciente").val(ob.hc_id);
                 $("#con_cedulaPaciente").val(ob.paciente.cedula);
                 $("#con_nombrePaciente").val((ob.paciente.apellido1 + " " + ob.paciente.apellido2 + " " + ob.paciente.nombre1 + " " + ob.paciente.nombre2).toUpperCase());
-                $("#con_ciudadPaciente").val(ob.paciente.ciudad.toUpperCase());
-                //alert(ob.paciente.sexo);
                 $("#con_sexoPaciente").val((ob.paciente.sexo) ? "1" : "0");
                 obtList();
             } else {

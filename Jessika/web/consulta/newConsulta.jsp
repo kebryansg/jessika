@@ -194,23 +194,23 @@
             <div class="modal-body" id="sv_id" data-id="0">
                 <div class="form-group col-md-3">
                     <label class="form-control-label">Peso:</label>
-                    <input validate="text" type="text" class="form-control " placeholder="kg - lb" id="sv_Peso">
+                    <input  type="text" class="form-control " placeholder="kg - lb" id="sv_Peso">
                 </div>
                 <div class="form-group col-md-3">
                     <label class="form-control-label">Talla:</label>
-                    <input validate="text" type="text" class="form-control " placeholder="cm" id="sv_Talla">
+                    <input  type="text" class="form-control " placeholder="cm" id="sv_Talla">
                 </div>
                 <div class="form-group col-md-3">
                     <label class="form-control-label">Temp.:</label>
-                    <input validate="text" type="text" class="form-control " placeholder="ºC" id="sv_Temperatura">
+                    <input  type="text" class="form-control " placeholder="ºC" id="sv_Temperatura">
                 </div>
                 <div class="form-group col-md-3">
                     <label class="form-control-label">F. Cardìaca:</label>
-                    <input validate="text" type="text" class="form-control " placeholder="x Min." id="sv_Frecuencia">
+                    <input  type="text" class="form-control " placeholder="x Min." id="sv_Frecuencia">
                 </div>
                 <div class="form-group col-md-3">
                     <label class="form-control-label">Presiòn Arterial:</label>
-                    <input validate="text" type="text" class="form-control " placeholder="mmHg" id="sv_Presion">
+                    <input  type="text" class="form-control " placeholder="mmHg" id="sv_Presion">
                 </div>
                 <div class="clearfix"></div>
                 <div id="div_femenino">
