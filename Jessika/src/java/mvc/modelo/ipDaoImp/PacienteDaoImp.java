@@ -214,12 +214,15 @@ public class PacienteDaoImp implements PacienteDao {
         this.conn = con_db.open(con_db.MSSQL_IP);
         list_count l = new list_count();
         List<Paciente> list = new ArrayList<>();
-        String sql = "EXEC [dbo].[getPacientes] " + top + ", " + pag + ", '" + value + "'";
-        System.out.println(sql);
-        ResultSet rs = this.conn.query(sql); //this.conn.query(sql);
         try {
+            CallableStatement call = this.conn.getConexion().prepareCall("{call dbo.getPacientes(?,?,?,?)}");
+            call.setInt("trows", top);
+            call.setInt("inicio", pag);
+            call.setString("buscar", value);
+            call.registerOutParameter("total", Types.INTEGER);
+            ResultSet rs = call.executeQuery();
             while (rs.next()) {
-                l.setTotal(rs.getInt("registros"));
+                
                 Paciente paciente1 = new Paciente();
                 paciente1.setId(rs.getInt("id"));
                 paciente1.setHistoriaClinica(rs.getInt("historia"));
@@ -234,6 +237,7 @@ public class PacienteDaoImp implements PacienteDao {
                 list.add(paciente1);
             }
             l.setList(list);
+            l.setTotal(call.getInt("total"));
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         } finally {

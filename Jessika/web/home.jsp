@@ -111,7 +111,7 @@
                         {
                             
                         
-                        int rol = (int)sesion.getAttribute("rol");
+                        int rol = Integer.parseInt(sesion.getAttribute("rol").toString());
                         switch (rol) {
                             case 1:
                     %>

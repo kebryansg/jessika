@@ -91,7 +91,9 @@ public class sExcel extends HttpServlet {
              SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");                                
              Date fechaReporte = sdf.parse(request.getParameter("fechaReporte"));                    
              ExcelDao objExcel= new ExcelDaoImp();
-             String absoluteFilesystemPath = getServletContext().getRealPath("/xlsx/");   
+             //String absoluteFilesystemPath = getServletContext().getRealPath("/xlsx/");   
+             String absoluteFilesystemPath = "D:/gen_excel/"; 
+             //System.out.println(getServletContext().getRealPath("/xlsx/"));
              String resultado=objExcel.generarExcelIngresos(fechaReporte,absoluteFilesystemPath,"");
              object.addProperty("egresos",resultado);
              if("".equals(resultado))
@@ -109,7 +111,8 @@ public class sExcel extends HttpServlet {
              SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");                                
              Date fechaReporte = sdf.parse(request.getParameter("fechaReporte"));                    
              ExcelDao objExcel= new ExcelDaoImp();
-             String absoluteFilesystemPath = getServletContext().getRealPath("/xlsx/"); 
+             //String absoluteFilesystemPath = getServletContext().getRealPath("/xlsx/"); 
+             String absoluteFilesystemPath = "D:/gen_excel/"; 
              String resultado=objExcel.generarExcelCamas(fechaReporte,absoluteFilesystemPath);
              object.addProperty("camas", resultado);
              if("".equals(resultado))

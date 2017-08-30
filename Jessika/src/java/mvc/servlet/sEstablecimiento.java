@@ -152,7 +152,8 @@ public class sEstablecimiento extends HttpServlet {
                 // subido donde nos interese
                 if (!uploaded.isFormField()) {
                     // No es campo de formulario, guardamos el fichero en algún sitio                    
-                    String absoluteFilesystemPath = getServletContext().getRealPath("/configuracion/img/");                    
+                    //String absoluteFilesystemPath = getServletContext().getRealPath("/configuracion/img/");                    
+                    String absoluteFilesystemPath = getServletContext().getRealPath("/configuracion/img/");
                     File fichero = new File(absoluteFilesystemPath, uploaded.getName());
                     uploaded.write(fichero);                           
                     datos[7]=uploaded.getName();
