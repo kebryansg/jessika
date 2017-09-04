@@ -14,6 +14,7 @@
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="icon" type="image/x-icon" href="resources/img/logo.png">
         <title>Jessika 3.0</title>
         <link href="resources/bootstrap/css/bootstrap.css" rel="stylesheet" />
         <link href="resources/font-awesome/css/font-awesome.css" rel="stylesheet"/>

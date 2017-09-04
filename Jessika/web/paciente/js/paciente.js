@@ -1,5 +1,7 @@
-function validarPaciente(id) {
-    $(".help-block").remove();
+function validarPaciente() {
+    $("#tabPacientes div").removeClass("has-error");
+    $("#tabPacientes div").removeClass("error_input");
+    $("#tabPacientes span").remove(".help-block");
     $.each($("#tabPacientes input[validate='text']"), function (index, value) {
         if (!validarText(value)) {
             $(value).blur(function () {
@@ -14,11 +16,10 @@ function validarPaciente(id) {
             });
         }
     });
-    $.each($("#tabPacientes input[validate='date']"), function (index, value) {
-        if (!validarDate(value)) {
-            $(value).change(function () {
-                validarDate(value);
-            });
+    $.each($("#tabPacientes input[validate='fecha_mask']"), function (index, value) {
+        if (!$(value).inputmask("isComplete")) {
+            $(value).closest("div").addClass("has-error");
+            $(value).after('<span id="' + $(value).attr("id") + 'help" class="help-block">Campo Vacio</span');
         }
     });
     var email = $("#tabPacientes input[validate='email']");
@@ -74,48 +75,6 @@ function list() {
     });
 }
 
-function td_tr_seleccionar(tbody) {
-    $.each($(tbody).find("tr"), function (index, tr) {
-        var id = $(tr).attr("data-id");
-        $(tr).find("td:last").html("");
-        $(tr).find("td:last").html('<button name="SeleccionarPaciente" data-dismiss="modal" class="btn btn-info">Seleccionar</button>');
-    });
-}
-
-function indexPag(pag, totalList, txt_filter) {
-    var cantList = totalList;
-    $.ajax({
-        url: 'sPaciente',
-        type: 'POST',
-        //async: false,
-        data: {
-            filter: txt_filter,
-            top: cantList,
-            pag: ((pag - 1) * cantList),
-            op: 'list_filter'
-        },
-        success: function (response) {
-            var obj = $.parseJSON(response);
-            var tablePaciente = $("#tablePaciente");
-            $(tablePaciente).html(obj.list);
-            if ($(tablePaciente).attr("modal") === "1") {
-
-                td_tr_seleccionar(tablePaciente);
-            }
-            $('#tablPaciente').bootstrapTable('resetView');
-        }
-    });
-}
-
-var defaultOpts = {
-//totalPages: 2,
-    visiblePages: 10,
-    first: "Primero",
-    next: "Siguiente",
-    last: "Ultimo",
-    prev: "Anterior"
-};
-
 function list_filter() {
     var tablePaciente = $("#tablePaciente");
     $(tablePaciente).html("");
@@ -156,23 +115,24 @@ function edit(id) {
         type: 'POST',
         async: false,
         cache: false,
+        dataType: 'json',
         data: {
             id: id,
             op: 'edit'
         },
-        success: function (response) {
-            var ob = $.parseJSON(response);
+        success: function (ob) {
             asignarPaciente(ob.paciente);
-            if (!ob.paciente.sexo) {
-                asignarObstetrico(ob.obs, ob.paciente.id);
+            if (ob.paciente.sexo === "2") {
+                asignarObstetrico(ob.obs);
             }
+            return_dir = 2;
         }
     });
 }
 
-function editSave(id) {
-    if (validarPaciente(id)) {
-        var paciente = obtenerDatos(id);
+/*function editSave(id) {
+    if (validarPaciente()) {
+        var paciente = obtenerDatos();
         $.ajax({
             url: 'sPaciente',
             type: 'POST',
@@ -183,17 +143,29 @@ function editSave(id) {
                 op: 'save'
             },
             success: function (response) {
-                alertify.success("Paciente Modificado");
-                limpiarPaciente();
+                switch (response.status) {
+                    case "ok":
+                        $("#savePaciente").data("cedula", response.id);
+                        alertify.success("Paciente Modificado");
+                        return true;
+                        break;
+                    case "cedula":
+                        alertify.success("Cedula repetida...!");
+                        return false;
+                        break;
+                }
             }
         });
     } else {
         alertify.success("Inconvenientes..!");
+        return false;
     }
-}
+}*/
 
 function save() {
-    if (validarPaciente(0)) {
+    bandera = false;
+    if (validarPaciente()) {
+        id = $("#savePaciente").data("id");
         $.ajax({
             url: 'sPaciente',
             type: 'POST',
@@ -201,17 +173,18 @@ function save() {
             cache: false,
             dataType: 'json',
             data: {
-                id: 0,
+                id: id,
                 paciente: obtenerDatos(),
                 op: 'save'
             },
             success: function (response) {
                 switch (response.status) {
                     case "ok":
+                        $("#savePaciente").data("cedula", response.id);
                         alertify.success("Paciente Registrado");
-                        limpiarPaciente();
+                        bandera = true;
                         break;
-                    case "cedula": 
+                    case "cedula":
                         alertify.success("Cedula repetida...!");
                         break;
                 }
@@ -220,6 +193,8 @@ function save() {
     } else {
         alertify.success("Inconvenientes..!");
     }
+    console.log("estado: " + bandera);
+    return bandera;
 }
 
 function obtenerDatos() {
@@ -236,12 +211,10 @@ function obtenerDatos() {
         etnia: $("#pac_Etnia").val(),
         domicilio: $("#pac_Domicilio").val(),
         discapacidad: $("#pac_Discapacidad").val(),
-        //ciudad: $("#pac_Ciudad").val(),
         estadoCivil: $("#pac_EstadoCivil").val(),
         telOficina: $("#pac_TelOficina").val(),
         genero: $("#pac_Genero").val(),
         paisNac: $("#pac_PaisNac").val(),
-        //lugarNac: $("#pac_LugarNac").val(),
         observacion: $("#pac_Observacion").val(),
         provincia: $("#cboProvincia").val(),
         parroquia: $("#cboParroquia").val(),
@@ -262,13 +235,13 @@ function obtenerDatos() {
         nacidoMuerto: $("#pac_NacidoMuerto").val(),
         hijosVivos: $("#pac_HijosVivos").val(),
         hijosMuertos: $("#pac_HijosMuertos").val()
-
     };
+    console.log(paciente);
     return paciente;
 }
 
-function asignarObstetrico(obs, id) {
-    $("#tabObstetricia").attr("data-id", obs.id);
+function asignarObstetrico(obs) {
+    $("#tabObstetricia").data("id", obs.id);
     $("#pac_FPP").val(obs.fpp);
     $("#pac_Gestacion").val(obs.gestas);
     $("#pac_Abortos").val(obs.abortos);
@@ -282,7 +255,7 @@ function asignarObstetrico(obs, id) {
 
 function asignarPaciente(paciente) {
     $("#savePaciente").data("id", paciente.id);
-    $("#cancelPaciente").data("id", paciente.id);
+    //$("#cancelPaciente").data("id", paciente.id);
     $("#pac_Cedula").val(paciente.cedula);
     $("#pac_primerNombre").val(paciente.nombre1);
     $("#pac_segundoNombre").val(paciente.nombre2);
@@ -295,10 +268,8 @@ function asignarPaciente(paciente) {
     $("#pac_Email").val(paciente.email);
     $("#pac_TelOficina").val(paciente.telefonoOficina);
     $("#pac_PaisNac").val(paciente.paisNacimiento);
-    //$("#pac_LugarNac").val(paciente.lugarNacimiento);
     $("#pac_Observacion").val(paciente.observacion);
     $("#pac_Domicilio").val(paciente.domicilio);
-    //$("#pac_Ciudad").val(paciente.ciudad);
     $("#pac_nombreContacto").val(paciente.nombreContacto);
     $("#pac_movilContacto").val(paciente.movilContacto);
     $("#pac_APP").val(paciente.app);
@@ -338,39 +309,39 @@ function asignarPaciente(paciente) {
 }
 
 function limpiarPaciente() {
-    var id = $("#savePaciente").data("id");
     moment();
 }
 
 function moment() {
     // Informacion basica
-    $("#tabPacientes input[validate='text']").val("");
-    $("#tabPacientes textarea[validate='text']").val("");
-    $("#pac_Cedula").val("");
-    $("#tabPacientes input[validate='cedula']").val("");
+    $("#tabPacientes input[validate='text'],input[validate='fecha_mask'],textarea[validate='text'],input[validate='cedula']").val("");
+
     $("#tabPacientes select[validate='select']").selectpicker("val", 0);
+    $('#pac_nacionalidad').selectpicker("val", 1);
+    $("#pac_PaisNac").val("Ecuador");
+
+    $("#tabPacientes div").removeClass("has-error");
+    $("#tabPacientes div").removeClass("error_input");
+    $("#tabPacientes span").remove(".help-block");
 
     $('.remove-example').find('option').remove();
     $('.remove-example').selectpicker('refresh');
 
     $("#tabPacientes #pac_Discapacidad").selectpicker("val", 1);
+
     $("#pac_nombreContacto").val("");
     $("#cboParentezco").selectpicker("val", 0);
     $("#pac_movilContacto").val("");
+
     change_Genero($('#pac_Genero'));
     // Antecedentes
-    $("input[antecedentes]").prop("checked", false);
     // Obstetricia
+    $("input[type='number']").val(0);
     $("#tabObstetricia").data("id", 0);
-    $("#pac_Gestacion").val(0);
-    $("#pac_Abortos").val(0);
-    $("#pac_Partos").val(0);
-    $("#pac_Cesareas").val(0);
-    $("#pac_NacidoVivo").val(0);
-    $("#pac_NacidoMuerto").val(0);
-    $("#pac_HijosVivos").val(0);
-    $("#pac_HijosMuertos").val(0);
-
-    $('.form_date').datetimepicker('update', new Date());
-    $('.form_date').datetimepicker('setEndDate', new Date());
+    var utc = new Date().toJSON().slice(0, 10);//.replace(/-/g,'/');
+    $("#pac_FPP").val(utc);
+    
+    $("#savePaciente").data("id", 0);
+    $("#tabObstetricia").data("id", 0);
+    
 }

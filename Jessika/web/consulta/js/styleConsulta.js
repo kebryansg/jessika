@@ -21,16 +21,20 @@ $(document).ready(function () {
 
 
     $("#estImg").on('hide.bs.modal', function (e) {
-        trs = $("#tableEstudiosImgSelec tbody tr[data-index]");
-        $.each(trs, function (index, i) {
-            if ($(i).find("input[name='ext_estI']").length > 0) {
-                if ($(i).find("input[name='ext_estI']:checked").length === 0) {
+        est = $("#tableEstudiosImgSelec").bootstrapTable('getData');
+        $.each(est, function (i, item) {
+            if (item.extremidad === "1") {
+                tr = $("#tableEstudiosImgSelec tbody tr").eq(i);
+                der = $(tr).find("td").eq(2).find("input[type='checkbox']").is(':checked') ? 1 : 0;
+                izq = $(tr).find("td").eq(3).find("input[type='checkbox']").is(':checked') ? 2 : 0;
+                if((der + izq) === 0){
                     alert("Informacion incompleta...!");
                     e.preventDefault();
+                    return false;
                 }
             }
         });
-        cant_tr = $("#tableEstudiosImgSelec tbody tr[data-index]").length;
+        cant_tr = $(est).length;// $("#tableEstudiosImgSelec tbody tr[data-index]").length;
         if (cant_tr === 0) {
             $("#showImgs span").html("Ningun estudio de imagenes.");
             $("#showImgs").removeClass("has-success");
@@ -57,8 +61,8 @@ $(document).ready(function () {
 
 
     $('#estLab').on('hidden.bs.modal', function () {
-        cant_tr = $("#tableEstudiosLabSelec tbody tr[data-index]").length;
-        div_lab = $("#showLabs");
+        est = $("#tableEstudiosLabSelec").bootstrapTable('getData');
+        cant_tr = $(est).length;
         if (cant_tr === 0) {
             $("#showLabs span").html("Ningun estudio de laboratorio.");
             $("#showLabs").removeClass("has-success");
@@ -180,15 +184,6 @@ function validarConsulta() {
             });
         }
     });
-    $.each($("#sv_id input[validate='text']"), function (index, value) {
-        if (!validarText(value)) {
-            $(value).change(function () {
-                validarText(value);
-            });
-        }
-    });
-
-
     return $("#consulta_div .help-block").not("[data-exonerado]").length === 0;
 }
 function obtenerSignosVitales() {
@@ -220,35 +215,35 @@ function obtenerDescripcion() {
     };
     return dc;
 }
+
 function obtenerEstudiosLab() {
     est = $.parseJSON(JSON.stringify($("#tableEstudiosLabSelec").bootstrapTable('getData')));
     estArreglo = [];
     $.each(est, function (i, item) {
         estArreglo.push(est[i].id);
-        //alert(est[i].id);
     });
     return estArreglo;
 }
+
 function obtenerEstudiosImg() {
     imgArreglo = [];
-    trs = $("#tableEstudiosImgSelec tbody tr[data-index]");
-    $.each(trs, function (index, i) {
-        detExtre = 0;//0 nada 1 izq 2 der 3 ambas
-        if ($(i).find("input[name='ext_estI']").length > 0) {
-            switch ($(i).find("input[name='ext_estI']:checked").length) {
-                case 1:
-                    dir = $(i).find("input[name='ext_estI']:checked").attr("data-dir");
-                    detExtre = (dir === "der") ? 2 : 1;
-                    break;
-                case 2:
-                    detExtre = 3;
-                    break;
-            }
+    est = $("#tableEstudiosImgSelec").bootstrapTable('getData');
+    $.each(est, function (i, item) {
+        if (item.extremidad === "0") {
+            delete item["der"];
+            delete item["izq"];
+        }
+        der = izq = 0;
+        if (item.extremidad === "1") {
+            tr = $("#tableEstudiosImgSelec tbody tr").eq(i);
+            der = $(tr).find("td").eq(2).find("input[type='checkbox']").is(':checked') ? 1 : 0;
+            izq = $(tr).find("td").eq(3).find("input[type='checkbox']").is(':checked') ? 2 : 0;
         }
         imgArreglo.push({
-            id: $(i).find("td").eq(1).html(),
-            detExtre: detExtre
+            id: item.id,
+            detExtre: (der + izq)
         });
+
     });
     return JSON.stringify(imgArreglo);
 }
@@ -267,7 +262,6 @@ var optionsCboCausa = {
     locale: {
         emptyTitle: ''
     },
-    // log: 3,
     preprocessData: function (data) {
         var i, l = data.length, array = [];
         if (l) {
@@ -285,6 +279,5 @@ var optionsCboCausa = {
     },
     preserveSelected: false
 };
-//$('.selectpicker').selectpicker().filter('.with-ajax').ajaxSelectPicker(optionsCboCausa);
 $('#cboCausa').ajaxSelectPicker(optionsCboCausa);
 $('select').trigger('change');

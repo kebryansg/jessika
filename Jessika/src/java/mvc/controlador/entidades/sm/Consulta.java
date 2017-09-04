@@ -120,6 +120,7 @@ public class Consulta implements Serializable {
     
 
     public Consulta() {
+        this.id = 0;
     }
 
     public Consulta(Integer id) {

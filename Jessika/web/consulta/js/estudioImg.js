@@ -22,11 +22,11 @@ loadListEstudiosImg(true, 1);
 
 function loadPaginacionEstudiosImg(total) {
     /*$.each($(paginacionEstudiosImg + " li"), function (i, li) {
-        if ($(li).find("a[aria-label]").length === 0) {
-            $(li).remove();
-        }
-    });*/
-    $(paginacionEstudiosImg +" li a").not("[aria-label]").closest("li").remove();
+     if ($(li).find("a[aria-label]").length === 0) {
+     $(li).remove();
+     }
+     });*/
+    $(paginacionEstudiosImg + " li a").not("[aria-label]").closest("li").remove();
     li = '';
     for (var c = 0; c < total; c++) {
         li += ('<li ' + ((c === 0) ? 'class="active"' : '') + ' ><a href="#">' + (c + 1) + '</a></li>');
@@ -94,6 +94,29 @@ function loadListEstudiosImg(bandera, pag) {
     });
 }
 
+$("#btnpush").click(function () {
+    imgArreglo = [];
+    est = $("#tableEstudiosImgSelec").bootstrapTable('getData');
+    $.each(est, function (i, item) {
+        if (item.extremidad === "0") {
+            delete item["der"];
+            delete item["izq"];
+        }
+        der = izq = 0;
+        if (item.extremidad === "1") {
+            tr = $("#tableEstudiosImgSelec tbody tr").eq(i);
+            der = $(tr).find("td").eq(2).find("input[type='checkbox']").is(':checked') ? 1 : 0;
+            izq = $(tr).find("td").eq(3).find("input[type='checkbox']").is(':checked') ? 2 : 0;
+        }
+        imgArreglo.push({
+            id: item.id,
+            detExtre: (der + izq)
+        });
+
+    });
+    console.log(imgArreglo);
+});
+
 $("#cboTipoEstudiosImg").on("changed.bs.select", function () {
     EstudiosImg_load($("#cboEstudiosImg"));
     loadListEstudiosImg(true, 1);
@@ -113,21 +136,39 @@ $("#txt_filterEstudiosImg").keyup(function (e) {
         loadListEstudiosImg(true, 1);
     }
 });
+function check(value) {
+    if (value === null) {
+        checked = 'disabled';
+    } else {
+        checked = (value) ? 'checked' : '';
+    }
+    return '<input type="checkbox"  ' + checked + ' />';
+}
 
 $("#btnSeleccEstudiosImg").click(function () {
     $.each($(tableEstudiosImg).bootstrapTable('getSelections'), function (i, item) {
         if ($.inArray(item.ID, idImgs) === -1) {
+            //defect_val = (item.extremidad === "1") ? false : null;
             tr_push = {
                 id: item.ID,
                 tipoEstudio: item.tipoEstudio,
-                estudio: item.estudio
+                estudio: item.estudio,
+                extremidad: item.extremidad
+                        /*,der: defect_val,
+                         izq: defect_val*/
             };
-            if (item.extremidad === "1") {
+            if (item.extremidad !== "1") {
                 $.extend(true, tr_push, {
-                    der: '<input type="checkbox" name="ext_estI" data-dir="der" >',
-                    izq: '<input type="checkbox" name="ext_estI" data-dir="izq">'
+                    der: null,
+                    izq: null
                 });
             }
+            /*if (item.extremidad === "1") {
+             $.extend(true, tr_push, {
+             der: '<input type="checkbox" name="ext_estI" data-dir="der" >',
+             izq: '<input type="checkbox" name="ext_estI" data-dir="izq">'
+             });
+             }*/
             $("#tableEstudiosImgSelec").bootstrapTable("append", tr_push);
             idImgs.push(item.ID);
         }
@@ -148,7 +189,7 @@ $('#btnRemoverEstImg').click(function () {
 
 $(function () {
     $("#contenido").on("click", paginacionEstudiosImg + " li a[aria-label]", function (e) {
-        e.preventDefault(); 
+        e.preventDefault();
         li_old = $(paginacionEstudiosImg + " li[class='active']");
         li = undefined;
         switch ($(this).attr("aria-label")) {

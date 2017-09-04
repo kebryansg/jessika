@@ -14,6 +14,8 @@ public interface ConsultaDao {
     public list_count listConsultas(int idHC,String idsEspecialidad,int idTipoConsulta, int tops, int pag, String filter);
 
     public boolean save(Consulta value);
+    
+    public boolean save_edit(Consulta value);
 
     public Consulta edit(int id);
 }

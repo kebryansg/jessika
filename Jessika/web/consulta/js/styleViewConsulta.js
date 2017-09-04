@@ -1,5 +1,4 @@
 $(function () {
-    //editConsulta(1025);
     $("#btnCancelarViewConsulta").click(function () {
         hc = $("#PacienteId").attr("data-hc");
         $("#contenido").load("consulta/ListHistorialC.jsp", function () {
@@ -7,7 +6,60 @@ $(function () {
             obtList();
         });
     });
+
+    $("#btnModificarConsulta").click(function () {
+        if (saveConsulta_edit($(this).data("id"))) {
+            hc = $("#PacienteId").attr("data-hc");
+            $("#contenido").load("consulta/ListHistorialC.jsp", function () {
+                load_Paciente(hc);
+                obtList();
+            });
+        }
+    });
 });
+
+function saveConsulta_edit(id) {
+    bandera = false;
+    $.ajax({
+        type: 'POST',
+        data: {
+            op: 'save_edit',
+            descripcion: get_descripcion(),
+            sv: get_sv(),
+            id: id
+        },
+        async: false,
+        url: 'sConsulta',
+        success: function (data) {
+            bandera = true;
+        }
+    });
+    return bandera;
+}
+function get_descripcion() {
+    descripcion = {
+        motivo: $("#con_Motivo").val(),
+        sintomas: $("#con_Sintomas").val(),
+        diagnostico: $("#con_Diagnostico").val(),
+        prescipcion: $("#con_Prescripcion").val(),
+        observacion: $("#con_Observacion").val()
+    };
+    return descripcion;
+}
+function get_sv() {
+    sv = {
+        id: $("#sv_id").data("id"),
+        peso: $("#sv_Peso").val(),
+        talla: $("#sv_Talla").val(),
+        temperatura: $("#sv_Temperatura").val(),
+        presion: $("#sv_Presion").val(),
+        frecuenciaC: $("#sv_Frecuencia").val(),
+        fum: $("#sv_FUM").val(),
+        fuc: $("#sv_FUC").val(),
+        periodo: $("#sv_Periodo").val()
+    };
+    return sv;
+}
 
 function editConsulta(id) {
     $.ajax({
@@ -23,8 +75,8 @@ function editConsulta(id) {
             asignarConsuta(data.consulta);
             asginarSV(data.sv, data.sexoP);
 
-            listEstudiosLabs(data.estl);
-            listEstudiosImgs(data.esti);
+            //listEstudiosLabs(data.estl);
+            //listEstudiosImgs(data.esti);
 
             $("#PacienteId").val(data.paciente);
             $("#PacienteId").attr("data-hc", data.consulta.idCaso.idHistorialClinico.id);
@@ -57,15 +109,15 @@ function listEstudiosImgs(estImgs) {
 
 }
 function asignarConsuta(consulta) {
+    $("#btnModificarConsulta").data("id", consulta.id);
     $("#con_Especialidad").val(consulta.idMedicoEspecialidad.idEspecialidad.descripcion);
     $("#con_Fecha").val(consulta.fecha);
-    $("#con_Motivo").val(consulta.motivo);
-    $("#con_Sintomas").val(consulta.sintoma);
     $("#con_Diagnostico").val(consulta.diagnostico);
     $("#con_Prescripcion").val(consulta.prescripcion);
     $("#con_Observacion").val(consulta.observacion);
 }
 function asginarSV(sv, sexo) {
+    $("#sv_id").data("id", sv.id);
     $("#sv_Peso").val(sv.peso);
     $("#sv_Talla").val(sv.talla);
     $("#sv_Temperatura").val(sv.temperatura);
@@ -80,4 +132,3 @@ function asginarSV(sv, sexo) {
         $("#sv_Periodo").selectpicker("refresh");
     }
 }
-

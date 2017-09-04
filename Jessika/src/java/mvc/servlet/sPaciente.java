@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package mvc.servlet;
 
 import com.google.gson.Gson;
@@ -118,26 +113,23 @@ public class sPaciente extends HttpServlet {
                 break;
             case "list_filter":
                 String filter = request.getParameter("filter");
+                String op_filter = request.getParameter("op_filter");
                 int topSQL = Integer.parseInt(request.getParameter("top"));
                 int inicioSQL = Integer.parseInt(request.getParameter("pag"));
                 String listString = "";
 
-                l = new PacienteDaoImp().list_count_Filter(filter, inicioSQL, topSQL);
+                l = new PacienteDaoImp().list_count_Filter(filter,op_filter, inicioSQL, topSQL);
                 List<String> resultList = new ArrayList();
 
                 for (Object object : l.getList()) {
                     Paciente paciente1 = (Paciente) object;
-
                     resultList.add("{"
                             + "\"id\":  \"" + paciente1.getId() + "\""
                             + ",\"hc\":  \"" + paciente1.getHistoriaClinica() + "\""
                             + ",\"cedula\": \"" + (paciente1.getCedula() != null ? paciente1.getCedula() : "-") + "\""
-                            + ",\"nombres\": \"" + (paciente1.getApellido1() + " " + paciente1.getApellido2() + " " + paciente1.getNombre1() + " " + paciente1.getNombre2()).toUpperCase() + "\""
+                            + ",\"nombres\": \"" + (paciente1.getNombre1()).toUpperCase() + "\""
                             + ",\"domicilio\": \"" + paciente1.getDomicilio() + "\""
                             + ",\"sexo\": \"" + (paciente1.getSexo()) + "\""
-                            /*+ ",\"accion\": \"<button name='editPaciente' data-id='" + paciente1.getId() + "'  style='margin-right: 2px;' class='btn btn-primary'><span class='glyphicon glyphicon-pencil'></span> </button>"
-                            + "<button name='deletPaciente' data-id='" + paciente1.getId() + "' class='btn btn-danger'><span class='glyphicon glyphicon-trash'></span> </button>\""
-                            + ",\"seleccionar\": \"<button name='SeleccionarPaciente' data-dismiss='modal' class='btn btn-info'>Seleccionar</button>\""*/
                             + "}");
                 }
 
@@ -154,9 +146,8 @@ public class sPaciente extends HttpServlet {
             case "edit":
                 paciente = new PacienteDaoImp().edit(Integer.parseInt(request.getParameter("id")));
                 Obstetricos obs = new ObstetricosDaoImp().edit_idPaciente(paciente.getId());
-                List<ParienteEnfermedadPaciente> list = new ParienteEnfermedadPacienteDaoImp().list_Paciente(paciente.getId());
                 out = response.getWriter();
-                result = "{\"paciente\": " + gson.toJson(paciente) + ",\"obs\": " + gson.toJson(obs) + ",\"list\": " + gson.toJson(list) + "}";
+                result = "{\"paciente\": " + gson.toJson(paciente) + ",\"obs\": " + gson.toJson(obs) + "}";
                 out.print(result);
                 out.flush();
                 out.close();
@@ -165,10 +156,10 @@ public class sPaciente extends HttpServlet {
                 //Paciente paciente = new Paciente(0); //Llama arriba
                 paciente.setId(Integer.parseInt(request.getParameter("id")));
                 paciente.setCedula(request.getParameter("paciente[cedula]"));
-                paciente.setNombre1(request.getParameter("paciente[primerNombre]"));
-                paciente.setNombre2(request.getParameter("paciente[segundoNombre]"));
-                paciente.setApellido1(request.getParameter("paciente[primerApellido]"));
-                paciente.setApellido2(request.getParameter("paciente[segundoApellido]"));
+                paciente.setNombre1(test.clear_filter(request.getParameter("paciente[primerNombre]")));
+                paciente.setNombre2(test.clear_filter(request.getParameter("paciente[segundoNombre]")));
+                paciente.setApellido1(test.clear_filter(request.getParameter("paciente[primerApellido]")));
+                paciente.setApellido2(test.clear_filter(request.getParameter("paciente[segundoApellido]")));
                 paciente.setFechaNacimiento(test.fechaSQL(request.getParameter("paciente[fechaNac]")));
                 paciente.setNacionalidad(request.getParameter("paciente[nacionalidad]"));
                 paciente.setTelefonoDomicilio(request.getParameter("paciente[telCasa]"));
@@ -181,7 +172,7 @@ public class sPaciente extends HttpServlet {
                 paciente.setApf(request.getParameter("paciente[apf]"));
                 paciente.setObservaciones(request.getParameter("paciente[observacion]"));
 
-                paciente.setNombreContacto(request.getParameter("paciente[nombreContacto]"));
+                paciente.setNombreContacto(test.clear_filter(request.getParameter("paciente[nombreContacto]")));
                 paciente.setMovilContacto(request.getParameter("paciente[movilContacto]"));
                 paciente.setParentezco(request.getParameter("paciente[parentezco]"));
 
@@ -192,8 +183,8 @@ public class sPaciente extends HttpServlet {
 
                 new PacienteDaoImp().save(paciente);
 
-                if (paciente.getId() > 0) {
-                    if (paciente.getSexo().equals("0")) {
+                if (paciente.getId() != 0) {
+                    if (paciente.getSexo().equals("2")) {
                         Obstetricos obstetricos = new Obstetricos(Integer.parseInt(request.getParameter("paciente[idObs]")));
                         obstetricos.setGestas(Integer.parseInt(request.getParameter("paciente[gestacion]")));
                         obstetricos.setAbortos(Integer.parseInt(request.getParameter("paciente[abortos]")));
@@ -204,11 +195,11 @@ public class sPaciente extends HttpServlet {
                         obstetricos.setMuertos(Integer.parseInt(request.getParameter("paciente[hijosMuertos]")));
                         obstetricos.setNacidosMuertos(Integer.parseInt(request.getParameter("paciente[nacidoMuerto]")));
                         obstetricos.setNacidosVivos(Integer.parseInt(request.getParameter("paciente[nacidoVivo]")));
-                        obstetricos.setObservaciones("");
+                        //obstetricos.setObservaciones("");
                         obstetricos.setPartos(Integer.parseInt(request.getParameter("paciente[partos]")));
                         new ObstetricosDaoImp().save(obstetricos);
                     }
-                    result = "{\"status\" : \"ok\"}";
+                    result = "{\"status\" : \"ok\", \"id\" : \""+ paciente.getCedula()+"\" }";
                 } else if (paciente.getId() == -1) {
                     result = "{\"status\" : \"cedula\"}";
                 }

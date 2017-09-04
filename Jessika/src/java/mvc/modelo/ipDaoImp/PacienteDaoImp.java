@@ -71,35 +71,32 @@ public class PacienteDaoImp implements PacienteDao {
     @Override
     public Paciente edit(int id) {
         this.conn = con_db.open(con_db.MSSQL_IP);
-        ResultSet rs = this.conn.query("select * from paciente where id = '" + id + "'");
+        ResultSet rs = this.conn.query("select * from getPaciente where id = '" + id + "'");
         Paciente value = new Paciente();
         try {
             while (rs.next()) {
-                value.setCedula(rs.getNString("cedula"));
-                value.setNombre1(rs.getNString("nombre1"));
-                value.setNombre2(rs.getNString("nombre2"));
-                value.setApellido1(rs.getNString("apellido1"));
-                value.setApellido2(rs.getNString("apellido2"));
-                //value.setCiudad(rs.getNString("ciudad"));
+                value.setCedula(rs.getString("cedula"));
+                value.setNombre1(rs.getString("nombre1"));
+                value.setNombre2(rs.getString("nombre2"));
+                value.setApellido1(rs.getString("apellido1"));
+                value.setApellido2(rs.getString("apellido2"));
                 value.setDiscapacidad(rs.getInt("discapacidad"));
-                value.setDomicilio(rs.getNString("domicilio"));
-                value.setEmail(rs.getNString("email"));
+                value.setDomicilio(rs.getString("domicilio"));
+                value.setEmail(rs.getString("email"));
                 value.setEstadoCivil(rs.getString("estadoCivil"));
                 value.setEtnia(rs.getInt("etnia"));
                 value.setFechaNacimiento(rs.getDate("fechaNacimiento"));
                 value.setId(rs.getInt("id"));
                 value.setIdParroquia(new Parroquia(rs.getInt("idParroquia")));
-                value.setImagen(rs.getNString("imagen"));
-                //value.setLugarNacimiento(rs.getNString("lugarNacimiento"));
                 value.setNacionalidad(rs.getString("nacionalidad"));
-                value.setPaisNacimiento(rs.getNString("paisNacimiento"));
+                value.setPaisNacimiento(rs.getString("paisNacimiento"));
                 value.setSexo(rs.getString("sexo"));
                 value.setApp(rs.getString("app"));
                 value.setApf(rs.getString("apf"));
                 value.setObservaciones(rs.getString("observacion"));
-                value.setTelefonoDomicilio(rs.getNString("telefonoDomicilio"));
-                value.setTelefonoOficina(rs.getNString("telefonoOficina"));
-                value.setNombreContacto(rs.getNString("nombreContacto"));
+                value.setTelefonoDomicilio(rs.getString("telefonoDomicilio"));
+                value.setTelefonoOficina(rs.getString("telefonoOficina"));
+                value.setNombreContacto(rs.getString("nombreContacto"));
                 value.setMovilContacto(rs.getString("movilContacto"));
                 value.setParentezco(rs.getString("parentezco"));
             }
@@ -116,24 +113,23 @@ public class PacienteDaoImp implements PacienteDao {
         this.conn = con_db.open(con_db.MSSQL_IP);
         try {
 
-            CallableStatement call = this.conn.getConexion().prepareCall("{call dbo.savePaciente(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
-            
+            CallableStatement call = this.conn.getConexion().prepareCall("{call dbo.savePaciente(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
+
             call.setInt("id", value.getId());
             call.setString("cedula", value.getCedula());
             call.setString("nombre1", value.getNombre1());
             call.setString("nombre2", value.getNombre2());
             call.setString("apellido1", value.getApellido1());
             call.setString("apellido2", value.getApellido2());
+            call.setString("nombres", value.getNombres());
             call.setString("domicilio", value.getDomicilio());
             call.setString("nacionalidad", value.getNacionalidad());
-            //call.setString("ciudad", value.getCiudad());
             call.setString("estadocivil", value.getEstadoCivil());
             call.setString("telDomicilio", value.getTelefonoDomicilio());
             call.setString("telOficina", value.getTelefonoOficina());
             call.setString("email", value.getEmail());
             call.setString("sexo", value.getSexo());
             call.setString("paisNac", value.getPaisNacimiento());
-            //call.setString("lugarNac", value.getLugarNacimiento());
             call.setDate("fechaNac", new java.sql.Date(value.getFechaNacimiento().getTime()));
             call.setInt("etnia", value.getEtnia());
             call.setInt("discapacidad", value.getDiscapacidad());
@@ -146,7 +142,6 @@ public class PacienteDaoImp implements PacienteDao {
             call.setString("observacion", value.getObservaciones());
             call.registerOutParameter("idOut", Types.INTEGER);
             call.execute();
-            System.out.println("idOut: " + call.getInt("idOut"));
             value.setId(call.getInt("idOut"));
             return true;
         } catch (SQLException ex) {
@@ -210,7 +205,7 @@ public class PacienteDaoImp implements PacienteDao {
     }
 
     @Override
-    public list_count list_count_Filter(String value, int pag, int top) {
+    public list_count list_count_Filter(String value, String op_filter, int pag, int top) {
         this.conn = con_db.open(con_db.MSSQL_IP);
         list_count l = new list_count();
         List<Paciente> list = new ArrayList<>();
@@ -218,26 +213,26 @@ public class PacienteDaoImp implements PacienteDao {
             CallableStatement call = this.conn.getConexion().prepareCall("{call dbo.getPacientes(?,?,?,?)}");
             call.setInt("trows", top);
             call.setInt("inicio", pag);
+            if (op_filter.equals("1")) {
+                if (!value.equals("")) {
+                    value = test.test.nvar(value);
+                }
+            }
+            call.setString("op_filter", op_filter);
             call.setString("buscar", value);
-            call.registerOutParameter("total", Types.INTEGER);
             ResultSet rs = call.executeQuery();
             while (rs.next()) {
-                
+                l.setTotal(rs.getInt("full_count"));
                 Paciente paciente1 = new Paciente();
                 paciente1.setId(rs.getInt("id"));
                 paciente1.setHistoriaClinica(rs.getInt("historia"));
                 paciente1.setCedula(rs.getNString("cedula"));
-                paciente1.setNombre1(rs.getNString("nombre1"));
-                paciente1.setNombre2(rs.getNString("nombre2"));
-                paciente1.setApellido1(rs.getNString("apellido1"));
-                paciente1.setApellido2(rs.getNString("apellido2"));
-                //paciente1.setCiudad(rs.getNString("ciudad"));
+                paciente1.setNombre1(rs.getNString("nombres"));
                 paciente1.setDomicilio(rs.getNString("domicilio"));
                 paciente1.setSexo(rs.getString("sexo"));
                 list.add(paciente1);
             }
             l.setList(list);
-            l.setTotal(call.getInt("total"));
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         } finally {
@@ -269,7 +264,7 @@ public class PacienteDaoImp implements PacienteDao {
                 value.setFechaNacimiento(rs.getDate("fechaNacimiento"));
                 value.setId(rs.getInt("id"));
                 value.setIdParroquia(new Parroquia(rs.getInt("idParroquia")));
-                value.setImagen(rs.getNString("imagen"));
+                //value.setImagen(rs.getNString("imagen"));
                 //value.setLugarNacimiento(rs.getNString("lugarNacimiento"));
                 value.setNacionalidad(rs.getString("nacionalidad"));
                 value.setPaisNacimiento(rs.getNString("paisNacimiento"));

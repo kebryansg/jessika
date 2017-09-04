@@ -2,9 +2,11 @@ package mvc.servlet;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.lang.reflect.Type;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -108,6 +110,7 @@ public class sConsulta extends HttpServlet {
         Gson gson = new GsonBuilder().setDateFormat(FORMATO_FECHA).create();
         String result = "";
         String op = request.getParameter("op");
+        int tops = 0, pag = 0;
 
         list_count l = new list_count();
         List<String> resultList = new ArrayList();
@@ -118,15 +121,39 @@ public class sConsulta extends HttpServlet {
                 System.out.println(jsonString);
 
                 break;
+            case "save_edit":
+                Consulta save_edit = new Consulta();
+                save_edit.setId(Integer.parseInt(request.getParameter("id")));
+                save_edit.setMotivo(request.getParameter("descripcion[motivo]"));
+                save_edit.setSintoma(request.getParameter("descripcion[sintomas]"));
+                save_edit.setDiagnostico(request.getParameter("descripcion[diagnostico]"));
+                save_edit.setPrescripcion(request.getParameter("descripcion[prescipcion]"));
+                save_edit.setObservacion(request.getParameter("descripcion[observacion]"));
+
+                SignosVitales sv_edit = new SignosVitales(Integer.parseInt(request.getParameter("sv[id]")));
+                sv_edit.setPeso(request.getParameter("sv[peso]"));
+                sv_edit.setPresion(request.getParameter("sv[presion]"));
+                sv_edit.setTalla(request.getParameter("sv[talla]"));
+                sv_edit.setTemperatura(request.getParameter("sv[temperatura]"));
+                sv_edit.setFrecuenciaC(request.getParameter("sv[frecuenciaC]"));
+                sv_edit.setPeriodo(request.getParameter("sv[periodo]"));
+                sv_edit.setFum(test.fechaSQL(request.getParameter("sv[fum]")));
+                sv_edit.setFuc(test.fechaSQL(request.getParameter("sv[fuc]")));
+                new SignosVitalesDaoImp().save(sv_edit);
+
+                new ConsultaDaoImp().save_edit(save_edit);
+
+                break;
             case "adminConsultas":
-                int tops = Integer.parseInt(request.getParameter("top")),
-                 pag = Integer.parseInt(request.getParameter("pag")),
-                 idHC = Integer.parseInt(request.getParameter("idHC")),
+
+                tops = Integer.parseInt(request.getParameter("top"));
+                pag = Integer.parseInt(request.getParameter("pag"));
+                int idHC = Integer.parseInt(request.getParameter("idHC")),
                  idTipoConsulta = Integer.parseInt(request.getParameter("idTipoConsulta")),
                  opTiempo = Integer.parseInt(request.getParameter("opTiempo"));
 
                 switch (opTiempo) {
-                    case 0: 
+                    case 0:
                         l = new ConsultaDaoImp().listConsultas(idHC, request.getParameter("idsEspecialidad"), idTipoConsulta, tops, pag, request.getParameter("filter"));
                         break;
                     case 1:
@@ -164,20 +191,22 @@ public class sConsulta extends HttpServlet {
                 String metodo_causa = (String.valueOf(value.getIdTipoConsulta()).equals("1")) ? new CausaDaoImp().edit(value.getIdMetodo()).getDescripcion() : new MetodosDaoImp().edit_detMetodos(value.getIdMetodo()).getDescripcion();
 
                 SignosVitales s_v = new SignosVitalesDaoImp().editar(value.getId());
-                String x = gson.toJson(new ConsultaEstudiosImagenDaoImp().list(value.getId()));
-                String y = gson.toJson(new ConsultaEstudiosLabsDaoImp().list(value.getId()));
-                String respuesta = ("{ \"esti\": " + x + " ,  \"estl\" : " + y + " , \"sv\": " + gson.toJson(s_v) + ",  \"consulta\": " + gson.toJson(value) + ", \"paciente\" : \"" + p.getNombres() + "\", \"sexoP\" : \"" + (p.getSexo().equals("1") ? "H" : "M") + "\" ,\"tipoConsulta\" : \"" + tipoConsulta + "\",\"metodo_causa\" : \"" + metodo_causa + "\"  }");
+                String respuesta = ("{ \"sv\": " + gson.toJson(s_v) + ",  \"consulta\": " + gson.toJson(value) + ", \"paciente\" : \"" + p.getNombres() + "\", \"sexoP\" : \"" + (p.getSexo().equals("1") ? "H" : "M") + "\" ,\"tipoConsulta\" : \"" + tipoConsulta + "\",\"metodo_causa\" : \"" + metodo_causa + "\"  }");
+                //String x = gson.toJson(new ConsultaEstudiosImagenDaoImp().list(value.getId()));
+                //String y = gson.toJson(new ConsultaEstudiosLabsDaoImp().list(value.getId()));
+                //String respuesta = ("{ \"esti\": " + x + " ,  \"estl\" : " + y + " , \"sv\": " + gson.toJson(s_v) + ",  \"consulta\": " + gson.toJson(value) + ", \"paciente\" : \"" + p.getNombres() + "\", \"sexoP\" : \"" + (p.getSexo().equals("1") ? "H" : "M") + "\" ,\"tipoConsulta\" : \"" + tipoConsulta + "\",\"metodo_causa\" : \"" + metodo_causa + "\"  }");
 
                 out.print(respuesta);
                 out.flush();
                 out.close();
                 break;
             case "detCaso":
-                List<Consulta> list_detCaso = new CasoDaoImp().listDetConsulta(Integer.parseInt(request.getParameter("caso")));
+                int caso = Integer.parseInt(request.getParameter("caso").toString().trim());
+                List<Consulta> list_detCaso = new CasoDaoImp().listDetConsulta(caso);
                 for (Consulta consulta : list_detCaso) {
                     resultList.add("{"
                             + "\"id\" : \"" + consulta.getId() + "\","
-                            + "\"caso\" : \"" + consulta.getIdCaso().getId() + "\","
+                            /*+ "\"caso\" : \"" + consulta.getIdCaso().getId() + "\","*/
                             + "\"fecha\" : \"" + consulta.getFecha() + "\","
                             + "\"tipo\" : \"" + consulta.getSintoma() + "\","
                             + "\"motivo\" : \"" + consulta.getMotivo() + "\","
@@ -185,6 +214,7 @@ public class sConsulta extends HttpServlet {
                             + "}");
 
                 }
+                System.out.println("[" + String.join(",", resultList) + "]");
                 out.print("[" + String.join(",", resultList) + "]");
                 out.flush();
                 out.close();
@@ -200,15 +230,10 @@ public class sConsulta extends HttpServlet {
                 out.close();
                 break;
             case "list":
-                List<Consulta> list = new CasoDaoImp().listConsulta(Integer.parseInt(request.getParameter("idHc")), "", "", request.getParameter("filter"), 0, 20);
-                for (Consulta con : list) {
-                    resultList.add("{"
-                            + "\"caso\": \"" + con.getIdCaso().getId() + "\","
-                            + "\"fecha\": \"" + test.SQLSave(con.getFecha()) + "\","
-                            + "\"motivo\": \"" + con.getMotivo()+ "\""
-                            + "}");
-                }
-                out.print("[" + String.join(",", resultList) + "]");
+                tops = Integer.parseInt(request.getParameter("top"));
+                pag = Integer.parseInt(request.getParameter("pag"));
+                l = new CasoDaoImp().listConsulta(Integer.parseInt(request.getParameter("idHc")), request.getParameter("filter"), pag, tops);
+                out.print("{\"list\" : [" + String.join(",", (List<String>) l.getList()) + "], \"total\" : " + l.getTotal() + "}");
                 out.flush();
                 out.close();
                 break;
@@ -228,26 +253,10 @@ public class sConsulta extends HttpServlet {
             case "save":
 
                 // <editor-fold defaultstate="collapsed" desc="Save">
-                // Signos Vitales
-                SignosVitales sv = new SignosVitales(Integer.parseInt(request.getParameter("sv[id]")));
-                sv.setPeso(request.getParameter("sv[peso]"));
-                sv.setTalla(request.getParameter("sv[talla]"));
-                sv.setTemperatura(request.getParameter("sv[temperatura]"));
-                sv.setPresion(request.getParameter("sv[presion]"));
-                sv.setFrecuenciaC(request.getParameter("sv[frecuenciaC]"));
-                sv.setFum(test.fechaSQL(request.getParameter("sv[fum]")));
-                sv.setFuc(test.fechaSQL(request.getParameter("sv[fuc]")));
-                sv.setPeriodo(request.getParameter("sv[periodo]"));
-                new SignosVitalesDaoImp().save(sv);
-                // Signos Vitales
-
-                Consulta consulta = new Consulta(0);
-                consulta.setMotivo(request.getParameter("dc[motivo]").toUpperCase());
+                Consulta consulta = new Consulta();
                 consulta.setDiagnostico(request.getParameter("dc[diagnostico]").toUpperCase());
                 consulta.setPrescripcion(request.getParameter("dc[prescripcion]").toUpperCase());
-                consulta.setSintoma(request.getParameter("dc[sintomas]").toUpperCase());
                 consulta.setObservacion(request.getParameter("dc[observacion]").toUpperCase());
-                
                 consulta.setFecha(test.fechaSQL(request.getParameter("fecha")));
 
                 // Caso
@@ -260,7 +269,6 @@ public class sConsulta extends HttpServlet {
 
                 consulta.setIdCaso(cs);
                 consulta.setIdMedicoEspecialidad(new MedicoEspecialidad(Integer.parseInt(request.getParameter("idEspecialidad"))));
-                consulta.setIdSignosvitales(sv);
 
                 consulta.setIdTipoConsulta(Integer.parseInt(request.getParameter("dc[idTipoConsulta]")));
                 if (consulta.getIdTipoConsulta() == 1) {
@@ -277,6 +285,18 @@ public class sConsulta extends HttpServlet {
 
                 new ConsultaDaoImp().save(consulta);
 
+                SignosVitales sv = new SignosVitales(Integer.parseInt(request.getParameter("sv[id]")));
+                sv.setPeso(request.getParameter("sv[peso]"));
+                sv.setTalla(request.getParameter("sv[talla]"));
+                sv.setTemperatura(request.getParameter("sv[temperatura]"));
+                sv.setPresion(request.getParameter("sv[presion]"));
+                sv.setFrecuenciaC(request.getParameter("sv[frecuenciaC]"));
+                sv.setFum(test.fechaSQL(request.getParameter("sv[fum]")));
+                sv.setFuc(test.fechaSQL(request.getParameter("sv[fuc]")));
+                sv.setPeriodo(request.getParameter("sv[periodo]"));
+                sv.setIdConsulta(consulta.getId());
+                new SignosVitalesDaoImp().save(sv);
+
                 //Estudios Lab
                 String[] estudLabs = request.getParameterValues("estudLab[]");
                 if (estudLabs != null) {
@@ -290,13 +310,18 @@ public class sConsulta extends HttpServlet {
                 //Estudios Lab
                 String estuImgs = request.getParameter("estuImg");
                 if (estuImgs != null) {
-                    estImg_ob[] estuImgs_a = gson.fromJson(estuImgs, estImg_ob[].class);
-                    for (estImg_ob img_ob : estuImgs_a) {
-                        ConsultaEstudiosImagen cEstImg = new ConsultaEstudiosImagen();
-                        cEstImg.setIdConsulta(consulta);
-                        cEstImg.setIdDetalleEstudiosImagen(new DetallesEstudiosImg(img_ob.getId()));
-                        cEstImg.setDetExtremidad(img_ob.getDetExtre());
-                        new ConsultaEstudiosImagenDaoImp().save(cEstImg);
+                    try {
+                        estImg_ob[] estuImgs_a = gson.fromJson(estuImgs, estImg_ob[].class);
+                        for (estImg_ob img_ob : estuImgs_a) {
+                            ConsultaEstudiosImagen cEstImg = new ConsultaEstudiosImagen();
+                            cEstImg.setIdConsulta(consulta);
+                            cEstImg.setIdDetalleEstudiosImagen(new DetallesEstudiosImg(img_ob.getId()));
+                            cEstImg.setDetExtremidad(img_ob.getDetExtre());
+                            new ConsultaEstudiosImagenDaoImp().save(cEstImg);
+                        }
+
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
                     }
                 }
                 out.print("hecho");
@@ -346,8 +371,8 @@ class estImg_ob {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setId(String id) {
+        this.id = Integer.parseInt(id);
     }
 
     public String getDetExtre() {

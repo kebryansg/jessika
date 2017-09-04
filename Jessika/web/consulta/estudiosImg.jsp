@@ -68,7 +68,6 @@
         <div class="col-md-6">
             <table id="tableEstudiosImgSelec" 
                    data-toolbar="#toolbarEstudiosImgSelec"  
-                   data-click-to-select="true"
                    data-toggle="table" data-height="300">
                 <thead style="font-weight: bold;">
                     <tr>
@@ -79,8 +78,8 @@
                         <th colspan="2" data-halign="center"  >Accion</th>
                     </tr>
                     <tr>
-                        <th data-field="der" data-align="center">Der.</th>
-                        <th data-field="izq" data-align="center">Izq.</th>
+                        <th data-field="der" data-formatter="check" data-align="center">Der.</th>
+                        <th data-field="izq" data-formatter="check" data-align="center">Izq.</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -91,6 +90,7 @@
     </div>
     <div id="toolbarEstudiosImgSelec">
         <button id="btnRemoverEstImg" class="btn btn-default">Remover</button>    
+        <button id="btnpush" class="btn btn-default">Push</button>
     </div>
 
 </div>

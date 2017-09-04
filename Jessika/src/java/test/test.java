@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import mvc.controlador.C_BD;
@@ -31,6 +32,31 @@ public class test {
         FileUtils.writeStringToFile(file, string);
         System.out.println(ruta());
 
+    }
+    public static String nvar(String frase) {
+        String[] elem = clear_filter(frase).split(" ");
+        for (int i = 0; i < elem.length; i++) {
+            elem[i] = "\"" + elem[i] + "*\"";
+        }
+        String[] elem_r = new String[elem.length];
+        int indice = 0;
+        for (int i = (elem.length - 1); i >= 0; i--) {
+            elem_r[indice++] = elem[i];
+        }
+        return String.join(" near ", elem) + " or " + String.join(" near ", elem_r);
+    }
+
+    public static String clear_filter(String text) {
+        text = text.trim();
+        String[] palabras = text.split(" ");
+        ArrayList<String> frase = new ArrayList<String>();
+        for (int i = 0; i < palabras.length; i++) {
+            palabras[i] = palabras[i].trim();
+            if (palabras[i].length() != 0) {
+                frase.add(palabras[i]);
+            }
+        }
+        return String.join(" ", frase);
     }
 
     public static int getID(String tabla) {

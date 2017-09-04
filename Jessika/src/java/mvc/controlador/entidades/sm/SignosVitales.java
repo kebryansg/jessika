@@ -34,6 +34,7 @@ public class SignosVitales implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+    private Integer idConsulta;
     @Column(name = "peso")
     private String peso;
     @Column(name = "talla")
@@ -56,12 +57,13 @@ public class SignosVitales implements Serializable {
     private List<Consulta> consultaList;
 
     public SignosVitales() {
-        this.id = 0;
+        this.idConsulta = this.id = 0;
         this.frecuenciaC = this.presion = this.talla = this.peso = this.temperatura = this.periodo = "";
     }
 
     public SignosVitales(Integer id) {
         this.id = id;
+        this.idConsulta = 0;
         this.frecuenciaC = this.presion = this.talla = this.peso = this.temperatura = this.periodo = "";
     }
 
@@ -72,6 +74,16 @@ public class SignosVitales implements Serializable {
     public void setId(Integer id) {
         this.id = id;
     }
+
+    public Integer getIdConsulta() {
+        return idConsulta;
+    }
+
+    public void setIdConsulta(Integer idConsulta) {
+        this.idConsulta = idConsulta;
+    }
+    
+    
 
     public String getPeriodo() {
         return periodo;

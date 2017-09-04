@@ -28,22 +28,19 @@ public class ConsultaDaoImp implements ConsultaDao {
         String sql = "";
         try {
             if (value.getId() == 0) {
-                CallableStatement call = this.conn.getConexion().prepareCall("{call dbo.saveConsulta(?,?,?,?,?,?,?,?,?,?,?,?)}");
+                CallableStatement call = this.conn.getConexion().prepareCall("{call dbo.saveConsulta(?,?,?,?,?,?,?,?,?)}");
                 call.setInt("idMedico_Especialidad", value.getIdMedicoEspecialidad().getId());
-                call.setInt("idSignosvitales", value.getIdSignosvitales().getId());
                 call.setInt("idCaso", value.getIdCaso().getId());
                 call.setInt("idMetodo", value.getIdMetodo());
                 call.setInt("idTipoConsulta", value.getIdTipoConsulta());
-                call.setString("motivo", value.getMotivo());
                 call.setString("diagnostico", value.getDiagnostico());
                 call.setString("prescripcion", value.getPrescripcion());
-                call.setString("sintomas", value.getSintoma());
                 call.setString("observacion", value.getObservacion());
                 call.registerOutParameter("id", Types.INTEGER);
                 call.setDate("fecha", new java.sql.Date(value.getFecha().getTime()));
                 call.execute();
                 value.setId(call.getInt("id"));
-                //System.out.println("Consulta -" +value.getId());
+                System.out.println("cons: " + value.getId());
             } else {
                 sql = "UPDATE [dbo].[consulta]\n"
                         + "   SET [idMedico_Especialidad] = '" + value.getIdMedicoEspecialidad().getId() + "'\n"
@@ -55,10 +52,8 @@ public class ConsultaDaoImp implements ConsultaDao {
                         + "   SET [sintomas] = '" + value.getSintoma() + "'\n"
                         + " WHERE id = '" + value.getId() + "'";
             }
-            //conn.execute(sql);
-            //System.out.println(sql);
             return true;
-        } catch (Exception ex) {
+        } catch (SQLException ex) {
             System.out.println(ex.getMessage());
             return false;
         } finally {
@@ -84,14 +79,14 @@ public class ConsultaDaoImp implements ConsultaDao {
                 value.setPrescripcion(rs.getString("prescripcion"));
                 value.setSintoma(rs.getString("sintomas"));
                 value.setObservacion(rs.getString("observacion"));
-                value.setIdCaso(new Caso(rs.getInt("idCaso"),rs.getInt("hc")));
+                value.setIdCaso(new Caso(rs.getInt("idCaso"), rs.getInt("hc")));
                 value.setIdTipoConsulta(rs.getInt("idTipoConsulta"));
-                
+
                 MedicoEspecialidad m_e = new MedicoEspecialidad(rs.getInt("idMedico_Especialidad"));
                 m_e.setIdEspecialidad(new Especialidad(0, rs.getString("especialidad")));
                 value.setIdMedicoEspecialidad(m_e);
-                
-                value.setIdSignosvitales(new SignosVitales(rs.getInt("idSignosvitales")));
+
+                //value.setIdSignosvitales(new SignosVitales(rs.getInt("idSignosvitales")));
                 value.setIdMetodo(rs.getInt("idMetodo"));
             }
         } catch (SQLException ex) {
@@ -103,7 +98,7 @@ public class ConsultaDaoImp implements ConsultaDao {
     }
 
     @Override
-    public list_count listConsultas(Date fechaI, Date fechaF,int opFecha, int idHC,String idsEspecialidad,int idTipoConsulta, int tops,int pag, String filter) {
+    public list_count listConsultas(Date fechaI, Date fechaF, int opFecha, int idHC, String idsEspecialidad, int idTipoConsulta, int tops, int pag, String filter) {
         this.conn = con_db.open(con_db.MSSQL_SM);
         list_count l = new list_count();
         List<Consulta> list = new ArrayList<>();
@@ -125,12 +120,12 @@ public class ConsultaDaoImp implements ConsultaDao {
                 Consulta value = new Consulta(rs.getInt("id"));
                 value.setIdCaso(new Caso(rs.getInt("idCaso")));
                 value.getIdCaso().setIdHistorialClinico(new HistorialClinico(rs.getInt("idHC")));
-                
+
                 value.setIdMedicoEspecialidad(new MedicoEspecialidad(rs.getInt("idMedico_Especialidad")));
-                value.getIdMedicoEspecialidad().setIdEspecialidad(new  Especialidad(rs.getInt("id_especialidad"), rs.getString("des_especialidad")));
+                value.getIdMedicoEspecialidad().setIdEspecialidad(new Especialidad(rs.getInt("id_especialidad"), rs.getString("des_especialidad")));
                 value.setIdTipoConsulta(rs.getInt("idTipoConsulta"));
                 value.setIdMetodo(rs.getInt("idMetodo"));
-                
+
                 value.setFecha(rs.getDate("fecha"));
                 value.setMotivo(rs.getString("causa_motivo"));
                 value.setSintoma(rs.getString("tipo"));
@@ -147,7 +142,7 @@ public class ConsultaDaoImp implements ConsultaDao {
     }
 
     @Override
-    public list_count listConsultas(Date fecha, int opFecha, int idHC,String idsEspecialidad,int idTipoConsulta,int tops,int pag, String filter) {
+    public list_count listConsultas(Date fecha, int opFecha, int idHC, String idsEspecialidad, int idTipoConsulta, int tops, int pag, String filter) {
         this.conn = con_db.open(con_db.MSSQL_SM);
         list_count l = new list_count();
         List<Consulta> list = new ArrayList<>();
@@ -169,12 +164,12 @@ public class ConsultaDaoImp implements ConsultaDao {
                 Consulta value = new Consulta(rs.getInt("id"));
                 value.setIdCaso(new Caso(rs.getInt("idCaso")));
                 value.getIdCaso().setIdHistorialClinico(new HistorialClinico(rs.getInt("idHC")));
-                
+
                 value.setIdMedicoEspecialidad(new MedicoEspecialidad(rs.getInt("idMedico_Especialidad")));
-                value.getIdMedicoEspecialidad().setIdEspecialidad(new  Especialidad(rs.getInt("id_especialidad"), rs.getString("des_especialidad")));
+                value.getIdMedicoEspecialidad().setIdEspecialidad(new Especialidad(rs.getInt("id_especialidad"), rs.getString("des_especialidad")));
                 value.setIdTipoConsulta(rs.getInt("idTipoConsulta"));
                 value.setIdMetodo(rs.getInt("idMetodo"));
-                
+
                 value.setFecha(rs.getDate("fecha"));
                 value.setMotivo(rs.getString("causa_motivo"));
                 value.setSintoma(rs.getString("tipo"));
@@ -214,12 +209,12 @@ public class ConsultaDaoImp implements ConsultaDao {
                 Consulta value = new Consulta(rs.getInt("id"));
                 value.setIdCaso(new Caso(rs.getInt("idCaso")));
                 value.getIdCaso().setIdHistorialClinico(new HistorialClinico(rs.getInt("idHC")));
-                
+
                 value.setIdMedicoEspecialidad(new MedicoEspecialidad(rs.getInt("idMedico_Especialidad")));
-                value.getIdMedicoEspecialidad().setIdEspecialidad(new  Especialidad(rs.getInt("id_especialidad"), rs.getString("des_especialidad")));
+                value.getIdMedicoEspecialidad().setIdEspecialidad(new Especialidad(rs.getInt("id_especialidad"), rs.getString("des_especialidad")));
                 value.setIdTipoConsulta(rs.getInt("idTipoConsulta"));
                 value.setIdMetodo(rs.getInt("idMetodo"));
-                
+
                 value.setFecha(rs.getDate("fecha"));
                 value.setMotivo(rs.getString("causa_motivo"));
                 value.setSintoma(rs.getString("tipo"));
@@ -234,6 +229,28 @@ public class ConsultaDaoImp implements ConsultaDao {
             this.conn.close();
         }
         return l;
+    }
+
+    @Override
+    public boolean save_edit(Consulta value) {
+        //dbo.up_consulta
+        this.conn = con_db.open(con_db.MSSQL_SM);
+        try {
+            CallableStatement call = this.conn.getConexion().prepareCall("{call dbo.up_consulta(?,?,?,?,?,?)}");
+            call.setInt("id", value.getId());
+            call.setString("motivo", value.getMotivo());
+            call.setString("sintoma", value.getSintoma());
+            call.setString("diagnostico", value.getDiagnostico());
+            call.setString("prescripcion", value.getPrescripcion());
+            call.setString("observacion", value.getObservacion());
+            call.execute();
+            return true;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            return false;
+        } finally {
+            this.conn.close();
+        }
     }
 
 }
