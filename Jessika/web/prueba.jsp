@@ -1,9 +1,3 @@
-<%-- 
-    Document   : prueba
-    Created on : 22-jun-2017, 18:24:24
-    Author     : Deivi
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
