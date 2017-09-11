@@ -15,7 +15,6 @@ $('#cboFilter').on('changed.bs.select', function (e) {
             break;
     }
     loadList(true, 1);
-
 });
 $("#tablPaciente").bootstrapTable({
     contextMenu: '#tablPaciente-context-menu',
